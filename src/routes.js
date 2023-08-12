@@ -1,6 +1,6 @@
 import Home from "./views/Home";
-import User1 from "./views/auth/User";
-import Admin from "./views/auth/Admin";
+import DashboardUser from "./views/auth/user/Dashboard";
+import DashboardAdmin from "./views/auth/admin/Dashboard";
 
 const status = "uaer";
 var routes = [
@@ -10,8 +10,8 @@ var routes = [
     layout: "/home",
   },
   {
-    path: "/user1",
-    component: status == "admin" ? Admin : User1,
+    path: "/dashboard",
+    component: status == "admin" ? DashboardAdmin : DashboardUser,
     layout: "/auth",
   },
 ];
