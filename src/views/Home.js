@@ -1,14 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
     <>
       <header id="header" className="header fixed-top">
         <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
-          <a href="index.html" className="logo d-flex align-items-center">
+          <Link to="/dashboard" className="logo d-flex align-items-center">
             <img src="assets/img/logo.png" alt />
             <span>FlexStart</span>
-          </a>
+          </Link>
           <nav id="navbar" className="navbar">
             <ul>
               <li>

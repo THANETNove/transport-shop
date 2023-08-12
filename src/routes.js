@@ -2,7 +2,7 @@ import Home from "./views/Home";
 import DashboardUser from "./views/auth/user/Dashboard";
 import DashboardAdmin from "./views/auth/admin/Dashboard";
 
-const status = "uaer";
+const status = "user";
 var routes = [
   {
     path: "/",
