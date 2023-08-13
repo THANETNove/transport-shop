@@ -114,12 +114,10 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        {/* Content Row */}
+
         <div className="row">
-          {/* Area Chart */}
           <div className="col-xl-8 col-lg-7">
             <div className="card shadow mb-4">
-              {/* Card Header - Dropdown */}
               <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 className="m-0 font-weight-bold text-primary">
                   Earnings Overview
@@ -154,7 +152,7 @@ export default function Dashboard() {
                   </div>
                 </div>
               </div>
-              {/* Card Body */}
+
               <div className="card-body">
                 <div className="chart-area">
                   <canvas id="myAreaChart" />
