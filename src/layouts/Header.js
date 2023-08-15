@@ -114,6 +114,20 @@ export default function Header() {
               </a>
             </li>
             <li>
+              {/*           <Link to="/login" className="logo d-flex align-items-center">
+                <img src="assets/img/logo.png" alt />
+                <span>FlexStart</span>
+              </Link> */}
+              <Link to="/login" className="nav-link ">
+                <span>login</span>
+              </Link>
+            </li>
+            <li>
+              <Link className="nav-link" to="/register">
+                register
+              </Link>
+            </li>
+            <li>
               <a className="getstarted scrollto" href="#about">
                 Get Started
               </a>

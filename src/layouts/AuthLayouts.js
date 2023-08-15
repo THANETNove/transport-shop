@@ -8,6 +8,8 @@ import Navbar from "./nav/Navbar.js";
 import Footer from "./nav/Footer.js";
 
 const Auth = (props) => {
+  const location = useLocation();
+
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout == "/auth") {
@@ -27,6 +29,7 @@ const Auth = (props) => {
     });
   };
 
+  console.log("location", location.pathname);
   return (
     <>
       <Helmet>
@@ -52,19 +55,29 @@ const Auth = (props) => {
 
         <script src="assetsAuth/vendor/chart.js/Chart.min.js"></script>
       </Helmet>
-      <div id="wrapper">
-        <Sidebar />
-        <div id="content-wrapper" class="d-flex flex-column">
-          <div id="content">
-            <Navbar />
-            <Routes>
-              {getRoutes(routes)}
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </div>
-          <Footer />
+
+      {location.pathname == "/login" || location.pathname == "/register" ? (
+        <div id="wrapper">
+          <Routes>
+            {getRoutes(routes)}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
         </div>
-      </div>
+      ) : (
+        <div id="wrapper">
+          <Sidebar />
+          <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+              <Navbar />
+              <Routes>
+                {getRoutes(routes)}
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </div>
+            <Footer />
+          </div>
+        </div>
+      )}
     </>
   );
 };
