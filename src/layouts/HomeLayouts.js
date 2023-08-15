@@ -3,6 +3,7 @@ import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 import routes from "../routes.js";
+import Header from "../layouts/Header";
 
 const Home = (props) => {
   console.log("routes", routes);
@@ -57,6 +58,7 @@ const Home = (props) => {
 
         <script src="assets/js/main.js"></script>
       </Helmet>
+      <Header />
       <Routes>
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/" replace />} />
