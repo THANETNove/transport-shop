@@ -44,6 +44,24 @@ const Auth = (props) => {
         />
         <link href="assetsAuth/css/sb-admin-2.css" rel="stylesheet" />
 
+        {(location.pathname === "/login" ||
+          location.pathname === "/register") && (
+          <style type="text/css">
+            {`
+            body {
+                margin: 0;
+                font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                font-size: 1rem;
+                font-weight: 400;
+                line-height: 1.5;
+                color: #858796;
+                text-align: left;
+                background-color: #b82828;
+            }
+        `}
+          </style>
+        )}
+
         {/* body */}
 
         <script src="assetsAuth/vendor/jquery/jquery.min.js"></script>
@@ -57,12 +75,12 @@ const Auth = (props) => {
       </Helmet>
 
       {location.pathname == "/login" || location.pathname == "/register" ? (
-        <div id="wrapper">
+        <>
           <Routes>
             {getRoutes(routes)}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </div>
+        </>
       ) : (
         <div id="wrapper">
           <Sidebar />
