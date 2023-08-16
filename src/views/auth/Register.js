@@ -1,7 +1,130 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function Register() {
+const Register = () => {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    username: "",
+    customerCode: "",
+    email: "",
+    password: "",
+    name_surname: "",
+    phone_number: "",
+    address: "",
+    subdistrict: "",
+    district: "",
+    province: "",
+    zipCode: "",
+  });
+
+  const [errors, setErrors] = useState({
+    username: "",
+    customerCode: "",
+    email: "",
+    password: "",
+    name_surname: "",
+    phone_number: "",
+    address: "",
+    subdistrict: "",
+    district: "",
+    province: "",
+    zipCode: "",
+  });
+
+  const validate = () => {
+    let isValid = true;
+    const newErrors = {};
+
+    // username validation
+    if (!formData.username.trim()) {
+      newErrors.username = "username is required";
+      isValid = false;
+    }
+    // customerCode validation
+    if (!formData.customerCode.trim()) {
+      newErrors.customerCode = "รหัสลูกค้า is required";
+      isValid = false;
+    }
+
+    // Email validation
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!emailPattern.test(formData.email)) {
+      newErrors.email = "Email format is invalid";
+      isValid = false;
+    }
+
+    // password validation
+    if (!formData.password.trim()) {
+      newErrors.password = "password is required";
+      isValid = false;
+    }
+    if (!formData.password.trim()) {
+      newErrors.password = "password is required";
+      isValid = false;
+    } else if (formData.password.length <= 5) {
+      newErrors.password = "Password must be at least 6 characters.";
+      isValid = false;
+    }
+
+    // name_surname validation
+    if (!formData.name_surname.trim()) {
+      newErrors.name_surname = "name_surname is required";
+      isValid = false;
+    }
+    // phone_number validation
+    if (!formData.phone_number.trim()) {
+      newErrors.phone_number = "phone_number is required";
+      isValid = false;
+    }
+    // address validation
+    if (!formData.address.trim()) {
+      newErrors.address = "address is required";
+      isValid = false;
+    }
+    // subdistrict validation
+    if (!formData.subdistrict.trim()) {
+      newErrors.subdistrict = "subdistrict is required";
+      isValid = false;
+    }
+    // district validation
+    if (!formData.district.trim()) {
+      newErrors.district = "district is required";
+      isValid = false;
+    }
+    // province validation
+    if (!formData.province.trim()) {
+      newErrors.province = "province is required";
+      isValid = false;
+    }
+    // zipCode validation
+    if (!formData.zipCode.trim()) {
+      newErrors.zipCode = "zipCode is required";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    // After processing the form data (like sending it to an API), redirect:
+    event.preventDefault();
+    if (validate()) {
+      console.log("formData", formData);
+      /*     navigate("/dashboard"); */
+    }
+  };
+
   return (
     <>
       <div className="container">
@@ -16,91 +139,137 @@ export default function Register() {
                       Create an Account!
                     </h1>
                   </div>
-                  <form className="user">
+                  <form className="user" onSubmit={handleSubmit}>
                     <div className="form-group row">
                       <div className="col-sm-6 mb-3 mb-sm-0">
                         <input
                           type="text"
                           className="form-control form-control-user"
-                          id="exampleFirstName"
+                          id="username"
                           placeholder="Username"
+                          name="username"
+                          value={formData.username}
+                          onChange={handleChange}
                         />
+                        {errors.username && (
+                          <div className="error-from">{errors.username}</div>
+                        )}
                       </div>
                       <div className="col-sm-6">
                         <input
                           type="text"
                           className="form-control form-control-user"
-                          id="exampleLastName"
+                          id="customerCode"
                           placeholder="รหัสลูกค้า"
+                          name="customerCode"
+                          value={formData.customerCode}
+                          onChange={handleChange}
                         />
+                        {errors.customerCode && (
+                          <div className="error-from">
+                            {errors.customerCode}
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="form-group">
                       <input
                         type="email"
                         className="form-control form-control-user"
-                        id="exampleInputEmail"
+                        id="email"
                         placeholder="Email Address"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                       />
+                      {errors.email && (
+                        <div className="error-from">{errors.email}</div>
+                      )}
                     </div>
-                    <div className="form-group row">
-                      <div className="col-sm-6 mb-3 mb-sm-0">
-                        <input
-                          type="password"
-                          className="form-control form-control-user"
-                          id="exampleInputPassword"
-                          placeholder="Password"
-                        />
-                      </div>
-                      <div className="col-sm-6">
-                        <input
-                          type="password"
-                          className="form-control form-control-user"
-                          id="exampleRepeatPassword"
-                          placeholder="Repeat Password"
-                        />
-                      </div>
+                    <div className="form-group">
+                      <input
+                        type="password"
+                        className="form-control form-control-user"
+                        id="password"
+                        placeholder="Password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                      />
+                      {errors.password && (
+                        <div className="error-from">{errors.password}</div>
+                      )}
                     </div>
                     <div className="form-group">
                       <input
                         type="text"
                         className="form-control form-control-user"
-                        id="exampleInputEmail"
+                        id="name_surname"
                         placeholder="ชื่อ-นามสกุล"
+                        name="name_surname"
+                        value={formData.name_surname}
+                        onChange={handleChange}
                       />
+                      {errors.name_surname && (
+                        <div className="error-from">{errors.name_surname}</div>
+                      )}
                     </div>
                     <div className="form-group">
                       <input
                         type="number"
                         className="form-control form-control-user"
-                        id="number"
+                        id="phone_number"
                         placeholder="เบอร์ติดต่อ"
+                        name="phone_number"
+                        value={formData.phone_number}
+                        onChange={handleChange}
                       />
+                      {errors.phone_number && (
+                        <div className="error-from">{errors.phone_number}</div>
+                      )}
                     </div>
                     <div className="form-group">
-                      <input
-                        type="text"
-                        className="form-control form-control-user"
-                        id="number"
+                      <textarea
+                        class="form-control"
                         placeholder="ที่อยู่"
-                      />
+                        id="address"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        rows="3"
+                      ></textarea>
+                      {errors.address && (
+                        <div className="error-from">{errors.address}</div>
+                      )}
                     </div>
                     <div className="form-group row">
                       <div className="col-sm-6 mb-3 mb-sm-0">
                         <input
                           type="text"
                           className="form-control form-control-user"
-                          id="exampleInputPassword"
-                          placeholder="ตำบล"
+                          placeholder="ตำบล/แขวง"
+                          id="subdistrict"
+                          name="subdistrict"
+                          value={formData.subdistrict}
+                          onChange={handleChange}
                         />
+                        {errors.subdistrict && (
+                          <div className="error-from">{errors.subdistrict}</div>
+                        )}
                       </div>
                       <div className="col-sm-6">
                         <input
                           type="text"
                           className="form-control form-control-user"
-                          id="exampleRepeatPassword"
-                          placeholder="อำเภอ"
+                          id="district"
+                          name="district"
+                          value={formData.district}
+                          onChange={handleChange}
+                          placeholder="อำเภอ/เขต"
                         />
+                        {errors.district && (
+                          <div className="error-from">{errors.district}</div>
+                        )}
                       </div>
                     </div>
                     <div className="form-group row">
@@ -108,25 +277,37 @@ export default function Register() {
                         <input
                           type="text"
                           className="form-control form-control-user"
-                          id="exampleInputPassword"
+                          id="province"
+                          name="province"
+                          value={formData.province}
+                          onChange={handleChange}
                           placeholder="จังหวัด"
                         />
+                        {errors.province && (
+                          <div className="error-from">{errors.province}</div>
+                        )}
                       </div>
                       <div className="col-sm-6">
                         <input
                           type="text"
                           className="form-control form-control-user"
-                          id="exampleRepeatPassword"
+                          id="zipCode"
+                          name="zipCode"
+                          value={formData.zipCode}
+                          onChange={handleChange}
                           placeholder="รหัสไปรษณีย์"
                         />
+                        {errors.zipCode && (
+                          <div className="error-from">{errors.zipCode}</div>
+                        )}
                       </div>
                     </div>
-                    <a
-                      href="login.html"
+                    <button
+                      type="submit"
                       className="btn btn-primary btn-user btn-block"
                     >
-                      Register Account
-                    </a>
+                      Submit
+                    </button>
                   </form>
                   <hr />
                   <div className="text-center">
@@ -147,4 +328,6 @@ export default function Register() {
       </div>
     </>
   );
-}
+};
+
+export default Register;

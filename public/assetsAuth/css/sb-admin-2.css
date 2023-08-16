@@ -12617,3 +12617,8 @@ body.sidebar-toggled footer.sticky-footer {
   background-color: #13855c !important;
   /*   background-position: center; */
 }
+
+.error-from {
+  color: red;
+  font-size: 16px;
+}
