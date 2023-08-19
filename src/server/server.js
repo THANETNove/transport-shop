@@ -1,40 +1,41 @@
-const express = require("express");
-const mysql = require("mysql2");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+import axios from "axios";
+/* import { getToken } from '../hooks/useToken'; */
+/*  const  url = 'https://reqres.in';  */
+const url = "http://192.168.1.5/project/API"; //หน่วย
+//const url = 'https://th-projet.com/api-database';    // ยอน
 
-const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+//192.168.1.5/project/API/register.php?isAdd=true&username=username111&email=email111
 
-// MySQL connection
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "call_credit_checker",
-});
+const register = async (e) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("username", e[0]);
+  formData.append("email", e[1]);
 
-db.connect((err) => {
-  if (err) throw err;
-  console.log("Connected to MySQL");
-});
-
-// Example route to fetch all data
-app.get("/fetch-data", (req, res) => {
-  db.query("SELECT * FROM users", (err, results) => {
-    if (err) {
-      console.error("Error querying the database:", err);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-    console.log(results);
-    res.send(results);
+  const response = await axios.post(`${url}/register.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
   });
-});
-// run node server.js
 
-const PORT = 3005;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
+export default {
+  register,
+};

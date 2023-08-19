@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Service from "../../server/server";
 
 const Register = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    username: "",
+    username: "use1",
     customerCode: "",
-    email: "",
+    email: "email1@hom.com",
     password: "",
     name_surname: "",
     phone_number: "",
@@ -114,14 +115,31 @@ const Register = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
+
+    if (name == "username") {
+      setFormData((prevState) => ({ ...prevState, ["customerCode"]: value }));
+    }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     // After processing the form data (like sending it to an API), redirect:
     event.preventDefault();
+    /* 
     if (validate()) {
       console.log("formData", formData);
-      /*     navigate("/dashboard"); */
+          navigate("/dashboard");
+    } */
+    const response = await Service.register([
+      formData.username,
+      formData.email,
+    ]);
+
+    if (response.status == "success") {
+      console.log(response.message);
+      // navigate to the dashboard or any other page
+    } else {
+      console.error("Registration failed", response.error);
+      // handle error (e.g., show an error message to the user)
     }
   };
 
@@ -230,7 +248,7 @@ const Register = () => {
                     </div>
                     <div className="form-group">
                       <textarea
-                        class="form-control"
+                        className="form-control"
                         placeholder="ที่อยู่"
                         id="address"
                         name="address"
