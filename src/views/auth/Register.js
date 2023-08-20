@@ -3,13 +3,18 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Service from "../../server/server";
 
+import { useSelector, useDispatch } from "react-redux";
+import { setAuth } from "../../redux/auth";
+
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
-    username: "use1",
+    username: "",
     customerCode: "",
-    email: "email1@hom.com",
+    email: "",
     password: "",
     name_surname: "",
     phone_number: "",
@@ -122,26 +127,30 @@ const Register = () => {
   };
 
   const handleSubmit = async (event) => {
-    // After processing the form data (like sending it to an API), redirect:
     event.preventDefault();
-    /* 
     if (validate()) {
       console.log("formData", formData);
-          navigate("/dashboard");
-    } */
-    const response = await Service.register([
-      formData.username,
-      formData.email,
-    ]);
+      const response = await Service.register(formData, dispatch);
 
-    if (response.status == "success") {
-      console.log(response.message);
-      // navigate to the dashboard or any other page
-    } else {
-      console.error("Registration failed", response.error);
-      // handle error (e.g., show an error message to the user)
+      if (response.status == "success") {
+        navigate("/dashboard");
+      } else {
+        if (response.error == "Username already exists!") {
+          setErrors((prevState) => ({
+            ...prevState,
+            ["username"]: response.error,
+          }));
+        } else if ("Email already exists!") {
+          setErrors((prevState) => ({
+            ...prevState,
+            ["email"]: response.error,
+          }));
+        }
+      }
     }
   };
+
+  /* console.log(useSelector((state) => ({ ...state }))); */
 
   return (
     <>
