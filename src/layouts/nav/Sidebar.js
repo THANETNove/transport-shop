@@ -23,7 +23,7 @@ export default function Sidebar() {
       >
         {/* Sidebar - Brand */}
         <Link
-          to="/"
+          to="/dashboard"
           className="sidebar-brand d-flex align-items-center justify-content-center"
         >
           <div className="sidebar-brand-icon rotate-n-15">

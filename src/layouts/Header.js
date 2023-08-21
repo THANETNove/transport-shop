@@ -5,10 +5,10 @@ export default function Header() {
   return (
     <header id="header" className="header fixed-top">
       <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
-        <Link to="/dashboard" className="logo d-flex align-items-center">
+        <a className="logo d-flex align-items-center">
           <img src="assets/img/logo.png" alt />
           <span>FlexStart</span>
-        </Link>
+        </a>
         <nav id="navbar" className="navbar">
           <ul>
             <li>
