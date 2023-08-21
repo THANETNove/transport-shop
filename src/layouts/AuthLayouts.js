@@ -29,7 +29,7 @@ const Auth = (props) => {
     });
   };
 
-  console.log("location", location.pathname);
+
   return (
     <>
       <Helmet>

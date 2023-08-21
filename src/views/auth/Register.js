@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Service from "../../server/server";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setAuth } from "../../redux/auth";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -68,10 +67,6 @@ const Register = () => {
     if (!formData.password.trim()) {
       newErrors.password = "password is required";
       isValid = false;
-    }
-    if (!formData.password.trim()) {
-      newErrors.password = "password is required";
-      isValid = false;
     } else if (formData.password.length <= 5) {
       newErrors.password = "Password must be at least 6 characters.";
       isValid = false;
@@ -129,7 +124,6 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validate()) {
-      console.log("formData", formData);
       const response = await Service.register(formData, dispatch);
 
       if (response.status == "success") {

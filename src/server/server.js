@@ -2,6 +2,7 @@ import axios from "axios";
 
 const url = "http://192.168.1.5/project/API"; //หน่วย
 
+//POST
 const register = async (e, dispatch) => {
   const formData = new FormData();
   formData.append("isAdd", true);
@@ -49,6 +50,45 @@ const register = async (e, dispatch) => {
   }
 };
 
+const Login = async (e, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("username", e.username);
+  formData.append("password", e.password);
+
+  const response = await axios.post(`${url}/login.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "LOGIN_SUCCESS",
+      payload: response.data.user,
+    });
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "LOGIN_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 export default {
   register,
+  Login,
 };

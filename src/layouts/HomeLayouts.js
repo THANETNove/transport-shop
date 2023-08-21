@@ -6,10 +6,8 @@ import routes from "../routes.js";
 import Header from "../layouts/Header";
 
 const Home = (props) => {
-  console.log("routes", routes);
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      console.log("prop", prop.layout);
       if (prop.layout == "/home") {
         return (
           <Route path={prop.path} element={<prop.component />} key={key} />

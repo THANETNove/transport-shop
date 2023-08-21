@@ -1,7 +1,73 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Service from "../../server/server";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-export default function Login() {
+const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({
+    username: "",
+    password: "",
+  });
+
+  const validate = () => {
+    let isValid = true;
+
+    const newErrors = {};
+
+    // username validation
+    if (!formData.username.trim()) {
+      newErrors.username = "username is required";
+      isValid = false;
+    }
+    // password validation
+    if (!formData.password.trim()) {
+      newErrors.password = "password is required";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (validate()) {
+      const response = await Service.Login(formData, dispatch);
+      console.log(response);
+
+      if (response.status == "success") {
+        navigate("/dashboard");
+      } else {
+        if (response.error == "User not found!") {
+          setErrors((prevState) => ({
+            ...prevState,
+            ["username"]: response.error,
+          }));
+        } else if ("Incorrect password") {
+          setErrors((prevState) => ({
+            ...prevState,
+            ["password"]: response.error,
+          }));
+        }
+      }
+    }
+  };
+
   return (
     <>
       <div className="row justify-content-center">
@@ -15,31 +81,44 @@ export default function Login() {
                     <div className="text-center">
                       <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
                     </div>
-                    <form className="user">
+                    <form className="user" onSubmit={handleSubmit}>
                       <div className="form-group">
                         <input
-                          type="email"
+                          type="text"
                           className="form-control form-control-user"
-                          id="exampleInputEmail"
+                          id="username"
+                          placeholder="Username"
+                          name="username"
+                          value={formData.username}
+                          onChange={handleChange}
                           aria-describedby="emailHelp"
-                          placeholder="Enter Email Address..."
                         />
+                        {errors.username && (
+                          <div className="error-from">{errors.username}</div>
+                        )}
                       </div>
                       <div className="form-group">
                         <input
                           type="password"
                           className="form-control form-control-user"
-                          id="exampleInputPassword"
+                          id="password"
                           placeholder="Password"
+                          name="password"
+                          value={formData.password}
+                          onChange={handleChange}
                         />
+                        {errors.password && (
+                          <div className="error-from">{errors.password}</div>
+                        )}
                       </div>
                       <div className="form-group">
                         <div className="custom-control custom-checkbox small">
                           <input
                             type="checkbox"
                             className="custom-control-input"
-                            id="customCheck"
+                            id="checkbox"
                           />
+
                           <label
                             className="custom-control-label"
                             htmlFor="customCheck"
@@ -48,26 +127,12 @@ export default function Login() {
                           </label>
                         </div>
                       </div>
-                      <a
-                        href="index.html"
+                      <button
+                        type="submit"
                         className="btn btn-primary btn-user btn-block"
                       >
                         Login
-                      </a>
-                      <hr />
-                      <a
-                        href="index.html"
-                        className="btn btn-google btn-user btn-block"
-                      >
-                        <i className="fab fa-google fa-fw" /> Login with Google
-                      </a>
-                      <a
-                        href="index.html"
-                        className="btn btn-facebook btn-user btn-block"
-                      >
-                        <i className="fab fa-facebook-f fa-fw" /> Login with
-                        Facebook
-                      </a>
+                      </button>
                     </form>
                     <hr />
                     <div className="text-center">
@@ -92,4 +157,6 @@ export default function Login() {
       </div>
     </>
   );
-}
+};
+
+export default Login;
