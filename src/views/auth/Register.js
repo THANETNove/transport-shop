@@ -144,7 +144,7 @@ const Register = () => {
     }
   };
 
-  /* console.log(useSelector((state) => ({ ...state }))); */
+  /*   console.log(useSelector((state) => ({ ...state }))); */
 
   return (
     <>

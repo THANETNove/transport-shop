@@ -1,7 +1,8 @@
 import React from "react";
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import routes from "../routes.js";
+import { useSelector } from "react-redux";
+import createRoutes from "../routes.js";
 
 import Sidebar from "./nav/Sidebar.js";
 import Navbar from "./nav/Navbar.js";
@@ -9,6 +10,25 @@ import Footer from "./nav/Footer.js";
 
 const Auth = (props) => {
   const location = useLocation();
+
+  const user = useSelector((state) => state.auth.user);
+  console.log("location.pathname", location.pathname);
+  if (location.pathname != "/login" && location.pathname != "/register") {
+
+    if (!user) {
+      return <Navigate to="/" />;
+    }
+  }
+
+  var status = null;
+  if (user && user.status == 0) {
+    status = "user";
+  } else if (user && user.status == 1) {
+    status = "admin";
+  } else if (user && user.status == 2) {
+    status = "manager";
+  }
+  const routes = createRoutes(status);
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
@@ -28,7 +48,6 @@ const Auth = (props) => {
       behavior: "smooth",
     });
   };
-
 
   return (
     <>

@@ -12622,3 +12622,7 @@ body.sidebar-toggled footer.sticky-footer {
   color: red;
   font-size: 16px;
 }
+
+.nav-item .nav-link {
+  cursor: pointer;
+}

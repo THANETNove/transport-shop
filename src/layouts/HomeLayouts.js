@@ -2,10 +2,14 @@ import React from "react";
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-import routes from "../routes.js";
+import { useSelector } from "react-redux";
+import createRoutes from "../routes.js";
 import Header from "../layouts/Header";
 
 const Home = (props) => {
+  const routes = createRoutes("admin");
+
+  /*console.log("routes", routes);*/
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout == "/home") {

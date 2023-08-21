@@ -1,7 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const Logout = () => {
+    dispatch({
+      type: "LOGIN_SUCCESS",
+      payload: null,
+    });
+    navigate("/");
+  };
   return (
     <>
       {/* Sidebar */}
@@ -157,6 +169,12 @@ export default function Sidebar() {
           <a className="nav-link" href="tables.html">
             <i className="fas fa-fw fa-table" />
             <span>Tables</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" onClick={() => Logout()}>
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
           </a>
         </li>
         {/* Divider */}
