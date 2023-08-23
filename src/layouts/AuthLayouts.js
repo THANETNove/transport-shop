@@ -14,7 +14,6 @@ const Auth = (props) => {
   const user = useSelector((state) => state.auth.user);
   console.log("location.pathname", location.pathname);
   if (location.pathname != "/login" && location.pathname != "/register") {
-
     if (!user) {
       return <Navigate to="/" />;
     }
@@ -75,7 +74,7 @@ const Auth = (props) => {
                 line-height: 1.5;
                 color: #858796;
                 text-align: left;
-                background-color: #b82828;
+                background: url(../assets/img/hero-bg.png);
             }
         `}
           </style>

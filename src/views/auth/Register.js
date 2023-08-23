@@ -156,9 +156,7 @@ const Register = () => {
               <div className="col-lg-7">
                 <div className="p-5">
                   <div className="text-center">
-                    <h1 className="h4 text-gray-900 mb-4">
-                      Create an Account!
-                    </h1>
+                    <h1 className="h4 text-gray-900 mb-4">สร้างบัญชี</h1>
                   </div>
                   <form className="user" onSubmit={handleSubmit}>
                     <div className="form-group row">

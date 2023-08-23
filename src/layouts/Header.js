@@ -26,20 +26,7 @@ export default function Header() {
                 Services
               </a>
             </li>
-            <li>
-              <a className="nav-link scrollto" href="#portfolio">
-                Portfolio
-              </a>
-            </li>
-            <li>
-              <a className="nav-link scrollto" href="#team">
-                Team
-              </a>
-            </li>
-            <li>
-              <a href="blog.html">Blog</a>
-            </li>
-            <li className="dropdown">
+            {/* <li className="dropdown">
               <a href="#">
                 <span>Drop Down</span> <i className="bi bi-chevron-down" />
               </a>
@@ -107,17 +94,8 @@ export default function Header() {
                   <a href="#">Column 4 link 3</a>
                 </li>
               </ul>
-            </li>
+            </li> */}
             <li>
-              <a className="nav-link scrollto" href="#contact">
-                Contact
-              </a>
-            </li>
-            <li>
-              {/*           <Link to="/login" className="logo d-flex align-items-center">
-                <img src="assets/img/logo.png" alt />
-                <span>FlexStart</span>
-              </Link> */}
               <Link to="/login" className="nav-link ">
                 <span>login</span>
               </Link>
