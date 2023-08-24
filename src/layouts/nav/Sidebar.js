@@ -24,10 +24,7 @@ export default function Sidebar() {
         id="accordionSidebar"
       >
         {/* Sidebar - Brand */}
-        <Link
-          to="/dashboard"
-          className="sidebar-brand d-flex align-items-center justify-content-center"
-        >
+        <a className="sidebar-brand d-flex align-items-center justify-content-center">
           {user && user.status == 0 ? (
             <>
               <div className="sidebar-brand-icon rotate-n-15">
@@ -50,7 +47,7 @@ export default function Sidebar() {
               <span className="sidebar-brand-text mx-3 a-pointer">Manager</span>
             </>
           )}
-        </Link>
+        </a>
 
         <hr className="sidebar-divider" />
         <div className="sidebar-heading">Interface</div>
