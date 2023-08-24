@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://192.168.1.5/project/API"; //หน่วย
+const url = "http://192.168.1.10/project/API"; //หน่วย
 
 //POST
 const register = async (e, dispatch) => {

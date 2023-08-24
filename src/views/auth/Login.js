@@ -51,7 +51,7 @@ const Login = () => {
       console.log(response);
 
       if (response.status == "success") {
-        navigate("/dashboard");
+        navigate("/product-list");
       } else {
         if (response.error == "User not found!") {
           setErrors((prevState) => ({

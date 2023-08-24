@@ -52,15 +52,20 @@ export default function Sidebar() {
           )}
         </Link>
 
-        <hr className="sidebar-divider my-0" />
-        <li className="nav-item active">
-          <Link className="nav-link" to="/dashboard">
-            <i class="fa-solid fa-table-columns"></i>
-            <span>Dashboard</span>
-          </Link>
-        </li>
         <hr className="sidebar-divider" />
         <div className="sidebar-heading">Interface</div>
+        <li className="nav-item">
+          <Link className="nav-link" to="/product-list">
+            <i class="fa-solid fa-table-columns"></i>
+            <span>สินค้าทั้งหมด</span>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/status-list">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>สถานะ</span>
+          </Link>
+        </li>
         <li className="nav-item">
           <a
             className="nav-link collapsed"

@@ -107,7 +107,10 @@ const Auth = (props) => {
               <Navbar />
               <Routes>
                 {getRoutes(routes)}
-                <Route path="*" element={<Navigate to="/" replace />} />
+                  <Route
+                    path="*"
+                    element={<Navigate to="/product-list" replace />}
+                  />
               </Routes>
             </div>
             <Footer />
