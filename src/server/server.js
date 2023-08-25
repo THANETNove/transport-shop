@@ -2,6 +2,39 @@ import axios from "axios";
 
 const url = "http://192.168.1.10/project/API"; //หน่วย
 
+// GET
+const getStatusList = async (dispatch) => {
+  const params = {
+    isAdd: true,
+  };
+
+  const response = await axios.get(`${url}/getStatusList.php`, { params });
+  if (response.data.message) {
+    dispatch({
+      type: "STATUS_LIST_SUCCESS",
+      payload: response.data.status_list_data,
+    });
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "STATUS_LIST__ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 //POST
 const register = async (e, dispatch) => {
   const formData = new FormData();
@@ -124,6 +157,8 @@ const statusList = async (e, dispatch) => {
     };
   }
 };
+
+// Delete POST
 const deleteStatusList = async (id, dispatch) => {
   const formData = new FormData();
   formData.append("isAdd", true);
@@ -166,6 +201,7 @@ const deleteStatusList = async (id, dispatch) => {
 };
 
 export default {
+  getStatusList,
   register,
   Login,
   statusList,

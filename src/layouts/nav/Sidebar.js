@@ -58,7 +58,7 @@ export default function Sidebar() {
           </Link>
         </li>
 
-        {user && user.status == 1 && (
+        {user && user.status == 2 && (
           <li className="nav-item">
             <Link className="nav-link" to="/status-list">
               <i class="fa-solid fa-layer-group"></i>

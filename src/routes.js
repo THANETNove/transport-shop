@@ -52,16 +52,6 @@ const adminRoutes = [
     component: CreateProductAdmin,
     layout: "/auth",
   },
-  {
-    path: "/status-list",
-    component: StatusList,
-    layout: "/auth",
-  },
-  {
-    path: "/create-status",
-    component: CreateStatus,
-    layout: "/auth",
-  },
 ];
 
 const managerRoutes = [
@@ -75,7 +65,7 @@ const managerRoutes = [
     component: CreateProductManager,
     layout: "/auth",
   },
-  /* {
+  {
     path: "/status-list",
     component: StatusList,
     layout: "/auth",
@@ -84,7 +74,7 @@ const managerRoutes = [
     path: "/create-status",
     component: CreateStatus,
     layout: "/auth",
-  }, */
+  },
 ];
 
 const createRoutes = (userStatus) => {
