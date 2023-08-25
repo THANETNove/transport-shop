@@ -48,7 +48,7 @@ const Login = () => {
 
     if (validate()) {
       const response = await Service.Login(formData, dispatch);
-      console.log(response);
+    
 
       if (response.status == "success") {
 

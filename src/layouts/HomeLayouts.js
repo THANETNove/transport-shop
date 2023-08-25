@@ -9,7 +9,6 @@ import Header from "../layouts/Header";
 const Home = (props) => {
   const routes = createRoutes("admin");
 
-  /*console.log("routes", routes);*/
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout == "/home") {

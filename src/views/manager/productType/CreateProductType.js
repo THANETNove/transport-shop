@@ -52,8 +52,6 @@ const CreateProductType = () => {
     event.preventDefault();
     if (validate()) {
       const response = await Service.ProductType(formData, dispatch);
-
-      console.log(response);
       if (response.status == "success") {
         navigate("/product-type-list");
       } else {

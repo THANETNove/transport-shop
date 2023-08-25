@@ -12,7 +12,6 @@ export default function StatusList() {
 
   const deleteStatusProduct = async (event) => {
     const response = await Service.deleteStatusList(event, dispatch);
-    console.log("response", response);
     if (response.status == "success") {
       /*  navigate("/status-list"); */
       setStatusSuccess(response.message);

@@ -18,7 +18,6 @@ const ProductTypeList = () => {
 
   const deleteProductType = async (event) => {
     const response = await Service.deleteProductTypeList(event, dispatch);
-    console.log("response", response);
     if (response.status == "success") {
       setStatusSuccess(response.message);
       setStatusResponse(1);
@@ -52,7 +51,6 @@ const ProductTypeList = () => {
     }, 1000);
   }, [statusSuccess]);
 
-  /*   console.log(useSelector((state) => ({ ...state }))); */
   return (
     <div className="container-fluid">
       <div className="row">
