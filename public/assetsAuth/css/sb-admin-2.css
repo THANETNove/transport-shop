@@ -12637,3 +12637,11 @@ body.sidebar-toggled footer.sticky-footer {
 .table>thead>tr:first-child>th {
   border-top: none;
 }
+
+.color-success {
+  color: green;
+}
+
+.color-error {
+  color: red;
+}

@@ -1,7 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Service from "../../../server/server";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function StatusList() {
+  const dispatch = useDispatch();
+  const statusListFromState = useSelector((state) => state.post.status_list);
+  const [statusList, setStatusList] = useState(statusListFromState);
+  const [statusSuccess, setStatusSuccess] = useState(null);
+  const [statusResponse, setStatusResponse] = useState(null);
+
+  const deleteStatusProduct = async (event) => {
+    const response = await Service.deleteStatusList(event, dispatch);
+    console.log("response", response);
+    if (response.status == "success") {
+      /*  navigate("/status-list"); */
+      setStatusSuccess(response.message);
+      setStatusResponse(1);
+    } else {
+      setStatusSuccess(response.error);
+      setStatusResponse(2);
+    }
+  };
+
+  useEffect(() => {
+    setStatusList(statusListFromState);
+    setStatusResponse(1);
+    setStatusSuccess("status added successfully!");
+  }, [statusListFromState]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setStatusSuccess(null);
+    }, 1000);
+  }, [statusSuccess]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setStatusResponse(null);
+    }, 1000);
+  }, [statusSuccess]);
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -12,6 +51,15 @@ export default function StatusList() {
               <Link className="btn btn-primary" to="/create-status">
                 เพิ่ม สถานะ
               </Link>
+              <span
+                className={
+                  statusResponse == "1"
+                    ? "color-success"
+                    : statusResponse == "2" && "color-error"
+                }
+              >
+                {statusSuccess && statusSuccess != null && statusSuccess}
+              </span>
             </div>
 
             <div className="card-body">
@@ -19,30 +67,27 @@ export default function StatusList() {
                 <table className="table  align-middle table-hover">
                   <thead>
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
+                      <th scope="col">id</th>
+                      <th scope="col">ชื่อ สถานะ</th>
+                      <th scope="col">delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td colspan="2">Larry the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
+                    {statusList &&
+                      statusList.map((status, index) => (
+                        <tr>
+                          <th scope="row">{index + 1}</th>
+                          <td>{status.statusProduct}</td>
+                          <td>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => deleteStatusProduct(status.id)}
+                            >
+                              delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

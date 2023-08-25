@@ -57,12 +57,16 @@ export default function Sidebar() {
             <span>สินค้าทั้งหมด</span>
           </Link>
         </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/status-list">
-            <i class="fa-solid fa-layer-group"></i>
-            <span>สถานะ</span>
-          </Link>
-        </li>
+
+        {user && user.status == 1 && (
+          <li className="nav-item">
+            <Link className="nav-link" to="/status-list">
+              <i class="fa-solid fa-layer-group"></i>
+              <span>สถานะ สินค้า</span>
+            </Link>
+          </li>
+        )}
+
         <li className="nav-item">
           <a
             className="nav-link collapsed"

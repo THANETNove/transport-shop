@@ -88,7 +88,86 @@ const Login = async (e, dispatch) => {
   }
 };
 
+const statusList = async (e, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("statusProduct", e.statusProduct);
+
+  const response = await axios.post(`${url}/statusList.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "STATUS_LIST_SUCCESS",
+      payload: response.data.status_list_data,
+    });
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "STATUS_LIST__ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+const deleteStatusList = async (id, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", id);
+
+  const response = await axios.post(`${url}/deleteStatusList.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "STATUS_LIST_SUCCESS",
+      payload: response.data.status_list_data,
+    });
+    dispatch({
+      type: "DELETE_STATUS_LIST_SUCCESS",
+      payload: response.data.message,
+    });
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "DELETE_STATUS_LIST__ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 export default {
   register,
   Login,
+  statusList,
+  deleteStatusList,
 };

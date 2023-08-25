@@ -12,7 +12,6 @@ const Auth = (props) => {
   const location = useLocation();
 
   const user = useSelector((state) => state.auth.user);
-  console.log("location.pathname", location.pathname);
   if (location.pathname != "/login" && location.pathname != "/register") {
     if (!user) {
       return <Navigate to="/" />;
@@ -107,10 +106,10 @@ const Auth = (props) => {
               <Navbar />
               <Routes>
                 {getRoutes(routes)}
-                  <Route
-                    path="*"
-                    element={<Navigate to="/product-list" replace />}
-                  />
+                <Route
+                  path="*"
+                  element={<Navigate to="/product-list" replace />}
+                />
               </Routes>
             </div>
             <Footer />

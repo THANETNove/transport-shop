@@ -4,7 +4,7 @@ import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 
 export default function Navbar() {
   const user = useSelector((state) => state.auth.user);
-  console.log("user", user);
+
   return (
     <>
       {/* Topbar */}
