@@ -20,7 +20,74 @@ const getStatusList = async (dispatch) => {
     };
   } else if (response.data.error) {
     dispatch({
-      type: "STATUS_LIST__ERROR",
+      type: "STATUS_LIST_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
+const getProductType = async (dispatch) => {
+  const params = {
+    isAdd: true,
+  };
+
+  const response = await axios.get(`${url}/getProductTypeList.php`, { params });
+  if (response.data.message) {
+    dispatch({
+      type: "PRODUCT_TYPE_SUCCESS",
+      payload: response.data.product_type_data,
+    });
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "PRODUCT_TYPE_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
+const getProductTypeId = async (id, dispatch) => {
+  const params = {
+    isAdd: true,
+    id: id,
+  };
+
+  const response = await axios.get(`${url}/getProductTypeListId.php`, {
+    params,
+  });
+  if (response.data.message) {
+    dispatch({
+      type: "ID_PRODUCT_TYPE_SUCCESS",
+      payload: response.data.product_type_data,
+    });
+    return {
+      status: "success",
+      message: response.data.product_type_data,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "ID_PRODUCT_TYPE_ERROR",
       payload: response.data.error,
     });
     return {
@@ -197,6 +264,47 @@ const ProductType = async (e, dispatch) => {
   }
 };
 
+//  Update POST
+const UpdateProductType = async (e, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", e.id);
+  formData.append("name", e.name);
+  formData.append("kg", e.kg);
+  formData.append("cbm", e.cbm);
+
+  const response = await axios.post(`${url}/updateProductType.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "PRODUCT_TYPE_SUCCESS",
+      payload: response.data.product_type_data,
+    });
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "PRODUCT_TYPE_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 // Delete POST
 const deleteStatusList = async (id, dispatch) => {
   const formData = new FormData();
@@ -281,10 +389,13 @@ const deleteProductTypeList = async (id, dispatch) => {
 
 export default {
   getStatusList,
+  getProductType,
+  getProductTypeId,
   register,
   Login,
   statusList,
   ProductType,
+  UpdateProductType,
   deleteStatusList,
   deleteProductTypeList,
 };

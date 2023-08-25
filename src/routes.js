@@ -14,6 +14,7 @@ import StatusList from "./views/manager/status/StatusList";
 import CreateStatus from "./views/manager/status/CreateStatus";
 import ProductTypeList from "./views/manager/productType/ProductTypeList";
 import CreateProductType from "./views/manager/productType/CreateProductType";
+import EditProductType from "./views/manager/productType/EditProductType";
 
 const commonRoutes = [
   {
@@ -88,6 +89,11 @@ const managerRoutes = [
   {
     path: "/create-product-type",
     component: CreateProductType,
+    layout: "/auth",
+  },
+  {
+    path: "/edit-product-type/:id",
+    component: EditProductType,
     layout: "/auth",
   },
 ];

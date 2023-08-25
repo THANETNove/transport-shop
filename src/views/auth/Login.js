@@ -51,7 +51,7 @@ const Login = () => {
       console.log(response);
 
       if (response.status == "success") {
-        await Service.getStatusList(dispatch); // ดึงสถานะสิค้า
+
         navigate("/product-list");
       } else {
         if (response.error == "User not found!") {

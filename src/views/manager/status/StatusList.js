@@ -22,11 +22,16 @@ export default function StatusList() {
       setStatusResponse(2);
     }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      await Service.getStatusList(dispatch); // ดึงสถานะสิค้า
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     setStatusList(statusListFromState);
-    setStatusResponse(1);
-    setStatusSuccess("status added successfully!");
   }, [statusListFromState]);
 
   useEffect(() => {

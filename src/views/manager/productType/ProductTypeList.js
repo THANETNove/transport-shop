@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Service from "../../../server/server";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 const ProductTypeList = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const productTypeListFromState = useSelector(
     (state) => state.post.product_type
   );
-  const [productTypeList, setproductTypeList] = useState(
+  const [productTypeList, setProductTypeList] = useState(
     productTypeListFromState
   );
   const [statusSuccess, setStatusSuccess] = useState(null);
@@ -27,9 +29,15 @@ const ProductTypeList = () => {
   };
 
   useEffect(() => {
-    setproductTypeList(productTypeListFromState);
-    setStatusResponse(1);
-    setStatusSuccess("product type added successfully!");
+    const fetchData = async () => {
+      await Service.getProductType(dispatch); // ดึงสถานะสิค้า
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setProductTypeList(productTypeListFromState);
   }, [productTypeListFromState]);
 
   useEffect(() => {
@@ -44,7 +52,7 @@ const ProductTypeList = () => {
     }, 1000);
   }, [statusSuccess]);
 
-  console.log(useSelector((state) => ({ ...state })));
+  /*   console.log(useSelector((state) => ({ ...state }))); */
   return (
     <div className="container-fluid">
       <div className="row">
@@ -72,9 +80,10 @@ const ProductTypeList = () => {
                   <thead>
                     <tr>
                       <th scope="col">id</th>
-                      <th scope="col">ชื่อ ประเภทสินค้า</th>
+                      <th scope="col">ประเภทสินค้า</th>
                       <th scope="col">KG</th>
                       <th scope="col">CBM</th>
+                      <th scope="col">Edit</th>
                       <th scope="col">delete</th>
                     </tr>
                   </thead>
@@ -86,6 +95,16 @@ const ProductTypeList = () => {
                           <td>{status.name}</td>
                           <td>{status.kg}</td>
                           <td>{status.cbm}</td>
+                          <td>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() =>
+                                navigate(`/edit-product-type/${status.id}`)
+                              }
+                            >
+                              Edit
+                            </button>
+                          </td>
                           <td>
                             <button
                               className="btn btn-danger"
