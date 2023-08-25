@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function StatusList() {
   const dispatch = useDispatch();
-  const statusListFromState = useSelector((state) => state.post.status_list);
-  const [statusList, setStatusList] = useState(statusListFromState);
+  const { status_list } = useSelector((state) => state.post);
+  const [statusList, setStatusList] = useState(status_list);
   const [statusSuccess, setStatusSuccess] = useState(null);
   const [statusResponse, setStatusResponse] = useState(null);
 
@@ -30,8 +30,8 @@ export default function StatusList() {
   }, []);
 
   useEffect(() => {
-    setStatusList(statusListFromState);
-  }, [statusListFromState]);
+    setStatusList(status_list);
+  }, [status_list]);
 
   useEffect(() => {
     setTimeout(() => {

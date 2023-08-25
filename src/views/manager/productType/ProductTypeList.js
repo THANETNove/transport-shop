@@ -29,7 +29,7 @@ const ProductTypeList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await Service.getProductType(dispatch); // ดึงสถานะสิค้า
+      await Service.getProductType(dispatch); // ดึงประเภทสินค้า
     };
 
     fetchData();

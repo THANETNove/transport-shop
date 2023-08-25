@@ -75,7 +75,7 @@ export default function Sidebar() {
           </>
         )}
 
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <a
             className="nav-link collapsed"
             data-toggle="collapse"
@@ -98,13 +98,7 @@ export default function Sidebar() {
               <a className="collapse-item">Cards</a>
             </div>
           </div>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link">
-            <i className="fas fa-fw fa-chart-area" />
-            <span>Charts</span>
-          </a>
-        </li>
+        </li>*/}
 
         <li className="nav-item">
           <a className="nav-link" onClick={() => Logout()}>

@@ -2,19 +2,21 @@
 import Home from "./views/Home";
 import Login from "./views/auth/Login";
 import Register from "./views/auth/Register";
-// Admin
-import ProductListUser from "./views/user/products/ProductList";
-import CreateProductUser from "./views/admin/products/CreateProduct";
-import ProductListAdmin from "./views/admin/products/ProductList";
-import CreateProductAdmin from "./views/admin/products/CreateProduct";
+
+// User
+
+//Admin
+
 // Manager
-import ProductListManager from "./views/manager/products/ProductList";
-import CreateProductManager from "./views/admin/products/CreateProduct";
+import ProductListManager from "./views/all/products/ProductList";
 import StatusList from "./views/manager/status/StatusList";
 import CreateStatus from "./views/manager/status/CreateStatus";
 import ProductTypeList from "./views/manager/productType/ProductTypeList";
 import CreateProductType from "./views/manager/productType/CreateProductType";
 import EditProductType from "./views/manager/productType/EditProductType";
+
+// All ใช้รวมกัน
+import CreateProduct from "./views/all/products/CreateProduct";
 
 const commonRoutes = [
   {
@@ -32,10 +34,22 @@ const commonRoutes = [
     component: Register,
     layout: "/auth",
   },
+
+  //  path All ใช้รวมกัน  กรณี login เเล้ว
+  {
+    path: "/product-list",
+    component: ProductListManager,
+    layout: "/auth",
+  },
+  {
+    path: "/create-product",
+    component: CreateProduct,
+    layout: "/auth",
+  },
 ];
 
 const userRoutes = [
-  {
+  /*   {
     path: "/product-list",
     component: ProductListUser,
     layout: "/auth",
@@ -44,11 +58,11 @@ const userRoutes = [
     path: "/create-product",
     component: CreateProductUser,
     layout: "/auth",
-  },
+  }, */
 ];
 
 const adminRoutes = [
-  {
+  /*   {
     path: "/product-list",
     component: ProductListAdmin,
     layout: "/auth",
@@ -57,20 +71,10 @@ const adminRoutes = [
     path: "/create-product",
     component: CreateProductAdmin,
     layout: "/auth",
-  },
+  }, */
 ];
 
 const managerRoutes = [
-  {
-    path: "/product-list",
-    component: ProductListManager,
-    layout: "/auth",
-  },
-  {
-    path: "/create-product",
-    component: CreateProductManager,
-    layout: "/auth",
-  },
   {
     path: "/status-list",
     component: StatusList,
