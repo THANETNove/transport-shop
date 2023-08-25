@@ -143,7 +143,46 @@ const statusList = async (e, dispatch) => {
     };
   } else if (response.data.error) {
     dispatch({
-      type: "STATUS_LIST__ERROR",
+      type: "STATUS_LIST_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
+const ProductType = async (e, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("name", e.name);
+  formData.append("kg", e.kg);
+  formData.append("cbm", e.cbm);
+
+  const response = await axios.post(`${url}/product_type.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "PRODUCT_TYPE_SUCCESS",
+      payload: response.data.product_type_data,
+    });
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "PRODUCT_TYPE_ERROR",
       payload: response.data.error,
     });
     return {
@@ -199,11 +238,53 @@ const deleteStatusList = async (id, dispatch) => {
     };
   }
 };
+const deleteProductTypeList = async (id, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", id);
+
+  const response = await axios.post(
+    `${url}/deleteProductTypeList.php`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data;charset=utf-8",
+      },
+    }
+  );
+
+  if (response.data.message) {
+    dispatch({
+      type: "PRODUCT_TYPE_SUCCESS",
+      payload: response.data.product_type_data,
+    });
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "PRODUCT_TYPE_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
 
 export default {
   getStatusList,
   register,
   Login,
   statusList,
+  ProductType,
   deleteStatusList,
+  deleteProductTypeList,
 };

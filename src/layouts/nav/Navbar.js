@@ -74,7 +74,7 @@ export default function Navbar() {
           {/* Nav Item - Alerts */}
           <li className="nav-item dropdown no-arrow mx-1">
             <div className="nav-link text-gray-600 small">
-              <i class="fa-solid fa-money-bill-wave small-xl"></i>
+              <i class="fa-solid fa-coins small-xl"></i>
               <span className="ml-3 text-gray-600 small-xl">
                 {user.money.toLocaleString()}
               </span>

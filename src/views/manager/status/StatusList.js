@@ -81,7 +81,15 @@ export default function StatusList() {
                           <td>
                             <button
                               className="btn btn-danger"
-                              onClick={() => deleteStatusProduct(status.id)}
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    "คุณต้องการลบ ข้อมูลใช่หรือไม่ ! "
+                                  )
+                                ) {
+                                  deleteStatusProduct(status.id);
+                                }
+                              }}
                             >
                               delete
                             </button>

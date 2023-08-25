@@ -27,7 +27,7 @@ export default function Sidebar() {
         <a className="sidebar-brand d-flex align-items-center justify-content-center">
           {user && user.status == 0 ? (
             <>
-              <div className="sidebar-brand-icon rotate-n-15">
+              <div className="sidebar-brand-icon">
                 <i class="fa-solid fa-users"></i>
               </div>
               <span className="sidebar-brand-text mx-3 a-pointer"> User</span>
@@ -41,7 +41,7 @@ export default function Sidebar() {
             </>
           ) : (
             <>
-              <div className="sidebar-brand-icon rotate-n-15">
+              <div className="sidebar-brand-icon">
                 <i class="fa-solid fa-people-roof"></i>
               </div>
               <span className="sidebar-brand-text mx-3 a-pointer">Manager</span>
@@ -59,12 +59,20 @@ export default function Sidebar() {
         </li>
 
         {user && user.status == 2 && (
-          <li className="nav-item">
-            <Link className="nav-link" to="/status-list">
-              <i class="fa-solid fa-layer-group"></i>
-              <span>สถานะ สินค้า</span>
-            </Link>
-          </li>
+          <>
+            <li className="nav-item">
+              <Link className="nav-link" to="/status-list">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>สถานะ สินค้า</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/product-type-list">
+                <i class="fa-solid fa-notes-medical"></i>
+                <span>ประเภทสินค้า</span>
+              </Link>
+            </li>
+          </>
         )}
 
         <li className="nav-item">

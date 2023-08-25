@@ -1,14 +1,19 @@
+//User
 import Home from "./views/Home";
 import Login from "./views/auth/Login";
 import Register from "./views/auth/Register";
+// Admin
 import ProductListUser from "./views/user/products/ProductList";
 import CreateProductUser from "./views/admin/products/CreateProduct";
 import ProductListAdmin from "./views/admin/products/ProductList";
 import CreateProductAdmin from "./views/admin/products/CreateProduct";
+// Manager
 import ProductListManager from "./views/manager/products/ProductList";
 import CreateProductManager from "./views/admin/products/CreateProduct";
-import StatusList from "./views/admin/status/StatusList";
-import CreateStatus from "./views/admin/status/CreateStatus";
+import StatusList from "./views/manager/status/StatusList";
+import CreateStatus from "./views/manager/status/CreateStatus";
+import ProductTypeList from "./views/manager/productType/ProductTypeList";
+import CreateProductType from "./views/manager/productType/CreateProductType";
 
 const commonRoutes = [
   {
@@ -73,6 +78,16 @@ const managerRoutes = [
   {
     path: "/create-status",
     component: CreateStatus,
+    layout: "/auth",
+  },
+  {
+    path: "/product-type-list",
+    component: ProductTypeList,
+    layout: "/auth",
+  },
+  {
+    path: "/create-product-type",
+    component: CreateProductType,
     layout: "/auth",
   },
 ];
