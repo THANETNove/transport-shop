@@ -1,4 +1,5 @@
 import axios from "axios";
+import { format } from "date-fns";
 
 const url = "http://192.168.1.10/project/API"; //หน่วย
 
@@ -264,6 +265,55 @@ const ProductType = async (e, dispatch) => {
   }
 };
 
+const createProduct = async (e, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  for (let key in e) {
+    console.log("key", key);
+    if (
+      key === "chinese_warehouse" ||
+      key === "close_cabinet" ||
+      key === "to_thailand"
+    ) {
+      formData.append(key, format(e[key], "dd--MM-yyyy"));
+    } else {
+      formData.append(key, e[key]);
+    }
+  }
+  console.log("formData", e);
+
+  const response = await axios.post(`${url}/product.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "PRODUCT_SUCCESS",
+      payload: response.data.product_data,
+    });
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "PRODUCT_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 //  Update POST
 const UpdateProductType = async (e, dispatch) => {
   const formData = new FormData();
@@ -394,6 +444,7 @@ export default {
   register,
   Login,
   statusList,
+  createProduct,
   ProductType,
   UpdateProductType,
   deleteStatusList,

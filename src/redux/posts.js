@@ -3,6 +3,8 @@ const initialState = {
   errors: null,
   product_type: null,
   product_type_errors: null,
+  product: null,
+  product_errors: null,
 };
 
 export default function (state = initialState, action) {
@@ -26,6 +28,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         product_type_errors: action.payload,
+      };
+    case "PRODUCT_SUCCESS":
+      return {
+        ...state,
+        product_type: action.payload,
+      };
+    case "PRODUCT_ERROR":
+      return {
+        ...state,
+        product_errors: action.payload,
       };
     default:
       return state;
