@@ -4,6 +4,7 @@ const initialState = {
   product_type: null,
   product_type_errors: null,
   product: null,
+  statusProduct: "default",
   product_errors: null,
 };
 
@@ -32,12 +33,19 @@ export default function (state = initialState, action) {
     case "PRODUCT_SUCCESS":
       return {
         ...state,
-        product_type: action.payload,
+        product: action.payload,
+        statusProduct: "success",
+      };
+    case "STATUS_PRODUCT_SUCCESS":
+      return {
+        ...state,
+        statusProduct: action.payload,
       };
     case "PRODUCT_ERROR":
       return {
         ...state,
         product_errors: action.payload,
+        statusProduct: "error",
       };
     default:
       return state;

@@ -5,17 +5,29 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function ProductList() {
   const dispatch = useDispatch();
-  
+  const { product, statusProduct } = useSelector((state) => state.post);
+  const [productList, setProductList] = useState(product);
+  const [statusProductList, setStatusProductList] = useState(statusProduct);
 
   useEffect(() => {
     const fetchData = async () => {
       await Service.getProductType(dispatch); // ดึงสถานะสิค้า
       await Service.getStatusList(dispatch); // ดึงสถานะสิค้า
     };
-
+    setTimeout(() => {
+      dispatch({
+        type: "STATUS_PRODUCT_SUCCESS",
+        payload: "default",
+      });
+    }, 2000);
     fetchData();
   }, []);
-  
+
+  useEffect(() => {
+    setStatusProductList(statusProduct);
+  }, [statusProduct]);
+
+  console.log("productList", productList, statusProduct);
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -35,6 +47,11 @@ export default function ProductList() {
               <Link className="btn btn-primary" to="/create-product">
                 เพิ่มสินค้า
               </Link>
+              {statusProductList == "success" && (
+                <span className="color-success">
+                  product added successfully!
+                </span>
+              )}
             </div>
 
             <div className="card-body">
@@ -49,23 +66,28 @@ export default function ProductList() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td colspan="2">Larry the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
+                    {productList &&
+                      productList.map((product, index) => (
+                        <tr>
+                          <th scope="row">{index + 1}</th>
+                          <td>{product.cabinet_number}</td>
+                          <td>{product.tech_china}</td>
+                          <td>{product.warehouse_code}</td>
+                          <td>{product.cabinet_number}</td>
+                          <td>{product.chinese_warehouse}</td>
+                          <td>{product.close_cabinet}</td>
+                          <td>{product.to_thailand}</td>
+                          <td>{product.parcel_status}</td>
+                          <td>{product.quantity}</td>
+                          <td>{product.size}</td>
+                          <td>{product.cue_per_piece}</td>
+                          <td>{product.weight}</td>
+                          <td>{product.total_queue}</td>
+                          <td>
+                            {product.payment_amount_chinese_thai_delivery}
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

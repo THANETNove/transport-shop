@@ -217,22 +217,12 @@ const CreateProduct = () => {
     event.preventDefault();
     if (validate()) {
       const response = await Service.createProduct(formData, dispatch);
-      console.log("response", response);
-      /*  if (response.status == "success") {
-        navigate("/dashboard");
+
+      if (response.status == "success") {
+        navigate("/product-list");
       } else {
-        if (response.error == "Username already exists!") {
-          setErrors((prevState) => ({
-            ...prevState,
-            ["username"]: response.error,
-          }));
-        } else if ("Email already exists!") {
-          setErrors((prevState) => ({
-            ...prevState,
-            ["email"]: response.error,
-          }));
-        }
-      } */
+        console.log("response", response);
+      }
     }
   };
 
@@ -253,7 +243,6 @@ const CreateProduct = () => {
     setProductType(product_type);
   }, [productType]);
 
-  console.log("formData", formData);
   return (
     <div className="container-fluidaa">
       <div className="row">

@@ -280,7 +280,6 @@ const createProduct = async (e, dispatch) => {
       formData.append(key, e[key]);
     }
   }
-  console.log("formData", e);
 
   const response = await axios.post(`${url}/product.php`, formData, {
     headers: {
@@ -293,6 +292,7 @@ const createProduct = async (e, dispatch) => {
       type: "PRODUCT_SUCCESS",
       payload: response.data.product_data,
     });
+
     return {
       status: "success",
       message: response.data.message,
