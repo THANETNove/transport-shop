@@ -60,9 +60,20 @@ export default function ProductList() {
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
+                      <th scope="col">รหัสลูกค้า</th>
+                      <th scope="col">เเทคจีน</th>
+                      <th scope="col">รหัสโกดัง</th>
+                      <th scope="col">เลขตู้</th>
+                      <th scope="col">ถึงโกดังจีน</th>
+                      <th scope="col">ปิดตู้</th>
+                      <th scope="col">ถึงไทย</th>
+                      <th scope="col">สถานะ</th>
+                      <th scope="col">จำนวน</th>
+                      <th scope="col">ขนาด</th>
+                      <th scope="col">คิวต่อชิ้น</th>
+                      <th scope="col">น้ำหนัก</th>
+                      <th scope="col">คิวรวม</th>
+                      <th scope="col">ยอดชำระค่าจัดส่ง จีน-ไทย</th>
                     </tr>
                   </thead>
                   <tbody>
