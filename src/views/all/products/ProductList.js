@@ -178,7 +178,7 @@ export default function ProductList() {
                                   status.statusProduct
                               )} */}
                             <select
-                              className="form-select"
+                              className="form-control"
                               id="parcel_status"
                               name="parcel_status"
                               value={product.parcel_status}

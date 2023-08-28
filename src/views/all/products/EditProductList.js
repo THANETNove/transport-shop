@@ -439,7 +439,7 @@ const EditProductList = () => {
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
                         <select
-                          class="form-select"
+                          class="form-control"
                           id="parcel_status"
                           name="parcel_status"
                           value={formData.parcel_status}
@@ -598,7 +598,7 @@ const EditProductList = () => {
                     <div className="form-group row">
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                         <select
-                          class="form-select"
+                          class="form-control"
                           id="product_type"
                           name="product_type"
                           value={formData.product_type}

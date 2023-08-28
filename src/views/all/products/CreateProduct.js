@@ -418,7 +418,7 @@ const CreateProduct = () => {
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
                         <select
-                          class="form-select"
+                          class="form-control"
                           id="parcel_status"
                           name="parcel_status"
                           onChange={handleChange}
@@ -591,7 +591,7 @@ const CreateProduct = () => {
                       <div className="col-sm-6  col-md-6 col-lg-6">
                         <input
                           type="file"
-                          className="form-control form-control-user"
+                          className="form-control"
                           id="image"
                           name="image"
                           onChange={handleImageChange}

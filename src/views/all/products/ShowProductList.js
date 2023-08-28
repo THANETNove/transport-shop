@@ -186,7 +186,7 @@ const ShowProductList = () => {
                             สถานะ
                           </label>
                           <select
-                            class="form-select"
+                            class="form-control"
                             id="parcel_status"
                             name="parcel_status"
                             value={formData.parcel_status}
@@ -289,7 +289,7 @@ const ShowProductList = () => {
                             เลือกประเภทพัสดุ
                           </label>
                           <select
-                            class="form-select"
+                            class="form-control"
                             id="product_type"
                             name="product_type"
                             value={formData.product_type}
