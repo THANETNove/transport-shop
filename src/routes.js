@@ -18,6 +18,7 @@ import EditProductType from "./views/manager/productType/EditProductType";
 // All ใช้รวมกัน
 import CreateProduct from "./views/all/products/CreateProduct";
 import EditProduct from "./views/all/products/EditProductList";
+import ShowProduct from "./views/all/products/ShowProductList";
 
 const commonRoutes = [
   {
@@ -50,6 +51,11 @@ const commonRoutes = [
   {
     path: "/edit-product/:id",
     component: EditProduct,
+    layout: "/auth",
+  },
+  {
+    path: "/show-product/:id",
+    component: ShowProduct,
     layout: "/auth",
   },
 ];

@@ -250,12 +250,10 @@ const CreateProduct = () => {
         <div className="col-xl-12 col-lg-12">
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <h6 className="m-0 font-weight-bold text-primary">
-                รายละเอียดพัสดุ
-              </h6>
-              <h6 className="m-0 font-weight-bold text-primary">
+              <h6 className="m-0 font-weight-bold text-primary">สร้างพัสดุ</h6>
+              {/*  <h6 className="m-0 font-weight-bold text-primary">
                 เพิ่มปุ่มชำระเงิน (ชำระบิลนี้)
-              </h6>
+              </h6> */}
             </div>
 
             <div className="card-body ">

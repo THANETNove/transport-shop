@@ -49,6 +49,13 @@ export default function ProductList() {
       navigate(`/edit-product/${id}`);
     }
   };
+  const showProduct = async (id) => {
+    console.log(id);
+    const re = await Service.getProduct(dispatch); // ดึงสิค้า
+    if (re.status == "success") {
+      navigate(`/show-product/${id}`);
+    }
+  };
 
   const deleteProductList = async (event, image) => {
     console.log(event, image);
@@ -208,7 +215,7 @@ export default function ProductList() {
                           <td>
                             <a
                               className="btn btn-primary btn-sm"
-                              onClick={() => getEdit(product.id)}
+                              onClick={() => showProduct(product.id)}
                             >
                               show
                             </a>
