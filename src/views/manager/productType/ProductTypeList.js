@@ -95,7 +95,7 @@ const ProductTypeList = () => {
                           <td>{status.cbm}</td>
                           <td>
                             <button
-                              className="btn btn-danger"
+                              className="btn btn-secondary"
                               onClick={() =>
                                 navigate(`/edit-product-type/${status.id}`)
                               }
