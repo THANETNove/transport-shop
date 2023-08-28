@@ -103,6 +103,41 @@ const getProductTypeId = async (id, dispatch) => {
   }
 };
 
+const getProduct = async (dispatch) => {
+  const params = {
+    isAdd: true,
+  };
+  const response = await axios.get(`${url}/getProductList.php`, {
+    params,
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "PRODUCT_SUCCESS",
+      payload: response.data.product_data,
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "PRODUCT_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 //POST
 const register = async (e, dispatch) => {
   const formData = new FormData();
@@ -292,6 +327,10 @@ const createProduct = async (e, dispatch) => {
       type: "PRODUCT_SUCCESS",
       payload: response.data.product_data,
     });
+    dispatch({
+      type: "STATUS_PRODUCT_SUCCESS",
+      payload: "success",
+    });
 
     return {
       status: "success",
@@ -441,6 +480,7 @@ export default {
   getStatusList,
   getProductType,
   getProductTypeId,
+  getProduct,
   register,
   Login,
   statusList,

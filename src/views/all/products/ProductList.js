@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Service from "../../../server/server";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function ProductList() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { product, statusProduct } = useSelector((state) => state.post);
   const [productList, setProductList] = useState(product);
   const [statusProductList, setStatusProductList] = useState(statusProduct);
@@ -13,6 +16,7 @@ export default function ProductList() {
     const fetchData = async () => {
       await Service.getProductType(dispatch); // ดึงสถานะสิค้า
       await Service.getStatusList(dispatch); // ดึงสถานะสิค้า
+      await Service.getProduct(dispatch); // ดึงสิค้า
     };
     setTimeout(() => {
       dispatch({
@@ -27,7 +31,19 @@ export default function ProductList() {
     setStatusProductList(statusProduct);
   }, [statusProduct]);
 
-  console.log("productList", productList, statusProduct);
+  useEffect(() => {
+    /*  getProduct */
+    setProductList(product);
+  }, [product]);
+
+  const getEdit = async (id) => {
+    console.log(id);
+    const re = await Service.getProduct(dispatch); // ดึงสิค้า
+    if (re.status == "success") {
+      navigate(`/edit-product/${id}`);
+    }
+  };
+
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -74,14 +90,15 @@ export default function ProductList() {
                       <th scope="col">น้ำหนัก</th>
                       <th scope="col">คิวรวม</th>
                       <th scope="col">ยอดชำระค่าจัดส่ง จีน-ไทย</th>
+                      <th scope="col">Edit</th>
                     </tr>
                   </thead>
                   <tbody>
                     {productList &&
                       productList.map((product, index) => (
                         <tr>
-                          <th scope="row">{index + 1}</th>
-                          <td>{product.cabinet_number}</td>
+                          <th scope="row">{product.id /* index + 1 */}</th>
+                          <td>{product.customer_code}</td>
                           <td>{product.tech_china}</td>
                           <td>{product.warehouse_code}</td>
                           <td>{product.cabinet_number}</td>
@@ -97,6 +114,12 @@ export default function ProductList() {
                           <td>
                             {product.payment_amount_chinese_thai_delivery}
                           </td>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => getEdit(product.id)}
+                          >
+                            Edit
+                          </button>
                         </tr>
                       ))}
                   </tbody>

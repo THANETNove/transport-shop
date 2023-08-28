@@ -34,7 +34,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         product: action.payload,
-        statusProduct: "success",
       };
     case "STATUS_PRODUCT_SUCCESS":
       return {
