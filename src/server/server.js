@@ -304,16 +304,7 @@ const createProduct = async (e, dispatch) => {
   const formData = new FormData();
   formData.append("isAdd", true);
   for (let key in e) {
-    console.log("key", key);
-    if (
-      key === "chinese_warehouse" ||
-      key === "close_cabinet" ||
-      key === "to_thailand"
-    ) {
-      formData.append(key, format(e[key], "dd--MM-yyyy"));
-    } else {
-      formData.append(key, e[key]);
-    }
+    formData.append(key, e[key]);
   }
 
   const response = await axios.post(`${url}/product.php`, formData, {
@@ -380,6 +371,50 @@ const UpdateProductType = async (e, dispatch) => {
   } else if (response.data.error) {
     dispatch({
       type: "PRODUCT_TYPE_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
+const UpdateProduct = async (e, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  for (let key in e) {
+    formData.append(key, e[key]);
+  }
+
+  const response = await axios.post(`${url}/UpdateProduct.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "PRODUCT_SUCCESS",
+      payload: response.data.product_data,
+    });
+    dispatch({
+      type: "STATUS_PRODUCT_SUCCESS",
+      payload: "success",
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "PRODUCT_ERROR",
       payload: response.data.error,
     });
     return {
@@ -486,6 +521,7 @@ export default {
   statusList,
   createProduct,
   ProductType,
+  UpdateProduct,
   UpdateProductType,
   deleteStatusList,
   deleteProductTypeList,

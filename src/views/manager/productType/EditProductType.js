@@ -89,7 +89,7 @@ const CreateProductType = (props) => {
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <h6 className="m-0 font-weight-bold text-primary">
-                เเก้ไขประเภทสินค้า
+                เเก้ไขประเภทพัสดุ
               </h6>
             </div>
 
@@ -103,7 +103,7 @@ const CreateProductType = (props) => {
                           type="text"
                           className="form-control form-control-user"
                           id="name"
-                          placeholder="ชื่อประเภทสินค้า"
+                          placeholder="ชื่อประเภทพัสดุ"
                           name="name"
                           value={formData.name}
                           onChange={handleChange}

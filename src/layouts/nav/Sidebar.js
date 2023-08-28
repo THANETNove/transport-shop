@@ -54,7 +54,7 @@ export default function Sidebar() {
         <li className="nav-item">
           <Link className="nav-link" to="/product-list">
             <i class="fa-solid fa-table-columns"></i>
-            <span>สินค้าทั้งหมด</span>
+            <span>พัสดุทั้งหมด</span>
           </Link>
         </li>
 
@@ -63,13 +63,13 @@ export default function Sidebar() {
             <li className="nav-item">
               <Link className="nav-link" to="/status-list">
                 <i class="fa-solid fa-layer-group"></i>
-                <span>สถานะ สินค้า</span>
+                <span>สถานะ พัสดุ</span>
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/product-type-list">
                 <i class="fa-solid fa-notes-medical"></i>
-                <span>ประเภทสินค้า</span>
+                <span>ประเภทพัสดุ</span>
               </Link>
             </li>
           </>

@@ -51,7 +51,7 @@ export default function StatusList() {
         <div className="col-xl-12 col-lg-12">
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              {/*  <h6 className="m-0 font-weight-bold text-primary">เพิ่มสินค้า</h6> */}
+              {/*  <h6 className="m-0 font-weight-bold text-primary">เพิ่มพัสดุ</h6> */}
               <Link className="btn btn-primary" to="/create-status">
                 เพิ่ม สถานะ
               </Link>

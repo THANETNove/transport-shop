@@ -242,7 +242,7 @@ const CreateProduct = () => {
   useEffect(() => {
     setProductType(product_type);
   }, [productType]);
-
+  console.log("formData", formData);
   return (
     <div className="container-fluidaa">
       <div className="row">
@@ -250,7 +250,7 @@ const CreateProduct = () => {
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <h6 className="m-0 font-weight-bold text-primary">
-                รายละเอียดสินค้า
+                รายละเอียดพัสดุ
               </h6>
               <h6 className="m-0 font-weight-bold text-primary">
                 เพิ่มปุ่มชำระเงิน (ชำระบิลนี้)
@@ -260,7 +260,7 @@ const CreateProduct = () => {
             <div className="card-body ">
               <div className="d-flex justify-content-center">
                 <div className="col-sm-12 col-md-12 col-lg-10">
-                  <form onSubmit={handleSubmit}>
+                  <form monSubmit={handleSubmit}>
                     <div className="form-group row">
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                         <label for="exampleFormControlInput1" class="form-labe">
@@ -576,7 +576,7 @@ const CreateProduct = () => {
                           aria-label="Default select example"
                         >
                           <option selected disabled>
-                            เลือกประเภทสินค้า
+                            เลือกประเภทพัสดุ
                           </option>
                           {productType &&
                             productType.map((type, index) => (

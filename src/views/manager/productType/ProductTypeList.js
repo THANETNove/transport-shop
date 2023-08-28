@@ -29,7 +29,7 @@ const ProductTypeList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await Service.getProductType(dispatch); // ดึงประเภทสินค้า
+      await Service.getProductType(dispatch); // ดึงประเภทพัสดุ
     };
 
     fetchData();
@@ -57,9 +57,9 @@ const ProductTypeList = () => {
         <div className="col-xl-12 col-lg-12">
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              {/*  <h6 className="m-0 font-weight-bold text-primary">เพิ่มสินค้า</h6> */}
+              {/*  <h6 className="m-0 font-weight-bold text-primary">เพิ่มพัสดุ</h6> */}
               <Link className="btn btn-primary" to="/create-product-type">
-                เพิ่ม ประเภทสินค้า
+                เพิ่ม ประเภทพัสดุ
               </Link>
               <span
                 className={
@@ -78,7 +78,7 @@ const ProductTypeList = () => {
                   <thead>
                     <tr>
                       <th scope="col">id</th>
-                      <th scope="col">ประเภทสินค้า</th>
+                      <th scope="col">ประเภทพัสดุ</th>
                       <th scope="col">KG</th>
                       <th scope="col">CBM</th>
                       <th scope="col">Edit</th>

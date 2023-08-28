@@ -69,9 +69,7 @@ const CreateProductType = () => {
         <div className="col-xl-12 col-lg-12">
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <h6 className="m-0 font-weight-bold text-primary">
-                ประเภทสินค้า
-              </h6>
+              <h6 className="m-0 font-weight-bold text-primary">ประเภทพัสดุ</h6>
             </div>
 
             <div className="card-body ">
@@ -84,7 +82,7 @@ const CreateProductType = () => {
                           type="text"
                           className="form-control form-control-user"
                           id="name"
-                          placeholder="ชื่อประเภทสินค้า"
+                          placeholder="ชื่อประเภทพัสดุ"
                           name="name"
                           value={formData.name}
                           onChange={handleChange}
