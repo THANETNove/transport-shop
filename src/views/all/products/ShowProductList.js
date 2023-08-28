@@ -96,14 +96,9 @@ const ShowProductList = () => {
                           >
                             รหัสลูกค้า
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            id="customer_code"
-                            name="customer_code"
-                            placeholder="รหัสลูกค้า"
-                            value={formData.customer_code}
-                          />
+                          <p className="form-control form-control-user">
+                            {formData.customer_code}
+                          </p>
                         </div>
                         <div className="col-sm-6  col-md-6 col-lg-6">
                           <label
@@ -112,14 +107,9 @@ const ShowProductList = () => {
                           >
                             เเทคจีน
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            id="tech_china"
-                            name="tech_china"
-                            placeholder="เเทคจีน"
-                            value={formData.tech_china}
-                          />
+                          <p className="form-control form-control-user">
+                            {formData.tech_china}
+                          </p>
                         </div>
                       </div>
                       <div className="form-group row">
@@ -130,14 +120,9 @@ const ShowProductList = () => {
                           >
                             รหัสโกดัง
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            id="warehouse_code"
-                            placeholder="รหัสโกดัง"
-                            name="warehouse_code"
-                            value={formData.warehouse_code}
-                          />
+                          <p className="form-control form-control-user">
+                            {formData.warehouse_code}
+                          </p>
                         </div>
                         <div className="col-sm-6  col-md-6 col-lg-6">
                           <label
@@ -146,14 +131,9 @@ const ShowProductList = () => {
                           >
                             เลขตู้
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            id="cabinet_number"
-                            placeholder="เลขตู้"
-                            name="cabinet_number"
-                            value={formData.cabinet_number}
-                          />
+                          <p className="form-control form-control-user">
+                            {formData.cabinet_number}
+                          </p>
                         </div>
                       </div>
                       <div className="form-group row">
@@ -164,14 +144,11 @@ const ShowProductList = () => {
                           >
                             ถึงโกดังจีน
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            value={format(
-                              new Date(formData.chinese_warehouse),
-                              "dd-MM-yyyy"
-                            )}
-                          />
+                          <p className="form-control form-control-user">
+                            {formData.to_thailand
+                              ? format(formData.chinese_warehouse, "dd-MM-yyyy")
+                              : ""}
+                          </p>
                         </div>
                         <div className="col-sm-6  col-md-6 col-lg-6 ">
                           <label
@@ -180,14 +157,11 @@ const ShowProductList = () => {
                           >
                             ปิดตู้
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            value={format(
-                              new Date(formData.close_cabinet),
-                              "dd-MM-yyyy"
-                            )}
-                          />
+                          <p className="form-control form-control-user">
+                            {formData.to_thailand
+                              ? format(formData.close_cabinet, "dd-MM-yyyy")
+                              : ""}
+                          </p>
                         </div>
                       </div>
                       <div className="form-group row">
@@ -198,16 +172,19 @@ const ShowProductList = () => {
                           >
                             ถึงไทย
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            value={format(
-                              new Date(formData.to_thailand),
-                              "dd-MM-yyyy"
-                            )}
-                          />
+                          <p className="form-control form-control-user">
+                            {formData.to_thailand
+                              ? format(formData.to_thailand, "dd-MM-yyyy")
+                              : ""}
+                          </p>
                         </div>
                         <div className="col-sm-6  col-md-6 col-lg-6">
+                          <label
+                            for="exampleFormControlInput1"
+                            class="form-label mr-5"
+                          >
+                            สถานะ
+                          </label>
                           <select
                             class="form-select"
                             id="parcel_status"
@@ -238,14 +215,9 @@ const ShowProductList = () => {
                           >
                             จำนวน
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            id="quantity"
-                            placeholder="จำนวน"
-                            value={formData.quantity}
-                            name="quantity"
-                          />
+                          <p className="form-control form-control-user">
+                            {formData.quantity}
+                          </p>
                         </div>
                         <div className="col-sm-6  col-md-6 col-lg-6">
                           <label
@@ -254,14 +226,9 @@ const ShowProductList = () => {
                           >
                             ขนาด
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            id="size"
-                            placeholder="ขนาด"
-                            value={formData.size}
-                            name="size"
-                          />
+                          <p className="form-control form-control-user">
+                            {formData.size}
+                          </p>
                         </div>
                       </div>
                       <div className="form-group row">
@@ -272,14 +239,9 @@ const ShowProductList = () => {
                           >
                             คิวต่อชิ้น
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            id="cue_per_piece"
-                            name="cue_per_piece"
-                            placeholder="คิวต่อชิ้น"
-                            value={formData.cue_per_piece}
-                          />
+                          <p className="form-control form-control-user">
+                            {formData.cue_per_piece}
+                          </p>
                         </div>
                         <div className="col-sm-6  col-md-6 col-lg-6">
                           <label
@@ -288,14 +250,9 @@ const ShowProductList = () => {
                           >
                             น้ำหนัก
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            id="weight"
-                            name="weight"
-                            value={formData.weight}
-                            placeholder="น้ำหนัก"
-                          />
+                          <p className="form-control form-control-user">
+                            {formData.weight}
+                          </p>
                         </div>
                       </div>
                       <div className="form-group row">
@@ -306,14 +263,10 @@ const ShowProductList = () => {
                           >
                             คิวรวม
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            id="total_queue"
-                            value={formData.total_queue}
-                            placeholder="คิวรวม"
-                            name="total_queue"
-                          />
+
+                          <p className="form-control form-control-user">
+                            {formData.total_queue}
+                          </p>
                         </div>
                         <div className="col-sm-6  col-md-6 col-lg-6">
                           <label
@@ -322,20 +275,19 @@ const ShowProductList = () => {
                           >
                             ยอดชำระค่าจัดส่ง จีน-ไทย
                           </label>
-                          <input
-                            type="text"
-                            className="form-control form-control-user"
-                            id="payment_amount_chinese_thai_delivery"
-                            name="payment_amount_chinese_thai_delivery"
-                            placeholder="ยอดชำระค่าจัดส่ง จีน-ไทย"
-                            value={
-                              formData.payment_amount_chinese_thai_delivery
-                            }
-                          />
+                          <p className="form-control form-control-user">
+                            {formData.payment_amount_chinese_thai_delivery}
+                          </p>
                         </div>
                       </div>
                       <div className="form-group row">
                         <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                          <label
+                            for="exampleFormControlInput1"
+                            class="form-label"
+                          >
+                            เลือกประเภทพัสดุ
+                          </label>
                           <select
                             class="form-select"
                             id="product_type"
