@@ -216,6 +216,7 @@ const CreateProduct = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validate()) {
+      console.log("aa");
       const response = await Service.createProduct(formData, dispatch);
 
       if (response.status == "success") {
@@ -260,7 +261,7 @@ const CreateProduct = () => {
             <div className="card-body ">
               <div className="d-flex justify-content-center">
                 <div className="col-sm-12 col-md-12 col-lg-10">
-                  <form monSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit}>
                     <div className="form-group row">
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                         <label for="exampleFormControlInput1" class="form-labe">

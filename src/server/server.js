@@ -510,6 +510,43 @@ const deleteProductTypeList = async (id, dispatch) => {
     };
   }
 };
+const deleteProduct = async (id, image, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", id);
+  formData.append("image", image);
+
+  const response = await axios.post(`${url}/deleteProductList.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "PRODUCT_SUCCESS",
+      payload: response.data.product_data,
+    });
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "PRODUCT_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
 
 export default {
   getStatusList,
@@ -524,5 +561,6 @@ export default {
   UpdateProduct,
   UpdateProductType,
   deleteStatusList,
+  deleteProduct,
   deleteProductTypeList,
 };
