@@ -68,6 +68,17 @@ export default function ProductList() {
       setStatusResponse(2);
     }
   };
+  const handleChangeStatus = async (id, name, value) => {
+    console.log( name, value ,id);
+   const response = await Service.updateStatusProductList(id, value, dispatch);
+     if (response.status == "success") {
+      setStatusSuccess(response.message);
+      setStatusResponse(1);
+    } else {
+      setStatusSuccess(response.error);
+      setStatusResponse(2);
+    }
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -182,7 +193,7 @@ export default function ProductList() {
                               id="parcel_status"
                               name="parcel_status"
                               value={product.parcel_status}
-                              /*  onChange={handleChange} */
+                               onChange={(event) => handleChangeStatus(product.id, event.target.name, event.target.value)}
                               aria-label="Default select example"
                             >
                               <option selected disabled>

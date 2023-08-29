@@ -428,6 +428,47 @@ const UpdateProduct = async (e, dispatch) => {
     };
   }
 };
+const updateStatusProductList = async (id,value, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("idProduct", id);
+  formData.append("parcel_status", value);
+
+
+  const response = await axios.post(`${url}/updateStatusProduct.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "PRODUCT_SUCCESS",
+      payload: response.data.product_data,
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "PRODUCT_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
+
 
 // Delete POST
 const deleteStatusList = async (id, dispatch) => {
@@ -470,6 +511,7 @@ const deleteStatusList = async (id, dispatch) => {
     };
   }
 };
+
 const deleteProductTypeList = async (id, dispatch) => {
   const formData = new FormData();
   formData.append("isAdd", true);
@@ -510,6 +552,7 @@ const deleteProductTypeList = async (id, dispatch) => {
     };
   }
 };
+
 const deleteProduct = async (id, image, dispatch) => {
   const formData = new FormData();
   formData.append("isAdd", true);
@@ -559,6 +602,7 @@ export default {
   createProduct,
   ProductType,
   UpdateProduct,
+  updateStatusProductList,
   UpdateProductType,
   deleteStatusList,
   deleteProduct,
