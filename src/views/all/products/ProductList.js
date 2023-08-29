@@ -22,10 +22,14 @@ const ProductList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await Service.getProductType(dispatch); // ดึงสถานะสิค้า
-      await Service.getStatusList(dispatch); // ดึงสถานะสิค้า
-      await Service.getProduct(dispatch); // ดึงสิค้า
-      await Service.getProductCode(user.id,dispatch); // ดึงรหัสพัสดุ
+    const pro_log_1 =  await Service.getProductType(dispatch); // ดึงประเภทสินค้า
+    const pro_log_2 =  await Service.getStatusList(dispatch); // ดึงสถานะสิค้า
+    const pro_log_3 =  await Service.getProduct(dispatch); // ดึงสิค้า
+    const pro_log_4 =  await Service.getProductCode(user.id,dispatch); // ดึงรหัสพัสดุ
+    console.log("ดึงประเภทสินค้า",pro_log_1);
+    console.log("ดึงสถานะสิค้า",pro_log_2);
+    console.log("ดึงสิค้า",pro_log_3);
+    console.log("ดึงรหัสพัสดุ",pro_log_4);
     };
 
     setTimeout(() => {
