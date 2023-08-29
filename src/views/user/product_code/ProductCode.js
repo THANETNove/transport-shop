@@ -60,34 +60,17 @@ const ProductCode = () => {
                 <thead>
                   <tr>
                     <th scope="col">id</th>
-                    <th scope="col">ชื่อ สถานะ</th>
-                    <th scope="col">delete</th>
+                    <th scope="col">รหัสพัสดุ</th>
                   </tr>
                 </thead>
                 <tbody>
-                 {/*  {statusList &&
-                    statusList.map((status, index) => (
+                  {codeData &&
+                    codeData.map((status, index) => (
                       <tr>
                         <th scope="row">{index + 1}</th>
-                        <td>{status.statusProduct}</td>
-                        <td>
-                          <button
-                            className="btn btn-danger"
-                            onClick={() => {
-                              if (
-                                window.confirm(
-                                  "คุณต้องการลบ ข้อมูลใช่หรือไม่ ! "
-                                )
-                              ) {
-                                deleteStatusProduct(status.id);
-                              }
-                            }}
-                          >
-                            delete
-                          </button>
-                        </td>
+                        <td>{status.code}</td>
                       </tr>
-                    ))} */}
+                    ))}
                 </tbody>
               </table>
             </div>

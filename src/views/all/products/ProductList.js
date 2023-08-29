@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { format } from "date-fns";
 
-export default function ProductList() {
-  const { status_list, product_type } = useSelector((state) => state.post);
+const ProductList = () => {
+  const user = useSelector((state) => state.auth.user);
+  const { status_list, product_type,status_code_data } = useSelector((state) => state.post);
   const [statusList, setStatusList] = useState(status_list);
   const [productType, setProductType] = useState(product_type);
   const [statusSuccess, setStatusSuccess] = useState(null);
@@ -17,14 +18,16 @@ export default function ProductList() {
   const { product, statusProduct } = useSelector((state) => state.post);
   const [productList, setProductList] = useState(product);
   const [statusProductList, setStatusProductList] = useState(statusProduct);
+  const [codeData, setCodeData] = useState(status_code_data);
 
   useEffect(() => {
     const fetchData = async () => {
       await Service.getProductType(dispatch); // ดึงสถานะสิค้า
       await Service.getStatusList(dispatch); // ดึงสถานะสิค้า
       await Service.getProduct(dispatch); // ดึงสิค้า
+      await Service.getProductCode(user.id,dispatch); // ดึงรหัสพัสดุ
     };
-    
+
     setTimeout(() => {
       dispatch({
         type: "STATUS_PRODUCT_SUCCESS",
@@ -41,6 +44,11 @@ export default function ProductList() {
   useEffect(() => {
     setStatusProductList(statusProduct);
   }, [statusProduct]);
+
+
+  useEffect(() => {
+    setCodeData(status_code_data)
+  },[status_code_data])
 
   useEffect(() => {
     /*  getProduct */
@@ -97,6 +105,177 @@ export default function ProductList() {
     }, 1000);
   }, [statusSuccess]);
 
+
+  const  systemUser  =() => {
+
+    console.log("codeData",codeData);
+    return (
+      <>
+    {codeData.map((codeItem, index) => (
+  <tbody>
+  {productList
+    .filter((product) => product.customer_code === codeItem.code)
+    .map((product) => (
+      <tr key={product.id}>
+         <th scope="row">{index + 1}</th>
+        <td>{product.customer_code}</td>
+        <td>{product.tech_china}</td>
+        <td>{format(new Date(product.chinese_warehouse), "dd-MM-yyyy")}</td>
+        <td>{format(new Date(product.close_cabinet), "dd-MM-yyyy")}</td>
+        <td>{format(new Date(product.to_thailand), "dd-MM-yyyy")}</td>
+        <td>
+        {statusList &&
+          statusList.find((status) => status.id == product.parcel_status) && (
+            <span>
+              {statusList.find((status) => status.id == product.parcel_status).statusProduct}
+            </span>
+          )}
+        </td>
+        <td>{product.quantity}</td>
+        <td>
+          {parseFloat(product.payment_amount_chinese_thai_delivery).toLocaleString(
+            "en-US",
+            {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }
+          )}
+        </td>
+        <td>
+          <a className="btn btn-primary btn-sm" onClick={() => showProduct(product.id)}>
+            show
+          </a>
+        </td>
+        <td>
+              <button
+                className="btn btn-secondary btn-sm"
+                onClick={() => getEdit(product.id)}
+              >
+                Edit
+              </button>
+            </td>
+            <td>
+              <button
+                className="btn btn-danger btn-sm"
+                onClick={() =>
+                  deleteProductList(product.id, product.image)
+                }
+              >
+                delete
+              </button>
+            </td>
+      </tr>
+    ))}
+</tbody>
+))}
+
+    </>
+    )
+  }
+  
+  const  systemAdmin =() => {
+    return (
+      <tbody>
+      {productList &&
+        productList.map((product, index) => (
+          <tr>
+            <th scope="row">{index + 1}</th>
+            <td>{product.customer_code}</td>
+            <td>{product.tech_china}</td>
+            {/*       <td>{product.warehouse_code}</td>
+            <td>{product.cabinet_number}</td> */}
+            <td>
+              {format(
+                new Date(product.chinese_warehouse),
+                "dd-MM-yyyy"
+              )}
+            </td>
+            <td>
+              {format(
+                new Date(product.close_cabinet),
+                "dd-MM-yyyy"
+              )}
+            </td>
+            <td>
+              {format(
+                new Date(product.to_thailand),
+                "dd-MM-yyyy"
+              )}
+            </td>
+            <td>
+              {/*  {statusList &&
+                statusList.file(
+                  (status) =>
+                    status.id == product.parcel_status &&
+                    status.statusProduct
+                )} */}
+              <select
+                className="form-control"
+                id="parcel_status"
+                name="parcel_status"
+                value={product.parcel_status}
+                 onChange={(event) => handleChangeStatus(product.id, event.target.name, event.target.value)}
+                aria-label="Default select example"
+              >
+                <option selected disabled>
+                  เลือก สถานะ
+                </option>
+                {statusList &&
+                  statusList.map((status) => (
+                    <option key={status.id} value={status.id}>
+                      {status.id === product.parcel_status
+                        ? `Selected: ${status.statusProduct}`
+                        : status.statusProduct}
+                    </option>
+                  ))}
+              </select>
+              {/* {product.parcel_status} */}
+            </td>
+            <td>{product.quantity}</td>
+            {/*     <td>{product.size}</td>
+            <td>{product.cue_per_piece}</td>
+            <td>{product.weight}</td>
+            <td>{product.total_queue}</td> */}
+            <td>
+              {parseFloat(
+                product.payment_amount_chinese_thai_delivery
+              ).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </td>
+            <td>
+              <a
+                className="btn btn-primary btn-sm"
+                onClick={() => showProduct(product.id)}
+              >
+                show
+              </a>
+            </td>
+            <td>
+              <button
+                className="btn btn-secondary btn-sm"
+                onClick={() => getEdit(product.id)}
+              >
+                Edit
+              </button>
+            </td>
+            <td>
+              <button
+                className="btn btn-danger btn-sm"
+                onClick={() =>
+                  deleteProductList(product.id, product.image)
+                }
+              >
+                delete
+              </button>
+            </td>
+          </tr>
+        ))}
+    </tbody>
+    )
+  }
+
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -135,130 +314,33 @@ export default function ProductList() {
             </div>
 
             <div className="card-body">
-              <div className="table-responsive">
-                <table className="table  align-middle table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">รหัสลูกค้า</th>
-                      <th scope="col">เเทคจีน</th>
-                      {/*  <th scope="col">รหัสโกดัง</th>
-                      <th scope="col">เลขตู้</th> */}
-                      <th scope="col">ถึงโกดังจีน</th>
-                      <th scope="col">ปิดตู้</th>
-                      <th scope="col">ถึงไทย</th>
-                      <th scope="col">สถานะ</th>
-                      <th scope="col">จำนวน</th>
-                      {/*     <th scope="col">ขนาด</th>
-                      <th scope="col">คิวต่อชิ้น</th>
-                      <th scope="col">น้ำหนัก</th>
-                      <th scope="col">คิวรวม</th> */}
-                      <th scope="col">ยอดชำระ จีน-ไทย</th>
-                      <th scope="col">show</th>
-                      <th scope="col">Edit</th>
-                      <th scope="col">delete</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {productList &&
-                      productList.map((product, index) => (
-                        <tr>
-                          <th scope="row">{index + 1}</th>
-                          <td>{product.customer_code}</td>
-                          <td>{product.tech_china}</td>
-                          {/*       <td>{product.warehouse_code}</td>
-                          <td>{product.cabinet_number}</td> */}
-                          <td>
-                            {format(
-                              new Date(product.chinese_warehouse),
-                              "dd-MM-yyyy"
-                            )}
-                          </td>
-                          <td>
-                            {format(
-                              new Date(product.close_cabinet),
-                              "dd-MM-yyyy"
-                            )}
-                          </td>
-                          <td>
-                            {format(
-                              new Date(product.to_thailand),
-                              "dd-MM-yyyy"
-                            )}
-                          </td>
-                          <td>
-                            {/*  {statusList &&
-                              statusList.file(
-                                (status) =>
-                                  status.id == product.parcel_status &&
-                                  status.statusProduct
-                              )} */}
-                            <select
-                              className="form-control"
-                              id="parcel_status"
-                              name="parcel_status"
-                              value={product.parcel_status}
-                               onChange={(event) => handleChangeStatus(product.id, event.target.name, event.target.value)}
-                              aria-label="Default select example"
-                            >
-                              <option selected disabled>
-                                เลือก สถานะ
-                              </option>
-                              {statusList &&
-                                statusList.map((status) => (
-                                  <option key={status.id} value={status.id}>
-                                    {status.id === product.parcel_status
-                                      ? `Selected: ${status.statusProduct}`
-                                      : status.statusProduct}
-                                  </option>
-                                ))}
-                            </select>
-                            {/* {product.parcel_status} */}
-                          </td>
-                          <td>{product.quantity}</td>
-                          {/*     <td>{product.size}</td>
-                          <td>{product.cue_per_piece}</td>
-                          <td>{product.weight}</td>
-                          <td>{product.total_queue}</td> */}
-                          <td>
-                            {parseFloat(
-                              product.payment_amount_chinese_thai_delivery
-                            ).toLocaleString("en-US", {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2,
-                            })}
-                          </td>
-                          <td>
-                            <a
-                              className="btn btn-primary btn-sm"
-                              onClick={() => showProduct(product.id)}
-                            >
-                              show
-                            </a>
-                          </td>
-                          <td>
-                            <button
-                              className="btn btn-secondary btn-sm"
-                              onClick={() => getEdit(product.id)}
-                            >
-                              Edit
-                            </button>
-                          </td>
-                          <td>
-                            <button
-                              className="btn btn-danger btn-sm"
-                              onClick={() =>
-                                deleteProductList(product.id, product.image)
-                              }
-                            >
-                              delete
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              </div>
+            <div className="table-responsive">
+      <table className="table  align-middle table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">รหัสลูกค้า</th>
+            <th scope="col">เเทคจีน</th>
+            {/*  <th scope="col">รหัสโกดัง</th>
+            <th scope="col">เลขตู้</th> */}
+            <th scope="col">ถึงโกดังจีน</th>
+            <th scope="col">ปิดตู้</th>
+            <th scope="col">ถึงไทย</th>
+            <th scope="col">สถานะ</th>
+            <th scope="col">จำนวน</th>
+            {/*     <th scope="col">ขนาด</th>
+            <th scope="col">คิวต่อชิ้น</th>
+            <th scope="col">น้ำหนัก</th>
+            <th scope="col">คิวรวม</th> */}
+            <th scope="col">ยอดชำระ จีน-ไทย</th>
+            <th scope="col">show</th>
+            <th scope="col">Edit</th>
+            <th scope="col">delete</th>
+          </tr>
+        </thead>
+       {user.status == 0 ?  systemUser(): systemAdmin()}
+      </table>
+    </div>
             </div>
           </div>
         </div>
@@ -266,3 +348,4 @@ export default function ProductList() {
     </div>
   );
 }
+export default  ProductList;
