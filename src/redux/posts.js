@@ -5,6 +5,10 @@ const initialState = {
   product_type_errors: null,
   product: null,
   statusProduct: "default",
+  status_code: "default",
+  status_code_errors: "default",
+  status_code_data: null,
+  status_code_data_errors: null,
   product_errors: null,
 };
 
@@ -45,6 +49,26 @@ export default function (state = initialState, action) {
         ...state,
         product_errors: action.payload,
         statusProduct: "error",
+      };
+    case "CODE_SUCCESS":
+      return {
+        ...state,
+        status_code: action.payload,
+      };
+    case "PRODUCT_ERROR":
+      return {
+        ...state,
+        status_code_errors: action.payload,
+      };
+    case "PRODUCT_CODE_SUCCESS":
+      return {
+        ...state,
+        status_code_data: action.payload,
+      };
+    case "PRODUCT_CODE_ERROR":
+      return {
+        ...state,
+        status_code_data_errors: action.payload,
       };
     default:
       return state;

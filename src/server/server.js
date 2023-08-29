@@ -1,7 +1,7 @@
 import axios from "axios";
 import { format } from "date-fns";
 
-const url = "http://192.168.1.10/project/API"; //หน่วย
+const url = "http://192.168.1.3/project/API"; //หน่วย
 
 // GET
 const getStatusList = async (dispatch) => {
@@ -124,6 +124,41 @@ const getProduct = async (dispatch) => {
   } else if (response.data.error) {
     dispatch({
       type: "PRODUCT_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+const getProductCode = async (id,dispatch) => {
+  const params = {
+    isAdd: true,
+    id: id,
+  };
+  const response = await axios.get(`${url}/getProductCode.php`, {
+    params,
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "PRODUCT_CODE_SUCCESS",
+      payload: response.data.product_code_data,
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "PRODUCT_CODE_ERROR",
       payload: response.data.error,
     });
     return {
@@ -330,6 +365,46 @@ const createProduct = async (e, dispatch) => {
   } else if (response.data.error) {
     dispatch({
       type: "PRODUCT_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
+const createProductCode = async (id, code, dispatch) => {
+
+  console.log("id, code,",id, code);
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", id);
+  formData.append("code", code);
+ 
+  const response = await axios.post(`${url}/productCode.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+   dispatch({
+      type: "CODE_SUCCESS",
+      payload: "success",
+    });
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "CODE_ERROR",
       payload: response.data.error,
     });
     return {
@@ -596,10 +671,12 @@ export default {
   getProductType,
   getProductTypeId,
   getProduct,
+  getProductCode,
   register,
   Login,
   statusList,
   createProduct,
+  createProductCode,
   ProductType,
   UpdateProduct,
   updateStatusProductList,

@@ -57,7 +57,21 @@ export default function Sidebar() {
             <span>พัสดุทั้งหมด</span>
           </Link>
         </li>
+        
+        {/* Users */}
+        {user && user.status == 0 && (
+          <>
+            <li className="nav-item">
+              <Link className="nav-link" to="/product-code">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>สร้างรหัสสินค้า</span>
+              </Link>
+            </li>
+          </>
+        )}
 
+         {/* manager */}
+        
         {user && user.status == 2 && (
           <>
             <li className="nav-item">

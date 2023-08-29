@@ -4,7 +4,8 @@ import Login from "./views/auth/Login";
 import Register from "./views/auth/Register";
 
 // User
-
+import ProductCode from "./views/user/product_code/ProductCode";
+import CreateProductCode from "./views/user/product_code/CreateProductCode";
 //Admin
 
 // Manager
@@ -61,16 +62,16 @@ const commonRoutes = [
 ];
 
 const userRoutes = [
-  /*   {
-    path: "/product-list",
-    component: ProductListUser,
+   {
+    path: "/product-code",
+    component: ProductCode,
     layout: "/auth",
   },
-  {
-    path: "/create-product",
-    component: CreateProductUser,
+    {
+    path: "/create-product-code",
+    component: CreateProductCode,
     layout: "/auth",
-  }, */
+  },
 ];
 
 const adminRoutes = [

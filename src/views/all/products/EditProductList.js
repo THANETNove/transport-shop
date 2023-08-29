@@ -16,6 +16,7 @@ const EditProductList = () => {
   const [statusList, setStatusList] = useState(status_list);
   const [productType, setProductType] = useState(product_type);
   const [preview, setPreview] = useState(null);
+  const url = "http://192.168.1.3/project/API/image/product/";
 
   const { id } = useParams();
 
@@ -653,7 +654,7 @@ const EditProductList = () => {
                           ) : (
                             <img
                               src={
-                                "http://192.168.1.10/project/API/image/product/" +
+                                url +
                                 formData.old_image
                               }
                               alt="Image Preview"

@@ -369,6 +369,10 @@ summary {
   cursor: pointer;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 template {
   display: none;
 }
@@ -5577,6 +5581,7 @@ a.badge-dark.focus {
 .alert-dismissible {
   padding-right: 4rem;
 }
+
 
 .alert-dismissible .close {
   position: absolute;
