@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
-import Service from "../../../server/server";
+import Service from "../../../server_api/server";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 

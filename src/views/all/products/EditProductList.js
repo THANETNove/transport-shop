@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Service from "../../../server/server";
+import Service from "../../../server_api/server";
 import DatePicker from "react-datepicker";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -17,7 +17,8 @@ const EditProductList = () => {
   const [productType, setProductType] = useState(product_type);
   const [preview, setPreview] = useState(null);
   const [codeData, setCodeData] = useState(status_code_data);
-  const url = "http://192.168.1.3/project/API/image/product/";
+  /* const url = "http://192.168.1.3/project/API/image/product/"; */
+  const url = "https://medocargo.com/API/image/product/";
 
   const { id } = useParams();
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import Service from "../../../server/server";
+import Service from "../../../server_api/server";
 import { useSelector, useDispatch } from "react-redux";
 
 const CreateProductType = () => {
