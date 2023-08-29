@@ -34,6 +34,10 @@ export default function ProductList() {
   }, []);
 
   useEffect(() => {
+    setStatusList(status_list)
+  },[status_list]) 
+
+  useEffect(() => {
     setStatusProductList(statusProduct);
   }, [statusProduct]);
 
@@ -70,7 +74,7 @@ export default function ProductList() {
   };
   const handleChangeStatus = async (id, name, value) => {
     console.log( name, value ,id);
-   const response = await Service.updateStatusProductList(id, value, dispatch);
+   const response = await Service.updateStatusProductList(id, name, value, dispatch);
      if (response.status == "success") {
       setStatusSuccess(response.message);
       setStatusResponse(1);
