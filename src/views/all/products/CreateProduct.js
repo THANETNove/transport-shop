@@ -10,11 +10,12 @@ import { format } from "date-fns";
 const CreateProduct = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { status_list, product_type } = useSelector((state) => state.post);
+  const { status_list, product_type,status_code_data } = useSelector((state) => state.post);
   const user = useSelector((state) => state.auth.user);
   const [startDate, setStartDate] = useState(new Date());
   const [statusList, setStatusList] = useState(status_list);
   const [productType, setProductType] = useState(product_type);
+  const [codeData, setCodeData] = useState(status_code_data);
 
   /*   const [image, setImage] = useState(null); */
   const [preview, setPreview] = useState(null);
@@ -243,7 +244,24 @@ const CreateProduct = () => {
   useEffect(() => {
     setProductType(product_type);
   }, [productType]);
-  console.log("formData", formData);
+
+  useEffect(() => {
+    setCodeData(status_code_data)
+  },[status_code_data])
+
+
+  useEffect(() => {
+    if (user.status == 0) {
+      setFormData((prevState) => ({
+        ...prevState,
+        ["parcel_status"]: "31",
+      }));
+    }
+  },[])
+
+
+
+
   return (
     <div className="container-fluidaa">
       <div className="row">
@@ -265,14 +283,35 @@ const CreateProduct = () => {
                         <label for="exampleFormControlInput1" className="form-labe">
                           รหัสลูกค้า
                         </label>
-                        <input
+                        {
+                          user.status == 0 ? (
+                            <select
+                            className="form-control"
+                            id="customer_code"
+                            name="customer_code"
+                            onChange={handleChange}
+                            aria-label="Default select example"
+                          >
+                            <option selected disabled>
+                              รหัสพัสดุ
+                            </option>
+                            {codeData &&
+                              codeData.map((data, index) => (
+                                <option value={data.code}>
+                                  {data.code}
+                                </option>
+                              ))}
+                          </select>
+                          ) :(<input
                           type="text"
                           className="form-control form-control-user"
                           id="customer_code"
                           name="customer_code"
                           placeholder="รหัสลูกค้า"
                           onChange={handleChange}
-                        />
+                        />)
+                        }
+                        
                         {errors.customer_code && (
                           <div className="error-from">
                             {errors.customer_code}
@@ -417,23 +456,50 @@ const CreateProduct = () => {
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
-                        <select
-                          className="form-control"
-                          id="parcel_status"
-                          name="parcel_status"
-                          onChange={handleChange}
-                          aria-label="Default select example"
-                        >
-                          <option selected disabled>
-                            เลือก สถานะ
-                          </option>
+                        {
+                           user.status == 0 ? (
+                            <select
+                            className="form-control"
+                            id="parcel_status"
+                            name="parcel_status"
+                            aria-label="Default select example"
+                            disabled
+                          >
                           {statusList &&
-                            statusList.map((status, index) => (
-                              <option value={status.id}>
-                                {status.statusProduct}
-                              </option>
-                            ))}
-                        </select>
+                            statusList.map((status) =>  {
+                              if (status.id == formData.parcel_status) {
+                                console.log("status",status.id);
+                                console.log("status",status.statusProduct);
+                                return (
+                                  <option >
+                                    {status.statusProduct}
+                                  </option>
+                                )
+                              }
+                              
+                            })}
+                          </select>
+                          
+                           ) : ( 
+                             <select
+                            className="form-control"
+                            id="parcel_status"
+                            name="parcel_status"
+                            onChange={handleChange}
+                            aria-label="Default select example"
+                          >
+                            <option selected disabled>
+                              เลือก สถานะ
+                            </option>
+                            {statusList &&
+                              statusList.map((status, index) => (
+                                <option value={status.id}>
+                                  {status.statusProduct}
+                                </option>
+                              ))}
+                          </select>)
+                        }
+                      
                         {errors.parcel_status && (
                           <div className="error-from">
                             {errors.parcel_status}
