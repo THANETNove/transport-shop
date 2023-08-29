@@ -8,7 +8,7 @@ const EditProductList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { product, statusProduct, status_list, product_type } = useSelector(
+  const { product, statusProduct, status_list, product_type,status_code_data } = useSelector(
     (state) => state.post
   );
   const user = useSelector((state) => state.auth.user);
@@ -16,6 +16,7 @@ const EditProductList = () => {
   const [statusList, setStatusList] = useState(status_list);
   const [productType, setProductType] = useState(product_type);
   const [preview, setPreview] = useState(null);
+  const [codeData, setCodeData] = useState(status_code_data);
   const url = "http://192.168.1.3/project/API/image/product/";
 
   const { id } = useParams();
@@ -65,6 +66,11 @@ const EditProductList = () => {
     const result = product && product.find((product) => product.id == id);
     setProductList(result);
   }, [id]);
+
+  useEffect(() => {
+    setCodeData(status_code_data)
+  },[status_code_data])
+
 
   useEffect(() => {
     setFormData((prevState) => ({
@@ -283,7 +289,31 @@ const EditProductList = () => {
                         <label for="exampleFormControlInput1" class="form-labe">
                           รหัสลูกค้า
                         </label>
-                        <input
+                        {
+                          user.status == 0 ? (
+                            <select
+                            className="form-control"
+                            id="customer_code"
+                            name="customer_code"
+                            onChange={handleChange}
+                            aria-label="Default select example"
+                          >
+                            <option disabled>
+                              รหัสพัสดุ
+                            </option>
+                              {codeData &&
+                                codeData.map((data) => (
+                                  <option
+                                    key={data.id}
+                                    value={data.code}
+                                    selected={data.code === formData.customer_code}
+                                  >
+                                    {data.code}
+                                  </option>
+                                ))}
+                          </select>)
+                          :
+                        (<input
                           type="text"
                           className="form-control form-control-user"
                           id="customer_code"
@@ -291,7 +321,8 @@ const EditProductList = () => {
                           placeholder="รหัสลูกค้า"
                           value={formData.customer_code}
                           onChange={handleChange}
-                        />
+                        />)
+                          }
                         {errors.customer_code && (
                           <div className="error-from">
                             {errors.customer_code}
@@ -446,6 +477,7 @@ const EditProductList = () => {
                           value={formData.parcel_status}
                           onChange={handleChange}
                           aria-label="Default select example"
+                          disabled
                         >
                           <option selected disabled>
                             เลือก สถานะ

@@ -292,12 +292,16 @@ const CreateProduct = () => {
                             onChange={handleChange}
                             aria-label="Default select example"
                           >
-                            <option selected disabled>
+                            <option  disabled>
                               รหัสพัสดุ
                             </option>
                             {codeData &&
-                              codeData.map((data, index) => (
-                                <option value={data.code}>
+                              codeData.map((data) => (
+                                <option
+                                  key={data.id}
+                                  value={data.id}
+                                  selected={data.code == formData.customer_code}
+                                >
                                   {data.code}
                                 </option>
                               ))}
