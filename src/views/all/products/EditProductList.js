@@ -8,9 +8,13 @@ const EditProductList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { product, statusProduct, status_list, product_type,status_code_data } = useSelector(
-    (state) => state.post
-  );
+  const {
+    product,
+    statusProduct,
+    status_list,
+    product_type,
+    status_code_data,
+  } = useSelector((state) => state.post);
   const user = useSelector((state) => state.auth.user);
   const [productList, setProductList] = useState(null);
   const [statusList, setStatusList] = useState(status_list);
@@ -69,9 +73,8 @@ const EditProductList = () => {
   }, [id]);
 
   useEffect(() => {
-    setCodeData(status_code_data)
-  },[status_code_data])
-
+    setCodeData(status_code_data);
+  }, [status_code_data]);
 
   useEffect(() => {
     setFormData((prevState) => ({
@@ -83,8 +86,14 @@ const EditProductList = () => {
       cabinet_number: productList && productList.cabinet_number,
       chinese_warehouse: new Date(productList && productList.chinese_warehouse), // date
       close_cabinet: new Date(productList && productList.close_cabinet), // date
-      to_thailand: new Date(productList && productList.to_thailand), // date*/
-      parcel_status: productList && productList.parcel_status,
+      to_thailand:
+        productList && productList.to_thailand
+          ? new Date(productList.to_thailand)
+          : null, // date*/
+      parcel_status:
+        productList && productList.parcel_status
+          ? productList.parcel_status
+          : null,
       quantity: productList && productList.quantity,
       size: productList && productList.size,
       cue_per_piece: productList && productList.cue_per_piece,
@@ -135,18 +144,6 @@ const EditProductList = () => {
     // close_cabinet validation
     if (!formData.close_cabinet) {
       newErrors.close_cabinet = "close_cabinet is required";
-      isValid = false;
-    }
-
-    // to_thailand validation
-    if (!formData.to_thailand) {
-      newErrors.to_thailand = "to_thailand is required";
-      isValid = false;
-    }
-
-    // parcel_status validation
-    if (!formData.parcel_status.trim()) {
-      newErrors.parcel_status = "parcel_status is required";
       isValid = false;
     }
 
@@ -266,7 +263,7 @@ const EditProductList = () => {
     }
   };
 
-  console.log("formData", formData.image);
+  console.log("formData", formData.parcel_status);
   return (
     <div className="container-fluidaa">
       <div className="row">
@@ -290,31 +287,7 @@ const EditProductList = () => {
                         <label for="exampleFormControlInput1" class="form-labe">
                           รหัสลูกค้า
                         </label>
-                        {
-                          user.status == 0 ? (
-                            <select
-                            className="form-control"
-                            id="customer_code"
-                            name="customer_code"
-                            onChange={handleChange}
-                            aria-label="Default select example"
-                          >
-                            <option disabled>
-                              รหัสพัสดุ
-                            </option>
-                              {codeData &&
-                                codeData.map((data) => (
-                                  <option
-                                    key={data.id}
-                                    value={data.code}
-                                    selected={data.code === formData.customer_code}
-                                  >
-                                    {data.code}
-                                  </option>
-                                ))}
-                          </select>)
-                          :
-                        (<input
+                        <input
                           type="text"
                           className="form-control form-control-user"
                           id="customer_code"
@@ -322,8 +295,7 @@ const EditProductList = () => {
                           placeholder="รหัสลูกค้า"
                           value={formData.customer_code}
                           onChange={handleChange}
-                        />)
-                          }
+                        />
                         {errors.customer_code && (
                           <div className="error-from">
                             {errors.customer_code}
@@ -453,7 +425,6 @@ const EditProductList = () => {
                           ถึงไทย
                         </label>
                         <DatePicker
-                          /* selected={startDate} */
                           selected={formData.to_thailand}
                           placeholderText="Select date"
                           className="form-control form-control-user w-100"
@@ -466,26 +437,46 @@ const EditProductList = () => {
                           }
                           dateFormat="dd/MM/yyyy"
                         />
+
                         {errors.to_thailand && (
                           <div className="error-from">{errors.to_thailand}</div>
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
-                        <select
+                        {/* <select
                           class="form-control"
                           id="parcel_status"
                           name="parcel_status"
                           value={formData.parcel_status}
                           onChange={handleChange}
                           aria-label="Default select example"
-                          disabled
                         >
-                          <option selected disabled>
+                          <option defaultValue="" disabled>
                             เลือก สถานะ
                           </option>
                           {statusList &&
                             statusList.map((status) => (
                               <option key={status.id} value={status.id}>
+                                {status.id === formData.parcel_status
+                                  ? `Selected: ${status.statusProduct}`
+                                  : status.statusProduct}
+                              </option>
+                            ))}
+                        </select> */}
+                        <select
+                          className="form-control"
+                          id="parcel_status"
+                          name="parcel_status"
+                          value={formData.parcel_status || null}
+                          onChange={handleChange}
+                          aria-label="Default select example"
+                        >
+                          <option selected disabled>
+                            เลือก สถานะ
+                          </option>
+                          {statusList &&
+                            statusList.map((status, index) => (
+                              <option value={status.id}>
                                 {status.id === formData.parcel_status
                                   ? `Selected: ${status.statusProduct}`
                                   : status.statusProduct}
@@ -686,10 +677,7 @@ const EditProductList = () => {
                             />
                           ) : (
                             <img
-                              src={
-                                url +
-                                formData.old_image
-                              }
+                              src={url + formData.old_image}
                               alt="Image Preview"
                               width="200"
                             />
