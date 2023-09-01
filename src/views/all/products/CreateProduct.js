@@ -10,7 +10,9 @@ import { format } from "date-fns";
 const CreateProduct = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { status_list, product_type,status_code_data } = useSelector((state) => state.post);
+  const { status_list, product_type, status_code_data } = useSelector(
+    (state) => state.post
+  );
   const user = useSelector((state) => state.auth.user);
   const [startDate, setStartDate] = useState(new Date());
   const [statusList, setStatusList] = useState(status_list);
@@ -46,8 +48,6 @@ const CreateProduct = () => {
     cabinet_number: "",
     chinese_warehouse: "",
     close_cabinet: "",
-    to_thailand: "",
-    parcel_status: "",
     quantity: "",
     size: "",
     cue_per_piece: "",
@@ -55,7 +55,6 @@ const CreateProduct = () => {
     total_queue: "",
     payment_amount_chinese_thai_delivery: "",
     product_type: "",
-    image: null,
   });
 
   const validate = () => {
@@ -94,16 +93,7 @@ const CreateProduct = () => {
       newErrors.close_cabinet = "close_cabinet is required";
       isValid = false;
     }
-    // to_thailand validation
-    if (!formData.to_thailand) {
-      newErrors.to_thailand = "to_thailand is required";
-      isValid = false;
-    }
-    // parcel_status validation
-    if (!formData.parcel_status.trim()) {
-      newErrors.parcel_status = "parcel_status is required";
-      isValid = false;
-    }
+
     // quantity validation
     if (!formData.quantity.trim()) {
       newErrors.quantity = "quantity is required";
@@ -154,11 +144,6 @@ const CreateProduct = () => {
     // product_type validation
     if (!formData.product_type.trim()) {
       newErrors.product_type = "product_type is required";
-      isValid = false;
-    }
-
-    if (!formData.image) {
-      newErrors.image = "image is required";
       isValid = false;
     }
 
@@ -246,9 +231,8 @@ const CreateProduct = () => {
   }, [productType]);
 
   useEffect(() => {
-    setCodeData(status_code_data)
-  },[status_code_data])
-
+    setCodeData(status_code_data);
+  }, [status_code_data]);
 
   useEffect(() => {
     if (user.status == 0) {
@@ -257,10 +241,7 @@ const CreateProduct = () => {
         ["parcel_status"]: "31",
       }));
     }
-  },[])
-
-
-
+  }, []);
 
   return (
     <div className="container-fluidaa">
@@ -280,42 +261,21 @@ const CreateProduct = () => {
                   <form onSubmit={handleSubmit}>
                     <div className="form-group row">
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
-                        <label for="exampleFormControlInput1" className="form-labe">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-labe"
+                        >
                           รหัสลูกค้า
                         </label>
-                        {
-                          user.status == 0 ? (
-                            <select
-                            className="form-control"
-                            id="customer_code"
-                            name="customer_code"
-                            onChange={handleChange}
-                            aria-label="Default select example"
-                          >
-                            <option  disabled>
-                              รหัสพัสดุ
-                            </option>
-                            {codeData &&
-                              codeData.map((data) => (
-                                <option
-                                  key={data.id}
-                                  value={data.id}
-                                  selected={data.code == formData.customer_code}
-                                >
-                                  {data.code}
-                                </option>
-                              ))}
-                          </select>
-                          ) :(<input
+                        <input
                           type="text"
                           className="form-control form-control-user"
                           id="customer_code"
                           name="customer_code"
                           placeholder="รหัสลูกค้า"
                           onChange={handleChange}
-                        />)
-                        }
-                        
+                        />
+
                         {errors.customer_code && (
                           <div className="error-from">
                             {errors.customer_code}
@@ -323,7 +283,10 @@ const CreateProduct = () => {
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
-                        <label for="exampleFormControlInput1" className="form-labe">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-labe"
+                        >
                           เเทคจีน
                         </label>
                         <input
@@ -362,7 +325,10 @@ const CreateProduct = () => {
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
-                        <label for="exampleFormControlInput1" className="form-labe">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-labe"
+                        >
                           เลขตู้
                         </label>
                         <input
@@ -460,50 +426,24 @@ const CreateProduct = () => {
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
-                        {
-                           user.status == 0 ? (
-                            <select
-                            className="form-control"
-                            id="parcel_status"
-                            name="parcel_status"
-                            aria-label="Default select example"
-                            disabled
-                          >
+                        <select
+                          className="form-control"
+                          id="parcel_status"
+                          name="parcel_status"
+                          onChange={handleChange}
+                          aria-label="Default select example"
+                        >
+                          <option selected disabled>
+                            เลือก สถานะ
+                          </option>
                           {statusList &&
-                            statusList.map((status) =>  {
-                              if (status.id == formData.parcel_status) {
-                                console.log("status",status.id);
-                                console.log("status",status.statusProduct);
-                                return (
-                                  <option >
-                                    {status.statusProduct}
-                                  </option>
-                                )
-                              }
-                              
-                            })}
-                          </select>
-                          
-                           ) : ( 
-                             <select
-                            className="form-control"
-                            id="parcel_status"
-                            name="parcel_status"
-                            onChange={handleChange}
-                            aria-label="Default select example"
-                          >
-                            <option selected disabled>
-                              เลือก สถานะ
-                            </option>
-                            {statusList &&
-                              statusList.map((status, index) => (
-                                <option value={status.id}>
-                                  {status.statusProduct}
-                                </option>
-                              ))}
-                          </select>)
-                        }
-                      
+                            statusList.map((status, index) => (
+                              <option value={status.id}>
+                                {status.statusProduct}
+                              </option>
+                            ))}
+                        </select>
+
                         {errors.parcel_status && (
                           <div className="error-from">
                             {errors.parcel_status}

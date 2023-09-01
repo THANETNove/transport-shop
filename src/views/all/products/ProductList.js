@@ -133,7 +133,11 @@ const ProductList = () => {
                   <td>
                     {format(new Date(product.close_cabinet), "dd-MM-yyyy")}
                   </td>
-                  <td>{format(new Date(product.to_thailand), "dd-MM-yyyy")}</td>
+                  <td>
+                    {product.to_thailand &&
+                      product.to_thailand &&
+                      format(new Date(product.to_thailand), "dd-MM-yyyy")}
+                  </td>
                   <td>
                     {statusList &&
                       statusList.find(
@@ -186,7 +190,11 @@ const ProductList = () => {
                 {format(new Date(product.chinese_warehouse), "dd-MM-yyyy")}
               </td>
               <td>{format(new Date(product.close_cabinet), "dd-MM-yyyy")}</td>
-              <td>{format(new Date(product.to_thailand), "dd-MM-yyyy")}</td>
+              <td>
+                {product.to_thailand &&
+                  product.to_thailand &&
+                  format(new Date(product.to_thailand), "dd-MM-yyyy")}
+              </td>
               <td>
                 {/*  {statusList &&
                 statusList.file(
