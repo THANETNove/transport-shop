@@ -7,7 +7,9 @@ import { format } from "date-fns";
 
 const ProductList = () => {
   const user = useSelector((state) => state.auth.user);
-  const { status_list, product_type,status_code_data } = useSelector((state) => state.post);
+  const { status_list, product_type, status_code_data } = useSelector(
+    (state) => state.post
+  );
   const [statusList, setStatusList] = useState(status_list);
   const [productType, setProductType] = useState(product_type);
   const [statusSuccess, setStatusSuccess] = useState(null);
@@ -22,14 +24,14 @@ const ProductList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-    const pro_log_1 =  await Service.getProductType(dispatch); // ดึงประเภทสินค้า
-    const pro_log_2 =  await Service.getStatusList(dispatch); // ดึงสถานะสิค้า
-    const pro_log_3 =  await Service.getProduct(dispatch); // ดึงสิค้า
-    const pro_log_4 =  await Service.getProductCode(user.id,dispatch); // ดึงรหัสพัสดุ
-    console.log("ดึงประเภทสินค้า",pro_log_1);
-    console.log("ดึงสถานะสิค้า",pro_log_2);
-    console.log("ดึงสิค้า",pro_log_3);
-    console.log("ดึงรหัสพัสดุ",pro_log_4);
+      const pro_log_1 = await Service.getProductType(dispatch); // ดึงประเภทสินค้า
+      const pro_log_2 = await Service.getStatusList(dispatch); // ดึงสถานะสิค้า
+      const pro_log_3 = await Service.getProduct(dispatch); // ดึงสิค้า
+      const pro_log_4 = await Service.getProductCode(user.id, dispatch); // ดึงรหัสพัสดุ
+      console.log("ดึงประเภทสินค้า", pro_log_1);
+      console.log("ดึงสถานะสิค้า", pro_log_2);
+      console.log("ดึงสิค้า", pro_log_3);
+      console.log("ดึงรหัสพัสดุ", pro_log_4);
     };
 
     setTimeout(() => {
@@ -42,17 +44,16 @@ const ProductList = () => {
   }, []);
 
   useEffect(() => {
-    setStatusList(status_list)
-  },[status_list]) 
+    setStatusList(status_list);
+  }, [status_list]);
 
   useEffect(() => {
     setStatusProductList(statusProduct);
   }, [statusProduct]);
 
-
   useEffect(() => {
-    setCodeData(status_code_data)
-  },[status_code_data])
+    setCodeData(status_code_data);
+  }, [status_code_data]);
 
   useEffect(() => {
     /*  getProduct */
@@ -86,9 +87,14 @@ const ProductList = () => {
     }
   };
   const handleChangeStatus = async (id, name, value) => {
-    console.log( name, value ,id);
-   const response = await Service.updateStatusProductList(id, name, value, dispatch);
-     if (response.status == "success") {
+    console.log(name, value, id);
+    const response = await Service.updateStatusProductList(
+      id,
+      name,
+      value,
+      dispatch
+    );
+    if (response.status == "success") {
       setStatusSuccess(response.message);
       setStatusResponse(1);
     } else {
@@ -109,176 +115,155 @@ const ProductList = () => {
     }, 1000);
   }, [statusSuccess]);
 
-
-  const  systemUser  =() => {
-
-    console.log("codeData",codeData);
+  const systemUser = () => {
     return (
       <>
-    {codeData.map((codeItem, index) => (
-  <tbody>
-  {productList
-    .filter((product) => product.customer_code === codeItem.code)
-    .map((product) => (
-      <tr key={product.id}>
-         <th scope="row">{index + 1}</th>
-        <td>{product.customer_code}</td>
-        <td>{product.tech_china}</td>
-        <td>{format(new Date(product.chinese_warehouse), "dd-MM-yyyy")}</td>
-        <td>{format(new Date(product.close_cabinet), "dd-MM-yyyy")}</td>
-        <td>{format(new Date(product.to_thailand), "dd-MM-yyyy")}</td>
-        <td>
-        {statusList &&
-          statusList.find((status) => status.id == product.parcel_status) && (
-            <span>
-              {statusList.find((status) => status.id == product.parcel_status).statusProduct}
-            </span>
-          )}
-        </td>
-        <td>{product.quantity}</td>
-        <td>
-          {parseFloat(product.payment_amount_chinese_thai_delivery).toLocaleString(
-            "en-US",
-            {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            }
-          )}
-        </td>
-        <td>
-          <a className="btn btn-primary btn-sm" onClick={() => showProduct(product.id)}>
-            show
-          </a>
-        </td>
-        <td>
-              <button
-                className="btn btn-secondary btn-sm"
-                onClick={() => getEdit(product.id)}
-              >
-                Edit
-              </button>
-            </td>
-            <td>
-              <button
-                className="btn btn-danger btn-sm"
-                onClick={() =>
-                  deleteProductList(product.id, product.image)
-                }
-              >
-                delete
-              </button>
-            </td>
-      </tr>
-    ))}
-</tbody>
-))}
+        <tbody>
+          {productList &&
+            productList
+              .filter((product) => product.customer_code === user.customerCode)
+              .map((product, index) => (
+                <tr key={product.id}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{product.customer_code}</td>
+                  <td>{product.tech_china}</td>
+                  <td>
+                    {format(new Date(product.chinese_warehouse), "dd-MM-yyyy")}
+                  </td>
+                  <td>
+                    {format(new Date(product.close_cabinet), "dd-MM-yyyy")}
+                  </td>
+                  <td>{format(new Date(product.to_thailand), "dd-MM-yyyy")}</td>
+                  <td>
+                    {statusList &&
+                      statusList.find(
+                        (status) => status.id == product.parcel_status
+                      ) && (
+                        <span>
+                          {statusList &&
+                            statusList.find(
+                              (status) => status.id == product.parcel_status
+                            ).statusProduct}
+                        </span>
+                      )}
+                  </td>
+                  <td>{product.quantity}</td>
+                  <td>
+                    {parseFloat(
+                      product.payment_amount_chinese_thai_delivery
+                    ).toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td>
+                    <a
+                      className="btn btn-primary btn-sm"
+                      onClick={() => showProduct(product.id)}
+                    >
+                      show
+                    </a>
+                  </td>
+                </tr>
+              ))}
+        </tbody>
+      </>
+    );
+  };
 
-    </>
-    )
-  }
-  
-  const  systemAdmin =() => {
+  const systemAdmin = () => {
     return (
       <tbody>
-      {productList &&
-        productList.map((product, index) => (
-          <tr>
-            <th scope="row">{index + 1}</th>
-            <td>{product.customer_code}</td>
-            <td>{product.tech_china}</td>
-            {/*       <td>{product.warehouse_code}</td>
+        {productList &&
+          productList.map((product, index) => (
+            <tr>
+              <th scope="row">{index + 1}</th>
+              <td>{product.customer_code}</td>
+              <td>{product.tech_china}</td>
+              {/*       <td>{product.warehouse_code}</td>
             <td>{product.cabinet_number}</td> */}
-            <td>
-              {format(
-                new Date(product.chinese_warehouse),
-                "dd-MM-yyyy"
-              )}
-            </td>
-            <td>
-              {format(
-                new Date(product.close_cabinet),
-                "dd-MM-yyyy"
-              )}
-            </td>
-            <td>
-              {format(
-                new Date(product.to_thailand),
-                "dd-MM-yyyy"
-              )}
-            </td>
-            <td>
-              {/*  {statusList &&
+              <td>
+                {format(new Date(product.chinese_warehouse), "dd-MM-yyyy")}
+              </td>
+              <td>{format(new Date(product.close_cabinet), "dd-MM-yyyy")}</td>
+              <td>{format(new Date(product.to_thailand), "dd-MM-yyyy")}</td>
+              <td>
+                {/*  {statusList &&
                 statusList.file(
                   (status) =>
                     status.id == product.parcel_status &&
                     status.statusProduct
                 )} */}
-              <select
-                className="form-control"
-                id="parcel_status"
-                name="parcel_status"
-                value={product.parcel_status}
-                 onChange={(event) => handleChangeStatus(product.id, event.target.name, event.target.value)}
-                aria-label="Default select example"
-              >
-                <option selected disabled>
-                  เลือก สถานะ
-                </option>
-                {statusList &&
-                  statusList.map((status) => (
-                    <option key={status.id} value={status.id}>
-                      {status.id === product.parcel_status
-                        ? `Selected: ${status.statusProduct}`
-                        : status.statusProduct}
-                    </option>
-                  ))}
-              </select>
-              {/* {product.parcel_status} */}
-            </td>
-            <td>{product.quantity}</td>
-            {/*     <td>{product.size}</td>
+                <select
+                  className="form-control"
+                  id="parcel_status"
+                  name="parcel_status"
+                  value={product.parcel_status}
+                  onChange={(event) =>
+                    handleChangeStatus(
+                      product.id,
+                      event.target.name,
+                      event.target.value
+                    )
+                  }
+                  aria-label="Default select example"
+                >
+                  <option selected disabled>
+                    เลือก สถานะ
+                  </option>
+                  {statusList &&
+                    statusList.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.id === product.parcel_status
+                          ? `Selected: ${status.statusProduct}`
+                          : status.statusProduct}
+                      </option>
+                    ))}
+                </select>
+                {/* {product.parcel_status} */}
+              </td>
+              <td>{product.quantity}</td>
+              {/*     <td>{product.size}</td>
             <td>{product.cue_per_piece}</td>
             <td>{product.weight}</td>
             <td>{product.total_queue}</td> */}
-            <td>
-              {parseFloat(
-                product.payment_amount_chinese_thai_delivery
-              ).toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </td>
-            <td>
-              <a
-                className="btn btn-primary btn-sm"
-                onClick={() => showProduct(product.id)}
-              >
-                show
-              </a>
-            </td>
-            <td>
-              <button
-                className="btn btn-secondary btn-sm"
-                onClick={() => getEdit(product.id)}
-              >
-                Edit
-              </button>
-            </td>
-            <td>
-              <button
-                className="btn btn-danger btn-sm"
-                onClick={() =>
-                  deleteProductList(product.id, product.image)
-                }
-              >
-                delete
-              </button>
-            </td>
-          </tr>
-        ))}
-    </tbody>
-    )
-  }
+              <td>
+                {parseFloat(
+                  product.payment_amount_chinese_thai_delivery
+                ).toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </td>
+              <td>
+                <a
+                  className="btn btn-primary btn-sm"
+                  onClick={() => showProduct(product.id)}
+                >
+                  show
+                </a>
+              </td>
+              <td>
+                <button
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => getEdit(product.id)}
+                >
+                  Edit
+                </button>
+              </td>
+              <td>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => deleteProductList(product.id, product.image)}
+                >
+                  delete
+                </button>
+              </td>
+            </tr>
+          ))}
+      </tbody>
+    );
+  };
 
   return (
     <div className="container-fluid">
@@ -296,9 +281,16 @@ const ProductList = () => {
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               {/*  <h6 className="m-0 font-weight-bold text-primary">เพิ่มพัสดุ</h6> */}
-              <Link className="btn btn-primary" to="/create-product">
-                เพิ่มพัสดุ
-              </Link>
+              {user.status != 0 ? (
+                <Link className="btn btn-primary" to="/create-product">
+                  เพิ่มพัสดุ
+                </Link>
+              ) : (
+                <h6 className="m-0 font-weight-bold text-primary">
+                  พัสดุทั้งหมด
+                </h6>
+              )}
+
               <div>
                 {statusProductList == "success" && (
                   <span className="color-success">
@@ -318,38 +310,42 @@ const ProductList = () => {
             </div>
 
             <div className="card-body">
-            <div className="table-responsive">
-      <table className="table  align-middle table-hover">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">รหัสลูกค้า</th>
-            <th scope="col">เเทคจีน</th>
-            {/*  <th scope="col">รหัสโกดัง</th>
+              <div className="table-responsive">
+                <table className="table  align-middle table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">รหัสลูกค้า</th>
+                      <th scope="col">เเทคจีน</th>
+                      {/*  <th scope="col">รหัสโกดัง</th>
             <th scope="col">เลขตู้</th> */}
-            <th scope="col">ถึงโกดังจีน</th>
-            <th scope="col">ปิดตู้</th>
-            <th scope="col">ถึงไทย</th>
-            <th scope="col">สถานะ</th>
-            <th scope="col">จำนวน</th>
-            {/*     <th scope="col">ขนาด</th>
+                      <th scope="col">ถึงโกดังจีน</th>
+                      <th scope="col">ปิดตู้</th>
+                      <th scope="col">ถึงไทย</th>
+                      <th scope="col">สถานะ</th>
+                      <th scope="col">จำนวน</th>
+                      {/*     <th scope="col">ขนาด</th>
             <th scope="col">คิวต่อชิ้น</th>
             <th scope="col">น้ำหนัก</th>
             <th scope="col">คิวรวม</th> */}
-            <th scope="col">ยอดชำระ จีน-ไทย</th>
-            <th scope="col">show</th>
-            <th scope="col">Edit</th>
-            <th scope="col">delete</th>
-          </tr>
-        </thead>
-       {user.status == 0 ?  systemUser(): systemAdmin()}
-      </table>
-    </div>
+                      <th scope="col">ยอดชำระ จีน-ไทย</th>
+                      <th scope="col">show</th>
+                      {user.status != 0 && (
+                        <>
+                          <th scope="col">Edit</th>
+                          <th scope="col">delete</th>
+                        </>
+                      )}
+                    </tr>
+                  </thead>
+                  {user.status == 0 ? systemUser() : systemAdmin()}
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
-export default  ProductList;
+};
+export default ProductList;

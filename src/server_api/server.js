@@ -1,8 +1,8 @@
 import axios from "axios";
 import { format } from "date-fns";
 
-/* const url = "http://192.168.1.3/project/API"; //หน่วย */
-const url = "https://medocargo55.com/API/";
+const url = "http://192.168.1.3/project/API"; //หน่วย
+/* const url = "https://medocargo.com/API/"; */
 
 // GET
 const getStatusList = async (dispatch) => {
@@ -138,7 +138,7 @@ const getProduct = async (dispatch) => {
     };
   }
 };
-const getProductCode = async (id,dispatch) => {
+const getProductCode = async (id, dispatch) => {
   const params = {
     isAdd: true,
     id: id,
@@ -381,13 +381,12 @@ const createProduct = async (e, dispatch) => {
 };
 
 const createProductCode = async (id, code, dispatch) => {
-
-  console.log("id, code,",id, code);
+  console.log("id, code,", id, code);
   const formData = new FormData();
   formData.append("isAdd", true);
   formData.append("id", id);
   formData.append("code", code);
- 
+
   const response = await axios.post(`${url}/productCode.php`, formData, {
     headers: {
       "Content-Type": "multipart/form-data;charset=utf-8",
@@ -395,7 +394,7 @@ const createProductCode = async (id, code, dispatch) => {
   });
 
   if (response.data.message) {
-   dispatch({
+    dispatch({
       type: "CODE_SUCCESS",
       payload: "success",
     });
@@ -504,18 +503,21 @@ const UpdateProduct = async (e, dispatch) => {
     };
   }
 };
-const updateStatusProductList = async (id,value, dispatch) => {
+const updateStatusProductList = async (id, value, dispatch) => {
   const formData = new FormData();
   formData.append("isAdd", true);
   formData.append("idProduct", id);
   formData.append("parcel_status", value);
 
-
-  const response = await axios.post(`${url}/updateStatusProduct.php`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data;charset=utf-8",
-    },
-  });
+  const response = await axios.post(
+    `${url}/updateStatusProduct.php`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data;charset=utf-8",
+      },
+    }
+  );
 
   if (response.data.message) {
     dispatch({
@@ -543,8 +545,6 @@ const updateStatusProductList = async (id,value, dispatch) => {
     };
   }
 };
-
-
 
 // Delete POST
 const deleteStatusList = async (id, dispatch) => {
