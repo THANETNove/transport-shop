@@ -124,19 +124,25 @@ const Register = () => {
     event.preventDefault();
     if (validate()) {
       const response = await Service.register(formData, dispatch);
-
+      console.log("response", response);
       if (response.status == "success") {
         navigate("/dashboard");
       } else {
-        if (response.error == "Username already exists!") {
+        if (response.error == "username_exists") {
           setErrors((prevState) => ({
             ...prevState,
-            ["username"]: response.error,
+            ["username"]: "Username already exists!",
           }));
-        } else if ("Email already exists!") {
+        } else if (response.error == "email_exists") {
+          console.log("44");
           setErrors((prevState) => ({
             ...prevState,
-            ["email"]: response.error,
+            ["email"]: "Email already exists!",
+          }));
+        } else if (response.error == "customerCode_exists") {
+          setErrors((prevState) => ({
+            ...prevState,
+            ["customerCode"]: "customerCode_result already exists!",
           }));
         }
       }
