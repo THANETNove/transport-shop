@@ -230,7 +230,7 @@ const CreatePricePreUser = () => {
                           KG
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           className="form-control form-control-user"
                           id="kg"
                           name="kg"
@@ -249,7 +249,7 @@ const CreatePricePreUser = () => {
                           CBM
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           className="form-control form-control-user"
                           id="cbm"
                           placeholder="cbm"

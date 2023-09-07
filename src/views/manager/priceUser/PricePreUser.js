@@ -24,13 +24,12 @@ const PricePreUser = () => {
 
   const deleteUsersCode = async (e) => {
     const response = await Service.deleteUserCode(e, dispatch); //
-    console.log(response);
+
     if (response.status == "success") {
       fetchData();
     }
   };
 
-  console.log("userCodeAll", userCodeAll);
   //getCustomerCodeAll
   return (
     <div className="container-fluid">
