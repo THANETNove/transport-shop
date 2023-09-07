@@ -36,6 +36,7 @@ const CreateProduct = () => {
     height_size: "",
     cue_per_piece: "",
     weight: "",
+    total_weight: "",
     total_queue: "",
     payment_amount_chinese_thai_delivery: "",
     product_type: "",
@@ -56,6 +57,7 @@ const CreateProduct = () => {
     height_size: "",
     cue_per_piece: "",
     weight: "",
+    total_weight: "",
     total_queue: "",
     payment_amount_chinese_thai_delivery: "",
     product_type: "",
@@ -137,6 +139,10 @@ const CreateProduct = () => {
       isValid = false;
     }
 
+    if (typeof formData.cue_per_piece !== "string") {
+      formData.cue_per_piece = formData.cue_per_piece.toString(); // แปลงเป็นสตริง
+    }
+
     // cue_per_piece validation
     if (!formData.cue_per_piece.trim()) {
       newErrors.cue_per_piece = "cue_per_piece is required";
@@ -153,6 +159,21 @@ const CreateProduct = () => {
     } else if (isNaN(Number(formData.weight))) {
       newErrors.weight = "weight must be a number";
       isValid = false;
+    }
+
+    if (typeof formData.total_weight !== "string") {
+      formData.total_weight = formData.total_weight.toString(); // แปลงเป็นสตริง
+    }
+    // total_weight validation
+    if (!formData.total_weight.trim()) {
+      newErrors.total_weight = "total_weight is required";
+      isValid = false;
+    } else if (isNaN(Number(formData.total_weight))) {
+      newErrors.total_weight = "total_weight must be a number";
+      isValid = false;
+    }
+    if (typeof formData.total_queue !== "string") {
+      formData.total_queue = formData.total_queue.toString(); // แปลงเป็นสตริง
     }
     // total_queue validation
     if (!formData.total_queue.trim()) {
@@ -274,6 +295,38 @@ const CreateProduct = () => {
       }));
     }
   }, []);
+
+  // คิวต่อชิ้น
+  useEffect(() => {
+    const qu =
+      (formData.wide_size * formData.long_size * formData.height_size) /
+      1000000;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      ["cue_per_piece"]: qu,
+    }));
+  }, [formData.wide_size, formData.long_size, formData.height_size]);
+
+  // คิวรวม
+  useEffect(() => {
+    const quAll = formData.cue_per_piece * formData.quantity;
+    setFormData((prevState) => ({
+      ...prevState,
+      ["total_queue"]: quAll,
+    }));
+  }, [formData.quantity, formData.cue_per_piece]);
+
+  // น้ำหนักรวม
+  useEffect(() => {
+    const totalWeight = formData.quantity * formData.weight;
+
+    console.log(totalWeight);
+    setFormData((prevState) => ({
+      ...prevState,
+      ["total_weight"]: totalWeight,
+    }));
+  }, [formData.quantity, formData.weight]);
 
   return (
     <div className="container-fluidaa">
@@ -458,6 +511,12 @@ const CreateProduct = () => {
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-label"
+                        >
+                          สถานะสินค้า
+                        </label>
                         <select
                           className="form-control"
                           id="parcel_status"
@@ -574,6 +633,7 @@ const CreateProduct = () => {
                           className="form-control form-control-user"
                           id="cue_per_piece"
                           name="cue_per_piece"
+                          value={formData.cue_per_piece}
                           placeholder="คิวต่อชิ้น"
                           onChange={handleChange}
                         />
@@ -588,7 +648,7 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label"
                         >
-                          น้ำหนัก
+                          น้ำหนักต่อชิ้น
                         </label>
                         <input
                           type="text"
@@ -609,6 +669,28 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label"
                         >
+                          น้ำหนักรวม
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control form-control-user"
+                          id="total_weight"
+                          name="total_weight"
+                          value={formData.total_weight}
+                          placeholder="น้ำหนักรวม"
+                          onChange={handleChange}
+                        />
+                        {errors.total_weight && (
+                          <div className="error-from">
+                            {errors.total_weight}
+                          </div>
+                        )}
+                      </div>
+                      <div className="col-sm-6  col-md-6 col-lg-6">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-label"
+                        >
                           คิวรวม
                         </label>
                         <input
@@ -617,13 +699,16 @@ const CreateProduct = () => {
                           id="total_queue"
                           placeholder="คิวรวม"
                           name="total_queue"
+                          value={formData.total_queue}
                           onChange={handleChange}
                         />
                         {errors.total_queue && (
                           <div className="error-from">{errors.total_queue}</div>
                         )}
                       </div>
-                      <div className="col-sm-6  col-md-6 col-lg-6">
+                    </div>
+                    <div className="form-group row">
+                      <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                         <label
                           for="exampleFormControlInput1"
                           className="form-label"
@@ -644,9 +729,13 @@ const CreateProduct = () => {
                           </div>
                         )}
                       </div>
-                    </div>
-                    <div className="form-group row">
-                      <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                      <div className="col-sm-6  col-md-6 col-lg-6">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-label"
+                        >
+                          ประเภทพัสดุ
+                        </label>
                         <select
                           className="form-select"
                           id="product_type"
@@ -668,7 +757,9 @@ const CreateProduct = () => {
                           </div>
                         )}
                       </div>
-                      <div className="col-sm-6  col-md-6 col-lg-6">
+                    </div>
+                    <div className="form-group row">
+                      <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                         <input
                           type="file"
                           className="form-control"

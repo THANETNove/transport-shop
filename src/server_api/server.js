@@ -337,6 +337,7 @@ const ProductType = async (e, dispatch) => {
 };
 
 const createProduct = async (e, dispatch) => {
+  console.log("55");
   const formData = new FormData();
   formData.append("isAdd", true);
   for (let key in e) {
