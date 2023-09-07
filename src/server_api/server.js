@@ -236,6 +236,40 @@ const getCustomerCode = async (code, dispatch) => {
   }
 };
 
+const getCustomerCodeAll = async (dispatch) => {
+  const params = {
+    isAdd: true,
+  };
+  const response = await axios.get(`${url}/getCustomerCodeAll.php`, {
+    params,
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "USERS_CODE_SUCCESS",
+      payload: response.data.usersCode_data,
+    });
+    return {
+      status: "success",
+      message: response.data.userCode_data,
+    };
+  } else if (response.data.error_message) {
+    dispatch({
+      type: "USERS_CODE_ERROR",
+      payload: response.data.usersCode_data,
+    });
+    return {
+      status: "error",
+      error: response.data.error_message,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 //POST
 const register = async (e, dispatch) => {
   const formData = new FormData();
@@ -762,6 +796,35 @@ const deleteProduct = async (id, image, dispatch) => {
   }
 };
 
+const deleteUserCode = async (id, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", id);
+
+  const response = await axios.post(`${url}/deleteUserCode.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 export default {
   getStatusList,
   getProductType,
@@ -770,6 +833,7 @@ export default {
   getProduct,
   getProductCode,
   getCustomerCode,
+  getCustomerCodeAll,
   register,
   Login,
   statusList,
@@ -783,4 +847,5 @@ export default {
   deleteStatusList,
   deleteProduct,
   deleteProductTypeList,
+  deleteUserCode,
 };

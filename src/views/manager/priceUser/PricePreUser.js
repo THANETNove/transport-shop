@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import Service from "../../../server_api/server";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-export default function PricePreUser() {
+const PricePreUser = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { users_code } = useSelector((state) => state.get);
+  const [userCodeAll, setUserCodeAll] = useState(users_code);
+
+  const fetchData = async () => {
+    await Service.getCustomerCodeAll(dispatch); // ดึงประเภทพัสดุ
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setUserCodeAll(users_code);
+  }, [users_code]);
+
+  const deleteUsersCode = async (e) => {
+    const response = await Service.deleteUserCode(e, dispatch); //
+    console.log(response);
+    if (response.status == "success") {
+      fetchData();
+    }
+  };
+
+  console.log("userCodeAll", userCodeAll);
+  //getCustomerCodeAll
   return (
     <div className="container-fluid">
       <div className="row">
@@ -29,6 +59,7 @@ export default function PricePreUser() {
                   <thead>
                     <tr>
                       <th scope="col">id</th>
+                      <th scope="col">รหัสลูกค้า</th>
                       <th scope="col">ประเภทพัสดุ</th>
                       <th scope="col">KG</th>
                       <th scope="col">CBM</th>
@@ -36,7 +67,44 @@ export default function PricePreUser() {
                       <th scope="col">delete</th>
                     </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+                    {userCodeAll &&
+                      userCodeAll.map((value, index) => (
+                        <tr>
+                          <th scope="row">{index + 1}</th>
+                          <td>{value.customerCode}</td>
+                          <td>{value.name}</td>
+                          <td>{value.kg}</td>
+                          <td>{value.cbm}</td>
+                          <td>
+                            {/*   <button
+                              className="btn btn-secondary"
+                              onClick={() =>
+                                navigate(`/edit-product-type/${status.id}`)
+                              }
+                            >
+                              Edit
+                            </button> */}
+                          </td>
+                          <td>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    "คุณต้องการลบ ข้อมูลใช่หรือไม่ ! "
+                                  )
+                                ) {
+                                  deleteUsersCode(value.id);
+                                }
+                              }}
+                            >
+                              delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -45,4 +113,6 @@ export default function PricePreUser() {
       </div>
     </div>
   );
-}
+};
+
+export default PricePreUser;
