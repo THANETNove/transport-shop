@@ -210,7 +210,6 @@ const getProductCode = async (id, dispatch) => {
 };
 
 const getCustomerCode = async (code, dispatch) => {
-  console.log("code", code);
   const params = {
     isAdd: true,
     id: code,

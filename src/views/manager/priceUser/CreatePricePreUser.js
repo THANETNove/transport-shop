@@ -12,13 +12,17 @@ const CreatePricePreUser = () => {
   const { price_user } = useSelector((state) => state.get);
   const [productTypeList, setProductTypeList] = useState(product_type);
   const [priceUser, setPriceUser] = useState(price_user);
+
   const [formData, setFormData] = useState({
     id_user: "",
+    username: "",
     id_type: "",
     kg: "",
     cbm: "",
   });
   const [errors, setErrors] = useState({
+    id_user: "",
+    username: "",
     id_type: "",
     kg: "",
     cbm: "",
@@ -29,6 +33,10 @@ const CreatePricePreUser = () => {
     const newErrors = {};
 
     // name validation
+    if (!formData.username.trim()) {
+      newErrors.username = "ไม่พบ รหัสลูกค้า";
+      isValid = false;
+    }
     if (!formData.id_type.trim()) {
       newErrors.id_type = "id_type is required";
       isValid = false;
@@ -36,10 +44,7 @@ const CreatePricePreUser = () => {
       newErrors.id_type = "กรุณา เลือกประเภท";
       isValid = false;
     }
-    /*     if (typeof formData.kg !== "string") {
-      formData.kg = formData.kg.toString(); // แปลงเป็นสตริง
-    }
- */
+
     // kg validation
     if (!formData.kg.trim()) {
       newErrors.kg = "kg is required";
@@ -48,9 +53,6 @@ const CreatePricePreUser = () => {
       newErrors.kg = "kg must be a number";
       isValid = false;
     }
-    /*    if (typeof formData.cbm !== "string") {
-      formData.cbm = formData.cbm.toString(); // แปลงเป็นสตริง
-    } */
 
     // cbm validation
     if (!formData.cbm.trim()) {
@@ -67,13 +69,9 @@ const CreatePricePreUser = () => {
 
   const fetchData = async () => {
     await Service.getProductType(dispatch); // ดึงประเภทพัสดุ
-    if (user) {
-      setFormData((prevState) => ({
-        ...prevState,
-        ["id_user"]: user && user.id,
-      }));
-      await Service.getPricePerUserId(user && user.id, dispatch); // ดึงประเภทพัสดุ
-    }
+  };
+  const fetchUser = async (e) => {
+    await Service.getPricePerUserId(e, dispatch);
   };
 
   useEffect(() => {
@@ -101,6 +99,7 @@ const CreatePricePreUser = () => {
       console.log("response", response);
       if (response.status == "success") {
         fetchData();
+        fetchUser(formData.id_user);
 
         setFormData((prevState) => ({
           ...prevState,
@@ -108,19 +107,38 @@ const CreatePricePreUser = () => {
           ["kg"]: "",
           ["cbm"]: "",
         }));
-      } else {
-        console.log("response error", response.error);
-        /*  setErrors((prevState) => ({
-          ...prevState,
-          ["statusProduct"]: response.error,
-        })); */
       }
     }
   };
   const handleChangeUser = async (event) => {
     const { name, value } = event.target;
-    const represent = await Service.getCustomerCode(value, dispatch); // ดึงประเภทพัสดุ
-    console.log(represent);
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+    const response = await Service.getCustomerCode(value, dispatch); // ดึงประเภทพัสดุ
+
+    if (response.message && response.message.length === 1) {
+      setFormData((prevState) => ({ ...prevState, [name]: value }));
+
+      setFormData((prevState) => ({
+        ...prevState,
+        ["username"]: response.message[0].customerCode,
+        ["id_user"]: response.message[0].id,
+      }));
+
+      fetchUser(response.message[0].id);
+    } else {
+      setErrors((prevState) => ({
+        ...prevState,
+        ["username"]: response.error,
+      }));
+    }
+  };
+
+  const handleClearUsername = () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ["username"]: "", // ลบค่า username ออก
+      ["id_user"]: "", // ลบค่า username ออก
+    }));
   };
 
   ///getCustomerCode
@@ -153,15 +171,22 @@ const CreatePricePreUser = () => {
                         <input
                           type="text"
                           className="form-control form-control-user"
-                          /*  id="kg"
-                          name="kg"
-                          placeholder="kg"
-                          value={formData.kg} */
+                          id="username"
+                          name="username"
+                          placeholder="รหัสลูกค้า"
+                          value={formData.username}
                           onChange={handleChangeUser}
                         />
-                        {errors.kg && (
-                          <div className="error-from">{errors.kg}</div>
+                        {errors.username && (
+                          <div className="error-from">{errors.username}</div>
                         )}
+                        <button
+                          type="button"
+                          class="btn btn-danger mt-2"
+                          onClick={handleClearUsername}
+                        >
+                          ลบ
+                        </button>
                       </div>
                     </div>
                     <div className="form-group">
