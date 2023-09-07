@@ -31,7 +31,9 @@ const CreateProduct = () => {
     to_thailand: "",
     parcel_status: "",
     quantity: "",
-    size: "",
+    wide_size: "",
+    long_size: "",
+    height_size: "",
     cue_per_piece: "",
     weight: "",
     total_queue: "",
@@ -49,7 +51,9 @@ const CreateProduct = () => {
     chinese_warehouse: "",
     close_cabinet: "",
     quantity: "",
-    size: "",
+    wide_size: "",
+    long_size: "",
+    height_size: "",
     cue_per_piece: "",
     weight: "",
     total_queue: "",
@@ -66,6 +70,7 @@ const CreateProduct = () => {
       newErrors.customer_code = "customer_code is required";
       isValid = false;
     }
+
     // tech_china validation
     if (!formData.tech_china.trim()) {
       newErrors.customerCode = "tech_china is required";
@@ -83,11 +88,13 @@ const CreateProduct = () => {
       newErrors.cabinet_number = "cabinet_number is required";
       isValid = false;
     }
+
     // chinese_warehouse validation
     if (!formData.chinese_warehouse) {
       newErrors.chinese_warehouse = "chinese_warehouse is required";
       isValid = false;
     }
+
     // close_cabinet validation
     if (!formData.close_cabinet) {
       newErrors.close_cabinet = "close_cabinet is required";
@@ -102,11 +109,34 @@ const CreateProduct = () => {
       newErrors.quantity = "quantity must be a number";
       isValid = false;
     }
-    // size validation
-    if (!formData.size.trim()) {
-      newErrors.size = "size is required";
+
+    //ขนาดความกว้าง  validation
+    if (!formData.wide_size.trim()) {
+      newErrors.wide_size = "wide_size is required";
+      isValid = false;
+    } else if (isNaN(Number(formData.wide_size))) {
+      newErrors.wide_size = "wide_size must be a number";
       isValid = false;
     }
+
+    // ขนาดความยาว validation
+    if (!formData.long_size.trim()) {
+      newErrors.long_size = "long_size is required";
+      isValid = false;
+    } else if (isNaN(Number(formData.long_size))) {
+      newErrors.long_size = "long_size must be a number";
+      isValid = false;
+    }
+
+    // ขนาดความสุง validation
+    if (!formData.height_size.trim()) {
+      newErrors.height_size = "height_size is required";
+      isValid = false;
+    } else if (isNaN(Number(formData.height_size))) {
+      newErrors.height_size = "height_size must be a number";
+      isValid = false;
+    }
+
     // cue_per_piece validation
     if (!formData.cue_per_piece.trim()) {
       newErrors.cue_per_piece = "cue_per_piece is required";
@@ -115,6 +145,7 @@ const CreateProduct = () => {
       newErrors.cue_per_piece = "cue_per_piece must be a number";
       isValid = false;
     }
+
     // weight validation
     if (!formData.weight.trim()) {
       newErrors.weight = "weight is required";
@@ -141,6 +172,7 @@ const CreateProduct = () => {
         "payment_amount_chinese_thai_delivery must be a number";
       isValid = false;
     }
+
     // product_type validation
     if (!formData.product_type.trim()) {
       newErrors.product_type = "product_type is required";
@@ -153,8 +185,6 @@ const CreateProduct = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
-    console.log("9999");
 
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -201,8 +231,8 @@ const CreateProduct = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (validate()) {
-      console.log("aa");
       const response = await Service.createProduct(formData, dispatch);
 
       if (response.status == "success") {
@@ -210,6 +240,8 @@ const CreateProduct = () => {
       } else {
         console.log("response", response);
       }
+    } else {
+      console.log("eee");
     }
   };
 
@@ -476,18 +508,56 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label"
                         >
-                          ขนาด
+                          ขนาดกว้าง
                         </label>
                         <input
                           type="text"
                           className="form-control form-control-user"
-                          id="size"
-                          placeholder="ขนาด"
-                          name="size"
+                          id="wide_size"
+                          placeholder="ขนาดกว้าง"
+                          name="wide_size"
                           onChange={handleChange}
                         />
-                        {errors.size && (
-                          <div className="error-from">{errors.size}</div>
+                        {errors.wide_size && (
+                          <div className="error-from">{errors.wide_size}</div>
+                        )}
+                      </div>
+                      <div className="col-sm-6  col-md-6 col-lg-6">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-label"
+                        >
+                          ขนาดยาว
+                        </label>
+                        <input
+                          type="long_size"
+                          className="form-control form-control-user"
+                          id="long_size"
+                          placeholder="ขนาดยาว"
+                          name="long_size"
+                          onChange={handleChange}
+                        />
+                        {errors.long_size && (
+                          <div className="error-from">{errors.long_size}</div>
+                        )}
+                      </div>
+                      <div className="col-sm-6  col-md-6 col-lg-6">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-label"
+                        >
+                          ขนาดสุง
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control form-control-user"
+                          id="height_size"
+                          placeholder="ขนาดสุง"
+                          name="height_size"
+                          onChange={handleChange}
+                        />
+                        {errors.height_size && (
+                          <div className="error-from">{errors.height_size}</div>
                         )}
                       </div>
                     </div>

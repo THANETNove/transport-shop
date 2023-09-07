@@ -87,13 +87,8 @@ const ProductList = () => {
     }
   };
   const handleChangeStatus = async (id, name, value) => {
-    console.log(name, value, id);
-    const response = await Service.updateStatusProductList(
-      id,
-      name,
-      value,
-      dispatch
-    );
+    console.log("name", name, value, id);
+    const response = await Service.updateStatusProductList(id, value, dispatch);
     if (response.status == "success") {
       setStatusSuccess(response.message);
       setStatusResponse(1);
@@ -141,12 +136,12 @@ const ProductList = () => {
                   <td>
                     {statusList &&
                       statusList.find(
-                        (status) => status.id == product.parcel_status
+                        (status) => status.id === product.parcel_status
                       ) && (
                         <span>
                           {statusList &&
                             statusList.find(
-                              (status) => status.id == product.parcel_status
+                              (status) => status.id === product.parcel_status
                             ).statusProduct}
                         </span>
                       )}
@@ -202,11 +197,11 @@ const ProductList = () => {
                     status.id == product.parcel_status &&
                     status.statusProduct
                 )} */}
-                <select
+                {/* <select
                   className="form-control"
                   id="parcel_status"
                   name="parcel_status"
-                  value={product.parcel_status}
+                  value={product.parcel_status || null}
                   onChange={(event) =>
                     handleChangeStatus(
                       product.id,
@@ -227,8 +222,35 @@ const ProductList = () => {
                           : status.statusProduct}
                       </option>
                     ))}
+                </select> */}
+                <select
+                  className="form-control"
+                  id="parcel_status"
+                  name="parcel_status"
+                  value={product.parcel_status || ""} // Use empty string instead of null
+                  onChange={(event) =>
+                    handleChangeStatus(
+                      product.id,
+                      event.target.name,
+                      event.target.value
+                    )
+                  }
+                  aria-label="Default select example"
+                >
+                  <option value="" disabled>
+                    {" "}
+                    {/* Use value="" to represent the default "Select" option */}
+                    เลือก สถานะ
+                  </option>
+                  {statusList &&
+                    statusList.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.id === product.parcel_status
+                          ? `Selected: ${status.statusProduct}`
+                          : status.statusProduct}
+                      </option>
+                    ))}
                 </select>
-                {/* {product.parcel_status} */}
               </td>
               <td>{product.quantity}</td>
               {/*     <td>{product.size}</td>
