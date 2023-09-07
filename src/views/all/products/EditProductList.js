@@ -87,8 +87,8 @@ const EditProductList = () => {
       chinese_warehouse: new Date(productList && productList.chinese_warehouse), // date
       close_cabinet: new Date(productList && productList.close_cabinet), // date
       to_thailand:
-        productList && !["null", "NULL", ""].includes(product.to_thailand)
-          ? new Date(product.to_thailand)
+        productList && !["null", "NULL", ""].includes(productList.to_thailand)
+          ? new Date(productList.to_thailand)
           : null,
       parcel_status:
         productList && productList.parcel_status
