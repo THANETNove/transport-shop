@@ -10,6 +10,7 @@ const PricePreUser = () => {
   const dispatch = useDispatch();
   const { users_code } = useSelector((state) => state.get);
   const [userCodeAll, setUserCodeAll] = useState(users_code);
+  const [statusSuccess, setStatusSuccess] = useState(null);
 
   const fetchData = async () => {
     await Service.getCustomerCodeAll(dispatch); // ดึงประเภทพัสดุ
@@ -27,6 +28,10 @@ const PricePreUser = () => {
 
     if (response.status == "success") {
       fetchData();
+      setStatusSuccess("ลบเรียบร้อย");
+      setTimeout(() => {
+        setStatusSuccess(null);
+      }, 1000);
     }
   };
 
@@ -41,15 +46,9 @@ const PricePreUser = () => {
               <Link className="btn btn-primary" to="/create-price-per-user">
                 เพิ่ม ราคาต่อ USER
               </Link>
-              {/*  <span
-                className={
-                  statusResponse == "1"
-                    ? "color-success"
-                    : statusResponse == "2" && "color-error"
-                }
-              >
+              <span className="color-error">
                 {statusSuccess && statusSuccess != null && statusSuccess}
-              </span> */}
+              </span>
             </div>
 
             <div className="card-body">
@@ -76,14 +75,14 @@ const PricePreUser = () => {
                           <td>{value.kg}</td>
                           <td>{value.cbm}</td>
                           <td>
-                            {/*   <button
+                            <button
                               className="btn btn-secondary"
                               onClick={() =>
-                                navigate(`/edit-product-type/${status.id}`)
+                                navigate(`/edit-price-per-user/${value.id}`)
                               }
                             >
                               Edit
-                            </button> */}
+                            </button>
                           </td>
                           <td>
                             <button
