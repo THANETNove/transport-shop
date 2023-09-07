@@ -17,8 +17,8 @@ const ShowProductList = () => {
   const [statusList, setStatusList] = useState(status_list);
   const [productType, setProductType] = useState(product_type);
   const [preview, setPreview] = useState(null);
- /*  const url = "http://192.168.1.3/project/API/image/product/"; */
- const url = "https://medocargo.com/API/image/product/";
+  /*  const url = "http://192.168.1.3/project/API/image/product/"; */
+  const url = "https://medocargo.com/API/image/product/";
 
   const { id } = useParams();
 
@@ -175,9 +175,13 @@ const ShowProductList = () => {
                             ถึงไทย
                           </label>
                           <p className="form-control form-control-user">
-                            {formData.to_thailand
-                              ? format(formData.to_thailand, "dd-MM-yyyy")
-                              : ""}
+                            {product.to_thailand &&
+                            !["null", "NULL", ""].includes(product.to_thailand)
+                              ? format(
+                                  new Date(product.to_thailand),
+                                  "dd-MM-yyyy"
+                                )
+                              : "N/A"}
                           </p>
                         </div>
                         <div className="col-sm-6  col-md-6 col-lg-6">
@@ -318,10 +322,7 @@ const ShowProductList = () => {
                           <div className="mt-5">
                             {formData.old_image && (
                               <img
-                                src={
-                                  url +
-                                  formData.old_image
-                                }
+                                src={url + formData.old_image}
                                 alt="Image Preview"
                                 width="200"
                               />
