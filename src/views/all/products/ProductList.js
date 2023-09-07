@@ -186,9 +186,15 @@ const ProductList = () => {
               </td>
               <td>{format(new Date(product.close_cabinet), "dd-MM-yyyy")}</td>
               <td>
-                {product.to_thailand &&
+                {/*  {product.to_thailand &&
                   product.to_thailand &&
-                  format(new Date(product.to_thailand), "dd-MM-yyyy")}
+                  format(new Date(product.to_thailand), "dd-MM-yyyy")} */}
+                {
+                  product.to_thailand &&
+                  !["null", "NULL", ""].includes(product.to_thailand)
+                    ? format(new Date(product.to_thailand), "dd-MM-yyyy")
+                    : "N/A" /* หรือข้อความอื่น ๆ ที่คุณต้องการแสดงถ้าเป็นค่า null, "NULL", หรือค่าว่าง */
+                }
               </td>
               <td>
                 {/*  {statusList &&
@@ -197,32 +203,6 @@ const ProductList = () => {
                     status.id == product.parcel_status &&
                     status.statusProduct
                 )} */}
-                {/* <select
-                  className="form-control"
-                  id="parcel_status"
-                  name="parcel_status"
-                  value={product.parcel_status || null}
-                  onChange={(event) =>
-                    handleChangeStatus(
-                      product.id,
-                      event.target.name,
-                      event.target.value
-                    )
-                  }
-                  aria-label="Default select example"
-                >
-                  <option selected disabled>
-                    เลือก สถานะ
-                  </option>
-                  {statusList &&
-                    statusList.map((status) => (
-                      <option key={status.id} value={status.id}>
-                        {status.id === product.parcel_status
-                          ? `Selected: ${status.statusProduct}`
-                          : status.statusProduct}
-                      </option>
-                    ))}
-                </select> */}
                 <select
                   className="form-control"
                   id="parcel_status"
