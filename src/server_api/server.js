@@ -115,7 +115,7 @@ const getPricePerUserId = async (id, dispatch) => {
   });
   if (response.data.message) {
     dispatch({
-      type: "ID_PRICE_USER_SUCCESS",
+      type: "PRICE_USER_SUCCESS",
       payload: response.data.price_per_user_data,
     });
     return {
@@ -404,6 +404,38 @@ const createProduct = async (e, dispatch) => {
       type: "PRODUCT_ERROR",
       payload: response.data.error,
     });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
+const createPriceUser = async (e, dispatch) => {
+  console.log("55");
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  for (let key in e) {
+    formData.append(key, e[key]);
+  }
+
+  const response = await axios.post(`${url}/priceUser.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
     return {
       status: "error",
       error: response.data.error,
@@ -715,6 +747,7 @@ export default {
   statusList,
   createProduct,
   createProductCode,
+  createPriceUser,
   ProductType,
   UpdateProduct,
   updateStatusProductList,
