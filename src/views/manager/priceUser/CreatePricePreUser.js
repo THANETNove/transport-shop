@@ -32,6 +32,9 @@ const CreatePricePreUser = () => {
     if (!formData.id_type.trim()) {
       newErrors.id_type = "id_type is required";
       isValid = false;
+    } else if (isNaN(Number(formData.id_type))) {
+      newErrors.id_type = "กรุณา เลือกประเภท";
+      isValid = false;
     }
     /*     if (typeof formData.kg !== "string") {
       formData.kg = formData.kg.toString(); // แปลงเป็นสตริง
@@ -64,11 +67,13 @@ const CreatePricePreUser = () => {
 
   const fetchData = async () => {
     await Service.getProductType(dispatch); // ดึงประเภทพัสดุ
-    await Service.getPricePerUserId(user && user.id, dispatch); // ดึงประเภทพัสดุ
-    setFormData((prevState) => ({
-      ...prevState,
-      ["id_user"]: user && user.id,
-    }));
+    if (user) {
+      setFormData((prevState) => ({
+        ...prevState,
+        ["id_user"]: user && user.id,
+      }));
+      await Service.getPricePerUserId(user && user.id, dispatch); // ดึงประเภทพัสดุ
+    }
   };
 
   useEffect(() => {
@@ -96,6 +101,13 @@ const CreatePricePreUser = () => {
       console.log("response", response);
       if (response.status == "success") {
         fetchData();
+
+        setFormData((prevState) => ({
+          ...prevState,
+          ["id_type"]: "",
+          ["kg"]: "",
+          ["cbm"]: "",
+        }));
       } else {
         console.log("response error", response.error);
         /*  setErrors((prevState) => ({
@@ -105,10 +117,17 @@ const CreatePricePreUser = () => {
       }
     }
   };
-  console.log(
+  const handleChangeUser = async (event) => {
+    const { name, value } = event.target;
+    const represent = await Service.getCustomerCode(value, dispatch); // ดึงประเภทพัสดุ
+    console.log(represent);
+  };
+
+  ///getCustomerCode
+  /*  console.log(
     "id_price_user",
     useSelector((state) => state.get)
-  );
+  ); */
   /*  console.log("product_type", product_type); */
 
   return (
@@ -128,23 +147,52 @@ const CreatePricePreUser = () => {
                   <form onSubmit={handleSubmit}>
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
+                        <label for="inputPassword6" class="col-form-label">
+                          รหัสลูกค้า
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control form-control-user"
+                          /*  id="kg"
+                          name="kg"
+                          placeholder="kg"
+                          value={formData.kg} */
+                          onChange={handleChangeUser}
+                        />
+                        {errors.kg && (
+                          <div className="error-from">{errors.kg}</div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <div className="col-sm-12 mb-3 mb-sm-0">
+                        <label for="inputPassword6" class="col-form-label">
+                          ประเภทพัสดุ
+                        </label>
                         <select
                           className="form-control"
                           id="id_type"
                           name="id_type"
+                          value={formData.id_type || ""}
                           onChange={handleChange}
                           aria-label="Default select example"
                         >
-                          <option selected disabled>
-                            เลือก สถานะ
-                          </option>
+                          <option selected>เลือก สถานะ</option>
                           {priceUser && priceUser.length === 0
                             ? product_type.map((pro_type) => (
                                 <option key={pro_type.id} value={pro_type.id}>
                                   {pro_type.name}
                                 </option>
                               ))
-                            : null}
+                            : product_type.map((type) =>
+                                !priceUser.some(
+                                  (priceId) => priceId.id_type == type.id
+                                ) ? (
+                                  <option key={type.id} value={type.id}>
+                                    {type.name}
+                                  </option>
+                                ) : null
+                              )}
                         </select>
                         {errors.id_type && (
                           <div className="error-from">{errors.id_type}</div>
@@ -153,6 +201,9 @@ const CreatePricePreUser = () => {
                     </div>
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
+                        <label for="inputPassword6" class="col-form-label">
+                          KG
+                        </label>
                         <input
                           type="number"
                           className="form-control form-control-user"
@@ -169,6 +220,9 @@ const CreatePricePreUser = () => {
                     </div>
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
+                        <label for="inputPassword6" class="col-form-label">
+                          CBM
+                        </label>
                         <input
                           type="number"
                           className="form-control form-control-user"

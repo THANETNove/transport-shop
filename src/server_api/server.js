@@ -209,6 +209,34 @@ const getProductCode = async (id, dispatch) => {
   }
 };
 
+const getCustomerCode = async (code, dispatch) => {
+  console.log("code", code);
+  const params = {
+    isAdd: true,
+    id: code,
+  };
+  const response = await axios.get(`${url}/getCustomerCode.php`, {
+    params,
+  });
+
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.userCode_data,
+    };
+  } else if (response.data.error_message) {
+    return {
+      status: "error",
+      error: "ไม่พบ รหัสลูกค้า",
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 //POST
 const register = async (e, dispatch) => {
   const formData = new FormData();
@@ -742,6 +770,7 @@ export default {
   getPricePerUserId,
   getProduct,
   getProductCode,
+  getCustomerCode,
   register,
   Login,
   statusList,
