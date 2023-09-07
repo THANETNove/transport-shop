@@ -104,6 +104,41 @@ const getProductTypeId = async (id, dispatch) => {
   }
 };
 
+const getPricePerUserId = async (id, dispatch) => {
+  const params = {
+    isAdd: true,
+    id: id,
+  };
+
+  const response = await axios.get(`${url}/getPricePerUserId.php`, {
+    params,
+  });
+  if (response.data.message) {
+    dispatch({
+      type: "ID_PRICE_USER_SUCCESS",
+      payload: response.data.price_per_user_data,
+    });
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "ID_PRICE_USER_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 const getProduct = async (dispatch) => {
   const params = {
     isAdd: true,
@@ -672,6 +707,7 @@ export default {
   getStatusList,
   getProductType,
   getProductTypeId,
+  getPricePerUserId,
   getProduct,
   getProductCode,
   register,

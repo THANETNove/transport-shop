@@ -147,7 +147,7 @@ const ShowProductList = () => {
                             ถึงโกดังจีน
                           </label>
                           <p className="form-control form-control-user">
-                            {formData.to_thailand
+                            {formData.chinese_warehouse
                               ? format(formData.chinese_warehouse, "dd-MM-yyyy")
                               : ""}
                           </p>
@@ -160,7 +160,7 @@ const ShowProductList = () => {
                             ปิดตู้
                           </label>
                           <p className="form-control form-control-user">
-                            {formData.to_thailand
+                            {formData.close_cabinet
                               ? format(formData.close_cabinet, "dd-MM-yyyy")
                               : ""}
                           </p>

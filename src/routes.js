@@ -15,6 +15,8 @@ import CreateStatus from "./views/manager/status/CreateStatus";
 import ProductTypeList from "./views/manager/productType/ProductTypeList";
 import CreateProductType from "./views/manager/productType/CreateProductType";
 import EditProductType from "./views/manager/productType/EditProductType";
+import PricePreUser from "./views/manager/priceUser/PricePreUser";
+import CreatePricePreUser from "./views/manager/priceUser/CreatePricePreUser";
 
 // All ใช้รวมกัน
 import CreateProduct from "./views/all/products/CreateProduct";
@@ -62,12 +64,12 @@ const commonRoutes = [
 ];
 
 const userRoutes = [
-   {
+  {
     path: "/product-code",
     component: ProductCode,
     layout: "/auth",
   },
-    {
+  {
     path: "/create-product-code",
     component: CreateProductCode,
     layout: "/auth",
@@ -111,6 +113,16 @@ const managerRoutes = [
   {
     path: "/edit-product-type/:id",
     component: EditProductType,
+    layout: "/auth",
+  },
+  {
+    path: "/price-per-user",
+    component: PricePreUser,
+    layout: "/auth",
+  },
+  {
+    path: "/create-price-per-user",
+    component: CreatePricePreUser,
     layout: "/auth",
   },
 ];

@@ -10,8 +10,8 @@ const CreateProductType = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
-    kg: "",
-    cbm: "",
+    kg: 0,
+    cbm: 0,
   });
 
   const [errors, setErrors] = useState({
@@ -29,7 +29,7 @@ const CreateProductType = () => {
       newErrors.name = "name is required";
       isValid = false;
     }
-    // kg validation
+    /*   // kg validation
     if (!formData.kg.trim()) {
       newErrors.kg = "kg is required";
       isValid = false;
@@ -38,7 +38,7 @@ const CreateProductType = () => {
     if (!formData.cbm.trim()) {
       newErrors.cbm = "cbm is required";
       isValid = false;
-    }
+    } */
 
     setErrors(newErrors);
     return isValid;
@@ -102,6 +102,7 @@ const CreateProductType = () => {
                           placeholder="kg"
                           value={formData.kg}
                           onChange={handleChange}
+                          disabled
                         />
                         {errors.kg && (
                           <div className="error-from">{errors.kg}</div>
@@ -118,6 +119,7 @@ const CreateProductType = () => {
                           name="cbm"
                           value={formData.cbm}
                           onChange={handleChange}
+                          disabled
                         />
                         {errors.cbm && (
                           <div className="error-from">{errors.cbm}</div>

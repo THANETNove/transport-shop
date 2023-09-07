@@ -57,7 +57,7 @@ export default function Sidebar() {
             <span>พัสดุทั้งหมด</span>
           </Link>
         </li>
-        
+
         {/* Users */}
         {user && user.status == 0 && (
           <>
@@ -70,8 +70,8 @@ export default function Sidebar() {
           </>
         )}
 
-         {/* manager */}
-        
+        {/* manager */}
+
         {user && user.status == 2 && (
           <>
             <li className="nav-item">
@@ -84,6 +84,12 @@ export default function Sidebar() {
               <Link className="nav-link" to="/product-type-list">
                 <i class="fa-solid fa-notes-medical"></i>
                 <span>ประเภทพัสดุ</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/price-per-user">
+                <i class="fa-solid fa-tag"></i>
+                <span>ราคาต่อ User</span>
               </Link>
             </li>
           </>

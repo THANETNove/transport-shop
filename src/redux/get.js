@@ -1,6 +1,8 @@
 const initialState = {
   productTypeId: null,
   errors: null,
+  id_price_user: null,
+  id_price_user_errors: null,
 };
 
 export default function (state = initialState, action) {
@@ -14,6 +16,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         errors: action.payload,
+      };
+    case "ID_PRICE_USER_SUCCESS":
+      return {
+        ...state,
+        id_price_user: action.payload,
+      };
+    case "ID_PRICE_USER_ERROR":
+      return {
+        ...state,
+        id_price_user_errors: action.payload,
       };
     default:
       return state;

@@ -1,86 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import Service from "../../../server_api/server";
 import { useSelector, useDispatch } from "react-redux";
 
-const CreateProductType = (props) => {
+const CreatePricePreUser = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id } = useParams();
-
+  const user = useSelector((state) => state.auth.user);
+  const { product_type } = useSelector((state) => state.post);
+  const { id_price_user } = useSelector((state) => state.get);
+  const [productTypeList, setProductTypeList] = useState(product_type);
+  const [priceUser, setPriceUser] = useState(id_price_user);
   const [formData, setFormData] = useState({
-    id: id,
-    name: "",
-    kg: 0,
-    cbm: 0,
-  });
-
-  const [errors, setErrors] = useState({
-    name: "",
+    id_type: "",
     kg: "",
     cbm: "",
   });
-
-  const validate = () => {
-    let isValid = true;
-    const newErrors = {};
-
-    // name validation
-    if (!formData.name.trim()) {
-      newErrors.name = "name is required";
-      isValid = false;
-    }
-    /*  // kg validation
-    if (typeof formData.kg === "string" && !formData.kg.trim()) {
-      newErrors.kg = "kg is required";
-      isValid = false;
-    }
-    // cbm validation
-    if (typeof formData.kg === "string" && !formData.cbm.trim()) {
-      newErrors.cbm = "cbm is required";
-      isValid = false;
-    } */
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (validate()) {
-      const response = await Service.UpdateProductType(formData, dispatch);
-      if (response.status == "success") {
-        navigate("/product-type-list");
-      } else {
-        setErrors((prevState) => ({
-          ...prevState,
-          ["statusProduct"]: response.error,
-        }));
-      }
-    }
+  const fetchData = async () => {
+    await Service.getProductType(dispatch); // ดึงประเภทพัสดุ
+    await Service.getPricePerUserId(user && user.id, dispatch); // ดึงประเภทพัสดุ
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const productType = await Service.getProductTypeId(id, dispatch); // ดึงสถานะสิค้า
-      if (productType.message.length > 0) {
-        setFormData((prevState) => ({
-          ...prevState,
-          ["name"]: productType.message[0].name,
-          ["kg"]: productType.message[0].kg,
-          ["cbm"]: productType.message[0].cbm,
-        }));
-      }
-    };
-
     fetchData();
   }, []);
+
+  useEffect(() => {
+    setProductTypeList(product_type);
+  }, [product_type]);
+
+  useEffect(() => {
+    setPriceUser(id_price_user);
+  }, [id_price_user]);
+
+  console.log("id_price_user", priceUser);
+  console.log("product_type", product_type);
 
   return (
     <div className="container-fluid">
@@ -89,14 +44,14 @@ const CreateProductType = (props) => {
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <h6 className="m-0 font-weight-bold text-primary">
-                เเก้ไขประเภทพัสดุ
+                ประเภทพัสดุของ user
               </h6>
             </div>
 
             <div className="card-body ">
               <div className="d-flex justify-content-center mt-5">
                 <div className="col-sm-12 col-md-12 col-lg-6">
-                  <form onSubmit={handleSubmit}>
+                  <form /* onSubmit={handleSubmit} */>
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
                         <input
@@ -105,12 +60,12 @@ const CreateProductType = (props) => {
                           id="name"
                           placeholder="ชื่อประเภทพัสดุ"
                           name="name"
-                          value={formData.name}
-                          onChange={handleChange}
+                          /*  value={formData.name}
+                          onChange={handleChange} */
                         />
-                        {errors.name && (
+                        {/*  {errors.name && (
                           <div className="error-from">{errors.name}</div>
-                        )}
+                        )} */}
                       </div>
                     </div>
                     <div className="form-group">
@@ -121,13 +76,12 @@ const CreateProductType = (props) => {
                           id="kg"
                           name="kg"
                           placeholder="kg"
-                          value={formData.kg}
-                          onChange={handleChange}
-                          disabled
+                          /*  value={formData.kg}
+                          onChange={handleChange} */
                         />
-                        {errors.kg && (
+                        {/*  {errors.kg && (
                           <div className="error-from">{errors.kg}</div>
-                        )}
+                        )} */}
                       </div>
                     </div>
                     <div className="form-group">
@@ -138,13 +92,12 @@ const CreateProductType = (props) => {
                           id="cbm"
                           placeholder="cbm"
                           name="cbm"
-                          value={formData.cbm}
-                          onChange={handleChange}
-                          disabled
+                          /*  value={formData.cbm}
+                          onChange={handleChange} */
                         />
-                        {errors.cbm && (
+                        {/* {errors.cbm && (
                           <div className="error-from">{errors.cbm}</div>
-                        )}
+                        )} */}
                       </div>
                     </div>
 
@@ -164,5 +117,4 @@ const CreateProductType = (props) => {
     </div>
   );
 };
-
-export default CreateProductType;
+export default CreatePricePreUser;
