@@ -97,7 +97,7 @@ const ProductTypeList = () => {
                             <button
                               className="btn btn-secondary"
                               onClick={() =>
-                                navigate(`/edit-price-per-user/${status.id}`)
+                                navigate(`/edit-product-type/${status.id}`)
                               }
                             >
                               Edit
