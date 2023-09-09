@@ -66,6 +66,13 @@ const CreateProduct = () => {
     product_type: "",
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      await Service.getCustomerCodeAll(dispatch); // ดึงประเภทพัสดุ
+    };
+    fetchData();
+  }, []);
+
   const validate = () => {
     let isValid = true;
     const newErrors = {};
