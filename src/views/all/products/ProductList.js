@@ -123,12 +123,18 @@ const ProductList = () => {
                     {format(new Date(product.chinese_warehouse), "dd-MM-yyyy")}
                   </td>
                   <td>
-                    {format(new Date(product.close_cabinet), "dd-MM-yyyy")}
+                    {product.close_cabinet &&
+                    !["null", "NULL", ""].includes(product.close_cabinet)
+                      ? format(new Date(product.close_cabinet), "dd-MM-yyyy")
+                      : "N/A"}
                   </td>
                   <td>
-                    {product.to_thailand &&
+                    {
                       product.to_thailand &&
-                      format(new Date(product.to_thailand), "dd-MM-yyyy")}
+                      !["null", "NULL", ""].includes(product.to_thailand)
+                        ? format(new Date(product.to_thailand), "dd-MM-yyyy")
+                        : "N/A" /* หรือข้อความอื่น ๆ ที่คุณต้องการแสดงถ้าเป็นค่า null, "NULL", หรือค่าว่าง */
+                    }
                   </td>
                   <td>
                     {statusList &&
