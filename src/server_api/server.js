@@ -674,6 +674,35 @@ const updateStatusProductList = async (id, value, dispatch) => {
     };
   }
 };
+const updatePriceUser = async (e, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  for (let key in e) {
+    formData.append(key, e[key]);
+  }
+
+  const response = await axios.post(`${url}/updatePriceUser.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    return {
+      status: "unknown",
+    };
+  }
+};
 
 // Delete POST
 const deleteStatusList = async (id, dispatch) => {
@@ -844,6 +873,7 @@ export default {
   UpdateProduct,
   updateStatusProductList,
   UpdateProductType,
+  updatePriceUser,
   deleteStatusList,
   deleteProduct,
   deleteProductTypeList,

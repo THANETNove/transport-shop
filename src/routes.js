@@ -17,6 +17,7 @@ import CreateProductType from "./views/manager/productType/CreateProductType";
 import EditProductType from "./views/manager/productType/EditProductType";
 import PricePreUser from "./views/manager/priceUser/PricePreUser";
 import CreatePricePreUser from "./views/manager/priceUser/CreatePricePreUser";
+import EditPricePreUser from "./views/manager/priceUser/EditPricePreUser";
 
 // All ใช้รวมกัน
 import CreateProduct from "./views/all/products/CreateProduct";
@@ -123,6 +124,11 @@ const managerRoutes = [
   {
     path: "/create-price-per-user",
     component: CreatePricePreUser,
+    layout: "/auth",
+  },
+  {
+    path: "/edit-price-per-user/:id",
+    component: EditPricePreUser,
     layout: "/auth",
   },
 ];
