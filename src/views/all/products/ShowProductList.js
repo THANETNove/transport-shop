@@ -17,8 +17,8 @@ const ShowProductList = () => {
   const [statusList, setStatusList] = useState(status_list);
   const [productType, setProductType] = useState(product_type);
   const [preview, setPreview] = useState(null);
-  /*  const url = "http://192.168.1.3/project/API/image/product/"; */
-  const url = "https://medocargo.com/API/image/product/";
+  const url = "http://192.168.1.10/project/API/image/product/";
+  /* const url = "https://medocargo.com/API/image/product/"; */
 
   const { id } = useParams();
 
@@ -61,9 +61,12 @@ const ShowProductList = () => {
       to_thailand: new Date(productList && productList.to_thailand), // date*/
       parcel_status: productList && productList.parcel_status,
       quantity: productList && productList.quantity,
-      size: productList && productList.size,
+      wide_size: productList && productList.wide_size,
+      long_size: productList && productList.long_size,
+      height_size: productList && productList.height_size,
       cue_per_piece: productList && productList.cue_per_piece,
       weight: productList && productList.weight,
+      total_weight: productList && productList.total_weight,
       total_queue: productList && productList.total_queue,
       payment_amount_chinese_thai_delivery:
         productList && productList.payment_amount_chinese_thai_delivery,
@@ -230,10 +233,34 @@ const ShowProductList = () => {
                             for="exampleFormControlInput1"
                             class="form-label"
                           >
-                            ขนาด
+                            ขนาดกว้าง
                           </label>
                           <p className="form-control form-control-user">
-                            {formData.size}
+                            {formData.wide_size}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="form-group row">
+                        <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                          <label
+                            for="exampleFormControlInput1"
+                            class="form-label"
+                          >
+                            ขนาดยาว
+                          </label>
+                          <p className="form-control form-control-user">
+                            {formData.long_size}
+                          </p>
+                        </div>
+                        <div className="col-sm-6  col-md-6 col-lg-6">
+                          <label
+                            for="exampleFormControlInput1"
+                            class="form-label"
+                          >
+                            ขนาดสุง
+                          </label>
+                          <p className="form-control form-control-user">
+                            {formData.height_size}
                           </p>
                         </div>
                       </div>
@@ -254,7 +281,7 @@ const ShowProductList = () => {
                             for="exampleFormControlInput1"
                             class="form-label"
                           >
-                            น้ำหนัก
+                            น้ำหนักต่อชิ้น
                           </label>
                           <p className="form-control form-control-user">
                             {formData.weight}
@@ -267,11 +294,11 @@ const ShowProductList = () => {
                             for="exampleFormControlInput1"
                             class="form-label"
                           >
-                            คิวรวม
+                            น้ำหนักรวม
                           </label>
 
                           <p className="form-control form-control-user">
-                            {formData.total_queue}
+                            {formData.total_weight}
                           </p>
                         </div>
                         <div className="col-sm-6  col-md-6 col-lg-6">
@@ -279,10 +306,11 @@ const ShowProductList = () => {
                             for="exampleFormControlInput1"
                             class="form-label"
                           >
-                            ยอดชำระค่าจัดส่ง จีน-ไทย
+                            คิวรวม
                           </label>
+
                           <p className="form-control form-control-user">
-                            {formData.payment_amount_chinese_thai_delivery}
+                            {formData.total_queue}
                           </p>
                         </div>
                       </div>
@@ -315,7 +343,17 @@ const ShowProductList = () => {
                               ))}
                           </select>
                         </div>
-                        <div className="col-sm-6  col-md-6 col-lg-6"></div>
+                        <div className="col-sm-6  col-md-6 col-lg-6">
+                          <label
+                            for="exampleFormControlInput1"
+                            class="form-label"
+                          >
+                            ยอดชำระค่าจัดส่ง จีน-ไทย
+                          </label>
+                          <p className="form-control form-control-user">
+                            {formData.payment_amount_chinese_thai_delivery}
+                          </p>
+                        </div>
                       </div>
                       <div className="form-group mb-5">
                         <div className="justify-content-center d-flex">
