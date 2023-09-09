@@ -24,8 +24,7 @@ const EditProductList = () => {
   const [preview, setPreview] = useState(null);
   const [codeData, setCodeData] = useState(status_code_data);
   const [userCode, setUserCode] = useState(users_code);
-  /* const url = "http://192.168.1.10/project/API/image/product/"; */
-  const url = "https://medocargo.com/API/image/product/";
+  const url = Service.getUrl() + "/image/product/";
 
   const { id } = useParams();
 

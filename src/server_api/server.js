@@ -1,8 +1,13 @@
 import axios from "axios";
 import { format } from "date-fns";
 
-/* const url = "http://192.168.1.10/project/API"; //หน่วย */
-const url = "https://medocargo.com/API";
+const getUrl = () => {
+  /* const url = "http://192.168.1.10/project/API"; //หน่วย */
+  const https_url = "https://medocargo.com/API";
+  return https_url;
+};
+
+const url = getUrl();
 
 // GET
 const getStatusList = async (dispatch) => {
@@ -590,13 +595,14 @@ const UpdateProductType = async (e, dispatch) => {
 };
 
 const UpdateProduct = async (e, dispatch) => {
+  console.log("e", e);
   const formData = new FormData();
   formData.append("isAdd", true);
   for (let key in e) {
     formData.append(key, e[key]);
   }
 
-  const response = await axios.post(`${url}/UpdateProduct.php`, formData, {
+  const response = await axios.post(`${url}/updateProduct.php`, formData, {
     headers: {
       "Content-Type": "multipart/form-data;charset=utf-8",
     },
@@ -855,6 +861,7 @@ const deleteUserCode = async (id, dispatch) => {
 };
 
 export default {
+  getUrl,
   getStatusList,
   getProductType,
   getProductTypeId,
