@@ -294,12 +294,11 @@ const EditProductList = () => {
     console.log("cbm", cbm); */
 
     if (selectedValue != "เลือกประเภทพัสดุ") {
-      // คำนวน kg
-      const calculate_kg = kg * formData.total_weight;
-      // คำนวน cbm
-      const calculate_cbm = kg * formData.total_queue;
-      /*       console.log("calculate_kg", calculate_kg);
-      console.log("calculate_cbm", calculate_cbm); */
+      // คำนวน kg* น้ำหนักรวม
+
+      const calculate_kg = parseFloat(kg) * parseFloat(formData.total_weight);
+      // คำนวน cbm*คิวรวม
+      const calculate_cbm = parseFloat(cbm) * parseFloat(formData.total_queue);
 
       if (calculate_kg && calculate_kg > calculate_cbm && calculate_cbm) {
         // กรณี calculate_kg มากกว่า calculate_cbm
