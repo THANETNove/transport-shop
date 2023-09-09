@@ -79,8 +79,6 @@ const ProductTypeList = () => {
                     <tr>
                       <th scope="col">id</th>
                       <th scope="col">ประเภทพัสดุ</th>
-                      <th scope="col">KG</th>
-                      <th scope="col">CBM</th>
                       <th scope="col">Edit</th>
                       <th scope="col">delete</th>
                     </tr>
@@ -91,8 +89,7 @@ const ProductTypeList = () => {
                         <tr>
                           <th scope="row">{index + 1}</th>
                           <td>{status.name}</td>
-                          <td>{status.kg}</td>
-                          <td>{status.cbm}</td>
+
                           <td>
                             <button
                               className="btn btn-secondary"

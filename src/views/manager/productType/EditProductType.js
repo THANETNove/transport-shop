@@ -10,7 +10,7 @@ const CreateProductType = (props) => {
   const { id } = useParams();
 
   const [formData, setFormData] = useState({
-    id: null,
+    id: id,
     name: "",
     kg: 0,
     cbm: 0,
@@ -31,16 +31,6 @@ const CreateProductType = (props) => {
       newErrors.name = "name is required";
       isValid = false;
     }
-    /*  // kg validation
-    if (typeof formData.kg === "string" && !formData.kg.trim()) {
-      newErrors.kg = "kg is required";
-      isValid = false;
-    }
-    // cbm validation
-    if (typeof formData.kg === "string" && !formData.cbm.trim()) {
-      newErrors.cbm = "cbm is required";
-      isValid = false;
-    } */
 
     setErrors(newErrors);
     return isValid;
@@ -75,16 +65,11 @@ const CreateProductType = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const productType = await Service.getProductTypeId(
-        formData && formData.id,
-        dispatch
-      ); // ดึงสถานะสิค้า // ดึงสถานะสิค้า
+      const productType = await Service.getProductTypeId(id, dispatch); // ดึงสถานะสิค้า // ดึงสถานะสิค้า
       if (productType.message.length > 0) {
         setFormData((prevState) => ({
           ...prevState,
           ["name"]: productType.message[0].name,
-          ["kg"]: productType.message[0].kg,
-          ["cbm"]: productType.message[0].cbm,
         }));
       }
     };
@@ -99,7 +84,7 @@ const CreateProductType = (props) => {
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <h6 className="m-0 font-weight-bold text-primary">
-                เเก้ไขประเภทพัสดุ
+                เเก้ไขประเภทพัสดุ55
               </h6>
             </div>
 
@@ -120,40 +105,6 @@ const CreateProductType = (props) => {
                         />
                         {errors.name && (
                           <div className="error-from">{errors.name}</div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="col-sm-12 mb-3 mb-sm-0">
-                        <input
-                          type="number"
-                          className="form-control form-control-user"
-                          id="kg"
-                          name="kg"
-                          placeholder="kg"
-                          value={formData.kg}
-                          onChange={handleChange}
-                          disabled
-                        />
-                        {errors.kg && (
-                          <div className="error-from">{errors.kg}</div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="col-sm-12 mb-3 mb-sm-0">
-                        <input
-                          type="number"
-                          className="form-control form-control-user"
-                          id="cbm"
-                          placeholder="cbm"
-                          name="cbm"
-                          value={formData.cbm}
-                          onChange={handleChange}
-                          disabled
-                        />
-                        {errors.cbm && (
-                          <div className="error-from">{errors.cbm}</div>
                         )}
                       </div>
                     </div>

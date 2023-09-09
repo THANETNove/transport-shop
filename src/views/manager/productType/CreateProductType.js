@@ -16,8 +16,6 @@ const CreateProductType = () => {
 
   const [errors, setErrors] = useState({
     name: "",
-    kg: "",
-    cbm: "",
   });
 
   const validate = () => {
@@ -29,16 +27,6 @@ const CreateProductType = () => {
       newErrors.name = "name is required";
       isValid = false;
     }
-    /*   // kg validation
-    if (!formData.kg.trim()) {
-      newErrors.kg = "kg is required";
-      isValid = false;
-    }
-    // cbm validation
-    if (!formData.cbm.trim()) {
-      newErrors.cbm = "cbm is required";
-      isValid = false;
-    } */
 
     setErrors(newErrors);
     return isValid;
@@ -89,40 +77,6 @@ const CreateProductType = () => {
                         />
                         {errors.name && (
                           <div className="error-from">{errors.name}</div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="col-sm-12 mb-3 mb-sm-0">
-                        <input
-                          type="number"
-                          className="form-control form-control-user"
-                          id="kg"
-                          name="kg"
-                          placeholder="kg"
-                          value={formData.kg}
-                          onChange={handleChange}
-                          disabled
-                        />
-                        {errors.kg && (
-                          <div className="error-from">{errors.kg}</div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="col-sm-12 mb-3 mb-sm-0">
-                        <input
-                          type="number"
-                          className="form-control form-control-user"
-                          id="cbm"
-                          placeholder="cbm"
-                          name="cbm"
-                          value={formData.cbm}
-                          onChange={handleChange}
-                          disabled
-                        />
-                        {errors.cbm && (
-                          <div className="error-from">{errors.cbm}</div>
                         )}
                       </div>
                     </div>
