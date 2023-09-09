@@ -84,7 +84,7 @@ const CreateProductType = (props) => {
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <h6 className="m-0 font-weight-bold text-primary">
-                เเก้ไขประเภทพัสดุ55
+                เเก้ไขประเภทพัสดุ
               </h6>
             </div>
 
