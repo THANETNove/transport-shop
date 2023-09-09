@@ -10,7 +10,7 @@ const CreateProductType = (props) => {
   const { id } = useParams();
 
   const [formData, setFormData] = useState({
-    id: id,
+    id: null,
     name: "",
     kg: 0,
     cbm: 0,
@@ -67,8 +67,18 @@ const CreateProductType = (props) => {
   };
 
   useEffect(() => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ["id"]: id,
+    }));
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
-      const productType = await Service.getProductTypeId(id, dispatch); // ดึงสถานะสิค้า
+      const productType = await Service.getProductTypeId(
+        formData && formData.id,
+        dispatch
+      ); // ดึงสถานะสิค้า // ดึงสถานะสิค้า
       if (productType.message.length > 0) {
         setFormData((prevState) => ({
           ...prevState,

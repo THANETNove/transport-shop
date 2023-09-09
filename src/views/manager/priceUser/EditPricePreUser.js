@@ -23,7 +23,7 @@ const EditPricePreUser = () => {
   });
 
   useEffect(() => {
-    const data = users_code && users_code.find((status) => status.id === id);
+    const data = users_code && users_code.find((status) => status.id == 16);
     setUserCode(data);
     setFormData((prevState) => ({
       ...prevState,

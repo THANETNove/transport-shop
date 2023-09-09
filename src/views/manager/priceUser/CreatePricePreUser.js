@@ -11,7 +11,7 @@ const CreatePricePreUser = () => {
   const { product_type } = useSelector((state) => state.post);
   const { price_user } = useSelector((state) => state.get);
   const [productTypeList, setProductTypeList] = useState(product_type);
-  const [priceUser, setPriceUser] = useState(price_user);
+  const [priceUser, setPriceUser] = useState(null);
 
   const [formData, setFormData] = useState({
     id_user: "",
@@ -204,12 +204,15 @@ const CreatePricePreUser = () => {
                         >
                           <option selected>เลือก สถานะ</option>
                           {priceUser && priceUser.length === 0
-                            ? product_type.map((pro_type) => (
+                            ? product_type &&
+                              product_type.map((pro_type) => (
                                 <option key={pro_type.id} value={pro_type.id}>
                                   {pro_type.name}
                                 </option>
                               ))
-                            : product_type.map((type) =>
+                            : product_type &&
+                              product_type.map((type) =>
+                                priceUser &&
                                 !priceUser.some(
                                   (priceId) => priceId.id_type == type.id
                                 ) ? (

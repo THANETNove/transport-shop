@@ -1,8 +1,8 @@
 import axios from "axios";
 import { format } from "date-fns";
 
-const url = "http://192.168.1.10/project/API"; //หน่วย
-/* const url = "https://medocargo.com/API/"; */
+/* const url = "http://192.168.1.10/project/API"; //หน่วย */
+const url = "https://medocargo.com/API";
 
 // GET
 const getStatusList = async (dispatch) => {
