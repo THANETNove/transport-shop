@@ -9,14 +9,18 @@ export default function Home() {
           <div className="row">
             <div className="col-lg-6 d-flex flex-column justify-content-center">
               <h1 data-aos="fade-up" className="aos-init aos-animate">
-                We offer modern solutions for growing your business
+                ระบบเช็คสินค้า จีน - ไทย
               </h1>
               <h2
                 data-aos="fade-up"
                 data-aos-delay="400"
                 className="aos-init aos-animate"
               >
-                We are team of talented designers making websites with Bootstrap
+                บริการนำเข้า-ส่งออกสินค้าจากจีน-ไทยจัดการเคลียร์ภาษีแบบครบวงจร
+                รับส่งแบบเหมาตู้ รับส่งแบบปลีก(พรีออเดอร์)
+                พาเดินตลาดสั่งซื้อสินค้า และสั่งซื้อออนไลน์
+                มีระบบให้ติดตามสถานะสินค้าได้ตลอด 24 ชั่วโมง
+                และสามารถสั่งซื้อสินค้าแบบออนไลน์ได้อย่างสะดวก
               </h2>
               <div
                 data-aos="fade-up"
@@ -39,12 +43,16 @@ export default function Home() {
               data-aos="zoom-out"
               data-aos-delay="200"
             >
-              <img src="assets/img/hero-img.png" className="img-fluid" alt="" />
+              <img
+                src="assetsAuth/img/DwippXnUwAAaieW.jpeg"
+                className="img-fluid"
+                alt=""
+              />
             </div>
           </div>
         </div>
       </section>
-      <section id="about" className="about">
+      {/*  <section id="about" className="about">
         <div className="container aos-init aos-animate" data-aos="fade-up">
           <div className="row gx-0">
             <div
@@ -85,8 +93,8 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
-      <section id="values" className="values">
+      </section> */}
+      {/* <section id="values" className="values">
         <div className="container aos-init aos-animate" data-aos="fade-up">
           <header className="section-header">
             <h2>Our Values</h2>
@@ -100,7 +108,11 @@ export default function Home() {
               data-aos-delay="200"
             >
               <div className="box">
-                <img src="assets/img/values-1.png" className="img-fluid" alt="" />
+                <img
+                  src="assets/img/values-1.png"
+                  className="img-fluid"
+                  alt=""
+                />
                 <h3>Ad cupiditate sed est odio</h3>
                 <p>
                   Eum ad dolor et. Autem aut fugiat debitis voluptatem
@@ -115,7 +127,11 @@ export default function Home() {
               data-aos-delay="400"
             >
               <div className="box">
-                <img src="assets/img/values-2.png" className="img-fluid" alt="" />
+                <img
+                  src="assets/img/values-2.png"
+                  className="img-fluid"
+                  alt=""
+                />
                 <h3>Voluptatem voluptatum alias</h3>
                 <p>
                   Repudiandae amet nihil natus in distinctio suscipit id.
@@ -130,7 +146,11 @@ export default function Home() {
               data-aos-delay="600"
             >
               <div className="box">
-                <img src="assets/img/values-3.png" className="img-fluid" alt="" />
+                <img
+                  src="assets/img/values-3.png"
+                  className="img-fluid"
+                  alt=""
+                />
                 <h3>Fugit cupiditate alias nobis.</h3>
                 <p>
                   Quam rem vitae est autem molestias explicabo debitis sint.
@@ -141,8 +161,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <section id="features" className="features">
+ */}
+      {/* <section id="features" className="features">
         <div className="container aos-init aos-animate" data-aos="fade-up">
           <header className="section-header">
             <h2>Features</h2>
@@ -225,7 +245,10 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="row feture-tabs aos-init aos-animate" data-aos="fade-up">
+          <div
+            className="row feture-tabs aos-init aos-animate"
+            data-aos="fade-up"
+          >
             <div className="col-lg-6">
               <h3>
                 Neque officiis dolore maiores et exercitationem quae est seda
@@ -365,7 +388,11 @@ export default function Home() {
             </div>
 
             <div className="col-lg-6">
-              <img src="assets/img/features-2.png" className="img-fluid" alt="" />
+              <img
+                src="assets/img/features-2.png"
+                className="img-fluid"
+                alt=""
+              />
             </div>
           </div>
 
@@ -483,9 +510,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <section id="services" className="services">
+      {/* <section id="services" className="services">
         <div className="container aos-init aos-animate" data-aos="fade-up">
           <header className="section-header">
             <h2>Services</h2>
@@ -603,9 +630,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <section id="faq" className="faq">
+      {/*  <section id="faq" className="faq">
         <div className="container aos-init aos-animate" data-aos="fade-up">
           <header className="section-header">
             <h2>F.A.Q</h2>
@@ -791,10 +818,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <footer id="footer" className="footer">
-        <div className="footer-newsletter">
+        {/* <div className="footer-newsletter">
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-12 text-center">
@@ -812,21 +839,21 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="footer-top">
           <div className="container">
             <div className="row gy-4">
               <div className="col-lg-5 col-md-12 footer-info">
                 <a href="index.html" className="logo d-flex align-items-center">
-                  <img src="assets/img/logo.png" alt />
-                  <span>FlexStart</span>
+                  {/*  <img src="assets/img/logo.png" alt /> */}
+                  <span>ระบบเช็คสินค้า จีน - ไทย</span>
                 </a>
                 <p>
                   Cras fermentum odio eu feugiat lide par naso tierra. Justo
                   eget nada terra videa magna derita valies darta donna mare
                   fermentum iaculis eu non diam phasellus.
                 </p>
-                <div className="social-links mt-3">
+                {/*  <div className="social-links mt-3">
                   <a href="#" className="twitter">
                     <i className="bi bi-twitter" />
                   </a>
@@ -840,9 +867,9 @@ export default function Home() {
                   <a href="#" className="linkedin">
                     <i className="bi bi-linkedin" />
                   </a>
-                </div>
+                </div> */}
               </div>
-              <div className="col-lg-2 col-6 footer-links">
+              {/*  <div className="col-lg-2 col-6 footer-links">
                 <h4>Useful Links</h4>
                 <ul>
                   <li>
@@ -890,8 +917,8 @@ export default function Home() {
                     <a href="#">Graphic Design</a>
                   </li>
                 </ul>
-              </div>
-              <div className="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+              </div> */}
+              {/*   <div className="col-lg-3 col-md-12 footer-contact text-center text-md-start">
                 <h4>Contact Us</h4>
                 <p>
                   A108 Adam Street <br />
@@ -904,7 +931,7 @@ export default function Home() {
                   <strong>Email:</strong> info@example.com
                   <br />
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -912,7 +939,7 @@ export default function Home() {
           <div className="copyright">
             © Copyright{" "}
             <strong>
-              <span>FlexStart</span>
+              <span>ระบบเช็คสินค้า จีน - ไทย</span>
             </strong>
             . All Rights Reserved
           </div>
@@ -921,7 +948,7 @@ export default function Home() {
             {/* You can delete the links only if you purchased the pro version. */}
             {/* Licensing information: https://bootstrapmade.com/license/ */}
             {/* Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/flexstart-bootstrap-startup-template/ */}
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            {/* Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> */}
           </div>
         </div>
       </footer>

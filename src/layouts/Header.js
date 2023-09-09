@@ -6,12 +6,12 @@ export default function Header() {
     <header id="header" className="header fixed-top">
       <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
         <a className="logo d-flex align-items-center">
-          <img src="assets/img/logo.png" alt />
-          <span>FlexStart</span>
+          {/* <img src="assets/img/logo.png" alt /> */}
+          <span>ระบบเช็คสินค้า จีน - ไทย</span>
         </a>
         <nav id="navbar" className="navbar">
           <ul>
-            <li>
+            {/*  <li>
               <a className="nav-link scrollto active" href="#hero">
                 Home
               </a>
@@ -25,7 +25,7 @@ export default function Header() {
               <a className="nav-link scrollto" href="#services">
                 Services
               </a>
-            </li>
+            </li> */}
             {/* <li className="dropdown">
               <a href="#">
                 <span>Drop Down</span> <i className="bi bi-chevron-down" />
@@ -105,11 +105,9 @@ export default function Header() {
                 register
               </Link>
             </li>
-            <li>
-              <a className="getstarted scrollto" href="#about">
-                Get Started
-              </a>
-            </li>
+            {/*  <li>
+              <a className="getstarted scrollto">Get Started</a>
+            </li> */}
           </ul>
           <i className="bi bi-list mobile-nav-toggle" />
         </nav>
