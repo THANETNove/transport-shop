@@ -186,6 +186,11 @@ const CreateProduct = () => {
       newErrors.total_queue = "total_queue must be a number";
       isValid = false;
     }
+
+    if (typeof formData.payment_amount_chinese_thai_delivery !== "string") {
+      formData.payment_amount_chinese_thai_delivery =
+        formData.payment_amount_chinese_thai_delivery.toString(); // แปลงเป็นสตริง
+    }
     // payment_amount_chinese_thai_delivery validation
     if (!formData.payment_amount_chinese_thai_delivery.trim()) {
       newErrors.payment_amount_chinese_thai_delivery =
@@ -211,16 +216,18 @@ const CreateProduct = () => {
     const { name, value } = event.target;
 
     setFormData((prevState) => ({ ...prevState, [name]: value }));
-    if (userCode.some((type) => type.customerCode === value)) {
-      setErrors((prevState) => ({
-        ...prevState,
-        ["customer_code"]: "",
-      }));
-    } else {
-      setErrors((prevState) => ({
-        ...prevState,
-        ["customer_code"]: "รหัสลูกค้าไม่ตรง",
-      }));
+    if (name == "customer_code") {
+      if (userCode.some((type) => type.customerCode === value)) {
+        setErrors((prevState) => ({
+          ...prevState,
+          ["customer_code"]: "",
+        }));
+      } else {
+        setErrors((prevState) => ({
+          ...prevState,
+          ["customer_code"]: "รหัสลูกค้าไม่ตรง",
+        }));
+      }
     }
   };
 
@@ -232,16 +239,40 @@ const CreateProduct = () => {
     const kg = valuesArray[1]; // 2
     const cbm = valuesArray[2]; // 0.6
 
+    console.log("id", id);
+    console.log("kg", kg);
+    console.log("cbm", cbm);
+
     if (selectedValue != "เลือกประเภทพัสดุ") {
       setErrors((prevState) => ({
         ...prevState,
         ["product_type"]: "",
       }));
-
       setFormData((prevState) => ({
         ...prevState,
         ["product_type"]: id,
       }));
+
+      // คำนวน kg
+      const calculate_kg = kg * formData.total_weight;
+      // คำนวน cbm
+      const calculate_cbm = kg * formData.total_queue;
+      console.log("calculate_kg", calculate_kg);
+      console.log("calculate_cbm", calculate_cbm);
+
+      if (calculate_kg && calculate_kg > calculate_cbm && calculate_cbm) {
+        // กรณี calculate_kg มากกว่า calculate_cbm
+        setFormData((prevState) => ({
+          ...prevState,
+          ["payment_amount_chinese_thai_delivery"]: calculate_kg,
+        }));
+      } else {
+        // กรณี calculate_cbm มากกว่าหรือเท่ากับ calculate_kg
+        setFormData((prevState) => ({
+          ...prevState,
+          ["payment_amount_chinese_thai_delivery"]: calculate_cbm,
+        }));
+      }
     } else {
       setErrors((prevState) => ({
         ...prevState,
@@ -760,7 +791,7 @@ const CreateProduct = () => {
                           className="form-select"
                           id="product_type"
                           name="product_type"
-                          /*  onChange={handleChangeType} */
+                          onChange={handleChangeType}
                           aria-label="Default select example"
                         >
                           <option>เลือกประเภทพัสดุ</option>
@@ -798,6 +829,7 @@ const CreateProduct = () => {
                           className="form-control form-control-user"
                           id="payment_amount_chinese_thai_delivery"
                           name="payment_amount_chinese_thai_delivery"
+                          value={formData.payment_amount_chinese_thai_delivery}
                           placeholder="ยอดชำระค่าจัดส่ง จีน-ไทย"
                           onChange={handleChange}
                         />
