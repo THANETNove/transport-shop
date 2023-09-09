@@ -53,7 +53,6 @@ const CreateProduct = () => {
     warehouse_code: "",
     cabinet_number: "",
     chinese_warehouse: "",
-    close_cabinet: "",
     quantity: "",
     wide_size: "",
     long_size: "",
@@ -104,12 +103,6 @@ const CreateProduct = () => {
     // chinese_warehouse validation
     if (!formData.chinese_warehouse) {
       newErrors.chinese_warehouse = "chinese_warehouse is required";
-      isValid = false;
-    }
-
-    // close_cabinet validation
-    if (!formData.close_cabinet) {
-      newErrors.close_cabinet = "close_cabinet is required";
       isValid = false;
     }
 
@@ -557,11 +550,6 @@ const CreateProduct = () => {
                           }
                           dateFormat="dd/MM/yyyy"
                         />
-                        {errors.close_cabinet && (
-                          <div className="error-from">
-                            {errors.close_cabinet}
-                          </div>
-                        )}
                       </div>
                     </div>
                     <div className="form-group row">

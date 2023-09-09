@@ -29,11 +29,6 @@ const ProductList = () => {
       const pro_log_3 = await Service.getProduct(dispatch); // ดึงสิค้า
       const pro_log_4 = await Service.getProductCode(user.id, dispatch); // ดึงรหัสพัสดุ
       const pro_log_5 = await Service.getCustomerCodeAll(dispatch); // ดึงประเภทพัสดุ
-      console.log("ดึงประเภทสินค้า", pro_log_1);
-      console.log("ดึงสถานะสิค้า", pro_log_2);
-      console.log("ดึงสิค้า", pro_log_3);
-      console.log("ดึงรหัสพัสดุ", pro_log_4);
-      console.log("ดึงประเภทพัสดุ", pro_log_5);
     };
 
     setTimeout(() => {
@@ -186,7 +181,12 @@ const ProductList = () => {
               <td>
                 {format(new Date(product.chinese_warehouse), "dd-MM-yyyy")}
               </td>
-              <td>{format(new Date(product.close_cabinet), "dd-MM-yyyy")}</td>
+              <td>
+                {product.close_cabinet &&
+                !["null", "NULL", ""].includes(product.close_cabinet)
+                  ? format(new Date(product.close_cabinet), "dd-MM-yyyy")
+                  : "N/A"}
+              </td>
               <td>
                 {/*  {product.to_thailand &&
                   product.to_thailand &&

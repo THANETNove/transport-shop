@@ -163,9 +163,15 @@ const ShowProductList = () => {
                             ปิดตู้
                           </label>
                           <p className="form-control form-control-user">
-                            {formData.close_cabinet
-                              ? format(formData.close_cabinet, "dd-MM-yyyy")
-                              : ""}
+                            {product.close_cabinet &&
+                            !["null", "NULL", ""].includes(
+                              product.close_cabinet
+                            )
+                              ? format(
+                                  new Date(product.close_cabinet),
+                                  "dd-MM-yyyy"
+                                )
+                              : "N/A"}
                           </p>
                         </div>
                       </div>

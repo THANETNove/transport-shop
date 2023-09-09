@@ -59,7 +59,6 @@ const EditProductList = () => {
     warehouse_code: "",
     cabinet_number: "",
     chinese_warehouse: "",
-    close_cabinet: "",
     to_thailand: "",
     parcel_status: "",
     quantity: "",
@@ -94,7 +93,10 @@ const EditProductList = () => {
       warehouse_code: productList && productList.warehouse_code,
       cabinet_number: productList && productList.cabinet_number,
       chinese_warehouse: new Date(productList && productList.chinese_warehouse), // date
-      close_cabinet: new Date(productList && productList.close_cabinet), // date
+      close_cabinet:
+        productList && !["null", "NULL", ""].includes(productList.close_cabinet)
+          ? new Date(productList.close_cabinet)
+          : null, // date
       to_thailand:
         productList && !["null", "NULL", ""].includes(productList.to_thailand)
           ? new Date(productList.to_thailand)
@@ -150,12 +152,6 @@ const EditProductList = () => {
     // chinese_warehouse validation
     if (!formData.chinese_warehouse) {
       newErrors.chinese_warehouse = "chinese_warehouse is required";
-      isValid = false;
-    }
-
-    // close_cabinet validation
-    if (!formData.close_cabinet) {
-      newErrors.close_cabinet = "close_cabinet is required";
       isValid = false;
     }
 
