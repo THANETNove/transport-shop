@@ -16,13 +16,16 @@ const EditProductList = () => {
     status_code_data,
   } = useSelector((state) => state.post);
   const user = useSelector((state) => state.auth.user);
+  const { users_code } = useSelector((state) => state.get);
+
   const [productList, setProductList] = useState(null);
   const [statusList, setStatusList] = useState(status_list);
   const [productType, setProductType] = useState(product_type);
   const [preview, setPreview] = useState(null);
   const [codeData, setCodeData] = useState(status_code_data);
-  /* const url = "http://192.168.1.3/project/API/image/product/"; */
-  const url = "https://medocargo.com/API/image/product/";
+  const [userCode, setUserCode] = useState(users_code);
+  const url = "http://192.168.1.10/project/API/image/product/";
+  /* const url = "https://medocargo.com/API/image/product/"; */
 
   const { id } = useParams();
 
@@ -37,9 +40,12 @@ const EditProductList = () => {
     to_thailand: "",
     parcel_status: "",
     quantity: "",
-    size: "",
+    wide_size: "",
+    long_size: "",
+    height_size: "",
     cue_per_piece: "",
     weight: "",
+    total_weight: "",
     total_queue: "",
     payment_amount_chinese_thai_delivery: "",
     product_type: "",
@@ -48,6 +54,7 @@ const EditProductList = () => {
   });
 
   const [errors, setErrors] = useState({
+    idProduct: "",
     customer_code: "",
     tech_china: "",
     warehouse_code: "",
@@ -57,9 +64,12 @@ const EditProductList = () => {
     to_thailand: "",
     parcel_status: "",
     quantity: "",
-    size: "",
+    wide_size: "",
+    long_size: "",
+    height_size: "",
     cue_per_piece: "",
     weight: "",
+    total_weight: "",
     total_queue: "",
     payment_amount_chinese_thai_delivery: "",
     product_type: "",
@@ -95,9 +105,12 @@ const EditProductList = () => {
           ? productList.parcel_status
           : null,
       quantity: productList && productList.quantity,
-      size: productList && productList.size,
+      wide_size: productList && productList.wide_size,
+      long_size: productList && productList.long_size,
+      height_size: productList && productList.height_size,
       cue_per_piece: productList && productList.cue_per_piece,
       weight: productList && productList.weight,
+      total_weight: productList && productList.total_weight,
       total_queue: productList && productList.total_queue,
       payment_amount_chinese_thai_delivery:
         productList && productList.payment_amount_chinese_thai_delivery,
@@ -156,13 +169,37 @@ const EditProductList = () => {
       isValid = false;
     }
 
-    // size validation
-    if (!formData.size.trim()) {
-      newErrors.size = "size is required";
+    //ขนาดความกว้าง  validation
+    if (!formData.wide_size.trim()) {
+      newErrors.wide_size = "wide_size is required";
+      isValid = false;
+    } else if (isNaN(Number(formData.wide_size))) {
+      newErrors.wide_size = "wide_size must be a number";
       isValid = false;
     }
 
+    // ขนาดความยาว validation
+    if (!formData.long_size.trim()) {
+      newErrors.long_size = "long_size is required";
+      isValid = false;
+    } else if (isNaN(Number(formData.long_size))) {
+      newErrors.long_size = "long_size must be a number";
+      isValid = false;
+    }
+
+    // ขนาดความสุง validation
+    if (!formData.height_size.trim()) {
+      newErrors.height_size = "height_size is required";
+      isValid = false;
+    } else if (isNaN(Number(formData.height_size))) {
+      newErrors.height_size = "height_size must be a number";
+      isValid = false;
+    }
     // cue_per_piece validation
+    if (typeof formData.cue_per_piece !== "string") {
+      formData.cue_per_piece = formData.cue_per_piece.toString(); // แปลงเป็นสตริง
+    }
+
     if (!formData.cue_per_piece.trim()) {
       newErrors.cue_per_piece = "cue_per_piece is required";
       isValid = false;
@@ -179,7 +216,21 @@ const EditProductList = () => {
       newErrors.weight = "weight must be a number";
       isValid = false;
     }
+    if (typeof formData.total_weight !== "string") {
+      formData.total_weight = formData.total_weight.toString(); // แปลงเป็นสตริง
+    }
+    // total_weight validation
+    if (!formData.total_weight.trim()) {
+      newErrors.total_weight = "total_weight is required";
+      isValid = false;
+    } else if (isNaN(Number(formData.total_weight))) {
+      newErrors.total_weight = "total_weight must be a number";
+      isValid = false;
+    }
     // total_queue validation
+    if (typeof formData.total_queue !== "string") {
+      formData.total_queue = formData.total_queue.toString(); // แปลงเป็นสตริง
+    }
     if (!formData.total_queue.trim()) {
       newErrors.total_queue = "total_queue is required";
       isValid = false;
@@ -189,6 +240,11 @@ const EditProductList = () => {
     }
 
     // payment_amount_chinese_thai_delivery validation
+    if (typeof formData.payment_amount_chinese_thai_delivery !== "string") {
+      formData.payment_amount_chinese_thai_delivery =
+        formData.payment_amount_chinese_thai_delivery.toString(); // แปลงเป็นสตริง
+    }
+
     if (!formData.payment_amount_chinese_thai_delivery.trim()) {
       newErrors.payment_amount_chinese_thai_delivery =
         "payment_amount_chinese_thai_delivery is required";
@@ -211,11 +267,61 @@ const EditProductList = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    console.log("9999");
-
     setFormData((prevState) => ({ ...prevState, [name]: value }));
+    if (name == "customer_code") {
+      if (userCode.some((type) => type.customerCode === value)) {
+        setErrors((prevState) => ({
+          ...prevState,
+          ["customer_code"]: "",
+        }));
+      } else {
+        setErrors((prevState) => ({
+          ...prevState,
+          ["customer_code"]: "รหัสลูกค้าไม่ตรง",
+        }));
+      }
+    }
   };
+  const handleChangeType = (event) => {
+    const selectedValue = event.target.value;
+    const valuesArray = selectedValue.split(" ");
 
+    const id = valuesArray[0]; // 15
+    const kg = valuesArray[1]; // 2
+    const cbm = valuesArray[2]; // 0.6
+
+    /*   console.log("id", id);
+    console.log("kg", kg);
+    console.log("cbm", cbm); */
+
+    if (selectedValue != "เลือกประเภทพัสดุ") {
+      // คำนวน kg
+      const calculate_kg = kg * formData.total_weight;
+      // คำนวน cbm
+      const calculate_cbm = kg * formData.total_queue;
+      /*       console.log("calculate_kg", calculate_kg);
+      console.log("calculate_cbm", calculate_cbm); */
+
+      if (calculate_kg && calculate_kg > calculate_cbm && calculate_cbm) {
+        // กรณี calculate_kg มากกว่า calculate_cbm
+        setFormData((prevState) => ({
+          ...prevState,
+          ["payment_amount_chinese_thai_delivery"]: calculate_kg,
+        }));
+      } else {
+        // กรณี calculate_cbm มากกว่าหรือเท่ากับ calculate_kg
+        setFormData((prevState) => ({
+          ...prevState,
+          ["payment_amount_chinese_thai_delivery"]: calculate_cbm,
+        }));
+      }
+    } else {
+      setErrors((prevState) => ({
+        ...prevState,
+        ["product_type"]: "เลือกประเภทพัสดุ",
+      }));
+    }
+  };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
@@ -263,7 +369,42 @@ const EditProductList = () => {
     }
   };
 
-  console.log("formData", formData.parcel_status);
+  useEffect(() => {
+    setUserCode(users_code);
+  }, [users_code]);
+
+  // คิวต่อชิ้น
+  useEffect(() => {
+    const qu =
+      (formData.wide_size * formData.long_size * formData.height_size) /
+      1000000;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      ["cue_per_piece"]: qu,
+    }));
+  }, [formData.wide_size, formData.long_size, formData.height_size]);
+
+  // คิวรวม
+  useEffect(() => {
+    const quAll = formData.cue_per_piece * formData.quantity;
+    setFormData((prevState) => ({
+      ...prevState,
+      ["total_queue"]: quAll,
+    }));
+  }, [formData.quantity, formData.cue_per_piece]);
+
+  // น้ำหนักรวม
+  useEffect(() => {
+    const totalWeight = formData.quantity * formData.weight;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      ["total_weight"]: totalWeight,
+    }));
+  }, [formData.quantity, formData.weight]);
+
+  /*   console.log("product_type", formData.product_type); */
   return (
     <div className="container-fluidaa">
       <div className="row">
@@ -443,26 +584,12 @@ const EditProductList = () => {
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
-                        {/* <select
-                          class="form-control"
-                          id="parcel_status"
-                          name="parcel_status"
-                          value={formData.parcel_status}
-                          onChange={handleChange}
-                          aria-label="Default select example"
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-label"
                         >
-                          <option defaultValue="" disabled>
-                            เลือก สถานะ
-                          </option>
-                          {statusList &&
-                            statusList.map((status) => (
-                              <option key={status.id} value={status.id}>
-                                {status.id === formData.parcel_status
-                                  ? `Selected: ${status.statusProduct}`
-                                  : status.statusProduct}
-                              </option>
-                            ))}
-                        </select> */}
+                          สถานะสินค้า
+                        </label>
                         <select
                           className="form-control"
                           id="parcel_status"
@@ -514,24 +641,65 @@ const EditProductList = () => {
                       <div className="col-sm-6  col-md-6 col-lg-6">
                         <label
                           for="exampleFormControlInput1"
-                          class="form-label"
+                          className="form-label"
                         >
-                          ขนาด
+                          ขนาดกว้าง
                         </label>
                         <input
                           type="text"
                           className="form-control form-control-user"
-                          id="size"
-                          placeholder="ขนาด"
-                          value={formData.size}
-                          name="size"
+                          id="wide_size"
+                          placeholder="ขนาดกว้าง"
+                          name="wide_size"
+                          value={formData.wide_size}
                           onChange={handleChange}
                         />
-                        {errors.size && (
-                          <div className="error-from">{errors.size}</div>
+                        {errors.wide_size && (
+                          <div className="error-from">{errors.wide_size}</div>
+                        )}
+                      </div>
+                      <div className="col-sm-6  col-md-6 col-lg-6">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-label"
+                        >
+                          ขนาดยาว
+                        </label>
+                        <input
+                          type="long_size"
+                          className="form-control form-control-user"
+                          id="long_size"
+                          placeholder="ขนาดยาว"
+                          name="long_size"
+                          value={formData.long_size}
+                          onChange={handleChange}
+                        />
+                        {errors.long_size && (
+                          <div className="error-from">{errors.long_size}</div>
+                        )}
+                      </div>
+                      <div className="col-sm-6  col-md-6 col-lg-6">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-label"
+                        >
+                          ขนาดสุง
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control form-control-user"
+                          id="height_size"
+                          placeholder="ขนาดสุง"
+                          name="height_size"
+                          value={formData.height_size}
+                          onChange={handleChange}
+                        />
+                        {errors.height_size && (
+                          <div className="error-from">{errors.height_size}</div>
                         )}
                       </div>
                     </div>
+
                     <div className="form-group row">
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                         <label
@@ -560,7 +728,7 @@ const EditProductList = () => {
                           for="exampleFormControlInput1"
                           class="form-label"
                         >
-                          น้ำหนัก
+                          น้ำหนักต่อชิ้น
                         </label>
                         <input
                           type="text"
@@ -580,6 +748,28 @@ const EditProductList = () => {
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                         <label
                           for="exampleFormControlInput1"
+                          className="form-label"
+                        >
+                          น้ำหนักรวม
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control form-control-user"
+                          id="total_weight"
+                          name="total_weight"
+                          value={formData.total_weight}
+                          placeholder="น้ำหนักรวม"
+                          onChange={handleChange}
+                        />
+                        {errors.total_weight && (
+                          <div className="error-from">
+                            {errors.total_weight}
+                          </div>
+                        )}
+                      </div>
+                      <div className="col-sm-6  col-md-6 col-lg-6">
+                        <label
+                          for="exampleFormControlInput1"
                           class="form-label"
                         >
                           คิวรวม
@@ -595,6 +785,55 @@ const EditProductList = () => {
                         />
                         {errors.total_queue && (
                           <div className="error-from">{errors.total_queue}</div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-label"
+                        >
+                          ประเภทพัสดุ
+                        </label>
+                        <select
+                          class="form-control"
+                          id="product_type"
+                          name="product_type"
+                          onChange={handleChangeType}
+                          aria-label="Default select example"
+                        >
+                          {/* productType.map((type) => (
+                              <option key={type.id} value={type.id}>
+                                {type.id === formData.product_type
+                                  ? `Selected: ${type.name}`
+                                  : type.name}
+                              </option> */}
+                          <option disabled selected>
+                            เลือกประเภทพัสดุ
+                          </option>
+                          {userCode &&
+                            userCode
+                              .filter(
+                                (type) =>
+                                  formData &&
+                                  formData.customer_code == type.customerCode
+                              )
+                              .map((type, index) => (
+                                <option
+                                  key={index}
+                                  value={`${type.id_type} ${type.kg} ${type.cbm}`}
+                                >
+                                  {type.id == formData.product_type
+                                    ? `Selected: ${type.name}`
+                                    : type.name}
+                                </option>
+                              ))}
+                        </select>
+                        {errors.product_type && (
+                          <div className="error-from">
+                            {errors.product_type}
+                          </div>
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
@@ -622,40 +861,9 @@ const EditProductList = () => {
                     </div>
                     <div className="form-group row">
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
-                        <select
-                          class="form-control"
-                          id="product_type"
-                          name="product_type"
-                          value={formData.product_type}
-                          onChange={handleChange}
-                          aria-label="Default select example"
-                        >
-                          <option selected disabled>
-                            เลือกประเภทพัสดุ
-                          </option>
-                          {/*  {productType &&
-                            productType.map((type, index) => (
-                              <option value={type.id}>{type.name}</option>
-                            ))} */}
-                          {productType &&
-                            productType.map((type) => (
-                              <option key={type.id} value={type.id}>
-                                {type.id === formData.product_type
-                                  ? `Selected: ${type.name}`
-                                  : type.name}
-                              </option>
-                            ))}
-                        </select>
-                        {errors.product_type && (
-                          <div className="error-from">
-                            {errors.product_type}
-                          </div>
-                        )}
-                      </div>
-                      <div className="col-sm-6  col-md-6 col-lg-6">
                         <input
                           type="file"
-                          className="form-control form-control-user"
+                          className="form-control"
                           id="image"
                           name="image"
                           onChange={handleImageChange}
