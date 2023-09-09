@@ -253,14 +253,15 @@ const CreateProduct = () => {
         ["product_type"]: id,
       }));
 
-      // คำนวน kg
-      const calculate_kg = kg * formData.total_weight;
-      // คำนวน cbm
-      const calculate_cbm = kg * formData.total_queue;
+      // คำนวน kg* น้ำหนักรวม
+
+      const calculate_kg = parseFloat(kg) * parseFloat(formData.total_weight);
+      // คำนวน cbm*คิวรวม
+      const calculate_cbm = parseFloat(cbm) * parseFloat(formData.total_queue);
       console.log("calculate_kg", calculate_kg);
       console.log("calculate_cbm", calculate_cbm);
 
-      if (calculate_kg && calculate_kg > calculate_cbm && calculate_cbm) {
+      if (calculate_kg > calculate_cbm && calculate_cbm) {
         // กรณี calculate_kg มากกว่า calculate_cbm
         setFormData((prevState) => ({
           ...prevState,
