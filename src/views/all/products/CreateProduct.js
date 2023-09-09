@@ -13,11 +13,14 @@ const CreateProduct = () => {
   const { status_list, product_type, status_code_data } = useSelector(
     (state) => state.post
   );
+  const { users_code } = useSelector((state) => state.get);
   const user = useSelector((state) => state.auth.user);
   const [startDate, setStartDate] = useState(new Date());
   const [statusList, setStatusList] = useState(status_list);
   const [productType, setProductType] = useState(product_type);
   const [codeData, setCodeData] = useState(status_code_data);
+
+  const [userCode, setUserCode] = useState(users_code);
 
   /*   const [image, setImage] = useState(null); */
   const [preview, setPreview] = useState(null);
@@ -208,6 +211,43 @@ const CreateProduct = () => {
     const { name, value } = event.target;
 
     setFormData((prevState) => ({ ...prevState, [name]: value }));
+    if (userCode.some((type) => type.customerCode === value)) {
+      setErrors((prevState) => ({
+        ...prevState,
+        ["customer_code"]: "",
+      }));
+    } else {
+      setErrors((prevState) => ({
+        ...prevState,
+        ["customer_code"]: "รหัสลูกค้าไม่ตรง",
+      }));
+    }
+  };
+
+  const handleChangeType = (event) => {
+    const selectedValue = event.target.value;
+    const valuesArray = selectedValue.split(" ");
+
+    const id = valuesArray[0]; // 15
+    const kg = valuesArray[1]; // 2
+    const cbm = valuesArray[2]; // 0.6
+
+    if (selectedValue != "เลือกประเภทพัสดุ") {
+      setErrors((prevState) => ({
+        ...prevState,
+        ["product_type"]: "",
+      }));
+
+      setFormData((prevState) => ({
+        ...prevState,
+        ["product_type"]: id,
+      }));
+    } else {
+      setErrors((prevState) => ({
+        ...prevState,
+        ["product_type"]: "เลือกประเภทพัสดุ",
+      }));
+    }
   };
 
   const handleImageChange = (e) => {
@@ -258,11 +298,7 @@ const CreateProduct = () => {
 
       if (response.status == "success") {
         navigate("/product-list");
-      } else {
-        console.log("response", response);
       }
-    } else {
-      console.log("eee");
     }
   };
 
@@ -321,12 +357,17 @@ const CreateProduct = () => {
   useEffect(() => {
     const totalWeight = formData.quantity * formData.weight;
 
-    console.log(totalWeight);
     setFormData((prevState) => ({
       ...prevState,
       ["total_weight"]: totalWeight,
     }));
   }, [formData.quantity, formData.weight]);
+
+  useEffect(() => {
+    setUserCode(users_code);
+  }, [users_code]);
+
+  /*   console.log("userCode", formData.customer_code, userCode); */
 
   return (
     <div className="container-fluidaa">
@@ -713,6 +754,43 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label"
                         >
+                          ประเภทพัสดุ
+                        </label>
+                        <select
+                          className="form-select"
+                          id="product_type"
+                          name="product_type"
+                          /*  onChange={handleChangeType} */
+                          aria-label="Default select example"
+                        >
+                          <option>เลือกประเภทพัสดุ</option>
+                          {userCode &&
+                            userCode
+                              .filter(
+                                (type) =>
+                                  formData &&
+                                  formData.customer_code == type.customerCode
+                              )
+                              .map((type, index) => (
+                                <option
+                                  key={index}
+                                  value={`${type.id_type} ${type.kg} ${type.cbm}`}
+                                >
+                                  {type.name}
+                                </option>
+                              ))}
+                        </select>
+                        {errors.product_type && (
+                          <div className="error-from">
+                            {errors.product_type}
+                          </div>
+                        )}
+                      </div>
+                      <div className="col-sm-6  col-md-6 col-lg-6">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-label"
+                        >
                           ยอดชำระค่าจัดส่ง จีน-ไทย
                         </label>
                         <input
@@ -726,34 +804,6 @@ const CreateProduct = () => {
                         {errors.payment_amount_chinese_thai_delivery && (
                           <div className="error-from">
                             {errors.payment_amount_chinese_thai_delivery}
-                          </div>
-                        )}
-                      </div>
-                      <div className="col-sm-6  col-md-6 col-lg-6">
-                        <label
-                          for="exampleFormControlInput1"
-                          className="form-label"
-                        >
-                          ประเภทพัสดุ
-                        </label>
-                        <select
-                          className="form-select"
-                          id="product_type"
-                          name="product_type"
-                          onChange={handleChange}
-                          aria-label="Default select example"
-                        >
-                          <option selected disabled>
-                            เลือกประเภทพัสดุ
-                          </option>
-                          {productType &&
-                            productType.map((type, index) => (
-                              <option value={type.id}>{type.name}</option>
-                            ))}
-                        </select>
-                        {errors.product_type && (
-                          <div className="error-from">
-                            {errors.product_type}
                           </div>
                         )}
                       </div>
