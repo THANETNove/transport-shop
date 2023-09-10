@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <header id="header" className="header fixed-top">
       <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
-        <a className="logo d-flex align-items-center">
+        <a className="logo  align-items-center">
           {/* <img src="assets/img/logo.png" alt /> */}
           <span>ระบบเช็คสินค้า จีน - ไทย</span>
         </a>

@@ -8,12 +8,12 @@ export default function Home() {
         <div className="container">
           <div className="row">
             <div className="col-lg-6 d-flex flex-column justify-content-center">
-              <h1 data-aos="fade-up" className="aos-init aos-animate">
+              <h1 data-aos="fade-up" className="aos-init aos-animate text-name">
                 ระบบเช็คสินค้า จีน - ไทย
               </h1>
-              <h2
-                data-aos="fade-up"
-                data-aos-delay="400"
+              <h6
+                /*   data-aos="fade-up"
+                data-aos-delay="100" */
                 className="aos-init aos-animate"
               >
                 บริการนำเข้า-ส่งออกสินค้าจากจีน-ไทยจัดการเคลียร์ภาษีแบบครบวงจร
@@ -21,7 +21,7 @@ export default function Home() {
                 พาเดินตลาดสั่งซื้อสินค้า และสั่งซื้อออนไลน์
                 มีระบบให้ติดตามสถานะสินค้าได้ตลอด 24 ชั่วโมง
                 และสามารถสั่งซื้อสินค้าแบบออนไลน์ได้อย่างสะดวก
-              </h2>
+              </h6>
               <div
                 data-aos="fade-up"
                 data-aos-delay="600"
@@ -44,7 +44,7 @@ export default function Home() {
               data-aos-delay="200"
             >
               <img
-                src="assetsAuth/img/DwippXnUwAAaieW.jpeg"
+                src="assetsAuth/img/552261.jpg"
                 className="img-fluid"
                 alt=""
               />
@@ -844,14 +844,16 @@ export default function Home() {
           <div className="container">
             <div className="row gy-4">
               <div className="col-lg-5 col-md-12 footer-info">
-                <a href="index.html" className="logo d-flex align-items-center">
+                <a href="index.html" className="logo align-items-center">
                   {/*  <img src="assets/img/logo.png" alt /> */}
-                  <span>ระบบเช็คสินค้า จีน - ไทย</span>
+                  <span className="text-footer">ระบบเช็คสินค้า จีน - ไทย</span>
                 </a>
                 <p>
-                  Cras fermentum odio eu feugiat lide par naso tierra. Justo
-                  eget nada terra videa magna derita valies darta donna mare
-                  fermentum iaculis eu non diam phasellus.
+                  บริการนำเข้า-ส่งออกสินค้าจากจีน-ไทยจัดการเคลียร์ภาษีแบบครบวงจร
+                  รับส่งแบบเหมาตู้ รับส่งแบบปลีก(พรีออเดอร์)
+                  พาเดินตลาดสั่งซื้อสินค้า และสั่งซื้อออนไลน์
+                  มีระบบให้ติดตามสถานะสินค้าได้ตลอด 24 ชั่วโมง
+                  และสามารถสั่งซื้อสินค้าแบบออนไลน์ได้อย่างสะดวก
                 </p>
                 {/*  <div className="social-links mt-3">
                   <a href="#" className="twitter">
