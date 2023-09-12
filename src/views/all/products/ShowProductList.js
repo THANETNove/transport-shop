@@ -85,7 +85,8 @@ const ShowProductList = () => {
     }));
   }, [productList]);
 
-  console.log("formData", formData.image);
+  console.log("close_cabinet", formData.close_cabinet);
+  console.log("to_thailand", formData.to_thailand);
   return (
     <>
       <div className="container-fluidaa">
@@ -173,7 +174,7 @@ const ShowProductList = () => {
                           </label>
                           <p className="form-control form-control-user">
                             {formData.close_cabinet
-                              ? format(formData.to_thailand, "dd-MM-yyyy")
+                              ? format(formData.close_cabinet, "dd-MM-yyyy")
                               : ""}
                           </p>
                         </div>
