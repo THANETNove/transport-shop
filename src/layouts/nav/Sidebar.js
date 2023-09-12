@@ -64,7 +64,61 @@ export default function Sidebar() {
             <li className="nav-item">
               <Link className="nav-link" to="/product-code">
                 <i class="fa-solid fa-layer-group"></i>
-                <span>สร้างรหัสสินค้า</span>
+                <span>สร้างรหัสตัวแทน</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/money-wallet">
+                <i class="fa-solid fa-sack-dollar"></i>
+                <span>เติมเงินเข้ากระเป๋า</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/money-wallet">
+                <i class="fa-solid fa-warehouse"></i>
+                <span>สินค้าเข้าโกดังไทย</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/money-wallet">
+                <i class="fa-solid fa-file-invoice"></i>
+                <span>ออกบิล</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/money-wallet">
+                <i class="fa-solid fa-arrow-up-9-1"></i>
+                <span>แจ้งเลขพัสดุเพิ่มเติม</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/money-wallet">
+                <i class="fa-brands fa-product-hunt"></i>
+                <span>สั่งซื้อสินค้าจีน</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/money-wallet">
+                <i class="fa-solid fa-qrcode"></i>
+                <span>แจ้งQCสินค้า</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/money-wallet">
+                <i class="fa-solid fa-warehouse"></i>
+                <span>ที่อยู่โกดังจีน </span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/money-wallet">
+                <i class="fa-solid fa-server"></i>
+                <span>ใช้บริการล่ามรายครึ่งปี </span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/money-wallet">
+                <i class="fa-solid fa-money-bill-transfer"></i>
+                <span>แลกเงิน </span>
               </Link>
             </li>
           </>

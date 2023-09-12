@@ -6,6 +6,7 @@ import Register from "./views/auth/Register";
 // User
 import ProductCode from "./views/user/product_code/ProductCode";
 import CreateProductCode from "./views/user/product_code/CreateProductCode";
+import moneyWallet from "./views/user/moneyWallet/MoneyWallet";
 //Admin
 
 // Manager
@@ -73,6 +74,11 @@ const userRoutes = [
   {
     path: "/create-product-code",
     component: CreateProductCode,
+    layout: "/auth",
+  },
+  {
+    path: "/money-wallet",
+    component: moneyWallet,
     layout: "/auth",
   },
 ];

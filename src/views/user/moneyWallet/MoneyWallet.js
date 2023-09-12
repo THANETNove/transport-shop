@@ -42,33 +42,19 @@ const ProductCode = () => {
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               {/*  <h6 className="m-0 font-weight-bold text-primary">เพิ่มพัสดุ</h6> */}
-              <Link className="btn btn-primary" to="/create-product-code">
+              {/*   <Link className="btn btn-primary" to="/create-product-code">
                 สร้างรหัสตัวแทนย่อย
               </Link>
               <span className="color-success">
                 {messageCode == "success" && "เพิ่มรหัสพัสดุสำเร็จ"}
-              </span>
+              </span> */}
             </div>
 
             <div className="card-body">
               <div className="table-responsive">
-                <table className="table  align-middle table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">id</th>
-                      <th scope="col">รหัสพัสดุ</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {codeData &&
-                      codeData.map((status, index) => (
-                        <tr>
-                          <th scope="row">{index + 1}</th>
-                          <td>{status.code}</td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
+                <h1 className="text-center mt-5 mb-5">
+                  กำลังปรับปรุงระบบ จะใช้ได้ในเร็วๆนี้
+                </h1>
               </div>
             </div>
           </div>
