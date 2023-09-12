@@ -4,6 +4,8 @@ import Service from "../../../server_api/server";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
+
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 
@@ -71,6 +73,17 @@ const CreateProduct = () => {
     };
     fetchData();
   }, []);
+
+  const toTimeZone = (date, timeZone) => {
+    const utcDate = zonedTimeToUtc(date, timeZone);
+    return utcToZonedTime(utcDate, timeZone);
+  };
+
+  const handleDateChange = (name, date) => {
+    const thailandTimeZone = "Asia/Bangkok"; // โซนเวลาของประเทศไทย
+    const zonedDate = toTimeZone(date, thailandTimeZone);
+    setFormData((prevState) => ({ ...prevState, [name]: zonedDate }));
+  };
 
   const validate = () => {
     let isValid = true;
@@ -399,7 +412,7 @@ const CreateProduct = () => {
     setUserCode(users_code);
   }, [users_code]);
 
-  /*   console.log("userCode", formData.customer_code, userCode); */
+  /* console.log("userCode", formData.customer_code, userCode); */
 
   return (
     <div className="container-fluidaa">
@@ -515,13 +528,12 @@ const CreateProduct = () => {
                         <DatePicker
                           /*  selected={startDate} */
                           placeholderText="Select date"
+                          id="chinese_warehouse"
+                          name="chinese_warehouse"
                           selected={formData.chinese_warehouse}
                           className="form-control form-control-user"
                           onChange={(date) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              ["chinese_warehouse"]: date,
-                            }))
+                            handleDateChange("chinese_warehouse", date)
                           }
                           dateFormat="dd/MM/yyyy"
                         />
@@ -540,13 +552,12 @@ const CreateProduct = () => {
                           /*  selected={startDate} */
                           placeholderText="Select date"
                           selected={formData.close_cabinet}
+                          id="close_cabinet"
+                          name="close_cabinet"
                           className="form-control form-control-user"
                           placeholder="ปิดตู้"
                           onChange={(date) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              ["close_cabinet"]: date,
-                            }))
+                            handleDateChange("close_cabinet", date)
                           }
                           dateFormat="dd/MM/yyyy"
                         />
@@ -563,14 +574,13 @@ const CreateProduct = () => {
                         <DatePicker
                           /* selected={startDate} */
                           selected={formData.to_thailand}
+                          id="to_thailand"
+                          name="to_thailand"
                           placeholderText="Select date"
                           className="form-control form-control-user w-100"
                           placeholder="ถึงไทย"
                           onChange={(date) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              ["to_thailand"]: date,
-                            }))
+                            handleDateChange("to_thailand", date)
                           }
                           dateFormat="dd/MM/yyyy"
                         />

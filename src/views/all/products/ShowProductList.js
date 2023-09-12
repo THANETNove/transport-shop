@@ -57,9 +57,18 @@ const ShowProductList = () => {
       warehouse_code: productList && productList.warehouse_code,
       cabinet_number: productList && productList.cabinet_number,
       chinese_warehouse: new Date(productList && productList.chinese_warehouse), // date
-      close_cabinet: new Date(productList && productList.close_cabinet), // date
-      to_thailand: new Date(productList && productList.to_thailand), // date*/
-      parcel_status: productList && productList.parcel_status,
+      close_cabinet:
+        productList && !["null", "NULL", ""].includes(productList.close_cabinet)
+          ? new Date(productList.close_cabinet)
+          : null, // date
+      to_thailand:
+        productList && !["null", "NULL", ""].includes(productList.to_thailand)
+          ? new Date(productList.to_thailand)
+          : null,
+      parcel_status:
+        productList && productList.parcel_status
+          ? productList.parcel_status
+          : null,
       quantity: productList && productList.quantity,
       wide_size: productList && productList.wide_size,
       long_size: productList && productList.long_size,
@@ -163,15 +172,9 @@ const ShowProductList = () => {
                             ปิดตู้
                           </label>
                           <p className="form-control form-control-user">
-                            {product.close_cabinet &&
-                            !["null", "NULL", ""].includes(
-                              product.close_cabinet
-                            )
-                              ? format(
-                                  new Date(product.close_cabinet),
-                                  "dd-MM-yyyy"
-                                )
-                              : "N/A"}
+                            {formData.close_cabinet
+                              ? format(formData.to_thailand, "dd-MM-yyyy")
+                              : ""}
                           </p>
                         </div>
                       </div>
@@ -184,13 +187,9 @@ const ShowProductList = () => {
                             ถึงไทย
                           </label>
                           <p className="form-control form-control-user">
-                            {product.to_thailand &&
-                            !["null", "NULL", ""].includes(product.to_thailand)
-                              ? format(
-                                  new Date(product.to_thailand),
-                                  "dd-MM-yyyy"
-                                )
-                              : "N/A"}
+                            {formData.to_thailand
+                              ? format(formData.to_thailand, "dd-MM-yyyy")
+                              : ""}
                           </p>
                         </div>
                         <div className="col-sm-6  col-md-6 col-lg-6">

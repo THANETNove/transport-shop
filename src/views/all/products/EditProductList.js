@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Service from "../../../server_api/server";
 import DatePicker from "react-datepicker";
 import { useSelector, useDispatch } from "react-redux";
+import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 
 const EditProductList = () => {
   const navigate = useNavigate();
@@ -259,6 +260,17 @@ const EditProductList = () => {
     return isValid;
   };
 
+  const toTimeZone = (date, timeZone) => {
+    const utcDate = zonedTimeToUtc(date, timeZone);
+    return utcToZonedTime(utcDate, timeZone);
+  };
+
+  const handleDateChange = (name, date) => {
+    const thailandTimeZone = "Asia/Bangkok"; // โซนเวลาของประเทศไทย
+    const zonedDate = toTimeZone(date, thailandTimeZone);
+    setFormData((prevState) => ({ ...prevState, [name]: zonedDate }));
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -512,10 +524,7 @@ const EditProductList = () => {
                           selected={formData.chinese_warehouse}
                           className="form-control form-control-user"
                           onChange={(date) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              ["chinese_warehouse"]: date,
-                            }))
+                            handleDateChange("chinese_warehouse", date)
                           }
                           dateFormat="dd/MM/yyyy"
                         />
@@ -537,10 +546,7 @@ const EditProductList = () => {
                           className="form-control form-control-user"
                           placeholder="ปิดตู้"
                           onChange={(date) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              ["close_cabinet"]: date,
-                            }))
+                            handleDateChange("close_cabinet", date)
                           }
                           dateFormat="dd/MM/yyyy"
                         />
@@ -565,10 +571,7 @@ const EditProductList = () => {
                           className="form-control form-control-user w-100"
                           placeholder="ถึงไทย"
                           onChange={(date) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              ["to_thailand"]: date,
-                            }))
+                            handleDateChange("to_thailand", date)
                           }
                           dateFormat="dd/MM/yyyy"
                         />
