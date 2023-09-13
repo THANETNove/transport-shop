@@ -274,7 +274,11 @@ const ProductList = () => {
               <td>
                 <button
                   className="btn btn-danger btn-sm"
-                  onClick={() => deleteProductList(product.id, product.image)}
+                  onClick={() => {
+                    if (window.confirm("คุณต้องการลบ ข้อมูลใช่หรือไม่ ! ")) {
+                      deleteProductList(product.id, product.image);
+                    }
+                  }}
                 >
                   delete
                 </button>
