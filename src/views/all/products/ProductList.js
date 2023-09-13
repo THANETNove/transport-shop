@@ -4,6 +4,7 @@ import Service from "../../../server_api/server";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { format } from "date-fns";
+import { CSVLink } from "react-csv";
 
 const ProductList = () => {
   const user = useSelector((state) => state.auth.user);
@@ -21,6 +22,7 @@ const ProductList = () => {
   const [productList, setProductList] = useState(product);
   const [statusProductList, setStatusProductList] = useState(statusProduct);
   const [codeData, setCodeData] = useState(status_code_data);
+  const [userdata, setUserdata] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -283,16 +285,40 @@ const ProductList = () => {
     );
   };
 
+  function Exportexcel() {
+    useEffect(() => {
+      const getuserdata = async () => {
+        /* const userreq= await fetch("http://localhost/devopsdeveloper/users"); */
+        const jsonData = [
+          { name: "John", age: 30 },
+          { name: "Jane", age: 25 },
+          { name: "Bob", age: 35 },
+        ];
+        const userres = await jsonData.json();
+        console.log(userres);
+        setUserdata(userres);
+      };
+      getuserdata();
+    }, []);
+  }
+
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800"></h1>
-        <a
-          href="#"
+        {/* <a
+          onClick={Exportexcel}
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
         >
           <i className="fas fa-download fa-sm text-white-50" /> Generate Report
-        </a>
+        </a> */}
+        {/*   <CSVLink
+          data={userdata}
+          filename="RegisterUserData"
+          className="btn btn-success mb-3"
+        >
+          Export User Data
+        </CSVLink> */}
       </div>
       <div className="row">
         <div className="col-xl-12 col-lg-12">

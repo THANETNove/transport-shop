@@ -308,7 +308,7 @@ const EditProductList = () => {
       // คำนวน cbm*คิวรวม
       const calculate_cbm = parseFloat(cbm) * parseFloat(formData.total_queue);
 
-      if (calculate_kg && calculate_kg > calculate_cbm && calculate_cbm) {
+      if (calculate_kg > calculate_cbm) {
         // กรณี calculate_kg มากกว่า calculate_cbm
         setFormData((prevState) => ({
           ...prevState,

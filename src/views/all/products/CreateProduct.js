@@ -274,7 +274,7 @@ const CreateProduct = () => {
       console.log("calculate_kg", calculate_kg);
       console.log("calculate_cbm", calculate_cbm);
 
-      if (calculate_kg > calculate_cbm && calculate_cbm) {
+      if (calculate_kg > calculate_cbm) {
         // กรณี calculate_kg มากกว่า calculate_cbm
         setFormData((prevState) => ({
           ...prevState,
