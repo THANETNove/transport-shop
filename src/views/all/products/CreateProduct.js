@@ -25,7 +25,13 @@ const CreateProduct = () => {
   const [userCode, setUserCode] = useState(users_code);
 
   const [inputFields, setInputFields] = useState([
-    { value1: 0, value2: 0, value3: 0, value4: 0, value5: 0 },
+    {
+      wideSize: 0,
+      lengthSize: 0,
+      heightSize: 0,
+      cuePerPiece: 0,
+      weightFields: 0,
+    },
   ]);
 
   const [preview, setPreview] = useState(null);
@@ -39,11 +45,12 @@ const CreateProduct = () => {
     to_thailand: "",
     parcel_status: "",
     quantity: "",
-    wide_size: "",
-    long_size: "",
-    height_size: "",
-    cue_per_piece: "",
-    weight: "",
+    wide_size: null,
+    long_size: null,
+    height_size: null,
+    cue_per_piece: null,
+    weight: null,
+    inputFields: null,
     total_weight: "",
     total_queue: "",
     payment_amount_chinese_thai_delivery: "",
@@ -59,11 +66,6 @@ const CreateProduct = () => {
     cabinet_number: "",
     chinese_warehouse: "",
     quantity: "",
-    wide_size: "",
-    long_size: "",
-    height_size: "",
-    cue_per_piece: "",
-    weight: "",
     total_weight: "",
     total_queue: "",
     payment_amount_chinese_thai_delivery: "",
@@ -128,55 +130,6 @@ const CreateProduct = () => {
       isValid = false;
     } else if (isNaN(Number(formData.quantity))) {
       newErrors.quantity = "quantity must be a number";
-      isValid = false;
-    }
-
-    //ขนาดความกว้าง  validation
-    if (!formData.wide_size.trim()) {
-      newErrors.wide_size = "wide_size is required";
-      isValid = false;
-    } else if (isNaN(Number(formData.wide_size))) {
-      newErrors.wide_size = "wide_size must be a number";
-      isValid = false;
-    }
-
-    // ขนาดความยาว validation
-    if (!formData.long_size.trim()) {
-      newErrors.long_size = "long_size is required";
-      isValid = false;
-    } else if (isNaN(Number(formData.long_size))) {
-      newErrors.long_size = "long_size must be a number";
-      isValid = false;
-    }
-
-    // ขนาดความสุง validation
-    if (!formData.height_size.trim()) {
-      newErrors.height_size = "height_size is required";
-      isValid = false;
-    } else if (isNaN(Number(formData.height_size))) {
-      newErrors.height_size = "height_size must be a number";
-      isValid = false;
-    }
-
-    if (typeof formData.cue_per_piece !== "string") {
-      formData.cue_per_piece = formData.cue_per_piece.toString(); // แปลงเป็นสตริง
-    }
-
-    // cue_per_piece validation
-    if (!formData.cue_per_piece.trim()) {
-      newErrors.cue_per_piece = "cue_per_piece is required";
-      isValid = false;
-    } else if (isNaN(Number(formData.cue_per_piece))) {
-      newErrors.cue_per_piece = "cue_per_piece must be a number";
-      isValid = false;
-    }
-
-    // weight validation
-    if (!formData.weight.trim()) {
-      newErrors.weight = "weight is required";
-      isValid = false;
-    } else if (isNaN(Number(formData.weight))) {
-      newErrors.weight = "weight must be a number";
       isValid = false;
     }
 
@@ -275,6 +228,8 @@ const CreateProduct = () => {
       // คำนวน cbm*คิวรวม
       const calculate_cbm = parseFloat(cbm) * parseFloat(formData.total_queue);
 
+      console.log("calculate_kg", calculate_kg);
+      console.log("calculate_cbm", calculate_cbm);
       if (calculate_kg > calculate_cbm) {
         // กรณี calculate_kg มากกว่า calculate_cbm
         setFormData((prevState) => ({
@@ -380,18 +335,10 @@ const CreateProduct = () => {
 
   // คิวต่อชิ้น
   useEffect(() => {
-    /*   const qu =
-      (formData.wide_size * formData.long_size * formData.height_size) /
-      1000000;
-
-    setFormData((prevState) => ({
-      ...prevState,
-      ["cue_per_piece"]: qu,
-    })); */
     for (let i = 0; i < inputFields.length; i++) {
-      const { value1, value2, value3 } = inputFields[i];
-      const result = (value1 * value2 * value3) / 1000000;
-      inputFields[i].value4 = result;
+      const { wideSize, lengthSize, heightSize } = inputFields[i];
+      const result = (wideSize * lengthSize * heightSize) / 1000000;
+      inputFields[i].cuePerPiece = result;
     }
   }, [inputFields]);
 
@@ -400,7 +347,7 @@ const CreateProduct = () => {
     let cue_per_piece = 0;
 
     for (let i = 0; i < inputFields.length; i++) {
-      cue_per_piece += parseFloat(inputFields[i].value4);
+      cue_per_piece += parseFloat(inputFields[i].cuePerPiece);
     }
 
     setFormData((prevState) => ({
@@ -420,7 +367,7 @@ const CreateProduct = () => {
     let weight = 0;
 
     for (let i = 0; i < inputFields.length; i++) {
-      weight += parseFloat(inputFields[i].value5);
+      weight += parseFloat(inputFields[i].weightFields);
     }
 
     // คำนวณค่า total_weight ใหม่
@@ -436,19 +383,33 @@ const CreateProduct = () => {
     setUserCode(users_code);
   }, [users_code]);
 
+  useEffect(() => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ["inputFields"]: JSON.stringify(inputFields),
+    }));
+  }, [inputFields]);
+
+  //เพิ่ม input
   const handleAddFields = () => {
     setInputFields([
       ...inputFields,
-      { value1: 0, value2: 0, value3: 0, value4: 0, value5: 0 },
+      {
+        wideSize: 0,
+        lengthSize: 0,
+        heightSize: 0,
+        cuePerPiece: 0,
+        weightFields: 0,
+      },
     ]);
   };
-
+  // เพิ่มข้อมูลเเต่ละ value
   const handleChangeInput = (index, fieldName, event) => {
     const values = [...inputFields];
     values[index][fieldName] = event.target.value;
     setInputFields(values);
   };
-
+  //เพิ่มลบ input
   const handleRemoveFields = (index) => {
     const values = [...inputFields];
     values.splice(index, 1);
@@ -699,9 +660,9 @@ const CreateProduct = () => {
                               id="wide_size"
                               placeholder={`ขนาดความกว้างชิ้นที่ ${index + 1}`}
                               name="wide_size"
-                              value={inputField.value1}
+                              value={inputField.wideSize}
                               onChange={(event) =>
-                                handleChangeInput(index, "value1", event)
+                                handleChangeInput(index, "wideSize", event)
                               }
                             />
                             {errors.wide_size && (
@@ -723,9 +684,9 @@ const CreateProduct = () => {
                               id="long_size"
                               placeholder={`ขนาดความยาวชิ้นที่ ${index + 1}`}
                               name="long_size"
-                              value={inputField.value2}
+                              value={inputField.lengthSize}
                               onChange={(event) =>
-                                handleChangeInput(index, "value2", event)
+                                handleChangeInput(index, "lengthSize", event)
                               }
                             />
                             {errors.long_size && (
@@ -747,9 +708,9 @@ const CreateProduct = () => {
                               id="height_size"
                               placeholder={`ขนาดความสุงชิ้นที่ ${index + 1}`}
                               name="height_size"
-                              value={inputField.value3}
+                              value={inputField.heightSize}
                               onChange={(event) =>
-                                handleChangeInput(index, "value3", event)
+                                handleChangeInput(index, "heightSize", event)
                               }
                             />
                             {errors.height_size && (
@@ -773,9 +734,9 @@ const CreateProduct = () => {
                                 name="cue_per_piece"
                                 /*  value={formData.cue_per_piece} */
                                 placeholder={`คิวต่อชิ้นที่ ${index + 1}`}
-                                value={inputField.value4}
+                                value={inputField.cuePerPiece}
                                 onChange={(event) =>
-                                  handleChangeInput(index, "value4", event)
+                                  handleChangeInput(index, "cuePerPiece", event)
                                 }
                               />
                               {errors.cue_per_piece && (
@@ -797,9 +758,13 @@ const CreateProduct = () => {
                                 id="weight"
                                 name="weight"
                                 placeholder={`น้ำหนัก ชิ้นที่ ${index + 1}`}
-                                value={inputField.value5}
+                                value={inputField.weightFields}
                                 onChange={(event) =>
-                                  handleChangeInput(index, "value5", event)
+                                  handleChangeInput(
+                                    index,
+                                    "weightFields",
+                                    event
+                                  )
                                 }
                               />
                               {errors.weight && (
