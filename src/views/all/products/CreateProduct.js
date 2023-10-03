@@ -25,7 +25,7 @@ const CreateProduct = () => {
   const [userCode, setUserCode] = useState(users_code);
 
   const [inputFields, setInputFields] = useState([
-    { value1: "", value2: "", value3: "", value4: "", value5: "" },
+    { value1: 0, value2: 0, value3: 0, value4: 0, value5: 0 },
   ]);
 
   const [preview, setPreview] = useState(null);
@@ -380,34 +380,57 @@ const CreateProduct = () => {
 
   // คิวต่อชิ้น
   useEffect(() => {
-    const qu =
+    /*   const qu =
       (formData.wide_size * formData.long_size * formData.height_size) /
       1000000;
 
     setFormData((prevState) => ({
       ...prevState,
       ["cue_per_piece"]: qu,
-    }));
-  }, [formData.wide_size, formData.long_size, formData.height_size]);
+    })); */
+    for (let i = 0; i < inputFields.length; i++) {
+      const { value1, value2, value3 } = inputFields[i];
+      const result = (value1 * value2 * value3) / 1000000;
+      inputFields[i].value4 = result;
+    }
+  }, [inputFields]);
 
   // คิวรวม
   useEffect(() => {
-    const quAll = formData.cue_per_piece * formData.quantity;
+    let cue_per_piece = 0;
+
+    for (let i = 0; i < inputFields.length; i++) {
+      cue_per_piece += parseFloat(inputFields[i].value4);
+    }
+
+    setFormData((prevState) => ({
+      ...prevState,
+      ["cue_per_piece"]: quAll,
+    }));
+
+    const quAll = cue_per_piece * formData.quantity;
     setFormData((prevState) => ({
       ...prevState,
       ["total_queue"]: quAll,
     }));
-  }, [formData.quantity, formData.cue_per_piece]);
+  }, [formData.quantity, inputFields]);
 
   // น้ำหนักรวม
   useEffect(() => {
-    const totalWeight = formData.quantity * formData.weight;
+    let weight = 0;
 
+    for (let i = 0; i < inputFields.length; i++) {
+      weight += parseFloat(inputFields[i].value5);
+    }
+
+    // คำนวณค่า total_weight ใหม่
+    const totalWeight = formData.quantity * weight;
+    // อัปเดตค่าใน formData ด้วย setFormData
     setFormData((prevState) => ({
       ...prevState,
-      ["total_weight"]: totalWeight,
+      total_weight: totalWeight, // ตรงนี้ใช้ "total_weight" แทน ["total_weight"]
     }));
-  }, [formData.quantity, formData.weight]);
+  }, [formData.quantity, inputFields]);
 
   useEffect(() => {
     setUserCode(users_code);
@@ -416,7 +439,7 @@ const CreateProduct = () => {
   const handleAddFields = () => {
     setInputFields([
       ...inputFields,
-      { value1: "", value2: "", value3: "", value4: "", value5: "" },
+      { value1: 0, value2: 0, value3: 0, value4: 0, value5: 0 },
     ]);
   };
 
@@ -431,6 +454,8 @@ const CreateProduct = () => {
     values.splice(index, 1);
     setInputFields(values);
   };
+
+  console.log("inputFields", inputFields);
 
   return (
     <div className="container-fluidaa">
@@ -666,7 +691,7 @@ const CreateProduct = () => {
                               for="exampleFormControlInput1"
                               className="form-label"
                             >
-                              ขนาดความกว้าง
+                              ขนาดความกว้างชิ้นที่ {index + 1}
                             </label>
                             <input
                               type="text"
@@ -690,7 +715,7 @@ const CreateProduct = () => {
                               for="exampleFormControlInput1"
                               className="form-label"
                             >
-                              ขนาดความยาว
+                              ขนาดความยาวชิ้นที่ {index + 1}
                             </label>
                             <input
                               type="long_size"
@@ -714,7 +739,7 @@ const CreateProduct = () => {
                               for="exampleFormControlInput1"
                               className="form-label"
                             >
-                              ขนาดความสุง
+                              ขนาดความสุงชิ้นที่ {index + 1}
                             </label>
                             <input
                               type="text"
@@ -739,7 +764,7 @@ const CreateProduct = () => {
                                 for="exampleFormControlInput1"
                                 className="form-label"
                               >
-                                คิวต่อชิ้น
+                                คิวชิ้นที่ {index + 1}
                               </label>
                               <input
                                 type="text"
@@ -764,7 +789,7 @@ const CreateProduct = () => {
                                 for="exampleFormControlInput1"
                                 className="form-label"
                               >
-                                น้ำหนักต่อชิ้น
+                                น้ำหนักชิ้นที่ {index + 1}
                               </label>
                               <input
                                 type="text"
