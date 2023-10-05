@@ -375,7 +375,7 @@ const ProductList = () => {
                   <input
                     type="text"
                     className="form-control  background-white bg-light border-0 small"
-                    placeholder="Search for..."
+                    placeholder="Search รหัสลูกค้า"
                     aria-label="Search"
                     onChange={searchData}
                     aria-describedby="basic-addon2"
