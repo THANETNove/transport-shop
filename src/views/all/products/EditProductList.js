@@ -400,7 +400,7 @@ const EditProductList = () => {
     setInputFields(values);
   };
 
-  console.log("product_type", inputFields);
+  console.log("product_type", formData.parcel_status);
   return (
     <div className="container-fluidaa">
       <div className="row">
@@ -585,9 +585,7 @@ const EditProductList = () => {
                           onChange={handleChange}
                           aria-label="Default select example"
                         >
-                          <option selected disabled>
-                            เลือก สถานะ
-                          </option>
+                          <option selected>เลือก สถานะ</option>
                           {statusList &&
                             statusList.map((status, index) => (
                               <option value={status.id}>

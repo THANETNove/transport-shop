@@ -212,9 +212,7 @@ const ShowProductList = () => {
                             aria-label="Default select example"
                             disabled
                           >
-                            <option selected disabled>
-                              เลือก สถานะ
-                            </option>
+                            <option selected>เลือก สถานะ</option>
                             {statusList &&
                               statusList.map((status) => (
                                 <option key={status.id} value={status.id}>

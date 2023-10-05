@@ -17,7 +17,7 @@ export default function Navbar() {
           <i className="fa fa-bars" />
         </button>
         {/* Topbar Search */}
-        <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        {/*        <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
           <div className="input-group">
             <input
               type="text"
@@ -32,7 +32,7 @@ export default function Navbar() {
               </button>
             </div>
           </div>
-        </form>
+        </form> */}
         {/* Topbar Navbar */}
         <ul className="navbar-nav ml-auto">
           {/* Nav Item - Search Dropdown (Visible Only XS) */}
