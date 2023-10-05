@@ -12651,3 +12651,7 @@ body.sidebar-toggled footer.sticky-footer {
 .color-error {
   color: red;
 }
+
+.background-white {
+  background-color: white !important;
+}

@@ -175,6 +175,20 @@ const ProductList = () => {
     );
   };
 
+  const searchData = (event) => {
+    const { value } = event.target;
+    if (value) {
+      const filteredProducts = productList.filter((product) =>
+        product.customer_code.includes(value)
+      );
+      console.log(filteredProducts);
+
+      setProductList(filteredProducts);
+    } else {
+      setProductList(product);
+    }
+  };
+
   const systemAdmin = () => {
     return (
       <tbody>
@@ -354,6 +368,24 @@ const ProductList = () => {
                 >
                   {statusSuccess && statusSuccess != null && statusSuccess}
                 </span>
+              </div>
+
+              <div className="col-md-6 col-sm-8 col-8">
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control  background-white bg-light border-0 small"
+                    placeholder="Search for..."
+                    aria-label="Search"
+                    onChange={searchData}
+                    aria-describedby="basic-addon2"
+                  />
+                  <div className="input-group-append">
+                    <button className="btn btn-primary" type="button">
+                      <i className="fas fa-search fa-sm" />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
