@@ -23,6 +23,7 @@ const CreateProduct = () => {
   const [codeData, setCodeData] = useState(status_code_data);
 
   const [userCode, setUserCode] = useState(users_code);
+  const [userCustomerCode, setUserCustomerCode] = useState(null);
 
   const [inputFields, setInputFields] = useState([
     {
@@ -184,19 +185,45 @@ const CreateProduct = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
+    const uniqueCodes = [];
+    const filteredArray = userCode.filter((item) => {
+      if (!uniqueCodes.includes(item.customerCode)) {
+        uniqueCodes.push(item.customerCode);
+        return true;
+      }
+      return false;
+    });
+    const filtered = filteredArray.filter((customer) =>
+      customer.customerCode.includes(value)
+    );
+
     setFormData((prevState) => ({ ...prevState, [name]: value }));
-    if (name == "customer_code") {
-      if (userCode.some((type) => type.customerCode === value)) {
+    if (value.length == 0) {
+      setUserCustomerCode(null);
+    }
+    if (filtered.length > 0) {
+      if (filtered.length == 1) {
+        if (userCustomerCode == null) {
+          setFormData((prevState) => ({
+            ...prevState,
+            [name]: filtered[0].customerCode,
+          }));
+          setUserCustomerCode(filtered[0].customerCode);
+        }
+        if (userCustomerCode != null) {
+          setFormData((prevState) => ({ ...prevState, [name]: value }));
+        }
+
         setErrors((prevState) => ({
           ...prevState,
           ["customer_code"]: "",
         }));
-      } else {
-        setErrors((prevState) => ({
-          ...prevState,
-          ["customer_code"]: "รหัสลูกค้าไม่ตรง",
-        }));
       }
+    } else {
+      setErrors((prevState) => ({
+        ...prevState,
+        ["customer_code"]: "รหัสลูกค้าไม่ตรง",
+      }));
     }
   };
 
@@ -416,8 +443,6 @@ const CreateProduct = () => {
     setInputFields(values);
   };
 
-  console.log("inputFields", inputFields);
-
   return (
     <div className="container-fluidaa">
       <div className="row">
@@ -447,6 +472,7 @@ const CreateProduct = () => {
                           className="form-control form-control-user"
                           id="customer_code"
                           name="customer_code"
+                          value={formData.customer_code}
                           placeholder="รหัสลูกค้า"
                           onChange={handleChange}
                         />
