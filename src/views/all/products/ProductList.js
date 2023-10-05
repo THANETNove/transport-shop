@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { format } from "date-fns";
 import { CSVLink } from "react-csv";
+import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
+import DatePicker from "react-datepicker";
 
 const ProductList = () => {
   const user = useSelector((state) => state.auth.user);
@@ -24,14 +26,12 @@ const ProductList = () => {
   const [codeData, setCodeData] = useState(status_code_data);
   const [userdata, setUserdata] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const pro_log_1 = await Service.getProductType(dispatch); // ดึงประเภทสินค้า
-      const pro_log_2 = await Service.getStatusList(dispatch); // ดึงสถานะสิค้า
-      const pro_log_3 = await Service.getProduct(dispatch); // ดึงสิค้า
-      const pro_log_4 = await Service.getProductCode(user.id, dispatch); // ดึงรหัสพัสดุ
-      const pro_log_5 = await Service.getCustomerCodeAll(dispatch); // ดึงประเภทพัสดุ
-    };
+  const fetchData = async () => {
+    const pro_log_1 = await Service.getProductType(dispatch); // ดึงประเภทสินค้า
+    const pro_log_2 = await Service.getStatusList(dispatch); // ดึงสถานะสิค้า
+    const pro_log_3 = await Service.getProduct(dispatch); // ดึงสิค้า
+    const pro_log_4 = await Service.getProductCode(user.id, dispatch); // ดึงรหัสพัสดุ
+    const pro_log_5 = await Service.getCustomerCodeAll(dispatch); // ดึงประเภทพัสดุ
 
     setTimeout(() => {
       dispatch({
@@ -39,6 +39,9 @@ const ProductList = () => {
         payload: "default",
       });
     }, 2000);
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -188,6 +191,36 @@ const ProductList = () => {
       setProductList(product);
     }
   };
+  const toTimeZone = (date, timeZone) => {
+    const utcDate = zonedTimeToUtc(date, timeZone);
+    return utcToZonedTime(utcDate, timeZone);
+  };
+
+  const handleDateChange = async (name, id, date) => {
+    const thailandTimeZone = "Asia/Bangkok"; // โซนเวลาของประเทศไทย
+    const zonedDate = toTimeZone(date, thailandTimeZone);
+
+    if (name == "close_cabinet") {
+      const response = await Service.updateProductDateCloseCabinet(
+        id,
+        zonedDate
+      );
+      if (response.status == "success") {
+        fetchData();
+      }
+    }else {
+      const response = await Service.updateProductDateToThailand(
+        id,
+        zonedDate
+      );
+      if (response.status == "success") {
+        fetchData();
+      }
+    }
+    /*   setFormData((prevState) => ({ ...prevState, [name]: zonedDate })); */
+  };
+
+  /* console.log("product.to_thailand", productList); */
 
   const systemAdmin = () => {
     return (
@@ -195,30 +228,61 @@ const ProductList = () => {
         {productList &&
           productList.map((product, index) => (
             <tr>
-              <th scope="row">{index + 1}</th>
-              <td>{product.customer_code}</td>
-              <td>{product.tech_china}</td>
+              <th scope="row">
+                {index + 1} {product.id}
+              </th>
+              <td>{product.customer_code} </td>
+              {/*   <td>{product.tech_china}</td> */}
               {/*       <td>{product.warehouse_code}</td>
             <td>{product.cabinet_number}</td> */}
               <td>
                 {format(new Date(product.chinese_warehouse), "dd-MM-yyyy")}
               </td>
               <td>
-                {product.close_cabinet &&
+                {/* {product.close_cabinet &&
                 !["null", "NULL", ""].includes(product.close_cabinet)
                   ? format(new Date(product.close_cabinet), "dd-MM-yyyy")
-                  : "N/A"}
+                  : "N/A"} */}
+                <DatePicker
+                  placeholderText="Select date"
+                  selected={
+                    product &&
+                    !["null", "NULL", ""].includes(product.close_cabinet)
+                      ? new Date(product.close_cabinet)
+                      : null
+                  }
+                  className="form-control form-control-user"
+                  onChange={(date) =>
+                    handleDateChange("close_cabinet", product.id, date)
+                  }
+                  dateFormat="dd/MM/yyyy"
+                />
               </td>
               <td>
                 {/*  {product.to_thailand &&
                   product.to_thailand &&
                   format(new Date(product.to_thailand), "dd-MM-yyyy")} */}
-                {
+                {/* {
                   product.to_thailand &&
                   !["null", "NULL", ""].includes(product.to_thailand)
                     ? format(new Date(product.to_thailand), "dd-MM-yyyy")
-                    : "N/A" /* หรือข้อความอื่น ๆ ที่คุณต้องการแสดงถ้าเป็นค่า null, "NULL", หรือค่าว่าง */
-                }
+                    : "N/A" 
+                } */}
+
+                <DatePicker
+                  placeholderText="Select date"
+                  selected={
+                    product &&
+                    !["null", "NULL", ""].includes(product.to_thailand)
+                      ? new Date(product.to_thailand)
+                      : null
+                  }
+                  className="form-control form-control-user"
+                  onChange={(date) =>
+                    handleDateChange("to_thailand", product.id, date)
+                  }
+                  dateFormat="dd/MM/yyyy"
+                />
               </td>
               <td>
                 {/*  {statusList &&
@@ -256,7 +320,7 @@ const ProductList = () => {
                     ))}
                 </select>
               </td>
-              <td>{product.quantity}</td>
+              {/*   <td>{product.quantity}</td> */}
               {/*     <td>{product.size}</td>
             <td>{product.cue_per_piece}</td>
             <td>{product.weight}</td>
@@ -396,14 +460,14 @@ const ProductList = () => {
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">รหัสลูกค้า</th>
-                      <th scope="col">เเทคจีน</th>
+                      {/*  <th scope="col">เเทคจีน</th> */}
                       {/*  <th scope="col">รหัสโกดัง</th>
             <th scope="col">เลขตู้</th> */}
                       <th scope="col">ถึงโกดังจีน</th>
                       <th scope="col">ปิดตู้</th>
                       <th scope="col">ถึงไทย</th>
                       <th scope="col">สถานะ</th>
-                      <th scope="col">จำนวน</th>
+                      {/*  <th scope="col">จำนวน</th> */}
                       {/*     <th scope="col">ขนาด</th>
             <th scope="col">คิวต่อชิ้น</th>
             <th scope="col">น้ำหนัก</th>

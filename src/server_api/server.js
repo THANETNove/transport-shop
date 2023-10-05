@@ -639,6 +639,7 @@ const UpdateProduct = async (e, dispatch) => {
     };
   }
 };
+
 const updateStatusProductList = async (id, value, dispatch) => {
   const formData = new FormData();
   formData.append("isAdd", true);
@@ -681,6 +682,7 @@ const updateStatusProductList = async (id, value, dispatch) => {
     };
   }
 };
+
 const updatePriceUser = async (e, dispatch) => {
   const formData = new FormData();
   formData.append("isAdd", true);
@@ -693,6 +695,72 @@ const updatePriceUser = async (e, dispatch) => {
       "Content-Type": "multipart/form-data;charset=utf-8",
     },
   });
+
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    return {
+      status: "unknown",
+    };
+  }
+};
+
+const updateProductDateCloseCabinet = async (id, close_cabinet) => {
+  console.log("close_cabinet");
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", id);
+  formData.append("close_cabinet", close_cabinet);
+
+  const response = await axios.post(
+    `${url}/updateProductDateCloseCabinet.php`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data;charset=utf-8",
+      },
+    }
+  );
+
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    return {
+      status: "unknown",
+    };
+  }
+};
+const updateProductDateToThailand = async (id, to_thailand) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", id);
+  formData.append("to_thailand", to_thailand);
+
+  const response = await axios.post(
+    `${url}/updateProductDateToThailand.php`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data;charset=utf-8",
+      },
+    }
+  );
 
   if (response.data.message) {
     return {
@@ -882,6 +950,8 @@ export default {
   updateStatusProductList,
   UpdateProductType,
   updatePriceUser,
+  updateProductDateCloseCabinet,
+  updateProductDateToThailand,
   deleteStatusList,
   deleteProduct,
   deleteProductTypeList,
