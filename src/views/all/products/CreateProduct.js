@@ -541,8 +541,10 @@ const CreateProduct = () => {
                           }
                           dateFormat="dd/MM/yyyy"
                         />
-                        {errors.date && (
-                          <div className="error-from">{errors.date}</div>
+                        {errors.chinese_warehouse && (
+                          <div className="error-from">
+                            {errors.chinese_warehouse}
+                          </div>
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6 ">
