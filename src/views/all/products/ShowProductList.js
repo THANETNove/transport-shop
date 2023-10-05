@@ -17,8 +17,10 @@ const ShowProductList = () => {
   const [statusList, setStatusList] = useState(status_list);
   const [productType, setProductType] = useState(product_type);
   const [preview, setPreview] = useState(null);
+  const [inputFields, setInputFields] = useState(null);
 
   const url = Service.getUrl() + "/image/product/";
+  console.log("url", url);
 
   const { id } = useParams();
 
@@ -83,6 +85,8 @@ const ShowProductList = () => {
       old_image: productList && productList.image,
       status_recorder: user.status,
     }));
+
+    setInputFields(productList && JSON.parse(productList.inputFields));
   }, [productList]);
 
   console.log("close_cabinet", formData.close_cabinet);
@@ -234,65 +238,169 @@ const ShowProductList = () => {
                             {formData.quantity}
                           </p>
                         </div>
-                        <div className="col-sm-6  col-md-6 col-lg-6">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                          >
-                            ขนาดกว้าง
-                          </label>
-                          <p className="form-control form-control-user">
-                            {formData.wide_size}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="form-group row">
-                        <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                          >
-                            ขนาดยาว
-                          </label>
-                          <p className="form-control form-control-user">
-                            {formData.long_size}
-                          </p>
-                        </div>
-                        <div className="col-sm-6  col-md-6 col-lg-6">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                          >
-                            ขนาดสุง
-                          </label>
-                          <p className="form-control form-control-user">
-                            {formData.height_size}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="form-group row">
-                        <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                          >
-                            คิวต่อชิ้น
-                          </label>
-                          <p className="form-control form-control-user">
-                            {formData.cue_per_piece}
-                          </p>
-                        </div>
-                        <div className="col-sm-6  col-md-6 col-lg-6">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                          >
-                            น้ำหนักต่อชิ้น
-                          </label>
-                          <p className="form-control form-control-user">
-                            {formData.weight}
-                          </p>
-                        </div>
+
+                        {inputFields != null ? (
+                          <>
+                            {inputFields &&
+                              inputFields.map((inputField, index) => (
+                                <>
+                                  <div className="col-sm-6  col-md-6 col-lg-6">
+                                    <label
+                                      for="exampleFormControlInput1"
+                                      className="form-label"
+                                    >
+                                      ขนาดความกว้างชิ้นที่ {index + 1}
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control form-control-user"
+                                      id="wide_size"
+                                      placeholder={`ขนาดความกว้างชิ้นที่ ${
+                                        index + 1
+                                      }`}
+                                      name="wide_size"
+                                      value={inputField.wideSize}
+                                    />
+                                  </div>
+                                  <div className="col-sm-6  col-md-6 col-lg-6 mt-3">
+                                    <label
+                                      for="exampleFormControlInput1"
+                                      className="form-label"
+                                    >
+                                      ขนาดความยาวชิ้นที่ {index + 1}
+                                    </label>
+                                    <input
+                                      type="long_size"
+                                      className="form-control form-control-user"
+                                      id="long_size"
+                                      placeholder={`ขนาดความยาวชิ้นที่ ${
+                                        index + 1
+                                      }`}
+                                      name="long_size"
+                                      value={inputField.lengthSize}
+                                    />
+                                  </div>
+                                  <div className="col-sm-6  col-md-6 col-lg-6  mt-3">
+                                    <label
+                                      for="exampleFormControlInput1"
+                                      className="form-label"
+                                    >
+                                      ขนาดความสุงชิ้นที่ {index + 1}
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control form-control-user"
+                                      id="height_size"
+                                      placeholder={`ขนาดความสุงชิ้นที่ ${
+                                        index + 1
+                                      }`}
+                                      name="height_size"
+                                      value={inputField.heightSize}
+                                    />
+                                  </div>
+
+                                  <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                                    <label
+                                      for="exampleFormControlInput1"
+                                      className="form-label mt-3"
+                                    >
+                                      คิวชิ้นที่ {index + 1}
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control form-control-user"
+                                      id="cue_per_piece"
+                                      name="cue_per_piece"
+                                      /*  value={formData.cue_per_piece} */
+                                      placeholder={`คิวต่อชิ้นที่ ${index + 1}`}
+                                      value={inputField.cuePerPiece}
+                                    />
+                                  </div>
+                                  <div className="col-sm-6  col-md-6 col-lg-6">
+                                    <label
+                                      for="exampleFormControlInput1"
+                                      className="form-label"
+                                    >
+                                      น้ำหนักชิ้นที่ {index + 1}
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control form-control-user"
+                                      id="weight"
+                                      name="weight"
+                                      placeholder={`น้ำหนัก ชิ้นที่ ${
+                                        index + 1
+                                      }`}
+                                      value={inputField.weightFields}
+                                    />
+                                  </div>
+                                </>
+                              ))}
+                          </>
+                        ) : (
+                          <>
+                            <div className="col-sm-6  col-md-6 col-lg-6">
+                              <label
+                                for="exampleFormControlInput1"
+                                class="form-label"
+                              >
+                                ขนาดกว้าง
+                              </label>
+                              <p className="form-control form-control-user">
+                                {formData.wide_size}
+                              </p>
+                            </div>
+
+                            <div className="form-group row">
+                              <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                                <label
+                                  for="exampleFormControlInput1"
+                                  class="form-label"
+                                >
+                                  ขนาดยาว
+                                </label>
+                                <p className="form-control form-control-user">
+                                  {formData.long_size}
+                                </p>
+                              </div>
+                              <div className="col-sm-6  col-md-6 col-lg-6">
+                                <label
+                                  for="exampleFormControlInput1"
+                                  class="form-label"
+                                >
+                                  ขนาดสุง
+                                </label>
+                                <p className="form-control form-control-user">
+                                  {formData.height_size}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="form-group row">
+                              <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                                <label
+                                  for="exampleFormControlInput1"
+                                  class="form-label"
+                                >
+                                  คิวต่อชิ้น
+                                </label>
+                                <p className="form-control form-control-user">
+                                  {formData.cue_per_piece}
+                                </p>
+                              </div>
+                              <div className="col-sm-6  col-md-6 col-lg-6">
+                                <label
+                                  for="exampleFormControlInput1"
+                                  class="form-label"
+                                >
+                                  น้ำหนักต่อชิ้น
+                                </label>
+                                <p className="form-control form-control-user">
+                                  {formData.weight}
+                                </p>
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </div>
                       <div className="form-group row">
                         <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">

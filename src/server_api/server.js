@@ -2,8 +2,8 @@ import axios from "axios";
 import { format } from "date-fns";
 
 const getUrl = () => {
-  /* const url = "http://192.168.1.10/project/API"; //หน่วย */
-  const https_url = "https://medocargo.com/API";
+  const https_url = "http://192.168.0.102/project/API"; //หน่วย
+  /* const https_url = "https://medocargo.com/API"; */
   return https_url;
 };
 
@@ -324,6 +324,7 @@ const register = async (e, dispatch) => {
 };
 
 const Login = async (e, dispatch) => {
+  console.log("e", e);
   const formData = new FormData();
   formData.append("isAdd", true);
   formData.append("username", e.username);
@@ -438,7 +439,7 @@ const ProductType = async (e, dispatch) => {
 };
 
 const createProduct = async (e, dispatch) => {
-  console.log("55");
+  console.log("55", e);
   const formData = new FormData();
   formData.append("isAdd", true);
   for (let key in e) {

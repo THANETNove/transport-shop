@@ -25,6 +25,7 @@ const EditProductList = () => {
   const [preview, setPreview] = useState(null);
   const [codeData, setCodeData] = useState(status_code_data);
   const [userCode, setUserCode] = useState(users_code);
+  const [inputFields, setInputFields] = useState(null);
   const url = Service.getUrl() + "/image/product/";
 
   const { id } = useParams();
@@ -120,6 +121,8 @@ const EditProductList = () => {
       old_image: productList && productList.image,
       status_recorder: user.status,
     }));
+
+    setInputFields(productList && JSON.parse(productList.inputFields));
   }, [productList]);
 
   const validate = () => {
@@ -165,53 +168,6 @@ const EditProductList = () => {
       isValid = false;
     }
 
-    //ขนาดความกว้าง  validation
-    if (!formData.wide_size.trim()) {
-      newErrors.wide_size = "wide_size is required";
-      isValid = false;
-    } else if (isNaN(Number(formData.wide_size))) {
-      newErrors.wide_size = "wide_size must be a number";
-      isValid = false;
-    }
-
-    // ขนาดความยาว validation
-    if (!formData.long_size.trim()) {
-      newErrors.long_size = "long_size is required";
-      isValid = false;
-    } else if (isNaN(Number(formData.long_size))) {
-      newErrors.long_size = "long_size must be a number";
-      isValid = false;
-    }
-
-    // ขนาดความสุง validation
-    if (!formData.height_size.trim()) {
-      newErrors.height_size = "height_size is required";
-      isValid = false;
-    } else if (isNaN(Number(formData.height_size))) {
-      newErrors.height_size = "height_size must be a number";
-      isValid = false;
-    }
-    // cue_per_piece validation
-    if (typeof formData.cue_per_piece !== "string") {
-      formData.cue_per_piece = formData.cue_per_piece.toString(); // แปลงเป็นสตริง
-    }
-
-    if (!formData.cue_per_piece.trim()) {
-      newErrors.cue_per_piece = "cue_per_piece is required";
-      isValid = false;
-    } else if (isNaN(Number(formData.cue_per_piece))) {
-      newErrors.cue_per_piece = "cue_per_piece must be a number";
-      isValid = false;
-    }
-
-    // weight validation
-    if (!formData.weight.trim()) {
-      newErrors.weight = "weight is required";
-      isValid = false;
-    } else if (isNaN(Number(formData.weight))) {
-      newErrors.weight = "weight must be a number";
-      isValid = false;
-    }
     if (typeof formData.total_weight !== "string") {
       formData.total_weight = formData.total_weight.toString(); // แปลงเป็นสตริง
     }
@@ -381,36 +337,70 @@ const EditProductList = () => {
 
   // คิวต่อชิ้น
   useEffect(() => {
-    const qu =
-      (formData.wide_size * formData.long_size * formData.height_size) /
-      1000000;
-
-    setFormData((prevState) => ({
-      ...prevState,
-      ["cue_per_piece"]: qu,
-    }));
-  }, [formData.wide_size, formData.long_size, formData.height_size]);
+    if (inputFields != null) {
+      for (let i = 0; i < inputFields.length; i++) {
+        const { wideSize, lengthSize, heightSize } = inputFields[i];
+        const result = (wideSize * lengthSize * heightSize) / 1000000;
+        inputFields[i].cuePerPiece = result;
+      }
+    }
+  }, [inputFields]);
 
   // คิวรวม
   useEffect(() => {
-    const quAll = formData.cue_per_piece * formData.quantity;
-    setFormData((prevState) => ({
-      ...prevState,
-      ["total_queue"]: quAll,
-    }));
-  }, [formData.quantity, formData.cue_per_piece]);
+    if (inputFields != null) {
+      let cue_per_piece = 0;
+
+      for (let i = 0; i < inputFields.length; i++) {
+        cue_per_piece += parseFloat(inputFields[i].cuePerPiece);
+      }
+
+      setFormData((prevState) => ({
+        ...prevState,
+        ["cue_per_piece"]: quAll,
+      }));
+
+      const quAll = cue_per_piece * formData.quantity;
+      setFormData((prevState) => ({
+        ...prevState,
+        ["total_queue"]: quAll,
+      }));
+    }
+  }, [formData.quantity, inputFields]);
 
   // น้ำหนักรวม
   useEffect(() => {
-    const totalWeight = formData.quantity * formData.weight;
+    if (inputFields != null) {
+      let weight = 0;
 
+      for (let i = 0; i < inputFields.length; i++) {
+        weight += parseFloat(inputFields[i].weightFields);
+      }
+      // คำนวณค่า total_weight ใหม่
+      const totalWeight = formData.quantity * weight;
+      // อัปเดตค่าใน formData ด้วย setFormData
+      setFormData((prevState) => ({
+        ...prevState,
+        total_weight: totalWeight, // ตรงนี้ใช้ "total_weight" แทน ["total_weight"]
+      }));
+    }
+  }, [formData.quantity, inputFields]);
+
+  useEffect(() => {
     setFormData((prevState) => ({
       ...prevState,
-      ["total_weight"]: totalWeight,
+      ["inputFields"]: JSON.stringify(inputFields),
     }));
-  }, [formData.quantity, formData.weight]);
+  }, [inputFields]);
 
-  /*   console.log("product_type", formData.product_type); */
+  // เพิ่มข้อมูลเเต่ละ value
+  const handleChangeInput = (index, fieldName, event) => {
+    const values = [...inputFields];
+    values[index][fieldName] = event.target.value;
+    setInputFields(values);
+  };
+
+  console.log("product_type", inputFields);
   return (
     <div className="container-fluidaa">
       <div className="row">
@@ -635,111 +625,280 @@ const EditProductList = () => {
                           <div className="error-from">{errors.quantity}</div>
                         )}
                       </div>
-                      <div className="col-sm-6  col-md-6 col-lg-6">
-                        <label
-                          for="exampleFormControlInput1"
-                          className="form-label"
-                        >
-                          ขนาดกว้าง
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control form-control-user"
-                          id="wide_size"
-                          placeholder="ขนาดกว้าง"
-                          name="wide_size"
-                          value={formData.wide_size}
-                          onChange={handleChange}
-                        />
-                        {errors.wide_size && (
-                          <div className="error-from">{errors.wide_size}</div>
-                        )}
-                      </div>
-                      <div className="col-sm-6  col-md-6 col-lg-6">
-                        <label
-                          for="exampleFormControlInput1"
-                          className="form-label"
-                        >
-                          ขนาดยาว
-                        </label>
-                        <input
-                          type="long_size"
-                          className="form-control form-control-user"
-                          id="long_size"
-                          placeholder="ขนาดยาว"
-                          name="long_size"
-                          value={formData.long_size}
-                          onChange={handleChange}
-                        />
-                        {errors.long_size && (
-                          <div className="error-from">{errors.long_size}</div>
-                        )}
-                      </div>
-                      <div className="col-sm-6  col-md-6 col-lg-6">
-                        <label
-                          for="exampleFormControlInput1"
-                          className="form-label"
-                        >
-                          ขนาดสุง
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control form-control-user"
-                          id="height_size"
-                          placeholder="ขนาดสุง"
-                          name="height_size"
-                          value={formData.height_size}
-                          onChange={handleChange}
-                        />
-                        {errors.height_size && (
-                          <div className="error-from">{errors.height_size}</div>
-                        )}
-                      </div>
-                    </div>
 
-                    <div className="form-group row">
-                      <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
-                        <label
-                          for="exampleFormControlInput1"
-                          class="form-label"
-                        >
-                          คิวต่อชิ้น
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control form-control-user"
-                          id="cue_per_piece"
-                          name="cue_per_piece"
-                          placeholder="คิวต่อชิ้น"
-                          value={formData.cue_per_piece}
-                          onChange={handleChange}
-                        />
-                        {errors.cue_per_piece && (
-                          <div className="error-from">
-                            {errors.cue_per_piece}
+                      {inputFields != null ? (
+                        <>
+                          {inputFields &&
+                            inputFields.map((inputField, index) => (
+                              <>
+                                <div className="col-sm-6  col-md-6 col-lg-6">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    className="form-label mt-3"
+                                  >
+                                    ขนาดความกว้างชิ้นที่ {index + 1}
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control form-control-user"
+                                    id="wide_size"
+                                    placeholder={`ขนาดความกว้างชิ้นที่ ${
+                                      index + 1
+                                    }`}
+                                    name="wide_size"
+                                    value={inputField.wideSize}
+                                    onChange={(event) =>
+                                      handleChangeInput(
+                                        index,
+                                        "wideSize",
+                                        event
+                                      )
+                                    }
+                                  />
+                                  {errors.wide_size && (
+                                    <div className="error-from">
+                                      {errors.wide_size}
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="col-sm-6  col-md-6 col-lg-6 mt-3">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    className="form-label"
+                                  >
+                                    ขนาดความยาวชิ้นที่ {index + 1}
+                                  </label>
+                                  <input
+                                    type="long_size"
+                                    className="form-control form-control-user"
+                                    id="long_size"
+                                    placeholder={`ขนาดความยาวชิ้นที่ ${
+                                      index + 1
+                                    }`}
+                                    name="long_size"
+                                    value={inputField.lengthSize}
+                                    onChange={(event) =>
+                                      handleChangeInput(
+                                        index,
+                                        "lengthSize",
+                                        event
+                                      )
+                                    }
+                                  />
+                                  {errors.long_size && (
+                                    <div className="error-from">
+                                      {errors.long_size}
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="col-sm-6  col-md-6 col-lg-6  mt-3">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    className="form-label"
+                                  >
+                                    ขนาดความสุงชิ้นที่ {index + 1}
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control form-control-user"
+                                    id="height_size"
+                                    placeholder={`ขนาดความสุงชิ้นที่ ${
+                                      index + 1
+                                    }`}
+                                    name="height_size"
+                                    value={inputField.heightSize}
+                                    onChange={(event) =>
+                                      handleChangeInput(
+                                        index,
+                                        "heightSize",
+                                        event
+                                      )
+                                    }
+                                  />
+                                  {errors.height_size && (
+                                    <div className="error-from">
+                                      {errors.height_size}
+                                    </div>
+                                  )}
+                                </div>
+
+                                <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    className="form-label mt-3"
+                                  >
+                                    คิวชิ้นที่ {index + 1}
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control form-control-user"
+                                    id="cue_per_piece"
+                                    name="cue_per_piece"
+                                    /*  value={formData.cue_per_piece} */
+                                    placeholder={`คิวต่อชิ้นที่ ${index + 1}`}
+                                    value={inputField.cuePerPiece}
+                                    onChange={(event) =>
+                                      handleChangeInput(
+                                        index,
+                                        "cuePerPiece",
+                                        event
+                                      )
+                                    }
+                                  />
+                                  {errors.cue_per_piece && (
+                                    <div className="error-from">
+                                      {errors.cue_per_piece}
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="col-sm-6  col-md-6 col-lg-6">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    className="form-label mt-3"
+                                  >
+                                    น้ำหนักชิ้นที่ {index + 1}
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control form-control-user"
+                                    id="weight"
+                                    name="weight"
+                                    placeholder={`น้ำหนัก ชิ้นที่ ${index + 1}`}
+                                    value={inputField.weightFields}
+                                    onChange={(event) =>
+                                      handleChangeInput(
+                                        index,
+                                        "weightFields",
+                                        event
+                                      )
+                                    }
+                                  />
+                                  {errors.weight && (
+                                    <div className="error-from">
+                                      {errors.weight}
+                                    </div>
+                                  )}
+                                </div>
+                              </>
+                            ))}
+                        </>
+                      ) : (
+                        <>
+                          <div className="col-sm-6  col-md-6 col-lg-6">
+                            <label
+                              for="exampleFormControlInput1"
+                              className="form-label"
+                            >
+                              ขนาดกว้าง
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control form-control-user"
+                              id="wide_size"
+                              placeholder="ขนาดกว้าง"
+                              name="wide_size"
+                              value={formData.wide_size}
+                              onChange={handleChange}
+                            />
+                            {errors.wide_size && (
+                              <div className="error-from">
+                                {errors.wide_size}
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
-                      <div className="col-sm-6  col-md-6 col-lg-6">
-                        <label
-                          for="exampleFormControlInput1"
-                          class="form-label"
-                        >
-                          น้ำหนักต่อชิ้น
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control form-control-user"
-                          id="weight"
-                          name="weight"
-                          value={formData.weight}
-                          placeholder="น้ำหนัก"
-                          onChange={handleChange}
-                        />
-                        {errors.weight && (
-                          <div className="error-from">{errors.weight}</div>
-                        )}
-                      </div>
+                          <div className="col-sm-6  col-md-6 col-lg-6">
+                            <label
+                              for="exampleFormControlInput1"
+                              className="form-label"
+                            >
+                              ขนาดยาว
+                            </label>
+                            <input
+                              type="long_size"
+                              className="form-control form-control-user"
+                              id="long_size"
+                              placeholder="ขนาดยาว"
+                              name="long_size"
+                              value={formData.long_size}
+                              onChange={handleChange}
+                            />
+                            {errors.long_size && (
+                              <div className="error-from">
+                                {errors.long_size}
+                              </div>
+                            )}
+                          </div>
+                          <div className="col-sm-6  col-md-6 col-lg-6">
+                            <label
+                              for="exampleFormControlInput1"
+                              className="form-label"
+                            >
+                              ขนาดสุง
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control form-control-user"
+                              id="height_size"
+                              placeholder="ขนาดสุง"
+                              name="height_size"
+                              value={formData.height_size}
+                              onChange={handleChange}
+                            />
+                            {errors.height_size && (
+                              <div className="error-from">
+                                {errors.height_size}
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="form-group row">
+                            <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                              <label
+                                for="exampleFormControlInput1"
+                                class="form-label"
+                              >
+                                คิวต่อชิ้น
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control form-control-user"
+                                id="cue_per_piece"
+                                name="cue_per_piece"
+                                placeholder="คิวต่อชิ้น"
+                                value={formData.cue_per_piece}
+                                onChange={handleChange}
+                              />
+                              {errors.cue_per_piece && (
+                                <div className="error-from">
+                                  {errors.cue_per_piece}
+                                </div>
+                              )}
+                            </div>
+                            <div className="col-sm-6  col-md-6 col-lg-6">
+                              <label
+                                for="exampleFormControlInput1"
+                                class="form-label"
+                              >
+                                น้ำหนักต่อชิ้น
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control form-control-user"
+                                id="weight"
+                                name="weight"
+                                value={formData.weight}
+                                placeholder="น้ำหนัก"
+                                onChange={handleChange}
+                              />
+                              {errors.weight && (
+                                <div className="error-from">
+                                  {errors.weight}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                     <div className="form-group row">
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
