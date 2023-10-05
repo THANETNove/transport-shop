@@ -208,11 +208,8 @@ const ProductList = () => {
       if (response.status == "success") {
         fetchData();
       }
-    }else {
-      const response = await Service.updateProductDateToThailand(
-        id,
-        zonedDate
-      );
+    } else {
+      const response = await Service.updateProductDateToThailand(id, zonedDate);
       if (response.status == "success") {
         fetchData();
       }
@@ -228,9 +225,7 @@ const ProductList = () => {
         {productList &&
           productList.map((product, index) => (
             <tr>
-              <th scope="row">
-                {index + 1} {product.id}
-              </th>
+              <th scope="row">{index + 1}</th>
               <td>{product.customer_code} </td>
               {/*   <td>{product.tech_china}</td> */}
               {/*       <td>{product.warehouse_code}</td>
