@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { CSVLink } from "react-csv";
 import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import DatePicker from "react-datepicker";
+import ExcelExport from "./ExcelExport";
 
 const ProductList = () => {
   const user = useSelector((state) => state.auth.user);
@@ -383,19 +384,8 @@ const ProductList = () => {
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800"></h1>
-        {/* <a
-          onClick={Exportexcel}
-          className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-        >
-          <i className="fas fa-download fa-sm text-white-50" /> Generate Report
-        </a> */}
-        {/*   <CSVLink
-          data={userdata}
-          filename="RegisterUserData"
-          className="btn btn-success mb-3"
-        >
-          Export User Data
-        </CSVLink> */}
+
+        <ExcelExport />
       </div>
       <div className="row">
         <div className="col-xl-12 col-lg-12">
