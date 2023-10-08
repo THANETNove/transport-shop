@@ -15,78 +15,83 @@ const CSVExport = () => {
   }, []);
 
   useEffect(() => {
-    const filteredProducts =
-      productExport &&
-      productExport.filter((product) => {
-        // เงื่อนไขการกรองตาม customerCode
-        const conditionCustomerCode =
-          !customerCode || product.customer_code.includes(customerCode);
+    if (customerCode || chineseWarehouse || closeCabinet || toThailand) {
+      const filteredProducts =
+        productExport &&
+        productExport.filter((product) => {
+          // เงื่อนไขการกรองตาม customerCode
+          const conditionCustomerCode =
+            !customerCode || product.customer_code.includes(customerCode);
 
-        // เงื่อนไขการกรองตาม chineseWarehouse
-        const conditionChineseWarehouse =
-          !chineseWarehouse ||
-          product.chinese_warehouse === "null" ||
-          product.chinese_warehouse === "";
+          // เงื่อนไขการกรองตาม chineseWarehouse
+          const conditionChineseWarehouse =
+            !chineseWarehouse ||
+            product.chinese_warehouse === "null" ||
+            product.chinese_warehouse === "";
 
-        // เงื่อนไขการกรองตาม closeCabinet
-        const conditionCloseCabinet =
-          !closeCabinet ||
-          product.close_cabinet === "null" ||
-          product.close_cabinet === "";
+          // เงื่อนไขการกรองตาม closeCabinet
+          const conditionCloseCabinet =
+            !closeCabinet ||
+            product.close_cabinet === "null" ||
+            product.close_cabinet === "";
 
-        // เงื่อนไขการกรองตาม toThailand
-        const conditionToThailand =
-          !toThailand ||
-          product.to_thailand === "null" ||
-          product.to_thailand === "";
+          // เงื่อนไขการกรองตาม toThailand
+          const conditionToThailand =
+            !toThailand ||
+            product.to_thailand === "null" ||
+            product.to_thailand === "";
 
-        // ใช้เงื่อนไขดังกล่าวเพื่อรวมผลลัพธ์การกรองทั้งหมด
-        return (
-          conditionCustomerCode &&
-          conditionChineseWarehouse &&
-          conditionCloseCabinet &&
-          conditionToThailand
-        );
-      });
+          // ใช้เงื่อนไขดังกล่าวเพื่อรวมผลลัพธ์การกรองทั้งหมด
+          return (
+            conditionCustomerCode &&
+            conditionChineseWarehouse &&
+            conditionCloseCabinet &&
+            conditionToThailand
+          );
+        });
 
-    console.log("filteredProducts", filteredProducts);
-    /*     setProductExport(filteredProducts); */
+      setProductExport(filteredProducts);
+    } else {
+      setProductExport(product);
+    }
   }, [customerCode, toThailand, chineseWarehouse, closeCabinet]);
 
   // Check if productExport exists and is an array
-  if (!productExport || !Array.isArray(productExport)) {
+  /*  if (!productExport || !Array.isArray(productExport)) {
     return null;
   }
-
+ */
   // Convert inputFields JSON data to a CSV-compatible array
-  const csvData = productExport.map((item) => ({
-    id: item.id,
-    customer_code: item.customer_code,
-    tech_china: item.tech_china,
-    warehouse_code: item.warehouse_code,
-    cabinet_number: item.cabinet_number,
-    chinese_warehouse: item.chinese_warehouse,
-    close_cabinet: item.close_cabinet,
-    to_thailand: item.to_thailand,
-    parcel_status: item.parcel_status,
-    quantity: item.quantity,
-    wide_size: item.wide_size,
-    long_size: item.long_size,
-    height_size: item.height_size,
-    cue_per_piece: item.cue_per_piece,
-    weight: item.weight,
-    inputFields: item.inputFields || "NULL", // Wrap inputFields in double quotes
-    total_weight: item.total_weight,
-    total_queue: item.total_queue,
-    payment_amount_chinese_thai_delivery:
-      item.payment_amount_chinese_thai_delivery,
-    product_type: item.product_type,
-    image: item.image,
-    status_withdrawal: item.status_withdrawal,
-    status_recorder: item.status_recorder,
-    created_at: item.created_at,
-    updated_at: item.updated_at,
-  }));
+  const csvData =
+    productExport &&
+    productExport.map((item) => ({
+      id: item.id,
+      customer_code: item.customer_code,
+      tech_china: item.tech_china,
+      warehouse_code: item.warehouse_code,
+      cabinet_number: item.cabinet_number,
+      chinese_warehouse: item.chinese_warehouse,
+      close_cabinet: item.close_cabinet,
+      to_thailand: item.to_thailand,
+      parcel_status: item.parcel_status,
+      quantity: item.quantity,
+      wide_size: item.wide_size,
+      long_size: item.long_size,
+      height_size: item.height_size,
+      cue_per_piece: item.cue_per_piece,
+      weight: item.weight,
+      inputFields: item.inputFields || "NULL", // Wrap inputFields in double quotes
+      total_weight: item.total_weight,
+      total_queue: item.total_queue,
+      payment_amount_chinese_thai_delivery:
+        item.payment_amount_chinese_thai_delivery,
+      product_type: item.product_type,
+      image: item.image,
+      status_withdrawal: item.status_withdrawal,
+      status_recorder: item.status_recorder,
+      created_at: item.created_at,
+      updated_at: item.updated_at,
+    }));
 
   const selectProductExport = (event) => {
     const { name, type, value } = event.target;
@@ -161,14 +166,18 @@ const CSVExport = () => {
           วันที่ถึงโกดังไทย
         </label>
       </div>
-      {productExport != null && (
-        <CSVLink
-          data={csvData}
-          separator={";"} // Use semicolon as the separator
-          filename={"sample.csv"}
-        >
-          Export to CSV
-        </CSVLink>
+      {csvData != null && (
+        <>
+          <CSVLink
+            data={csvData}
+            separator={";"} // Use semicolon as the separator
+            filename={"sample.csv"}
+          >
+            Export to CSV
+          </CSVLink>
+          <br />
+          <h6>จำนวน Data Export {csvData.length}</h6>
+        </>
       )}
     </div>
   );
