@@ -5,10 +5,53 @@ const CSVExport = () => {
   const { product, statusProduct } = useSelector((state) => state.post);
 
   const [productExport, setProductExport] = useState(null);
+  const [customerCode, setCustomerCode] = useState(null);
+  const [chineseWarehouse, setChineseWarehouse] = useState(false);
+  const [closeCabinet, setCloseCabinet] = useState(false);
+  const [toThailand, setToThailand] = useState(false);
 
   useEffect(() => {
     setProductExport(product);
   }, []);
+
+  useEffect(() => {
+    const filteredProducts =
+      productExport &&
+      productExport.filter((product) => {
+        // เงื่อนไขการกรองตาม customerCode
+        const conditionCustomerCode =
+          !customerCode || product.customer_code.includes(customerCode);
+
+        // เงื่อนไขการกรองตาม chineseWarehouse
+        const conditionChineseWarehouse =
+          !chineseWarehouse ||
+          product.chinese_warehouse === "null" ||
+          product.chinese_warehouse === "";
+
+        // เงื่อนไขการกรองตาม closeCabinet
+        const conditionCloseCabinet =
+          !closeCabinet ||
+          product.close_cabinet === "null" ||
+          product.close_cabinet === "";
+
+        // เงื่อนไขการกรองตาม toThailand
+        const conditionToThailand =
+          !toThailand ||
+          product.to_thailand === "null" ||
+          product.to_thailand === "";
+
+        // ใช้เงื่อนไขดังกล่าวเพื่อรวมผลลัพธ์การกรองทั้งหมด
+        return (
+          conditionCustomerCode &&
+          conditionChineseWarehouse &&
+          conditionCloseCabinet &&
+          conditionToThailand
+        );
+      });
+
+    console.log("filteredProducts", filteredProducts);
+    /*     setProductExport(filteredProducts); */
+  }, [customerCode, toThailand, chineseWarehouse, closeCabinet]);
 
   // Check if productExport exists and is an array
   if (!productExport || !Array.isArray(productExport)) {
@@ -45,8 +88,26 @@ const CSVExport = () => {
     updated_at: item.updated_at,
   }));
 
+  const selectProductExport = (event) => {
+    const { name, type, value } = event.target;
+    if (name == "customerCode") {
+      setCustomerCode(value);
+    }
+    if (name == "chineseWarehouse") {
+      setChineseWarehouse(!chineseWarehouse);
+    }
+    if (name == "closeCabinet") {
+      setCloseCabinet(!closeCabinet);
+    }
+    if (name == "toThailand") {
+      setToThailand(!toThailand);
+    }
+  };
+
+  console.log("csvData", csvData);
+
   return (
-    <div className="col-2">
+    <div className="col-8 col-sm-8  col-md-6 col-lg-3">
       <h6>เลือก Export</h6>
       <div class="mb-3">
         {/* <label for="exampleFormControlInput1" class="form-label">
@@ -57,16 +118,18 @@ const CSVExport = () => {
           class="form-control"
           id="exampleFormControlInput1"
           placeholder="รหัสลูกค้า"
-
-          /*  onChange={c} */
+          name="customerCode"
+          onChange={selectProductExport}
         />
       </div>
       <div class="form-check">
         <input
           class="form-check-input"
           type="checkbox"
-          value=""
           id="flexCheckDefault"
+          name="chineseWarehouse"
+          value={closeCabinet}
+          onChange={selectProductExport}
         />
         <label class="form-check-label" for="flexCheckDefault">
           วันที่ถึงโกดังจีน
@@ -76,7 +139,9 @@ const CSVExport = () => {
         <input
           class="form-check-input"
           type="checkbox"
-          value=""
+          name="closeCabinet"
+          value={closeCabinet}
+          onClick={selectProductExport}
           id="flexCheckDefault"
         />
         <label class="form-check-label" for="flexCheckDefault">
@@ -87,8 +152,10 @@ const CSVExport = () => {
         <input
           class="form-check-input"
           type="checkbox"
-          value=""
+          name="toThailand"
           id="flexCheckDefault"
+          value={toThailand}
+          onClick={selectProductExport}
         />
         <label class="form-check-label" for="flexCheckDefault">
           วันที่ถึงโกดังไทย
