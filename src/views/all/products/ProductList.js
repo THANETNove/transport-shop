@@ -8,6 +8,7 @@ import { CSVLink } from "react-csv";
 import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import DatePicker from "react-datepicker";
 import ExcelExport from "./ExcelExport";
+import ExcelImport from "./ExcelImport";
 
 const ProductList = () => {
   const user = useSelector((state) => state.auth.user);
@@ -26,6 +27,15 @@ const ProductList = () => {
   const [statusProductList, setStatusProductList] = useState(statusProduct);
   const [codeData, setCodeData] = useState(status_code_data);
   const [userdata, setUserdata] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1); // หน้าปัจจุบัน
+  const [itemsPerPage, setItemsPerPage] = useState(50); // จำนวนรายการต่อหน้า
+
+  // ข้อมูลที่ต้องการแสดงในหน้าปัจจุบัน
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems =
+    productList && productList.slice(indexOfFirstItem, indexOfLastItem);
 
   const fetchData = async () => {
     const pro_log_1 = await Service.getProductType(dispatch); // ดึงประเภทสินค้า
@@ -113,12 +123,21 @@ const ProductList = () => {
     }, 1000);
   }, [statusSuccess]);
 
+  const pageNumbers = [];
+  for (
+    let i = 1;
+    i <= Math.ceil(productList && productList.length / itemsPerPage);
+    i++
+  ) {
+    pageNumbers.push(i);
+  }
+
   const systemUser = () => {
     return (
       <>
         <tbody>
-          {productList &&
-            productList
+          {currentItems &&
+            currentItems
               .filter((product) => product.customer_code === user.customerCode)
               .map((product, index) => (
                 <tr key={product.id}>
@@ -220,11 +239,12 @@ const ProductList = () => {
 
   /* console.log("product.to_thailand", productList); */
 
+  console.log("currentItems", currentItems);
   const systemAdmin = () => {
     return (
       <tbody>
-        {productList &&
-          productList.map((product, index) => (
+        {currentItems &&
+          currentItems.map((product, index) => (
             <tr>
               <th scope="row">{index + 1}</th>
               <td>{product.customer_code} </td>
@@ -363,28 +383,14 @@ const ProductList = () => {
     );
   };
 
-  function Exportexcel() {
-    useEffect(() => {
-      const getuserdata = async () => {
-        /* const userreq= await fetch("http://localhost/devopsdeveloper/users"); */
-        const jsonData = [
-          { name: "John", age: 30 },
-          { name: "Jane", age: 25 },
-          { name: "Bob", age: 35 },
-        ];
-        const userres = await jsonData.json();
-        console.log(userres);
-        setUserdata(userres);
-      };
-      getuserdata();
-    }, []);
-  }
-
+  const dataList = Math.ceil(productList && productList.length / itemsPerPage);
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800"></h1>
-
+        <div className="mb-3">
+          <ExcelImport />
+        </div>
         <ExcelExport />
       </div>
       <div className="row">
@@ -474,6 +480,69 @@ const ProductList = () => {
           </div>
         </div>
       </div>
+      {/* สร้างปุ่ม Pagination */}
+      {/* แสดงรายการหน้าของ Pagination */}
+
+      {dataList > 1 && (
+        <nav aria-label="Page navigation example">
+          <ul className="pagination">
+            <li
+              className={
+                currentPage === 1
+                  ? "page-item disabled"
+                  : "page-item cursor-pointer"
+              }
+            >
+              <a
+                className="page-link"
+                onClick={() =>
+                  setCurrentPage(currentPage === 1 ? 1 : currentPage - 1)
+                }
+              >
+                Previous
+              </a>
+            </li>
+            {pageNumbers.map((number) => (
+              <li
+                key={number}
+                className={
+                  currentPage === number
+                    ? "page-item active "
+                    : "page-item cursor-pointer"
+                }
+              >
+                <a className="page-link" onClick={() => setCurrentPage(number)}>
+                  {number}
+                </a>
+              </li>
+            ))}
+            <li
+              className={
+                currentPage ===
+                Math.ceil(productList && productList.length / itemsPerPage)
+                  ? "page-item disabled"
+                  : "page-item cursor-pointer"
+              }
+            >
+              <a
+                className="page-link cursor-pointer"
+                onClick={() =>
+                  setCurrentPage(
+                    currentPage ===
+                      Math.ceil(
+                        productList && productList.length / itemsPerPage
+                      )
+                      ? currentPage
+                      : currentPage + 1
+                  )
+                }
+              >
+                Next
+              </a>
+            </li>
+          </ul>
+        </nav>
+      )}
     </div>
   );
 };
