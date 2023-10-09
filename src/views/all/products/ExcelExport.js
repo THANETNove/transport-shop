@@ -109,7 +109,7 @@ const CSVExport = () => {
     }
   };
 
-  console.log("csvData", csvData);
+  /*  console.log("csvData", csvData); */
 
   return (
     <div className="col-8 col-sm-8  col-md-6 col-lg-3">
