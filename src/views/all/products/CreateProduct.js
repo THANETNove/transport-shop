@@ -182,7 +182,7 @@ const CreateProduct = () => {
     return isValid;
   };
 
-  const handleChange = (event) => {
+  const handleChangeCustomerCode = (event) => {
     const { name, value } = event.target;
 
     const uniqueCodes = [];
@@ -225,6 +225,11 @@ const CreateProduct = () => {
         ["customer_code"]: "รหัสลูกค้าไม่ตรง",
       }));
     }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const handleChangeType = (event) => {
@@ -474,7 +479,7 @@ const CreateProduct = () => {
                           name="customer_code"
                           value={formData.customer_code}
                           placeholder="รหัสลูกค้า"
-                          onChange={handleChange}
+                          onChange={handleChangeCustomerCode}
                         />
 
                         {errors.customer_code && (

@@ -335,7 +335,20 @@ const EditProductList = () => {
     setUserCode(users_code);
   }, [users_code]);
 
-  // คิวต่อชิ้น
+  // คิวต่อชิ้น  อันเก่า
+  useEffect(() => {
+    if (inputFields == null) {
+      const qu =
+        (formData.wide_size * formData.long_size * formData.height_size) /
+        1000000;
+      setFormData((prevState) => ({
+        ...prevState,
+        ["cue_per_piece"]: qu,
+      }));
+    }
+  }, [formData.wide_size, formData.long_size, formData.height_size]);
+
+  // คิวต่อชิ้น ใหม่
   useEffect(() => {
     if (inputFields != null) {
       for (let i = 0; i < inputFields.length; i++) {
@@ -345,8 +358,18 @@ const EditProductList = () => {
       }
     }
   }, [inputFields]);
+  // คิวรวม  เก่า
+  useEffect(() => {
+    if (inputFields == null) {
+      const quAll = formData.cue_per_piece * formData.quantity;
+      setFormData((prevState) => ({
+        ...prevState,
+        ["total_queue"]: quAll,
+      }));
+    }
+  }, [formData.quantity, formData.cue_per_piece]);
 
-  // คิวรวม
+  // คิวรวม  ใหม่
   useEffect(() => {
     if (inputFields != null) {
       let cue_per_piece = 0;
@@ -368,11 +391,21 @@ const EditProductList = () => {
     }
   }, [formData.quantity, inputFields]);
 
-  // น้ำหนักรวม
+  // น้ำหนักรวม เก่า
+  useEffect(() => {
+    if (inputFields == null) {
+      const totalWeight = formData.quantity * formData.weight;
+      setFormData((prevState) => ({
+        ...prevState,
+        ["total_weight"]: totalWeight,
+      }));
+    }
+  }, [formData.quantity, formData.weight]);
+
+  // น้ำหนักรวม ใหม่
   useEffect(() => {
     if (inputFields != null) {
       let weight = 0;
-
       for (let i = 0; i < inputFields.length; i++) {
         weight += parseFloat(inputFields[i].weightFields);
       }

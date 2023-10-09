@@ -172,12 +172,15 @@ const ProductList = () => {
                   </td>
                   <td>{product.quantity}</td>
                   <td>
-                    {parseFloat(
-                      product.payment_amount_chinese_thai_delivery
-                    ).toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
+                    {/*  {product.payment_amount_chinese_thai_delivery.length > 0
+                      ? parseFloat(
+                          product.payment_amount_chinese_thai_delivery
+                        ).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })
+                      : } */}
+                    {product.payment_amount_chinese_thai_delivery}
                   </td>
                   <td>
                     <a
@@ -375,15 +378,21 @@ const ProductList = () => {
     );
   };
 
+  console.log("user", user);
+
   const dataList = Math.ceil(productList && productList.length / itemsPerPage);
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800"></h1>
-        <div className="mb-3">
-          <ExcelImport />
-        </div>
-        <ExcelExport />
+        {user && user.status == "2" && (
+          <>
+            <div className="mb-3">
+              <ExcelImport />
+            </div>
+            <ExcelExport />
+          </>
+        )}
       </div>
       <div className="row">
         <div className="col-xl-12 col-lg-12">
