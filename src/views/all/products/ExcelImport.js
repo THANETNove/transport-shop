@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Service from "../../../server_api/server";
 import { useSelector, useDispatch } from "react-redux";
 
 const CSVReader = () => {
   const dispatch = useDispatch();
   const [csvData, setCSVData] = useState([]);
+  const user = useSelector((state) => state.auth.user);
+  const fileInputRef = useRef(null); // สร้าง ref สำหรับ input
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -46,8 +48,8 @@ const CSVReader = () => {
               }
             });
 
-            /*  const itemForm = {
-              id: item.id,
+            const itemForm = {
+              idProduct: item.id,
               customer_code: item.customer_code,
               tech_china: item.tech_china,
               warehouse_code: item.warehouse_code,
@@ -73,9 +75,9 @@ const CSVReader = () => {
               status_recorder: item.status_recorder,
               created_at: item.created_at,
               updated_at: item.updated_at,
-            }; */
+            };
 
-            updateProductImport(item);
+            updateProductImport(itemForm);
           });
       };
       reader.readAsText(file);
@@ -83,34 +85,40 @@ const CSVReader = () => {
   };
 
   const updateProductImport = async (item) => {
-    console.log("formData", item);
     const response = await Service.UpdateProduct(item, dispatch);
+    if (response.status == "success") {
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ""; // รีเซ็ตค่าใน input เป็นค่าว่าง
+      }
+      fetchData();
+    }
+  };
 
-    console.log(response);
+  const fetchData = async () => {
+    const pro_log_1 = await Service.getProductType(dispatch); // ดึงประเภทสินค้า
+    const pro_log_2 = await Service.getStatusList(dispatch); // ดึงสถานะสิค้า
+    const pro_log_3 = await Service.getProduct(dispatch); // ดึงสิค้า
+    const pro_log_4 = await Service.getProductCode(user.id, dispatch); // ดึงรหัสพัสดุ
+    const pro_log_5 = await Service.getCustomerCodeAll(dispatch); // ดึงประเภทพัสดุ
+
+    setTimeout(() => {
+      dispatch({
+        type: "STATUS_PRODUCT_SUCCESS",
+        payload: "default",
+      });
+    }, 2000);
   };
 
   /* console.log("csvData", csvData); */
 
   return (
     <div>
-      <input type="file" accept=".csv" onChange={handleFileUpload} />
-      {/*  <table>
-        <thead>
-          <tr>
-            {csvData[0] &&
-              csvData[0].map((header, index) => <th key={index}>{header}</th>)}
-          </tr>
-        </thead>
-        <tbody>
-          {csvData.slice(1).map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((cell, cellIndex) => (
-                <td key={cellIndex}>{cell}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
+      <input
+        type="file"
+        accept=".csv"
+        onChange={handleFileUpload}
+        ref={fileInputRef}
+      />
     </div>
   );
 };
