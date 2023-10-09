@@ -253,9 +253,9 @@ const EditProductList = () => {
     const kg = valuesArray[1]; // 2
     const cbm = valuesArray[2]; // 0.6
 
-    /*   console.log("id", id);
+    console.log("id", id);
     console.log("kg", kg);
-    console.log("cbm", cbm); */
+    console.log("cbm", cbm);
 
     if (selectedValue != "เลือกประเภทพัสดุ") {
       // คำนวน kg* น้ำหนักรวม
@@ -263,6 +263,9 @@ const EditProductList = () => {
       const calculate_kg = parseFloat(kg) * parseFloat(formData.total_weight);
       // คำนวน cbm*คิวรวม
       const calculate_cbm = parseFloat(cbm) * parseFloat(formData.total_queue);
+
+      console.log("calculate_kg", calculate_kg);
+      console.log("calculate_cbm", calculate_cbm);
 
       if (calculate_kg > calculate_cbm) {
         // กรณี calculate_kg มากกว่า calculate_cbm
