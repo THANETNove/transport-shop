@@ -74,14 +74,12 @@ const ProductList = () => {
   }, [product]);
 
   const getEdit = async (id) => {
-    console.log(id);
     const re = await Service.getProduct(dispatch); // ดึงสิค้า
     if (re.status == "success") {
       navigate(`/edit-product/${id}`);
     }
   };
   const showProduct = async (id) => {
-    console.log(id);
     const re = await Service.getProduct(dispatch); // ดึงสิค้า
     if (re.status == "success") {
       navigate(`/show-product/${id}`);
@@ -89,7 +87,6 @@ const ProductList = () => {
   };
 
   const deleteProductList = async (event, image) => {
-    console.log(event, image);
     const response = await Service.deleteProduct(event, image, dispatch);
     if (response.status == "success") {
       setStatusSuccess(response.message);
@@ -100,7 +97,6 @@ const ProductList = () => {
     }
   };
   const handleChangeStatus = async (id, name, value) => {
-    console.log("name", name, value, id);
     const response = await Service.updateStatusProductList(id, value, dispatch);
     if (response.status == "success") {
       setStatusSuccess(response.message);
@@ -204,7 +200,6 @@ const ProductList = () => {
       const filteredProducts = productList.filter((product) =>
         product.customer_code.includes(value)
       );
-      console.log(filteredProducts);
 
       setProductList(filteredProducts);
     } else {
@@ -237,9 +232,6 @@ const ProductList = () => {
     /*   setFormData((prevState) => ({ ...prevState, [name]: zonedDate })); */
   };
 
-  /* console.log("product.to_thailand", productList); */
-
-  console.log("currentItems", currentItems);
   const systemAdmin = () => {
     return (
       <tbody>
