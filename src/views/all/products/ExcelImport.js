@@ -15,7 +15,7 @@ const CSVReader = () => {
       const reader = new FileReader();
       reader.onload = (event) => {
         const text = event.target.result;
-        const rows = text.split("\n").map((row) => row.split(/,|;/));
+        const rows = text && text.split("\n").map((row) => row.split(/,|;/));
 
         console.log("rows", rows);
         // ตรวจสอบว่าข้อมูลมีหัวข้อหรือไม่
