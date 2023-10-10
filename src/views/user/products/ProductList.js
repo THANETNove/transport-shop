@@ -47,14 +47,6 @@ const ProductList = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  useEffect(() => {
-    console.log("user", user);
-    if (user.status == "0") {
-      const filteredItems = currentItems.filter(
-        (product) => product.customer_code === user.customerCode
-      );
-    }
-  }, []);
 
   useEffect(() => {
     setStatusList(status_list);
@@ -69,41 +61,16 @@ const ProductList = () => {
   }, [status_code_data]);
 
   useEffect(() => {
-    /*  getProduct */
-    setProductList(product);
+    const filteredItems =
+      product &&
+      product.filter((product) => product.customer_code === user.customerCode);
+    setProductList(filteredItems);
   }, [product]);
 
-  const getEdit = async (id) => {
-    const re = await Service.getProduct(dispatch); // ดึงสิค้า
-    if (re.status == "success") {
-      navigate(`/edit-product/${id}`);
-    }
-  };
   const showProduct = async (id) => {
     const re = await Service.getProduct(dispatch); // ดึงสิค้า
     if (re.status == "success") {
       navigate(`/show-product/${id}`);
-    }
-  };
-
-  const deleteProductList = async (event, image) => {
-    const response = await Service.deleteProduct(event, image, dispatch);
-    if (response.status == "success") {
-      setStatusSuccess(response.message);
-      setStatusResponse(1);
-    } else {
-      setStatusSuccess(response.error);
-      setStatusResponse(2);
-    }
-  };
-  const handleChangeStatus = async (id, name, value) => {
-    const response = await Service.updateStatusProductList(id, value, dispatch);
-    if (response.status == "success") {
-      setStatusSuccess(response.message);
-      setStatusResponse(1);
-    } else {
-      setStatusSuccess(response.error);
-      setStatusResponse(2);
     }
   };
 

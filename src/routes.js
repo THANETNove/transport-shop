@@ -67,6 +67,11 @@ const userRoutes = [
     component: ProductListUser,
     layout: "/auth",
   },
+  {
+    path: "/show-product/:id",
+    component: ShowProduct,
+    layout: "/auth",
+  },
 ];
 
 const adminRoutes = [
