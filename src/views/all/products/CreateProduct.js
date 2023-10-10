@@ -356,15 +356,6 @@ const CreateProduct = () => {
     setCodeData(status_code_data);
   }, [status_code_data]);
 
-  useEffect(() => {
-    if (user.status == 0) {
-      setFormData((prevState) => ({
-        ...prevState,
-        ["parcel_status"]: "31",
-      }));
-    }
-  }, []);
-
   // คิวต่อชิ้น
   useEffect(() => {
     for (let i = 0; i < inputFields.length; i++) {

@@ -103,6 +103,7 @@ const ProductList = () => {
   };
 
   const systemUser = () => {
+    console.log("statusList", statusList);
     return (
       <>
         <tbody>
@@ -110,7 +111,7 @@ const ProductList = () => {
             currentItems
               .filter((product) => product.customer_code === user.customerCode)
               .map((product, index) => (
-                <tr key={product.id}>
+                <tr key={product.id} className="text-center">
                   <th scope="row">{index + 1}</th>
                   <td>{product.customer_code}</td>
                   <td>{product.tech_china}</td>
@@ -134,27 +135,25 @@ const ProductList = () => {
                   <td>
                     {statusList &&
                       statusList.find(
-                        (status) => status.id === product.parcel_status
+                        (status) => status.id == product.parcel_status
                       ) && (
                         <span>
                           {statusList &&
                             statusList.find(
-                              (status) => status.id === product.parcel_status
+                              (status) => status.id == product.parcel_status
                             ).statusProduct}
                         </span>
                       )}
                   </td>
                   <td>{product.quantity}</td>
                   <td>
-                    {/*  {product.payment_amount_chinese_thai_delivery.length > 0
-                      ? parseFloat(
-                          product.payment_amount_chinese_thai_delivery
-                        ).toLocaleString("en-US", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })
-                      : } */}
-                    {product.payment_amount_chinese_thai_delivery}
+                    {product.payment_amount_chinese_thai_delivery.length > 0 &&
+                      parseFloat(
+                        product.payment_amount_chinese_thai_delivery
+                      ).toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
                   </td>
                   <td>
                     <a
@@ -183,35 +182,7 @@ const ProductList = () => {
       setProductList(product);
     }
   };
-  const toTimeZone = (date, timeZone) => {
-    const utcDate = zonedTimeToUtc(date, timeZone);
-    return utcToZonedTime(utcDate, timeZone);
-  };
 
-  const handleDateChange = async (name, id, date) => {
-    const thailandTimeZone = "Asia/Bangkok"; // โซนเวลาของประเทศไทย
-    const zonedDate = toTimeZone(date, thailandTimeZone);
-
-    if (name == "close_cabinet") {
-      const response = await Service.updateProductDateCloseCabinet(
-        id,
-        zonedDate
-      );
-      if (response.status == "success") {
-        fetchData();
-      }
-    } else {
-      const response = await Service.updateProductDateToThailand(id, zonedDate);
-      if (response.status == "success") {
-        fetchData();
-      }
-    }
-    /*   setFormData((prevState) => ({ ...prevState, [name]: zonedDate })); */
-  };
-
-  console.log("user", user);
-
-  const dataList = Math.ceil(productList && productList.length / itemsPerPage);
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -228,7 +199,7 @@ const ProductList = () => {
                 </Link>
               ) : (
                 <h6 className="m-0 font-weight-bold text-primary">
-                  พัสดุทั้งหมด 555
+                  พัสดุทั้งหมด
                 </h6>
               )}
 
@@ -272,7 +243,7 @@ const ProductList = () => {
               <div className="table-responsive">
                 <table className="table  align-middle table-hover">
                   <thead>
-                    <tr>
+                    <tr className="text-center">
                       <th scope="col">#</th>
                       <th scope="col">รหัสลูกค้า</th>
                       {/*  <th scope="col">เเทคจีน</th> */}
@@ -282,19 +253,14 @@ const ProductList = () => {
                       <th scope="col">ปิดตู้</th>
                       <th scope="col">ถึงไทย</th>
                       <th scope="col">สถานะ</th>
-                      {/*  <th scope="col">จำนวน</th> */}
+                      <th scope="col">จำนวน</th>
                       {/*     <th scope="col">ขนาด</th>
             <th scope="col">คิวต่อชิ้น</th>
             <th scope="col">น้ำหนัก</th>
             <th scope="col">คิวรวม</th> */}
+
                       <th scope="col">ยอดชำระ จีน-ไทย</th>
                       <th scope="col">show</th>
-                      {user.status != 0 && (
-                        <>
-                          <th scope="col">Edit</th>
-                          <th scope="col">delete</th>
-                        </>
-                      )}
                     </tr>
                   </thead>
                   {systemUser()}
