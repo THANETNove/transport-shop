@@ -7,8 +7,6 @@ import { format } from "date-fns";
 import { CSVLink } from "react-csv";
 import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import DatePicker from "react-datepicker";
-import ExcelExport from "./ExcelExport";
-import ExcelImport from "./ExcelImport";
 import ReactPaginate from "react-paginate";
 
 const ProductList = () => {
@@ -137,6 +135,75 @@ const ProductList = () => {
     setItemOffset(newOffset);
   };
 
+  const systemUser = () => {
+    return (
+      <>
+        <tbody>
+          {currentItems &&
+            currentItems
+              .filter((product) => product.customer_code === user.customerCode)
+              .map((product, index) => (
+                <tr key={product.id}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{product.customer_code}</td>
+                  <td>{product.tech_china}</td>
+                  <td>
+                    {format(new Date(product.chinese_warehouse), "dd-MM-yyyy")}
+                  </td>
+                  <td>
+                    {product.close_cabinet &&
+                    !["null", "NULL", ""].includes(product.close_cabinet)
+                      ? format(new Date(product.close_cabinet), "dd-MM-yyyy")
+                      : "N/A"}
+                  </td>
+                  <td>
+                    {
+                      product.to_thailand &&
+                      !["null", "NULL", ""].includes(product.to_thailand)
+                        ? format(new Date(product.to_thailand), "dd-MM-yyyy")
+                        : "N/A" /* หรือข้อความอื่น ๆ ที่คุณต้องการแสดงถ้าเป็นค่า null, "NULL", หรือค่าว่าง */
+                    }
+                  </td>
+                  <td>
+                    {statusList &&
+                      statusList.find(
+                        (status) => status.id === product.parcel_status
+                      ) && (
+                        <span>
+                          {statusList &&
+                            statusList.find(
+                              (status) => status.id === product.parcel_status
+                            ).statusProduct}
+                        </span>
+                      )}
+                  </td>
+                  <td>{product.quantity}</td>
+                  <td>
+                    {/*  {product.payment_amount_chinese_thai_delivery.length > 0
+                      ? parseFloat(
+                          product.payment_amount_chinese_thai_delivery
+                        ).toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })
+                      : } */}
+                    {product.payment_amount_chinese_thai_delivery}
+                  </td>
+                  <td>
+                    <a
+                      className="btn btn-primary btn-sm"
+                      onClick={() => showProduct(product.id)}
+                    >
+                      show
+                    </a>
+                  </td>
+                </tr>
+              ))}
+        </tbody>
+      </>
+    );
+  };
+
   const searchData = (event) => {
     const { value } = event.target;
     if (value) {
@@ -175,150 +242,6 @@ const ProductList = () => {
     /*   setFormData((prevState) => ({ ...prevState, [name]: zonedDate })); */
   };
 
-  const systemAdmin = () => {
-    /*     console.log("currentItems", currentItems); */
-    return (
-      <tbody>
-        {currentItems &&
-          currentItems.map((product, index) => (
-            <tr>
-              <th scope="row">{index + 1}</th>
-              <td>{product.customer_code} </td>
-              {/*   <td>{product.tech_china}</td> */}
-              {/*       <td>{product.warehouse_code}</td>
-            <td>{product.cabinet_number}</td> */}
-              <td>
-                {format(new Date(product.chinese_warehouse), "dd-MM-yyyy")}
-              </td>
-              <td>
-                {/* {product.close_cabinet &&
-                !["null", "NULL", ""].includes(product.close_cabinet)
-                  ? format(new Date(product.close_cabinet), "dd-MM-yyyy")
-                  : "N/A"} */}
-                <DatePicker
-                  placeholderText="Select date"
-                  selected={
-                    product &&
-                    !["null", "NULL", ""].includes(product.close_cabinet)
-                      ? new Date(product.close_cabinet)
-                      : null
-                  }
-                  className="form-control form-control-user"
-                  onChange={(date) =>
-                    handleDateChange("close_cabinet", product.id, date)
-                  }
-                  dateFormat="dd/MM/yyyy"
-                />
-              </td>
-              <td>
-                {/*  {product.to_thailand &&
-                  product.to_thailand &&
-                  format(new Date(product.to_thailand), "dd-MM-yyyy")} */}
-                {/* {
-                  product.to_thailand &&
-                  !["null", "NULL", ""].includes(product.to_thailand)
-                    ? format(new Date(product.to_thailand), "dd-MM-yyyy")
-                    : "N/A" 
-                } */}
-
-                <DatePicker
-                  placeholderText="Select date"
-                  selected={
-                    product &&
-                    !["null", "NULL", ""].includes(product.to_thailand)
-                      ? new Date(product.to_thailand)
-                      : null
-                  }
-                  className="form-control form-control-user"
-                  onChange={(date) =>
-                    handleDateChange("to_thailand", product.id, date)
-                  }
-                  dateFormat="dd/MM/yyyy"
-                />
-              </td>
-              <td>
-                {/*  {statusList &&
-                statusList.file(
-                  (status) =>
-                    status.id == product.parcel_status &&
-                    status.statusProduct
-                )} */}
-                <select
-                  className="form-control"
-                  id="parcel_status"
-                  name="parcel_status"
-                  value={product.parcel_status || ""} // Use empty string instead of null
-                  onChange={(event) =>
-                    handleChangeStatus(
-                      product.id,
-                      event.target.name,
-                      event.target.value
-                    )
-                  }
-                  aria-label="Default select example"
-                >
-                  <option value="" disabled>
-                    {" "}
-                    {/* Use value="" to represent the default "Select" option */}
-                    เลือก สถานะ
-                  </option>
-                  {statusList &&
-                    statusList.map((status) => (
-                      <option key={status.id} value={status.id}>
-                        {status.id === product.parcel_status
-                          ? `Selected: ${status.statusProduct}`
-                          : status.statusProduct}
-                      </option>
-                    ))}
-                </select>
-              </td>
-              {/*   <td>{product.quantity}</td> */}
-              {/*     <td>{product.size}</td>
-            <td>{product.cue_per_piece}</td>
-            <td>{product.weight}</td>
-            <td>{product.total_queue}</td> */}
-              <td>
-                {parseFloat(
-                  product.payment_amount_chinese_thai_delivery
-                ).toLocaleString("en-US", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </td>
-              <td>
-                <a
-                  className="btn btn-primary btn-sm"
-                  onClick={() => showProduct(product.id)}
-                >
-                  show
-                </a>
-              </td>
-              <td>
-                <button
-                  className="btn btn-secondary btn-sm"
-                  onClick={() => getEdit(product.id)}
-                >
-                  Edit
-                </button>
-              </td>
-              <td>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => {
-                    if (window.confirm("คุณต้องการลบ ข้อมูลใช่หรือไม่ ! ")) {
-                      deleteProductList(product.id, product.image);
-                    }
-                  }}
-                >
-                  delete
-                </button>
-              </td>
-            </tr>
-          ))}
-      </tbody>
-    );
-  };
-
   console.log("user", user);
 
   const dataList = Math.ceil(productList && productList.length / itemsPerPage);
@@ -326,14 +249,6 @@ const ProductList = () => {
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800"></h1>
-        {user && user.status == "2" && (
-          <>
-            <div className="mb-3">
-              <ExcelImport />
-            </div>
-            <ExcelExport />
-          </>
-        )}
       </div>
       <div className="row">
         <div className="col-xl-12 col-lg-12">
@@ -346,7 +261,7 @@ const ProductList = () => {
                 </Link>
               ) : (
                 <h6 className="m-0 font-weight-bold text-primary">
-                  พัสดุทั้งหมด
+                  พัสดุทั้งหมด 555
                 </h6>
               )}
 
@@ -415,7 +330,7 @@ const ProductList = () => {
                       )}
                     </tr>
                   </thead>
-                  {systemAdmin()}
+                  {systemUser()}
                 </table>
               </div>
             </div>

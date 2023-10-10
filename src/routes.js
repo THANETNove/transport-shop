@@ -7,6 +7,7 @@ import Register from "./views/auth/Register";
 import ProductCode from "./views/user/product_code/ProductCode";
 import CreateProductCode from "./views/user/product_code/CreateProductCode";
 import moneyWallet from "./views/user/moneyWallet/MoneyWallet";
+import ProductListUser from "./views/user/products/ProductList";
 //Admin
 
 // Manager
@@ -43,6 +44,32 @@ const commonRoutes = [
   },
 
   //  path All ใช้รวมกัน  กรณี login เเล้ว
+];
+
+const userRoutes = [
+  {
+    path: "/product-code",
+    component: ProductCode,
+    layout: "/auth",
+  },
+  {
+    path: "/create-product-code",
+    component: CreateProductCode,
+    layout: "/auth",
+  },
+  {
+    path: "/money-wallet",
+    component: moneyWallet,
+    layout: "/auth",
+  },
+  {
+    path: "/product-list",
+    component: ProductListUser,
+    layout: "/auth",
+  },
+];
+
+const adminRoutes = [
   {
     path: "/product-list",
     component: ProductListManager,
@@ -63,37 +90,6 @@ const commonRoutes = [
     component: ShowProduct,
     layout: "/auth",
   },
-];
-
-const userRoutes = [
-  {
-    path: "/product-code",
-    component: ProductCode,
-    layout: "/auth",
-  },
-  {
-    path: "/create-product-code",
-    component: CreateProductCode,
-    layout: "/auth",
-  },
-  {
-    path: "/money-wallet",
-    component: moneyWallet,
-    layout: "/auth",
-  },
-];
-
-const adminRoutes = [
-  /*   {
-    path: "/product-list",
-    component: ProductListAdmin,
-    layout: "/auth",
-  },
-  {
-    path: "/create-product",
-    component: CreateProductAdmin,
-    layout: "/auth",
-  }, */
 ];
 
 const managerRoutes = [
@@ -135,6 +131,26 @@ const managerRoutes = [
   {
     path: "/edit-price-per-user/:id",
     component: EditPricePreUser,
+    layout: "/auth",
+  },
+  {
+    path: "/product-list",
+    component: ProductListManager,
+    layout: "/auth",
+  },
+  {
+    path: "/create-product",
+    component: CreateProduct,
+    layout: "/auth",
+  },
+  {
+    path: "/edit-product/:id",
+    component: EditProduct,
+    layout: "/auth",
+  },
+  {
+    path: "/show-product/:id",
+    component: ShowProduct,
     layout: "/auth",
   },
 ];
