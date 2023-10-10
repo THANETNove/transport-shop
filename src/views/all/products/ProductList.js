@@ -9,6 +9,7 @@ import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import DatePicker from "react-datepicker";
 import ExcelExport from "./ExcelExport";
 import ExcelImport from "./ExcelImport";
+import ReactPaginate from "react-paginate";
 
 const ProductList = () => {
   const user = useSelector((state) => state.auth.user);
@@ -27,15 +28,8 @@ const ProductList = () => {
   const [statusProductList, setStatusProductList] = useState(statusProduct);
   const [codeData, setCodeData] = useState(status_code_data);
   const [userdata, setUserdata] = useState([]);
-
-  const [currentPage, setCurrentPage] = useState(1); // หน้าปัจจุบัน
-  const [itemsPerPage, setItemsPerPage] = useState(50); // จำนวนรายการต่อหน้า
-
-  // ข้อมูลที่ต้องการแสดงในหน้าปัจจุบัน
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems =
-    productList && productList.slice(indexOfFirstItem, indexOfLastItem);
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 50; // จำนวนรายการต่อหน้า
 
   const fetchData = async () => {
     const pro_log_1 = await Service.getProductType(dispatch); // ดึงประเภทสินค้า
@@ -119,14 +113,21 @@ const ProductList = () => {
     }, 1000);
   }, [statusSuccess]);
 
-  const pageNumbers = [];
-  for (
-    let i = 1;
-    i <= Math.ceil(productList && productList.length / itemsPerPage);
-    i++
-  ) {
-    pageNumbers.push(i);
-  }
+  // Simulate fetching items from another resources.
+  // (This could be items from props; or items loaded in a local state
+  // from an API endpoint with useEffect and useState)
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = productList && productList.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(productList && productList.length / itemsPerPage);
+  const maxItemOffset = (pageCount - 1) * itemsPerPage;
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = event.selected * itemsPerPage;
+
+    setItemOffset(newOffset);
+  };
 
   const systemUser = () => {
     return (
@@ -236,6 +237,7 @@ const ProductList = () => {
   };
 
   const systemAdmin = () => {
+    /*     console.log("currentItems", currentItems); */
     return (
       <tbody>
         {currentItems &&
@@ -479,71 +481,27 @@ const ProductList = () => {
               </div>
             </div>
           </div>
+          {pageCount > 1 && (
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel="Next"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={pageCount}
+              previousLabel="Previous"
+              containerClassName="pagination"
+              activeClassName="active"
+              pageLinkClassName="page-link"
+              previousLinkClassName="page-link"
+              nextLinkClassName="page-link"
+              breakClassName="page-item disabled"
+              pageClassName="page-item"
+              previousClassName="page-item"
+              nextClassName="page-item"
+            />
+          )}
         </div>
       </div>
-      {/* สร้างปุ่ม Pagination */}
-      {/* แสดงรายการหน้าของ Pagination */}
-
-      {dataList > 1 && (
-        <nav aria-label="Page navigation example">
-          <ul className="pagination">
-            <li
-              className={
-                currentPage === 1
-                  ? "page-item disabled"
-                  : "page-item cursor-pointer"
-              }
-            >
-              <a
-                className="page-link"
-                onClick={() =>
-                  setCurrentPage(currentPage === 1 ? 1 : currentPage - 1)
-                }
-              >
-                Previous
-              </a>
-            </li>
-            {pageNumbers.map((number) => (
-              <li
-                key={number}
-                className={
-                  currentPage === number
-                    ? "page-item active "
-                    : "page-item cursor-pointer"
-                }
-              >
-                <a className="page-link" onClick={() => setCurrentPage(number)}>
-                  {number}
-                </a>
-              </li>
-            ))}
-            <li
-              className={
-                currentPage ===
-                Math.ceil(productList && productList.length / itemsPerPage)
-                  ? "page-item disabled"
-                  : "page-item cursor-pointer"
-              }
-            >
-              <a
-                className="page-link cursor-pointer"
-                onClick={() =>
-                  setCurrentPage(
-                    currentPage ===
-                      Math.ceil(
-                        productList && productList.length / itemsPerPage
-                      )
-                      ? currentPage
-                      : currentPage + 1
-                  )
-                }
-              >
-                Next
-              </a>
-            </li>
-          </ul>
-        </nav>
-      )}
     </div>
   );
 };

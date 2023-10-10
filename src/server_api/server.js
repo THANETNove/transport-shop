@@ -2,8 +2,8 @@ import axios from "axios";
 import { format } from "date-fns";
 
 const getUrl = () => {
-  const https_url = "http://192.168.0.100/project/API"; //หน่วย
-  /* const https_url = "https://medocargo.com/API"; */
+  /*  const https_url = "http://192.168.0.100/project/API"; //หน่วย */
+  const https_url = "https://medocargo.com/API";
   return https_url;
 };
 
