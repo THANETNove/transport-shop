@@ -4,7 +4,7 @@ import { CSVLink } from "react-csv";
 const CSVExport = () => {
   const { product, statusProduct } = useSelector((state) => state.post);
 
-  const [productExport, setProductExport] = useState(null);
+  const [productExport, setProductExport] = useState(product);
   const [customerCode, setCustomerCode] = useState(null);
   const [chineseWarehouse, setChineseWarehouse] = useState(false);
   const [closeCabinet, setCloseCabinet] = useState(false);
@@ -12,7 +12,7 @@ const CSVExport = () => {
 
   useEffect(() => {
     setProductExport(product);
-  }, []);
+  }, [product]);
 
   useEffect(() => {
     if (customerCode || chineseWarehouse || closeCabinet || toThailand) {
