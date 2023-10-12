@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Service from "../../../server_api/server";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { format } from "date-fns";
 import { CSVLink } from "react-csv";
@@ -28,6 +29,7 @@ const ProductList = () => {
   const [userdata, setUserdata] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 50; // จำนวนรายการต่อหน้า
+  const [selectedData, setSelectedData] = useState([]); // ข้อมูลที่ถูกเลือก
 
   const fetchData = async () => {
     const pro_log_1 = await Service.getProductType(dispatch); // ดึงประเภทสินค้า
@@ -90,7 +92,7 @@ const ProductList = () => {
   // (This could be items from props; or items loaded in a local state
   // from an API endpoint with useEffect and useState)
   const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+
   const currentItems = productList && productList.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(productList && productList.length / itemsPerPage);
   const maxItemOffset = (pageCount - 1) * itemsPerPage;
@@ -102,8 +104,20 @@ const ProductList = () => {
     setItemOffset(newOffset);
   };
 
+  const handleCheckboxChange = (item) => {
+    const selectedIndex = selectedData.indexOf(item);
+    if (selectedIndex === -1) {
+      // เพิ่มข้อมูลเข้าใน selectedData
+      setSelectedData([...selectedData, item]);
+    } else {
+      // ลบข้อมูลออกจาก selectedData
+      const updatedData = [...selectedData];
+      updatedData.splice(selectedIndex, 1);
+      setSelectedData(updatedData);
+    }
+  };
+
   const systemUser = () => {
-    console.log("statusList", statusList);
     return (
       <>
         <tbody>
@@ -113,6 +127,16 @@ const ProductList = () => {
               .map((product, index) => (
                 <tr key={product.id} className="text-center">
                   <th scope="row">{index + 1}</th>
+                  <th>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        checked={selectedData.includes(product)}
+                        onChange={() => handleCheckboxChange(product)}
+                      />
+                    </div>
+                  </th>
                   <td>{product.customer_code}</td>
                   <td>{product.tech_china}</td>
                   <td>
@@ -245,20 +269,14 @@ const ProductList = () => {
                   <thead>
                     <tr className="text-center">
                       <th scope="col">#</th>
+                      <th scope="col"></th>
                       <th scope="col">รหัสลูกค้า</th>
-                      <th scope="col">รหัสตัวเเทน</th>
-                      {/*  <th scope="col">รหัสโกดัง</th>
-            <th scope="col">เลขตู้</th> */}
+                      <th scope="col">เเทคจีน</th>
                       <th scope="col">ถึงโกดังจีน</th>
                       <th scope="col">ปิดตู้</th>
                       <th scope="col">ถึงไทย</th>
                       <th scope="col">สถานะ</th>
                       <th scope="col">จำนวน</th>
-                      {/*     <th scope="col">ขนาด</th>
-            <th scope="col">คิวต่อชิ้น</th>
-            <th scope="col">น้ำหนัก</th>
-            <th scope="col">คิวรวม</th> */}
-
                       <th scope="col">ยอดชำระ จีน-ไทย</th>
                       <th scope="col">show</th>
                     </tr>

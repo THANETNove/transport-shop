@@ -182,7 +182,10 @@ const ProductList = () => {
         {currentItems &&
           currentItems.map((product, index) => (
             <tr>
-              <th scope="row">{index + 1}</th>
+              <th scope="row">
+                {/*  {index + 1}  */}
+                {product.id}
+              </th>
               <td>{product.customer_code} </td>
               {/*   <td>{product.tech_china}</td> */}
               {/*       <td>{product.warehouse_code}</td>
