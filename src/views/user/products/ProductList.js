@@ -117,6 +117,15 @@ const ProductList = () => {
     }
   };
 
+  const [selectAll, setSelectAll] = useState(false);
+
+  // ... (โค้ดที่เหลือ)
+
+  const handleSelectAll = () => {
+    setSelectAll(!selectAll);
+    setSelectedData(selectAll ? [] : productList);
+  };
+
   const systemUser = () => {
     return (
       <>
@@ -206,7 +215,7 @@ const ProductList = () => {
       setProductList(product);
     }
   };
-
+  console.log("selectedData", selectedData);
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -269,7 +278,24 @@ const ProductList = () => {
                   <thead>
                     <tr className="text-center">
                       <th scope="col">#</th>
-                      <th scope="col"></th>
+                      <th scope="col">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                            checked={selectAll}
+                            onChange={() => handleSelectAll()}
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            All
+                          </label>
+                        </div>
+                      </th>
                       <th scope="col">รหัสลูกค้า</th>
                       <th scope="col">เเทคจีน</th>
                       <th scope="col">ถึงโกดังจีน</th>

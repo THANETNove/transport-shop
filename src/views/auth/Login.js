@@ -48,10 +48,8 @@ const Login = () => {
 
     if (validate()) {
       const response = await Service.Login(formData, dispatch);
-    
 
       if (response.status == "success") {
-
         navigate("/product-list");
       } else {
         if (response.error == "User not found!") {
@@ -112,7 +110,7 @@ const Login = () => {
                           <div className="error-from">{errors.password}</div>
                         )}
                       </div>
-                      <div className="form-group">
+                      {/*       <div className="form-group">
                         <div className="custom-control custom-checkbox small">
                           <input
                             type="checkbox"
@@ -127,7 +125,7 @@ const Login = () => {
                             Remember Me
                           </label>
                         </div>
-                      </div>
+                      </div> */}
                       <button
                         type="submit"
                         className="btn btn-primary btn-user btn-block"

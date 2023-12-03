@@ -183,8 +183,18 @@ const ProductList = () => {
           currentItems.map((product, index) => (
             <tr>
               <th scope="row">
-                {/*  {index + 1}  */}
-                {product.id}
+                {index + 1}
+                {/*  {product.id} */}
+              </th>
+              <th>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="flexCheckDefault"
+                  />
+                </div>
               </th>
               <td>{product.customer_code} </td>
               {/*   <td>{product.tech_china}</td> */}
@@ -395,8 +405,23 @@ const ProductList = () => {
                   <thead>
                     <tr>
                       <th scope="col">#</th>
+                      <th scope="col">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            All
+                          </label>
+                        </div>
+                      </th>
                       <th scope="col">รหัสลูกค้า</th>
-                      {/*  <th scope="col">เเทคจีน</th> */}
                       {/*  <th scope="col">รหัสโกดัง</th>
             <th scope="col">เลขตู้</th> */}
                       <th scope="col">ถึงโกดังจีน</th>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { format } from "date-fns";
 
 const getUrl = () => {
-  const https_url = "http://192.168.0.105/project/API";
+  const https_url = "http://localhost/project/API/";
   /* const https_url = "https://medocargo.com/API"; */
   return https_url;
 };
