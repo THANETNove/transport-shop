@@ -134,7 +134,6 @@ const ProductList = () => {
     setSelectedData(selectAll ? [] : productList);
   };
 
-  console.log("productList", productList);
   const systemUser = () => {
     return (
       <>
@@ -224,7 +223,11 @@ const ProductList = () => {
       setProductList(product);
     }
   };
-  console.log("selectedData", selectedData);
+
+  const issue_bill = () => {
+    console.log("55");
+  };
+
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -240,9 +243,22 @@ const ProductList = () => {
                   เพิ่มพัสดุ
                 </Link>
               ) : (
-                <h6 className="m-0 font-weight-bold text-primary">
-                  พัสดุทั้งหมด
-                </h6>
+                <>
+                  <h6 className="m-0 font-weight-bold text-primary">
+                    พัสดุทั้งหมด
+                  </h6>
+                  <button
+                    type="button"
+                    className={
+                      selectedData.length > 0
+                        ? "btn btn-info"
+                        : "btn btn-secondary"
+                    }
+                    onClick={selectedData.length > 0 ? issue_bill : null}
+                  >
+                    ออกบิล
+                  </button>
+                </>
               )}
 
               <div>
