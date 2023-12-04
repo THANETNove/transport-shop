@@ -23,7 +23,7 @@ const ProductList = () => {
   const navigate = useNavigate();
 
   const { product, statusProduct } = useSelector((state) => state.post);
-  const [productList, setProductList] = useState(product);
+  const [productList, setProductList] = useState(null);
   const [statusProductList, setStatusProductList] = useState(statusProduct);
   const [codeData, setCodeData] = useState(status_code_data);
   const [userdata, setUserdata] = useState([]);
@@ -63,11 +63,23 @@ const ProductList = () => {
   }, [status_code_data]);
 
   useEffect(() => {
+    set_product();
+  }, []);
+
+  useEffect(() => {
+    set_product();
+  }, [product]);
+
+  const set_product = () => {
     const filteredItems =
       product &&
-      product.filter((product) => product.customer_code === user.customerCode);
+      product.filter(
+        (product) =>
+          product.customer_code === user.customerCode &&
+          product.billing_status == null
+      );
     setProductList(filteredItems);
-  }, [product]);
+  };
 
   const showProduct = async (id) => {
     const re = await Service.getProduct(dispatch); // ดึงสิค้า
@@ -126,6 +138,7 @@ const ProductList = () => {
     setSelectedData(selectAll ? [] : productList);
   };
 
+  console.log("productList", productList);
   const systemUser = () => {
     return (
       <>
