@@ -73,11 +73,7 @@ const ProductList = () => {
   const set_product = () => {
     const filteredItems =
       product &&
-      product.filter(
-        (product) =>
-          product.customer_code === user.customerCode &&
-          product.billing_status == null
-      );
+      product.filter((product) => product.customer_code === user.customerCode);
     setProductList(filteredItems);
   };
 
