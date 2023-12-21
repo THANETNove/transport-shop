@@ -620,6 +620,37 @@ const createProductCode = async (id, code, dispatch) => {
   }
 };
 
+const createIssueBill = async (id, id_address, data, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", id);
+  formData.append("id_address", id_address);
+  formData.append("data", JSON.stringify(data));
+
+  const response = await axios.post(`${url}/createIssueBill.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 //  Update POST
 const UpdateProductType = async (e, dispatch) => {
   const formData = new FormData();
@@ -670,53 +701,6 @@ const UpdateProduct = async (e, dispatch) => {
   }
 
   const response = await axios.post(`${url}/updateProduct.php`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data;charset=utf-8",
-    },
-  });
-
-  if (response.data.message) {
-    dispatch({
-      type: "PRODUCT_SUCCESS",
-      payload: response.data.product_data,
-    });
-    dispatch({
-      type: "STATUS_PRODUCT_SUCCESS",
-      payload: "success",
-    });
-
-    return {
-      status: "success",
-      message: response.data.message,
-    };
-  } else if (response.data.error) {
-    dispatch({
-      type: "PRODUCT_ERROR",
-      payload: response.data.error,
-    });
-    return {
-      status: "error",
-      error: response.data.error,
-    };
-  } else {
-    // handle other cases, if any
-    return {
-      status: "unknown",
-    };
-  }
-};
-
-const updateIssueBill = async (e, dispatch) => {
-  console.log("e", e);
-  const formData = new FormData();
-  formData.append("isAdd", true);
-  for (let key in e) {
-    formData.append(key, e[key]);
-  }
-
-  console.log("formData", formData);
-
-  const response = await axios.post(`${url}/updateIssueBill.php`, formData, {
     headers: {
       "Content-Type": "multipart/form-data;charset=utf-8",
     },
@@ -1067,7 +1051,7 @@ export default {
   updatePriceUser,
   updateProductDateCloseCabinet,
   updateProductDateToThailand,
-  updateIssueBill,
+  createIssueBill,
   deleteStatusList,
   deleteProduct,
   deleteProductTypeList,

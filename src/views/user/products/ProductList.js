@@ -30,6 +30,7 @@ const ProductList = () => {
   const [codeData, setCodeData] = useState(status_code_data);
   const [userdata, setUserdata] = useState([]);
   const [addressData, setAddressData] = useState(user_address);
+  const [idAddress, setIdAddress] = useState(null);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 50; // จำนวนรายการต่อหน้า
   const [selectedData, setSelectedData] = useState([]); // ข้อมูลที่ถูกเลือก
@@ -55,7 +56,6 @@ const ProductList = () => {
     provinces: "",
     zip_code: "",
   });
-  console.log("user_address", user_address);
 
   const fetchData = async () => {
     const pro_log_1 = await Service.getProductType(dispatch); // ดึงประเภทสินค้า
@@ -238,6 +238,22 @@ const ProductList = () => {
     }
   };
 
+  const handleSubmitBilling = async () => {
+    const response = await Service.createIssueBill(
+      user && user.id,
+      idAddress,
+      selectedData,
+      dispatch
+    );
+    if (response.status == "success") {
+      fetchData();
+      setStatusModel(0);
+      setIdAddress(null);
+      document.getElementById("close-modal") &&
+        document.getElementById("close-modal").click();
+    }
+  };
+
   const systemUser = () => {
     return (
       <>
@@ -247,7 +263,9 @@ const ProductList = () => {
               .filter((product) => product.customer_code === user.customerCode)
               .map((product, index) => (
                 <tr key={product.id} className="text-center">
-                  <th scope="row">{index + 1}</th>
+                  <th scope="row">
+                    {/* {index + 1} */} {product.id}
+                  </th>
                   <th>
                     <div class="form-check">
                       <input
@@ -326,11 +344,6 @@ const ProductList = () => {
     } else {
       setProductList(product);
     }
-  };
-
-  const issue_bill = async () => {
-    const response = await Service.updateIssueBill(selectedData, dispatch);
-    console.log("response", response);
   };
 
   const newAddress = () => {
@@ -471,12 +484,10 @@ const ProductList = () => {
                         ? "btn btn-info"
                         : "btn btn-secondary"
                     }
-                    /*  data-bs-toggle={selectedData.length > 0 ? "modal" : ""}
+                    data-bs-toggle={selectedData.length > 0 ? "modal" : ""}
                     data-bs-target={
                       selectedData.length > 0 ? "#exampleModal" : ""
-                    } */
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
+                    }
                   >
                     ออกบิล
                   </button>
@@ -588,7 +599,7 @@ const ProductList = () => {
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
@@ -611,12 +622,16 @@ const ProductList = () => {
                         <input
                           class="form-check-input"
                           type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault1"
+                          onClick={() => setIdAddress(item.id)}
+                          checked={idAddress === item.id}
+                          name="idAddress"
+                          id={`idAddress_${index}`}
                         />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                          {item.username} {item.tel} {item.address}{" "}
-                          {item.subdistricts} {item.districts} {item.provinces}{" "}
+                        <label class="form-check-label" for="idAddress">
+                          {item.username}&nbsp; {item.tel}&nbsp; {item.address}
+                          &nbsp;
+                          {item.subdistricts}&nbsp; {item.districts} &nbsp;{" "}
+                          {item.provinces}&nbsp;
                           {item.zip_code}
                         </label>
                       </div>
@@ -637,6 +652,7 @@ const ProductList = () => {
             <div class="modal-footer">
               <button
                 type="button"
+                id="close-modal"
                 class="btn btn-secondary"
                 data-bs-dismiss={statusModel === 0 ? "modal" : undefined}
                 onClick={statusModel === 0 ? null : () => setStatusModel(0)}
@@ -645,8 +661,12 @@ const ProductList = () => {
               </button>
               <button
                 type="button"
-                class="btn btn-primary"
-                onClick={handleSubmitAddress}
+                class={idAddress ? "btn btn-primary" : "btn btn-secondary"}
+                onClick={
+                  statusModel === 0
+                    ? idAddress && handleSubmitBilling
+                    : handleSubmitAddress
+                }
               >
                 Save changes
               </button>
