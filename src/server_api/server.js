@@ -214,6 +214,42 @@ const getProductCode = async (id, dispatch) => {
   }
 };
 
+const getAddress = async (id, dispatch) => {
+  const params = {
+    isAdd: true,
+    id: id,
+  };
+  const response = await axios.get(`${url}/getAddress.php`, {
+    params,
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "ADDRESS_SUCCESS",
+      payload: response.data.data,
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "PRODUCT_CODE_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 const getCustomerCode = async (code, dispatch) => {
   const params = {
     isAdd: true,
@@ -482,6 +518,36 @@ const createProduct = async (e, dispatch) => {
     };
   }
 };
+const createAddress = async (e, dispatch) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  for (let key in e) {
+    formData.append(key, e[key]);
+  }
+
+  const response = await axios.post(`${url}createAddress.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
 
 const createPriceUser = async (e, dispatch) => {
   console.log("55");
@@ -604,6 +670,53 @@ const UpdateProduct = async (e, dispatch) => {
   }
 
   const response = await axios.post(`${url}/updateProduct.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "PRODUCT_SUCCESS",
+      payload: response.data.product_data,
+    });
+    dispatch({
+      type: "STATUS_PRODUCT_SUCCESS",
+      payload: "success",
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    dispatch({
+      type: "PRODUCT_ERROR",
+      payload: response.data.error,
+    });
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
+const updateIssueBill = async (e, dispatch) => {
+  console.log("e", e);
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  for (let key in e) {
+    formData.append(key, e[key]);
+  }
+
+  console.log("formData", formData);
+
+  const response = await axios.post(`${url}/updateIssueBill.php`, formData, {
     headers: {
       "Content-Type": "multipart/form-data;charset=utf-8",
     },
@@ -939,10 +1052,12 @@ export default {
   getProductCode,
   getCustomerCode,
   getCustomerCodeAll,
+  getAddress,
   register,
   Login,
   statusList,
   createProduct,
+  createAddress,
   createProductCode,
   createPriceUser,
   ProductType,
@@ -952,6 +1067,7 @@ export default {
   updatePriceUser,
   updateProductDateCloseCabinet,
   updateProductDateToThailand,
+  updateIssueBill,
   deleteStatusList,
   deleteProduct,
   deleteProductTypeList,

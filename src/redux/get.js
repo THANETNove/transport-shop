@@ -5,6 +5,7 @@ const initialState = {
   price_user_errors: null,
   users_code: null,
   users_code_error: null,
+  user_address: null,
 };
 
 export default function (state = initialState, action) {
@@ -38,6 +39,15 @@ export default function (state = initialState, action) {
       return {
         ...state,
         users_code_errors: action.payload,
+      };
+    case "ADDRESS_SUCCESS":
+      return {
+        ...state,
+        user_address: action.payload,
+      };
+    case "ADDRESS_ERROR":
+      return {
+        ...state,
       };
     default:
       return state;
