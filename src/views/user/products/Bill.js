@@ -75,7 +75,7 @@ const ProductList = () => {
     setShowTel(tel);
     setShowUsername(username);
     setShowImage(image);
-    setShowUpdated_atBill(formatDateTime(billUpdated_at));
+    setShowUpdated_atBill(billUpdated_at);
   };
 
   const endOffset = itemOffset + itemsPerPage;
@@ -118,19 +118,26 @@ const ProductList = () => {
   };
 
   const searchData = (event) => {
-    /*  const { value } = event.target;
+    const { value } = event.target;
+
     if (value) {
-      const filteredProducts = productList.filter((product) =>
-        product.customer_code.includes(value)
+      const filteredProducts = Object.values(data).filter(
+        (item) => item.billId == value
       );
+      if (filteredProducts.length > 0) {
+        setData(filteredProducts);
+      } else {
+        const filteredDate = Object.values(data).filter((item) => {
+          const itemDate = new Date(item.billUpdated_at.split(" ")[0]); // Convert to Date object
+          const targetDate = new Date(value); // Convert to Date object
 
-      setProductList(filteredProducts);
-    } else {
-      setProductList(product);
-    } */
+          return itemDate.getTime() === targetDate.getTime();
+        });
+
+        console.log("filteredDate", filteredDate);
+      }
+    }
   };
-
-  console.log("currentItems", currentItems);
 
   const systemUser = () => {
     return (
@@ -142,7 +149,12 @@ const ProductList = () => {
                 {/* Your table cell content here */}
                 <th scope="row">{index + 1} </th>
                 <td>{item.billId}</td>
-                <td> {formatDateTime(item.billUpdated_at)}</td>
+                <td>
+                  {" "}
+                  {
+                    item.billUpdated_at /* formatDateTime(item.billUpdated_at) */
+                  }
+                </td>
                 <td>
                   {item.status == "รอตรวจสอบ"
                     ? item.status == "ตรวจสอบเเล้ว"
@@ -330,14 +342,14 @@ const ProductList = () => {
                   <h6 className="uppercase-text">รายละเอียดลูกค้า</h6>
                   <p>
                     ที่อยู่ คุณ {showUsername}&nbsp; &nbsp; {showAddress}&nbsp;
-                    &nbspว เเขวง/ตำบล.
+                    &nbsp; เเขวง/ตำบล.
                     {showSubdistricts}&nbsp; &nbsp; เขต/อำเภอ.
                     {showDistricts}&nbsp; &nbsp; จ.{showProvinces}&nbsp; &nbsp;
                     รหัสไปรษณีย์ {showZip_code}
                   </p>
                   <p>TEL. {showTel}</p>
                 </div>
-                <div className="box-bill-add">
+                <div className="table-responsive box-bill-add">
                   <table class="table">
                     <thead>
                       <tr>
@@ -393,7 +405,7 @@ const ProductList = () => {
                   </div>
                   <div className="col-4">
                     <h6 className="uppercase-text">เรทค่านำเข้า</h6>
-                    <div className="box-bill-add">
+                    <div className="table-responsive box-bill-add">
                       <table class="table  mt-3">
                         <tbody>
                           {userCode &&
@@ -425,7 +437,7 @@ const ProductList = () => {
                   <div className="col-5">
                     <h6 className="uppercase-text">สรุปรายการ</h6>
 
-                    <div className="box-bill-add">
+                    <div className="table-responsive box-bill-add">
                       <table class="table  mt-3">
                         <tbody>
                           <tr>
