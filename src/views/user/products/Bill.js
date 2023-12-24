@@ -33,6 +33,7 @@ const ProductList = () => {
   const [userCode, setUserCode] = useState(users_code);
   const [showImage, setShowImage] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
 
   const fetchData = async () => {
     const pro_log_1 = await Service.getBill(user && user.id, dispatch);
@@ -119,6 +120,7 @@ const ProductList = () => {
 
   const searchData = (event) => {
     const { value } = event.target;
+    setData(BillData);
 
     if (value) {
       const filteredProducts = Object.values(data).filter(
@@ -133,8 +135,9 @@ const ProductList = () => {
 
           return itemDate.getTime() === targetDate.getTime();
         });
-
-        console.log("filteredDate", filteredDate);
+        if (filteredDate.length > 0) {
+          setData(filteredDate);
+        }
       }
     }
   };
@@ -243,8 +246,9 @@ const ProductList = () => {
                   <input
                     type="text"
                     className="form-control  background-white bg-light border-0 small"
-                    placeholder="Search รหัสลูกค้า"
+                    placeholder="Search เลขที่ หรือ 2023-12-21"
                     aria-label="Search"
+                    /*   value={searchText} */
                     onChange={searchData}
                     aria-describedby="basic-addon2"
                   />
