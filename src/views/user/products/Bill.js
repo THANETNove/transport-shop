@@ -18,8 +18,21 @@ const ProductList = () => {
   const navigate = useNavigate();
   const [data, setData] = useState(BillData);
   const [showDataBill, setShowDataBill] = useState(null);
+  const [showIdBill, setShowIdBill] = useState(null);
+  const [showAddress, setShowAddress] = useState(null);
+  const [showSubdistricts, setShowSubdistricts] = useState(null);
+  const [showDistricts, setShowDistricts] = useState(null);
+  const [showProvinces, setShowProvinces] = useState(null);
+  const [showZip_code, setShowZip_code] = useState(null);
+  const [showTel, setShowTel] = useState(null);
+  const [showUsername, setShowUsername] = useState(null);
+  const [showUpdated_atBill, setShowUpdated_atBill] = useState(null);
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 50; // จำนวนรายการต่อหน้า
+  const itemsPerPage = 50; // จำนวนรายการต่
+  const { users_code } = useSelector((state) => state.get);
+  const [userCode, setUserCode] = useState(users_code);
+  const [showImage, setShowImage] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const fetchData = async () => {
     const pro_log_1 = await Service.getBill(user && user.id, dispatch);
@@ -29,15 +42,40 @@ const ProductList = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  useEffect(() => {
+    setUserCode(users_code);
+  }, [users_code]);
 
   useEffect(() => {
     setData(data);
   }, [BillData]);
 
-  const showProduct = (event) => {
+  const showProduct = (
+    dataBill,
+    billId,
+    billUpdated_at,
+    address,
+    subdistricts,
+    districts,
+    provinces,
+    zip_code,
+    tel,
+    username,
+    image
+  ) => {
     document.getElementById("btn-exampleModal") &&
       document.getElementById("btn-exampleModal").click();
-    setShowDataBill(event);
+    setShowDataBill(dataBill);
+    setShowIdBill(billId);
+    setShowAddress(address);
+    setShowSubdistricts(subdistricts);
+    setShowDistricts(districts);
+    setShowProvinces(provinces);
+    setShowZip_code(zip_code);
+    setShowTel(tel);
+    setShowUsername(username);
+    setShowImage(image);
+    setShowUpdated_atBill(formatDateTime(billUpdated_at));
   };
 
   const endOffset = itemOffset + itemsPerPage;
@@ -54,53 +92,29 @@ const ProductList = () => {
     setItemOffset(newOffset);
   };
 
-  console.log("showDataBill", showDataBill);
-  const systemUser = () => {
-    return (
-      <>
-        <tbody>
-          {currentItems &&
-            currentItems.map((item, index) => (
-              <tr key={item.billId} className="text-center">
-                {/* Your table cell content here */}
-                <th scope="row">{index + 1} </th>
-                <td>{item.billId}</td>
-                <td>{item.billUpdated_at}</td>
-                <td>
-                  {item.status == "รอตรวจสอบ"
-                    ? item.status == "ตรวจสอบเเล้ว"
-                      ? ""
-                      : ""
-                    : ""}
-                  {item.status}
-                </td>
-                <a
-                  className="btn btn-primary btn-sm"
-                  onClick={() => showProduct(item.dataBill)}
-                >
-                  show
-                </a>
-              </tr>
-            ))}
-          {/* {data &&
-            data.map((item, index) => (
-              <tr key={item.id} className="text-center">
-                 <th scope="row">{index + 1} </th>
-                
-                <td>{item.billId}</td>
-                <td>{item.billUpdated_at}</td>
-                <td>{item.status}</td>
-                <a
-                  className="btn btn-primary btn-sm"
-                  onClick={() => showProduct(item.billId)}
-                >
-                  show
-                </a>
-              </tr>
-            ))} */}
-        </tbody>
-      </>
-    );
+  const formatDateTime = (originalDate) => {
+    const dateTime = new Date(originalDate);
+    const options = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    const formattedDate = dateTime
+      .toLocaleString("en-GB", options)
+      .replace(/, /g, " ")
+      .replace(/\//g, "-");
+    return formattedDate;
+  };
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   const searchData = (event) => {
@@ -115,6 +129,93 @@ const ProductList = () => {
       setProductList(product);
     } */
   };
+
+  console.log("currentItems", currentItems);
+
+  const systemUser = () => {
+    return (
+      <>
+        <tbody>
+          {currentItems &&
+            currentItems.map((item, index) => (
+              <tr key={item.billId} className="text-center">
+                {/* Your table cell content here */}
+                <th scope="row">{index + 1} </th>
+                <td>{item.billId}</td>
+                <td> {formatDateTime(item.billUpdated_at)}</td>
+                <td>
+                  {item.status == "รอตรวจสอบ"
+                    ? item.status == "ตรวจสอบเเล้ว"
+                      ? ""
+                      : ""
+                    : ""}
+                  {item.status}
+                </td>
+                <a
+                  className="btn btn-primary btn-sm"
+                  onClick={() =>
+                    showProduct(
+                      item.dataBill,
+                      item.billId,
+                      item.billUpdated_at,
+                      item.address,
+                      item.subdistricts,
+                      item.districts,
+                      item.provinces,
+                      item.zip_code,
+                      item.tel,
+                      item.username,
+                      item.image
+                    )
+                  }
+                >
+                  show
+                </a>
+              </tr>
+            ))}
+        </tbody>
+      </>
+    );
+  };
+
+  const totalQuantity =
+    showDataBill &&
+    showDataBill.reduce((acc, item) => {
+      const quantity = parseInt(item.quantity, 10); // แปลงเป็นตัวเลข
+      if (!isNaN(quantity)) {
+        return acc + quantity;
+      }
+      return acc;
+    }, 0);
+
+  const totalWeight =
+    showDataBill &&
+    showDataBill.reduce((acc, item) => {
+      const quantity = parseInt(item.total_weight, 10); // แปลงเป็นตัวเลข
+      if (!isNaN(quantity)) {
+        return acc + quantity;
+      }
+      return acc;
+    }, 0);
+
+  const totalQueue =
+    showDataBill &&
+    showDataBill.reduce((acc, item) => {
+      const quantity = parseInt(item.total_queue, 10); // แปลงเป็นตัวเลข
+      if (!isNaN(quantity)) {
+        return acc + quantity;
+      }
+      return acc;
+    }, 0);
+  const paymentAmountChineseThaiDelivery =
+    showDataBill &&
+    showDataBill.reduce((acc, item) => {
+      const quantity = parseInt(item.payment_amount_chinese_thai_delivery, 10); // แปลงเป็นตัวเลข
+      if (!isNaN(quantity)) {
+        return acc + quantity;
+      }
+      return acc;
+    }, 0);
 
   return (
     <div className="container-fluid">
@@ -216,25 +317,25 @@ const ProductList = () => {
             </div>
             <div class="modal-body">
               <div className="box-bill">
-                <p>เลขที่/No 9289</p>
-                <p>วันที่/Date 10-01-2023 00:18:29 น.</p>
+                <p>เลขที่/No {showIdBill && showIdBill}</p>
+                <p>วันที่/Date {showUpdated_atBill && showUpdated_atBill} น.</p>
               </div>
               <div className="row">
                 <div className="col-6">
-                  <h6 className="uppercase-text">medocargo THAILAND</h6>
-                  <p>
-                    เลขที่ 176/4-5 MUKDAHAN - DONTAN ROAD,SI BUN RUEANG MUEANG
-                    MUKDAHAN,MUKDAHAN PROVINCE 49000 THAILAND
-                  </p>
-                  <p>TEL. 085-1122999</p>
+                  <h6 className="uppercase-text">MEDO INTERNATIONAL</h6>
+                  {/* <p>MEDO INTERNATIONAL</p> */}
+                  {/*  <p>TEL. 085-1122999</p> */}
                 </div>
                 <div className="col-6">
                   <h6 className="uppercase-text">รายละเอียดลูกค้า</h6>
                   <p>
-                    ที่อยู่ คุณ จุฑามาศ 34/1 ต.แพรกษา อ.เมือง จ.สมุทรปราการ
-                    รหัสไปรษณีย์ 10280
+                    ที่อยู่ คุณ {showUsername}&nbsp; &nbsp; {showAddress}&nbsp;
+                    &nbspว เเขวง/ตำบล.
+                    {showSubdistricts}&nbsp; &nbsp; เขต/อำเภอ.
+                    {showDistricts}&nbsp; &nbsp; จ.{showProvinces}&nbsp; &nbsp;
+                    รหัสไปรษณีย์ {showZip_code}
                   </p>
-                  <p>TEL. 0918738739</p>
+                  <p>TEL. {showTel}</p>
                 </div>
                 <div className="box-bill-add">
                   <table class="table">
@@ -262,90 +363,102 @@ const ProductList = () => {
                             <td>{item.quantity}</td>
                             <td>{item.total_weight}</td>
                             <td>{item.total_queue}</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
+                            <td>{item.thinkingFrom}</td>
+                            <td>{item.payment_amount_chinese_thai_delivery}</td>
                           </tr>
                         ))}
                     </tbody>
                   </table>
                 </div>
                 <div className="row mt-4">
-                  <div className="col-4">
+                  <div className="col-3">
                     <h6 className="uppercase-text">บิลส่งของ จัดส่งแล้ว</h6>
+                    {/*   <img
+                      src="../../assetsAuth/img/image.jpeg"
+                      className="img-fluid"
+                      alt=""
+                      onClick={openModal}
+                    /> */}
+                    <a
+                      href="http://localhost:3000/assetsAuth/img/image.jpeg"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src="/assetsAuth/img/image.jpeg"
+                        alt="Enlarged Image"
+                        className="img-fluid"
+                      />
+                    </a>
                   </div>
                   <div className="col-4">
                     <h6 className="uppercase-text">เรทค่านำเข้า</h6>
                     <div className="box-bill-add">
                       <table class="table  mt-3">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                          </tr>
-                        </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">จำนวน </th>
-                            <td>Mark</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">ปริมาตร(คิว) </th>
-                            <td>Mark</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">น้ำหนัก </th>
-                            <td>Mark</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">ยอดรวมค่านำเข้า จีน-ไทย </th>
-                            <td>Mark</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">ยอดชำระทั้งหมด </th>
-                            <td>Mark</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">ยอดชำระทั้งหมด </th>
-                            <td>เลือกขนส่ง </td>
-                          </tr>
+                          {userCode &&
+                            userCode
+                              .filter(
+                                (type) =>
+                                  showDataBill &&
+                                  showDataBill[0].customer_code ==
+                                    type.customerCode
+                              )
+                              .map((type, index) => (
+                                /*   <option
+                                  key={index}
+                                  value={`${type.id_type} ${type.kg} ${type.cbm}`}
+                                >
+                                  {type.name}
+                                </option> */
+                                <tr>
+                                  <th scope="row"> {type.name}</th>
+                                  <td>
+                                    {`"KG":  ${type.kg},  "CBM" : ${type.cbm} `}
+                                  </td>
+                                </tr>
+                              ))}
                         </tbody>
                       </table>
                     </div>
                   </div>
-                  <div className="col-4">
+                  <div className="col-5">
                     <h6 className="uppercase-text">สรุปรายการ</h6>
+
                     <div className="box-bill-add">
                       <table class="table  mt-3">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                          </tr>
-                        </thead>
                         <tbody>
                           <tr>
                             <th scope="row">จำนวน </th>
-                            <td>Mark</td>
+                            <td>{totalQuantity} กล่อง</td>
                           </tr>
                           <tr>
                             <th scope="row">ปริมาตร(คิว) </th>
-                            <td>Mark</td>
+                            <td>{totalWeight} CBM</td>
                           </tr>
                           <tr>
                             <th scope="row">น้ำหนัก </th>
-                            <td>Mark</td>
+                            <td>{totalQueue} kg</td>
                           </tr>
                           <tr>
                             <th scope="row">ยอดรวมค่านำเข้า จีน-ไทย </th>
-                            <td>Mark</td>
+                            <td>
+                              {paymentAmountChineseThaiDelivery &&
+                                paymentAmountChineseThaiDelivery.toLocaleString()}{" "}
+                              บาท
+                            </td>
                           </tr>
                           <tr>
                             <th scope="row">ยอดชำระทั้งหมด </th>
-                            <td>Mark</td>
+                            <td>
+                              {paymentAmountChineseThaiDelivery &&
+                                paymentAmountChineseThaiDelivery.toLocaleString()}{" "}
+                              บาท ( ชำระแล้ว)
+                            </td>
                           </tr>
                           <tr>
-                            <th scope="row">ยอดชำระทั้งหมด </th>
-                            <td>เลือกขนส่ง </td>
+                            <th scope="row">เลือกขนส่ง </th>
+                            <td>นัดรับ</td>
                           </tr>
                         </tbody>
                       </table>
