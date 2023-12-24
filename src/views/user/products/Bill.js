@@ -158,14 +158,7 @@ const ProductList = () => {
                     item.billUpdated_at /* formatDateTime(item.billUpdated_at) */
                   }
                 </td>
-                <td>
-                  {item.status == "รอตรวจสอบ"
-                    ? item.status == "ตรวจสอบเเล้ว"
-                      ? ""
-                      : ""
-                    : ""}
-                  {item.status}
-                </td>
+                <td>{item.status}</td>
                 <a
                   className="btn btn-primary btn-sm"
                   onClick={() =>
