@@ -8,6 +8,7 @@ import ProductCode from "./views/user/product_code/ProductCode";
 import CreateProductCode from "./views/user/product_code/CreateProductCode";
 import moneyWallet from "./views/user/moneyWallet/MoneyWallet";
 import ProductListUser from "./views/user/products/ProductList";
+import BillList from "./views/user/products/Bill";
 //Admin
 
 // Manager
@@ -70,6 +71,11 @@ const userRoutes = [
   {
     path: "/show-product/:id",
     component: ShowProduct,
+    layout: "/auth",
+  },
+  {
+    path: "/bill-all",
+    component: BillList,
     layout: "/auth",
   },
 ];

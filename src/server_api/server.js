@@ -249,6 +249,43 @@ const getAddress = async (id, dispatch) => {
     };
   }
 };
+const getBill = async (id, dispatch) => {
+  const params = {
+    isAdd: true,
+    id: id,
+  };
+  const response = await axios.get(`${url}/getIssueBill.php`, {
+    params,
+  });
+
+  console.log("response", response.data.message);
+
+  if (response.data.message) {
+       dispatch({
+      type: "BILL_SUCCESS",
+      payload: response.data.data,
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    /*   dispatch({
+      type: "PRODUCT_CODE_ERROR",
+      payload: response.data.error,
+    }); */
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
 
 const getCustomerCode = async (code, dispatch) => {
   const params = {
@@ -1037,6 +1074,7 @@ export default {
   getCustomerCode,
   getCustomerCodeAll,
   getAddress,
+  getBill,
   register,
   Login,
   statusList,

@@ -80,7 +80,7 @@ export default function Sidebar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/money-wallet">
+              <Link className="nav-link" to="/bill-all">
                 <i class="fa-solid fa-file-invoice"></i>
                 <span>ออกบิล</span>
               </Link>

@@ -74,6 +74,7 @@ const EditProductList = () => {
     payment_amount_chinese_thai_delivery: "",
     product_type: "",
     image: null,
+    thinkingFrom: null,
     old_image: null,
   });
 
@@ -272,12 +273,14 @@ const EditProductList = () => {
         setFormData((prevState) => ({
           ...prevState,
           ["payment_amount_chinese_thai_delivery"]: calculate_kg,
+          thinkingFrom: "น้ำหนัก",
         }));
       } else {
         // กรณี calculate_cbm มากกว่าหรือเท่ากับ calculate_kg
         setFormData((prevState) => ({
           ...prevState,
           ["payment_amount_chinese_thai_delivery"]: calculate_cbm,
+          thinkingFrom: "ปริมาตร",
         }));
       }
     } else {

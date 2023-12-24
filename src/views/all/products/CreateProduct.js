@@ -56,6 +56,7 @@ const CreateProduct = () => {
     total_queue: "",
     payment_amount_chinese_thai_delivery: "",
     product_type: "",
+    thinkingFrom: null,
     image: null,
     status_recorder: "",
   });
@@ -267,12 +268,14 @@ const CreateProduct = () => {
         setFormData((prevState) => ({
           ...prevState,
           ["payment_amount_chinese_thai_delivery"]: calculate_kg,
+          thinkingFrom: "น้ำหนัก",
         }));
       } else {
         // กรณี calculate_cbm มากกว่าหรือเท่ากับ calculate_kg
         setFormData((prevState) => ({
           ...prevState,
           ["payment_amount_chinese_thai_delivery"]: calculate_cbm,
+          thinkingFrom: "ปริมาตร",
         }));
       }
     } else {
@@ -439,6 +442,7 @@ const CreateProduct = () => {
     setInputFields(values);
   };
 
+  console.log("formData", formData.thinkingFrom);
   return (
     <div className="container-fluidaa">
       <div className="row">

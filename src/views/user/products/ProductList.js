@@ -21,6 +21,7 @@ const ProductList = () => {
   const [productType, setProductType] = useState(product_type);
   const [statusSuccess, setStatusSuccess] = useState(null);
   const [statusResponse, setStatusResponse] = useState(null);
+  const [statusBill, setStatusBill] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -251,6 +252,10 @@ const ProductList = () => {
       setIdAddress(null);
       document.getElementById("close-modal") &&
         document.getElementById("close-modal").click();
+      setStatusBill(true);
+      setTimeout(() => {
+        setStatusBill(false);
+      }, 3000);
     }
   };
 
@@ -263,9 +268,7 @@ const ProductList = () => {
               .filter((product) => product.customer_code === user.customerCode)
               .map((product, index) => (
                 <tr key={product.id} className="text-center">
-                  <th scope="row">
-                    {/* {index + 1} */} {product.id}
-                  </th>
+                  <th scope="row">{index + 1}</th>
                   <th>
                     <div class="form-check">
                       <input
@@ -531,6 +534,8 @@ const ProductList = () => {
             </div>
 
             <div className="card-body">
+              {statusBill && <p style={{ color: "green" }}>ออกบิลสำเร็จ</p>}
+
               <div className="table-responsive">
                 <table className="table  align-middle table-hover">
                   <thead>
