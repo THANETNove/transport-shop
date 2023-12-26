@@ -40,7 +40,7 @@ const ProductList = () => {
   const [message, setMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [searchText, setSearchText] = useState("");
-  const url = Service.getUrl() + "/image/product/";
+  const url = Service.getUrlImage();
   const fetchData = async () => {
     const pro_log_1 = await Service.getBillAll(dispatch);
   };

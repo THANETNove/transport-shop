@@ -19,7 +19,7 @@ const ShowProductList = () => {
   const [preview, setPreview] = useState(null);
   const [inputFields, setInputFields] = useState(null);
 
-  const url = Service.getUrl() + "/image/product/";
+  const url = Service.getUrlImage();
   console.log("url", url);
 
   const { id } = useParams();
@@ -350,7 +350,7 @@ const ShowProductList = () => {
                             </div>
 
                             <div className="form-group row">
-                              <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                              <div className="col-12  mb-3 mb-sm-0">
                                 <label
                                   for="exampleFormControlInput1"
                                   class="form-label"
@@ -361,7 +361,7 @@ const ShowProductList = () => {
                                   {formData.long_size}
                                 </p>
                               </div>
-                              <div className="col-sm-6  col-md-6 col-lg-6">
+                              <div className="col-12">
                                 <label
                                   for="exampleFormControlInput1"
                                   class="form-label"
@@ -374,7 +374,7 @@ const ShowProductList = () => {
                               </div>
                             </div>
                             <div className="form-group row">
-                              <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                              <div className="col-12 ml-3">
                                 <label
                                   for="exampleFormControlInput1"
                                   class="form-label"
@@ -385,7 +385,7 @@ const ShowProductList = () => {
                                   {formData.cue_per_piece}
                                 </p>
                               </div>
-                              <div className="col-sm-6  col-md-6 col-lg-6">
+                              <div className="col-12 ml-3">
                                 <label
                                   for="exampleFormControlInput1"
                                   class="form-label"

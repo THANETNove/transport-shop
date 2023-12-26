@@ -26,7 +26,7 @@ const EditProductList = () => {
   const [codeData, setCodeData] = useState(status_code_data);
   const [userCode, setUserCode] = useState(users_code);
   const [inputFields, setInputFields] = useState(null);
-  const url = Service.getUrl() + "/image/product/";
+  const url = Service.getUrlImage();
 
   const { id } = useParams();
 

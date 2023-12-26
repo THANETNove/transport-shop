@@ -6,6 +6,11 @@ const getUrl = () => {
   /* const https_url = "https://medocargo.com/API"; */
   return https_url;
 };
+const getUrlImage = () => {
+  const https_url = "http://localhost/project/API/image/product/";
+  /* const https_url = "https://medocargo.com/API/image/product/"; */
+  return https_url;
+};
 
 const url = getUrl();
 
@@ -1131,6 +1136,7 @@ const deleteUserCode = async (id, dispatch) => {
 
 export default {
   getUrl,
+  getUrlImage,
   getStatusList,
   getProductType,
   getProductTypeId,
