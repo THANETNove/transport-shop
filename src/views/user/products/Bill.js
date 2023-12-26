@@ -142,6 +142,53 @@ const ProductList = () => {
     }
   };
 
+  const totalQuantity =
+    showDataBill &&
+    showDataBill.reduce((acc, item) => {
+      const quantity = parseInt(item.quantity, 10); // แปลงเป็นตัวเลข
+      if (!isNaN(quantity)) {
+        return acc + quantity;
+      }
+      return acc;
+    }, 0);
+
+  const totalWeight =
+    showDataBill &&
+    showDataBill.reduce((acc, item) => {
+      const weight = parseFloat(item.total_weight, 10); // แปลงเป็นตัวเลข
+      if (!isNaN(weight)) {
+        return acc + weight;
+      }
+      return acc;
+    }, 0);
+
+  const totalQueue =
+    showDataBill &&
+    showDataBill
+      .reduce((acc, item) => {
+        const quantity = parseFloat(item.total_queue, 10); // แปลงเป็นตัวเลข
+        if (!isNaN(quantity)) {
+          return acc + quantity;
+        }
+        return acc;
+      }, 0)
+      .toFixed(2);
+
+  const paymentAmountChineseThaiDelivery =
+    showDataBill &&
+    Math.ceil(
+      showDataBill.reduce((acc, item) => {
+        const amount = parseFloat(
+          item.payment_amount_chinese_thai_delivery,
+          10
+        ); // แปลงเป็นตัวเลข
+        if (!isNaN(amount)) {
+          return acc + amount;
+        }
+        return acc;
+      }, 0)
+    );
+
   const systemUser = () => {
     return (
       <>
@@ -195,53 +242,6 @@ const ProductList = () => {
       </>
     );
   };
-
-  const totalQuantity =
-    showDataBill &&
-    showDataBill.reduce((acc, item) => {
-      const quantity = parseInt(item.quantity, 10); // แปลงเป็นตัวเลข
-      if (!isNaN(quantity)) {
-        return acc + quantity;
-      }
-      return acc;
-    }, 0);
-
-  const totalWeight =
-    showDataBill &&
-    showDataBill.reduce((acc, item) => {
-      const quantity = parseInt(item.total_weight, 10); // แปลงเป็นตัวเลข
-      if (!isNaN(quantity)) {
-        return acc + quantity;
-      }
-      return acc;
-    }, 0);
-
-  const totalQueue = Math.ceil(
-    showDataBill.reduce((acc, item) => {
-      const quantity = parseFloat(item.total_queue, 10); // แปลงเป็นตัวเลข
-      if (!isNaN(quantity)) {
-        return acc + quantity;
-      }
-      return acc;
-    }, 0)
-  );
-
-  console.log("totalQueue", totalQueue);
-
-  const paymentAmountChineseThaiDelivery =
-    showDataBill &&
-    Math.ceil(
-      showDataBill.reduce((acc, item) => {
-        const amount = parseFloat(
-          item.payment_amount_chinese_thai_delivery.replace(/,/g, ""),
-          10
-        ); // แปลงเป็นตัวเลข
-        if (!isNaN(amount)) {
-          return acc + amount;
-        }
-        return acc;
-      }, 0)
-    );
 
   return (
     <div className="container-fluid">

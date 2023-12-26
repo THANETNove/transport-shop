@@ -169,13 +169,15 @@ const ProductList = () => {
 
   const totalQueue =
     showDataBill &&
-    showDataBill.reduce((acc, item) => {
-      const quantity = parseInt(item.total_queue, 10); // แปลงเป็นตัวเลข
-      if (!isNaN(quantity)) {
-        return acc + quantity;
-      }
-      return acc;
-    }, 0);
+    showDataBill
+      .reduce((acc, item) => {
+        const quantity = parseFloat(item.total_queue, 10); // แปลงเป็นตัวเลข
+        if (!isNaN(quantity)) {
+          return acc + quantity;
+        }
+        return acc;
+      }, 0)
+      .toFixed(2);
 
   const paymentAmountChineseThaiDelivery =
     showDataBill &&
