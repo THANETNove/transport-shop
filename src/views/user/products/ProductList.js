@@ -250,6 +250,7 @@ const ProductList = () => {
       fetchData();
       setStatusModel(0);
       setIdAddress(null);
+      setSelectedData([]);
       document.getElementById("close-modal") &&
         document.getElementById("close-modal").click();
       setStatusBill(true);

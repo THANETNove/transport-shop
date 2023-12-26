@@ -216,24 +216,32 @@ const ProductList = () => {
       return acc;
     }, 0);
 
-  const totalQueue =
-    showDataBill &&
+  const totalQueue = Math.ceil(
     showDataBill.reduce((acc, item) => {
-      const quantity = parseInt(item.total_queue, 10); // แปลงเป็นตัวเลข
+      const quantity = parseFloat(item.total_queue, 10); // แปลงเป็นตัวเลข
       if (!isNaN(quantity)) {
         return acc + quantity;
       }
       return acc;
-    }, 0);
+    }, 0)
+  );
+
+  console.log("totalQueue", totalQueue);
+
   const paymentAmountChineseThaiDelivery =
     showDataBill &&
-    showDataBill.reduce((acc, item) => {
-      const quantity = parseInt(item.payment_amount_chinese_thai_delivery, 10); // แปลงเป็นตัวเลข
-      if (!isNaN(quantity)) {
-        return acc + quantity;
-      }
-      return acc;
-    }, 0);
+    Math.ceil(
+      showDataBill.reduce((acc, item) => {
+        const amount = parseFloat(
+          item.payment_amount_chinese_thai_delivery.replace(/,/g, ""),
+          10
+        ); // แปลงเป็นตัวเลข
+        if (!isNaN(amount)) {
+          return acc + amount;
+        }
+        return acc;
+      }, 0)
+    );
 
   return (
     <div className="container-fluid">
@@ -383,7 +391,14 @@ const ProductList = () => {
                             <td>{item.total_weight}</td>
                             <td>{item.total_queue}</td>
                             <td>{item.thinkingFrom}</td>
-                            <td>{item.payment_amount_chinese_thai_delivery}</td>
+                            <td>
+                              {Number(
+                                item.payment_amount_chinese_thai_delivery
+                              ).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
+                            </td>
                           </tr>
                         ))}
                     </tbody>
@@ -453,11 +468,11 @@ const ProductList = () => {
                           </tr>
                           <tr>
                             <th scope="row">ปริมาตร(คิว) </th>
-                            <td>{totalWeight} CBM</td>
+                            <td>{totalQueue} CBM</td>
                           </tr>
                           <tr>
                             <th scope="row">น้ำหนัก </th>
-                            <td>{totalQueue} kg</td>
+                            <td>{totalWeight} kg</td>
                           </tr>
                           <tr>
                             <th scope="row">ยอดรวมค่านำเข้า จีน-ไทย </th>
