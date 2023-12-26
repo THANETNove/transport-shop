@@ -2,7 +2,7 @@ import axios from "axios";
 import { format } from "date-fns";
 
 const getUrl = () => {
-  const https_url = "http://localhost/project/API/";
+  const https_url = "http://localhost/project/API";
   /* const https_url = "https://medocargo.com/API"; */
   return https_url;
 };
@@ -809,6 +809,36 @@ const UpdateProduct = async (e, dispatch) => {
     };
   }
 };
+const UpdateStatusBill = async (showIdBill, event, image) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", showIdBill);
+  formData.append("status", event);
+  formData.append("image", image);
+
+  const response = await axios.post(`${url}/UpdateStatusBill.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
 
 const updateStatusProductList = async (id, value, dispatch) => {
   const formData = new FormData();
@@ -1126,6 +1156,7 @@ export default {
   updatePriceUser,
   updateProductDateCloseCabinet,
   updateProductDateToThailand,
+  UpdateStatusBill,
   createIssueBill,
   deleteStatusList,
   deleteProduct,

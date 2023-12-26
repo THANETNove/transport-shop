@@ -215,6 +215,9 @@ const ProductList = () => {
                   {item.status == "จัดส่งเเล้ว" && (
                     <p style={{ color: "#1cc88a" }}> {item.status}</p>
                   )}
+                  {item.status == "ถูกยกเลิก" && (
+                    <p style={{ color: "#FF0000" }}> {item.status}</p>
+                  )}
                 </td>
                 <a
                   className="btn btn-primary btn-sm"

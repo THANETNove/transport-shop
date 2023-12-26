@@ -27,14 +27,20 @@ const ProductList = () => {
   const [showTel, setShowTel] = useState(null);
   const [showUsername, setShowUsername] = useState(null);
   const [showUpdated_atBill, setShowUpdated_atBill] = useState(null);
+  const [showStatus, setShowStatus] = useState(null);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 50; // จำนวนรายการต่
   const { users_code } = useSelector((state) => state.get);
   const [userCode, setUserCode] = useState(users_code);
   const [showImage, setShowImage] = useState(null);
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [errorsImage, setErrorsImage] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [searchText, setSearchText] = useState("");
-
+  const url = Service.getUrl() + "/image/product/";
   const fetchData = async () => {
     const pro_log_1 = await Service.getBillAll(dispatch);
   };
@@ -61,7 +67,8 @@ const ProductList = () => {
     zip_code,
     tel,
     username,
-    image
+    image,
+    status
   ) => {
     document.getElementById("btn-exampleModal") &&
       document.getElementById("btn-exampleModal").click();
@@ -76,6 +83,7 @@ const ProductList = () => {
     setShowUsername(username);
     setShowImage(image);
     setShowUpdated_atBill(billUpdated_at);
+    setShowStatus(status);
   };
 
   const endOffset = itemOffset + itemsPerPage;
@@ -147,6 +155,103 @@ const ProductList = () => {
     }
   };
 
+  const handleImageChange = (e) => {
+    setErrorsImage(null);
+    const file = e.target.files[0];
+
+    if (file) {
+      const allowedMimeTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/bmp",
+        "image/svg+xml",
+      ];
+
+      if (allowedMimeTypes.includes(file.type)) {
+        setImage(file);
+        // สร้าง URL ของภาพตัวอย่าง
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    } else {
+      setPreview(null);
+    }
+  };
+  const handleUpdateStatusBill = async (event) => {
+    /*  let data = [{ id: showIdBill, status: event, image: image }]; */
+
+    let mess = "update สถานะสำเร็จ";
+    let errorMess = "update สถานะไม่สำเร็จ";
+    let messCancel = "ถูกยกเลิก สถานะสำเร็จ";
+    let errorMessCancel = "ถูกยกเลิก สถานะไม่สำเร็จ";
+    if (event == "รอจัดส่ง") {
+      const require = await Service.UpdateStatusBill(showIdBill, event, image);
+      if (require.status == "success") {
+        fetchData();
+        setMessage(mess);
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000);
+        document.getElementById("btn-close") &&
+          document.getElementById("btn-close").click();
+      } else {
+        setErrorMessage(errorMess);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
+      }
+    }
+
+    if (event == "จัดส่งเเล้ว") {
+      if (image) {
+        const require = await Service.UpdateStatusBill(
+          showIdBill,
+          event,
+          image
+        );
+        if (require.status == "success") {
+          fetchData();
+          setMessage(mess);
+          setTimeout(() => {
+            setMessage(null);
+          }, 3000);
+          document.getElementById("btn-close") &&
+            document.getElementById("btn-close").click();
+        } else {
+          setErrorMessage(errorMess);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 3000);
+        }
+      } else {
+        setErrorsImage("กรุณาอัพโหลดภาพ");
+      }
+    }
+    if (event == "ถูกยกเลิก") {
+      const require = await Service.UpdateStatusBill(showIdBill, event, image);
+
+      console.log("require", require);
+      if (require.status == "success") {
+        fetchData();
+        setMessage(messCancel);
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000);
+        document.getElementById("btn-close") &&
+          document.getElementById("btn-close").click();
+      } else {
+        setErrorMessage(errorMessCancel);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
+      }
+    }
+  };
+
   const totalQuantity =
     showDataBill &&
     showDataBill.reduce((acc, item) => {
@@ -191,9 +296,8 @@ const ProductList = () => {
       }, 0)
     );
 
-  console.log("showDataBill", showDataBill);
-
   const systemUser = () => {
+    console.log("currentItems", currentItems);
     return (
       <>
         <tbody>
@@ -215,6 +319,9 @@ const ProductList = () => {
                   {item.status == "จัดส่งเเล้ว" && (
                     <p style={{ color: "#1cc88a" }}> {item.status}</p>
                   )}
+                  {item.status == "ถูกยกเลิก" && (
+                    <p style={{ color: "#FF0000" }}> {item.status}</p>
+                  )}
                 </td>
                 <a
                   className="btn btn-primary btn-sm"
@@ -230,7 +337,8 @@ const ProductList = () => {
                       item.zip_code,
                       item.tel,
                       item.username,
-                      item.image
+                      item.billImage,
+                      item.status
                     )
                   }
                 >
@@ -269,6 +377,9 @@ const ProductList = () => {
                     </button>
                   </div>
                 </div>
+                <p className="mt-3" style={{ color: "green" }}>
+                  {message}
+                </p>
               </div>
             </div>
 
@@ -336,14 +447,22 @@ const ProductList = () => {
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 ใบแจ้งหนี้/วางบิล ค่าขนส่ง ไทย - จีน
               </h1>
+
               <button
                 type="button"
+                id="btn-close"
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
             <div class="modal-body">
+              {errorMessage && (
+                <p style={{ color: "red", textAlign: "center" }}>
+                  {errorMessage}
+                </p>
+              )}
+
               <div className="box-bill">
                 <p>เลขที่/No {showIdBill && showIdBill}</p>
                 <p>วันที่/Date {showUpdated_atBill && showUpdated_atBill} น.</p>
@@ -414,17 +533,20 @@ const ProductList = () => {
                       alt=""
                       onClick={openModal}
                     /> */}
-                    <a
-                      href="http://localhost:3000/assetsAuth/img/image.jpeg"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <img
-                        src="/assetsAuth/img/image.jpeg"
-                        alt="Enlarged Image"
-                        className="img-fluid"
-                      />
-                    </a>
+
+                    {showImage && (
+                      <a
+                        href="http://localhost:3000/assetsAuth/img/image.jpeg"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={url + showImage}
+                          alt="Enlarged Image"
+                          className="img-fluid"
+                        />
+                      </a>
+                    )}
                   </div>
                   <div className="col-4">
                     <h6 className="uppercase-text">เรทค่านำเข้า</h6>
@@ -498,6 +620,65 @@ const ProductList = () => {
                         </tbody>
                       </table>
                     </div>
+
+                    {showStatus != "จัดส่งเเล้ว" && (
+                      <>
+                        {" "}
+                        <button
+                          type="button"
+                          class="btn btn-danger"
+                          onClick={() => handleUpdateStatusBill("ถูกยกเลิก")}
+                        >
+                          ถูกยกเลิก
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-success ml-3"
+                          onClick={() =>
+                            handleUpdateStatusBill(
+                              showStatus == "รอตรวจสอบ"
+                                ? "รอจัดส่ง"
+                                : showStatus == "รอจัดส่ง" && "จัดส่งเเล้ว"
+                            )
+                          }
+                        >
+                          {showStatus == "รอตรวจสอบ"
+                            ? "รอจัดส่ง"
+                            : showStatus == "รอจัดส่ง" && "จัดส่งเเล้ว"}
+                        </button>
+                      </>
+                    )}
+
+                    {showStatus == "รอจัดส่ง" && (
+                      <>
+                        <div className="mt-3">
+                          <input
+                            type="file"
+                            className="form-control"
+                            id="image"
+                            name="image"
+                            onChange={handleImageChange}
+                            placeholder="อัพโหลดไฟล์ภาพ"
+                          />
+                          {errorsImage && (
+                            <div className="error-from">{errorsImage}</div>
+                          )}
+                        </div>
+                        <div className="form-group">
+                          <div className="justify-content-center d-flex">
+                            <div className="mt-5">
+                              {preview && (
+                                <img
+                                  src={preview}
+                                  alt="Image Preview"
+                                  width="200"
+                                />
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
