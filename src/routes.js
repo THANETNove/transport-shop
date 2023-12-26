@@ -21,6 +21,7 @@ import EditProductType from "./views/manager/productType/EditProductType";
 import PricePreUser from "./views/manager/priceUser/PricePreUser";
 import CreatePricePreUser from "./views/manager/priceUser/CreatePricePreUser";
 import EditPricePreUser from "./views/manager/priceUser/EditPricePreUser";
+import BillListStatus from "./views/manager/bill/Bill";
 
 // All ใช้รวมกัน
 import CreateProduct from "./views/all/products/CreateProduct";
@@ -101,6 +102,11 @@ const adminRoutes = [
     component: ShowProduct,
     layout: "/auth",
   },
+  {
+    path: "/check-bill/",
+    component: BillListStatus,
+    layout: "/auth",
+  },
 ];
 
 const managerRoutes = [
@@ -162,6 +168,11 @@ const managerRoutes = [
   {
     path: "/show-product/:id",
     component: ShowProduct,
+    layout: "/auth",
+  },
+  {
+    path: "/check-bill/",
+    component: BillListStatus,
     layout: "/auth",
   },
 ];

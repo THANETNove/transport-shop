@@ -7,6 +7,7 @@ const initialState = {
   users_code_error: null,
   user_address: null,
   BillData: null,
+  BillDataAll: null,
 };
 
 export default function (state = initialState, action) {
@@ -54,6 +55,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         BillData: action.payload,
+      };
+    case "BILL_SUCCESS_ALL":
+      return {
+        ...state,
+        BillDataAll: action.payload,
       };
     case "ADDRESS_ERROR":
       return {

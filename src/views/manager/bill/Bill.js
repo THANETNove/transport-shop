@@ -4,7 +4,7 @@ import Service from "../../../server_api/server";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { CSVLink } from "react-csv";
 import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import DatePicker from "react-datepicker";
@@ -13,10 +13,10 @@ import { useRef } from "react";
 
 const ProductList = () => {
   const user = useSelector((state) => state.auth.user);
-  const { BillData } = useSelector((state) => state.get);
+  const { BillDataAll } = useSelector((state) => state.get);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [data, setData] = useState(BillData);
+  const [data, setData] = useState(BillDataAll);
   const [showDataBill, setShowDataBill] = useState(null);
   const [showIdBill, setShowIdBill] = useState(null);
   const [showAddress, setShowAddress] = useState(null);
@@ -36,8 +36,7 @@ const ProductList = () => {
   const [searchText, setSearchText] = useState("");
 
   const fetchData = async () => {
-    const pro_log_1 = await Service.getBill(user && user.id, dispatch);
-    /* console.log("pro_log_1", pro_log_1); */
+    const pro_log_1 = await Service.getBillAll(dispatch);
   };
 
   useEffect(() => {
@@ -48,8 +47,8 @@ const ProductList = () => {
   }, [users_code]);
 
   useEffect(() => {
-    setData(BillData);
-  }, [BillData]);
+    setData(BillDataAll);
+  }, [BillDataAll]);
 
   const showProduct = (
     dataBill,
@@ -120,14 +119,21 @@ const ProductList = () => {
 
   const searchData = (event) => {
     const { value } = event.target;
-    setData(BillData);
+    setData(BillDataAll);
 
     if (value) {
       const filteredProducts = Object.values(data).filter(
         (item) => item.billId == value
       );
+      const filteredCode = Object.values(data).filter(
+        (item) => item.customerCode === value
+      );
+
+      console.log("filteredCode", filteredCode);
       if (filteredProducts.length > 0) {
         setData(filteredProducts);
+      } else if (filteredCode.length > 0) {
+        setData(filteredCode);
       } else {
         const filteredDate = Object.values(data).filter((item) => {
           const itemDate = new Date(item.billUpdated_at.split(" ")[0]); // Convert to Date object
@@ -152,12 +158,8 @@ const ProductList = () => {
                 {/* Your table cell content here */}
                 <th scope="row">{index + 1} </th>
                 <td>{item.billId}</td>
-                <td>
-                  {" "}
-                  {
-                    item.billUpdated_at /* formatDateTime(item.billUpdated_at) */
-                  }
-                </td>
+                <td>{item.customerCode}</td>
+                <td> {item.billUpdated_at}</td>
                 <td>
                   {item.status == "รอตรวจสอบ" && (
                     <p style={{ color: "#858796" }}> {item.status}</p>
@@ -271,6 +273,7 @@ const ProductList = () => {
                     <tr className="text-center">
                       <th scope="col">#</th>
                       <th scope="col">เลขที่</th>
+                      <th scope="col">รหัสลูกค้า</th>
                       <th scope="col">วันที่</th>
                       <th scope="col">สถานะ</th>
                       <th scope="col">show</th>

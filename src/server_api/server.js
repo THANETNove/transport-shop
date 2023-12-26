@@ -261,8 +261,44 @@ const getBill = async (id, dispatch) => {
   console.log("response", response.data.message);
 
   if (response.data.message) {
-       dispatch({
+    dispatch({
       type: "BILL_SUCCESS",
+      payload: response.data.data,
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    /*   dispatch({
+      type: "PRODUCT_CODE_ERROR",
+      payload: response.data.error,
+    }); */
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+const getBillAll = async (dispatch) => {
+  const params = {
+    isAdd: true,
+  };
+  const response = await axios.get(`${url}/getIssueBill_All.php`, {
+    params,
+  });
+
+  /*   console.log("response", response.data.data); */
+
+  if (response.data.message) {
+    dispatch({
+      type: "BILL_SUCCESS_ALL",
       payload: response.data.data,
     });
 
@@ -1075,6 +1111,7 @@ export default {
   getCustomerCodeAll,
   getAddress,
   getBill,
+  getBillAll,
   register,
   Login,
   statusList,
