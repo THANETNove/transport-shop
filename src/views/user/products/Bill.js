@@ -34,7 +34,7 @@ const ProductList = () => {
   const [showImage, setShowImage] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
-
+  const url = Service.getUrlImage();
   const fetchData = async () => {
     const pro_log_1 = await Service.getBill(user && user.id, dispatch);
     /* console.log("pro_log_1", pro_log_1); */
@@ -186,7 +186,7 @@ const ProductList = () => {
           return acc + amount;
         }
         return acc;
-      }, 0)
+      }, 0).toFixed(2)
     );
 
   const systemUser = () => {
@@ -233,7 +233,7 @@ const ProductList = () => {
                       item.zip_code,
                       item.tel,
                       item.username,
-                      item.image
+                      item.billImage
                     )
                   }
                 >
@@ -410,23 +410,20 @@ const ProductList = () => {
                 <div className="row mt-4">
                   <div className="col-3">
                     <h6 className="uppercase-text">บิลส่งของ จัดส่งแล้ว</h6>
-                    {/*   <img
-                      src="../../assetsAuth/img/image.jpeg"
-                      className="img-fluid"
-                      alt=""
-                      onClick={openModal}
-                    /> */}
-                    <a
-                      href="http://localhost:3000/assetsAuth/img/image.jpeg"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <img
-                        src="/assetsAuth/img/image.jpeg"
-                        alt="Enlarged Image"
-                        className="img-fluid"
-                      />
-                    </a>
+
+                    {showImage && (
+                      <a
+                        href={url + showImage}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={url + showImage}
+                          alt="Enlarged Image"
+                          className="img-fluid"
+                        />
+                      </a>
+                    )}
                   </div>
                   <div className="col-4">
                     <h6 className="uppercase-text">เรทค่านำเข้า</h6>

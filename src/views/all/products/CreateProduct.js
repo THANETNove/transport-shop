@@ -267,14 +267,14 @@ const CreateProduct = () => {
         // กรณี calculate_kg มากกว่า calculate_cbm
         setFormData((prevState) => ({
           ...prevState,
-          ["payment_amount_chinese_thai_delivery"]: calculate_kg,
+          ["payment_amount_chinese_thai_delivery"]: calculate_kg.toFixed(2),
           thinkingFrom: "น้ำหนัก",
         }));
       } else {
         // กรณี calculate_cbm มากกว่าหรือเท่ากับ calculate_kg
         setFormData((prevState) => ({
           ...prevState,
-          ["payment_amount_chinese_thai_delivery"]: calculate_cbm,
+          ["payment_amount_chinese_thai_delivery"]: calculate_cbm.toFixed(2),
           thinkingFrom: "ปริมาตร",
         }));
       }
@@ -364,7 +364,7 @@ const CreateProduct = () => {
     for (let i = 0; i < inputFields.length; i++) {
       const { wideSize, lengthSize, heightSize } = inputFields[i];
       const result = (wideSize * lengthSize * heightSize) / 1000000;
-      inputFields[i].cuePerPiece = result;
+      inputFields[i].cuePerPiece = result.toFixed(2);
     }
   }, [inputFields]);
 
@@ -376,15 +376,15 @@ const CreateProduct = () => {
       cue_per_piece += parseFloat(inputFields[i].cuePerPiece);
     }
 
-    setFormData((prevState) => ({
-      ...prevState,
-      ["cue_per_piece"]: quAll,
-    }));
-
     const quAll = cue_per_piece * formData.quantity;
     setFormData((prevState) => ({
       ...prevState,
-      ["total_queue"]: quAll,
+      ["cue_per_piece"]: quAll.toFixed(2),
+    }));
+
+    setFormData((prevState) => ({
+      ...prevState,
+      ["total_queue"]: quAll.toFixed(2),
     }));
   }, [formData.quantity, inputFields]);
 
@@ -401,7 +401,7 @@ const CreateProduct = () => {
     // อัปเดตค่าใน formData ด้วย setFormData
     setFormData((prevState) => ({
       ...prevState,
-      total_weight: totalWeight, // ตรงนี้ใช้ "total_weight" แทน ["total_weight"]
+      total_weight: totalWeight.toFixed(2), // ตรงนี้ใช้ "total_weight" แทน ["total_weight"]
     }));
   }, [formData.quantity, inputFields]);
 

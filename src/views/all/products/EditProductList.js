@@ -360,7 +360,7 @@ const EditProductList = () => {
       for (let i = 0; i < inputFields.length; i++) {
         const { wideSize, lengthSize, heightSize } = inputFields[i];
         const result = (wideSize * lengthSize * heightSize) / 1000000;
-        inputFields[i].cuePerPiece = result;
+        inputFields[i].cuePerPiece = result.toFixed(2);
       }
     }
   }, [inputFields]);
@@ -386,13 +386,13 @@ const EditProductList = () => {
 
       setFormData((prevState) => ({
         ...prevState,
-        ["cue_per_piece"]: quAll,
+        ["cue_per_piece"]: quAll.toFixed(2),
       }));
 
       const quAll = cue_per_piece * formData.quantity;
       setFormData((prevState) => ({
         ...prevState,
-        ["total_queue"]: quAll,
+        ["total_queue"]: quAll.toFixed(2),
       }));
     }
   }, [formData.quantity, inputFields]);
@@ -420,7 +420,7 @@ const EditProductList = () => {
       // อัปเดตค่าใน formData ด้วย setFormData
       setFormData((prevState) => ({
         ...prevState,
-        total_weight: totalWeight, // ตรงนี้ใช้ "total_weight" แทน ["total_weight"]
+        total_weight: totalWeight.toFixed(2), // ตรงนี้ใช้ "total_weight" แทน ["total_weight"]
       }));
     }
   }, [formData.quantity, inputFields]);

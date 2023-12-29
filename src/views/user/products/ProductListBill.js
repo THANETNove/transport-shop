@@ -4,7 +4,7 @@ import Service from "../../../server_api/server";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { format, parse } from "date-fns";
+import { format } from "date-fns";
 import { CSVLink } from "react-csv";
 import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import DatePicker from "react-datepicker";
@@ -13,11 +13,11 @@ import { useRef } from "react";
 
 const ProductList = () => {
   const user = useSelector((state) => state.auth.user);
-  const { BillDataAll } = useSelector((state) => state.get);
+  const { BillProduct } = useSelector((state) => state.get);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [data, setData] = useState(BillDataAll);
-  const [showDataBill, setShowDataBill] = useState(null);
+  const [data, setData] = useState(BillProduct);
+  const [showItemBill, setShowItemBill] = useState(null);
   const [showIdBill, setShowIdBill] = useState(null);
   const [showAddress, setShowAddress] = useState(null);
   const [showSubdistricts, setShowSubdistricts] = useState(null);
@@ -27,22 +27,18 @@ const ProductList = () => {
   const [showTel, setShowTel] = useState(null);
   const [showUsername, setShowUsername] = useState(null);
   const [showUpdated_atBill, setShowUpdated_atBill] = useState(null);
-  const [showStatus, setShowStatus] = useState(null);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 50; // จำนวนรายการต่
   const { users_code } = useSelector((state) => state.get);
   const [userCode, setUserCode] = useState(users_code);
   const [showImage, setShowImage] = useState(null);
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [errorsImage, setErrorsImage] = useState(null);
-  const [message, setMessage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
   const [searchText, setSearchText] = useState("");
   const url = Service.getUrlImage();
+
   const fetchData = async () => {
-    const pro_log_1 = await Service.getBillAll(dispatch);
+    const pro_log_1 = await Service.getBillProduct(user && user.id, dispatch);
+    /* console.log("pro_log_1", pro_log_1); */
   };
 
   useEffect(() => {
@@ -53,37 +49,25 @@ const ProductList = () => {
   }, [users_code]);
 
   useEffect(() => {
-    setData(BillDataAll);
-  }, [BillDataAll]);
+    setData(BillProduct);
+  }, [BillProduct]);
 
-  const showProduct = (
-    dataBill,
-    billId,
-    billUpdated_at,
-    address,
-    subdistricts,
-    districts,
-    provinces,
-    zip_code,
-    tel,
-    username,
-    image,
-    status
-  ) => {
+  const showProduct = (date) => {
+    console.log("date", date);
     document.getElementById("btn-exampleModal") &&
       document.getElementById("btn-exampleModal").click();
-    setShowDataBill(dataBill);
-    setShowIdBill(billId);
-    setShowAddress(address);
-    setShowSubdistricts(subdistricts);
-    setShowDistricts(districts);
-    setShowProvinces(provinces);
-    setShowZip_code(zip_code);
-    setShowTel(tel);
-    setShowUsername(username);
-    setShowImage(image);
-    setShowUpdated_atBill(billUpdated_at);
-    setShowStatus(status);
+    setShowItemBill(date);
+    setShowIdBill(date.billId);
+    setShowAddress(date.address);
+    setShowSubdistricts(date.subdistricts);
+    setShowDistricts(date.districts);
+    setShowProvinces(date.provinces);
+    setShowZip_code(date.zip_code);
+    setShowTel(date.tel);
+    setShowUsername(date.username);
+
+    setShowUpdated_atBill(date.billUpdated_at);
+    setShowImage(date.billImage);
   };
 
   const endOffset = itemOffset + itemsPerPage;
@@ -127,20 +111,14 @@ const ProductList = () => {
 
   const searchData = (event) => {
     const { value } = event.target;
-    setData(BillDataAll);
+    setData(BillProduct);
 
     if (value) {
       const filteredProducts = Object.values(data).filter(
         (item) => item.billId == value
       );
-      const filteredCode = Object.values(data).filter(
-        (item) => item.customerCode === value
-      );
-
       if (filteredProducts.length > 0) {
         setData(filteredProducts);
-      } else if (filteredCode.length > 0) {
-        setData(filteredCode);
       } else {
         const filteredDate = Object.values(data).filter((item) => {
           const itemDate = new Date(item.billUpdated_at.split(" ")[0]); // Convert to Date object
@@ -155,125 +133,28 @@ const ProductList = () => {
     }
   };
 
-  const handleImageChange = (e) => {
-    setErrorsImage(null);
-    const file = e.target.files[0];
-
-    if (file) {
-      const allowedMimeTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/gif",
-        "image/bmp",
-        "image/svg+xml",
-      ];
-
-      if (allowedMimeTypes.includes(file.type)) {
-        setImage(file);
-        // สร้าง URL ของภาพตัวอย่าง
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreview(reader.result);
-        };
-        reader.readAsDataURL(file);
-      }
-    } else {
-      setPreview(null);
-    }
-  };
-  const handleUpdateStatusBill = async (event) => {
-    /*  let data = [{ id: showIdBill, status: event, image: image }]; */
-
-    let mess = "update สถานะสำเร็จ";
-    let errorMess = "update สถานะไม่สำเร็จ";
-    let messCancel = "ถูกยกเลิก สถานะสำเร็จ";
-    let errorMessCancel = "ถูกยกเลิก สถานะไม่สำเร็จ";
-    if (event == "รอจัดส่ง") {
-      const require = await Service.UpdateStatusBill(showIdBill, event, image);
-      if (require.status == "success") {
-        fetchData();
-        setMessage(mess);
-        setTimeout(() => {
-          setMessage(null);
-        }, 3000);
-        document.getElementById("btn-close") &&
-          document.getElementById("btn-close").click();
-      } else {
-        setErrorMessage(errorMess);
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 3000);
-      }
-    }
-
-    if (event == "จัดส่งเเล้ว") {
-      if (image) {
-        const require = await Service.UpdateStatusBill(
-          showIdBill,
-          event,
-          image
-        );
-        if (require.status == "success") {
-          fetchData();
-          setMessage(mess);
-          setTimeout(() => {
-            setMessage(null);
-          }, 3000);
-          document.getElementById("btn-close") &&
-            document.getElementById("btn-close").click();
-        } else {
-          setErrorMessage(errorMess);
-          setTimeout(() => {
-            setErrorMessage(null);
-          }, 3000);
-        }
-      } else {
-        setErrorsImage("กรุณาอัพโหลดภาพ");
-      }
-    }
-    if (event == "ถูกยกเลิก") {
-      const require = await Service.UpdateStatusBill(showIdBill, event, image);
-
-      console.log("require", require);
-      if (require.status == "success") {
-        fetchData();
-        setMessage(messCancel);
-        setTimeout(() => {
-          setMessage(null);
-        }, 3000);
-        document.getElementById("btn-close") &&
-          document.getElementById("btn-close").click();
-      } else {
-        setErrorMessage(errorMessCancel);
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 3000);
-      }
-    }
-  };
-
-  const totalQuantity =
-    showDataBill &&
+  const totalQuantity = 500;
+  /*   showDataBill &&
     showDataBill.reduce((acc, item) => {
       const quantity = parseInt(item.quantity, 10); // แปลงเป็นตัวเลข
       if (!isNaN(quantity)) {
         return acc + quantity;
       }
       return acc;
-    }, 0);
+    }, 0); */
 
-  const totalWeight =
-    showDataBill &&
+  const totalWeight = 500;
+  /*  showDataBill &&
     showDataBill.reduce((acc, item) => {
       const weight = parseFloat(item.total_weight, 10); // แปลงเป็นตัวเลข
       if (!isNaN(weight)) {
         return acc + weight;
       }
       return acc;
-    }, 0);
+    }, 0); */
 
-  const totalQueue =
-    showDataBill &&
+  const totalQueue = 5000;
+  /*  showDataBill &&
     showDataBill
       .reduce((acc, item) => {
         const quantity = parseFloat(item.total_queue, 10); // แปลงเป็นตัวเลข
@@ -282,22 +163,24 @@ const ProductList = () => {
         }
         return acc;
       }, 0)
-      .toFixed(2);
+      .toFixed(2); */
 
-  const paymentAmountChineseThaiDelivery =
-    showDataBill &&
+  const paymentAmountChineseThaiDelivery = 5000;
+  /*  showDataBill &&
     Math.ceil(
       showDataBill.reduce((acc, item) => {
-        const amount = parseInt(item.payment_amount_chinese_thai_delivery, 10); // แปลงเป็นตัวเลข
+        const amount = parseFloat(
+          item.payment_amount_chinese_thai_delivery,
+          10
+        ); // แปลงเป็นตัวเลข
         if (!isNaN(amount)) {
           return acc + amount;
         }
         return acc;
       }, 0)
     );
-
+ */
   const systemUser = () => {
-    console.log("currentItems", currentItems);
     return (
       <>
         <tbody>
@@ -307,8 +190,14 @@ const ProductList = () => {
                 {/* Your table cell content here */}
                 <th scope="row">{index + 1} </th>
                 <td>{item.billId}</td>
-                <td>{item.customerCode}</td>
-                <td> {item.billUpdated_at}</td>
+                <td>{item.customer_code}</td>
+                <td>{item.tech_china}</td>
+                <td>{item.warehouse_code}</td>
+                <td>
+                  {
+                    item.billUpdated_at /* formatDateTime(item.billUpdated_at) */
+                  }
+                </td>
                 <td>
                   {item.status == "รอตรวจสอบ" && (
                     <p style={{ color: "#858796" }}> {item.status}</p>
@@ -325,24 +214,9 @@ const ProductList = () => {
                 </td>
                 <a
                   className="btn btn-primary btn-sm"
-                  onClick={() =>
-                    showProduct(
-                      item.dataBill,
-                      item.billId,
-                      item.billUpdated_at,
-                      item.address,
-                      item.subdistricts,
-                      item.districts,
-                      item.provinces,
-                      item.zip_code,
-                      item.tel,
-                      item.username,
-                      item.billImage,
-                      item.status
-                    )
-                  }
+                  onClick={() => showProduct(item)}
                 >
-                  ตรวจสอบ
+                  show
                 </a>
               </tr>
             ))}
@@ -377,9 +251,6 @@ const ProductList = () => {
                     </button>
                   </div>
                 </div>
-                <p className="mt-3" style={{ color: "green" }}>
-                  {message}
-                </p>
               </div>
             </div>
 
@@ -390,7 +261,6 @@ const ProductList = () => {
                     <tr className="text-center">
                       <th scope="col">#</th>
                       <th scope="col">เลขที่</th>
-                      <th scope="col">รหัสลูกค้า</th>
                       <th scope="col">วันที่</th>
                       <th scope="col">สถานะ</th>
                       <th scope="col">show</th>
@@ -447,22 +317,14 @@ const ProductList = () => {
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 ใบแจ้งหนี้/วางบิล ค่าขนส่ง ไทย - จีน
               </h1>
-
               <button
                 type="button"
-                id="btn-close"
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
             <div class="modal-body">
-              {errorMessage && (
-                <p style={{ color: "red", textAlign: "center" }}>
-                  {errorMessage}
-                </p>
-              )}
-
               <div className="box-bill">
                 <p>เลขที่/No {showIdBill && showIdBill}</p>
                 <p>วันที่/Date {showUpdated_atBill && showUpdated_atBill} น.</p>
@@ -500,40 +362,33 @@ const ProductList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {showDataBill &&
-                        showDataBill.map((item, index) => (
-                          <tr>
-                            <th scope="row">{item.warehouse_code}</th>
-                            <td></td>
-                            <td>{item.customer_code}</td>
-                            <td>{item.product_type}</td>
-                            <td>{item.quantity}</td>
-                            <td>{item.total_weight}</td>
-                            <td>{item.total_queue}</td>
-                            <td>{item.thinkingFrom}</td>
-                            <td>
-                              {Number(
-                                item.payment_amount_chinese_thai_delivery
-                              ).toLocaleString(undefined, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                            </td>
-                          </tr>
-                        ))}
+                      <tr>
+                        <th scope="row">
+                          {showItemBill && showItemBill.warehouse_code}
+                        </th>
+                        <td></td>
+                        <td>{showItemBill && showItemBill.customer_code}</td>
+                        <td>{showItemBill && showItemBill.product_type}</td>
+                        <td>{showItemBill && showItemBill.quantity}</td>
+                        <td>{showItemBill && showItemBill.total_weight}</td>
+                        <td>{showItemBill && showItemBill.total_queue}</td>
+                        <td>{showItemBill && showItemBill.thinkingFrom}</td>
+                        <td>
+                          {Number(
+                            showItemBill &&
+                              showItemBill.payment_amount_chinese_thai_delivery
+                          ).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
                 <div className="row mt-4">
                   <div className="col-3">
                     <h6 className="uppercase-text">บิลส่งของ จัดส่งแล้ว</h6>
-                    {/*   <img
-                      src="../../assetsAuth/img/image.jpeg"
-                      className="img-fluid"
-                      alt=""
-                      onClick={openModal}
-                    /> */}
-
                     {showImage && (
                       <a
                         href={url + showImage}
@@ -557,17 +412,11 @@ const ProductList = () => {
                             userCode
                               .filter(
                                 (type) =>
-                                  showDataBill &&
-                                  showDataBill[0].customer_code ==
+                                  showItemBill &&
+                                  showItemBill.customer_code ==
                                     type.customerCode
                               )
                               .map((type, index) => (
-                                /*   <option
-                                  key={index}
-                                  value={`${type.id_type} ${type.kg} ${type.cbm}`}
-                                >
-                                  {type.name}
-                                </option> */
                                 <tr>
                                   <th scope="row"> {type.name}</th>
                                   <td>
@@ -620,65 +469,6 @@ const ProductList = () => {
                         </tbody>
                       </table>
                     </div>
-
-                    {showStatus != "จัดส่งเเล้ว" && (
-                      <>
-                        {" "}
-                        <button
-                          type="button"
-                          class="btn btn-danger"
-                          onClick={() => handleUpdateStatusBill("ถูกยกเลิก")}
-                        >
-                          ถูกยกเลิก
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-success ml-3"
-                          onClick={() =>
-                            handleUpdateStatusBill(
-                              showStatus == "รอตรวจสอบ"
-                                ? "รอจัดส่ง"
-                                : showStatus == "รอจัดส่ง" && "จัดส่งเเล้ว"
-                            )
-                          }
-                        >
-                          {showStatus == "รอตรวจสอบ"
-                            ? "รอจัดส่ง"
-                            : showStatus == "รอจัดส่ง" && "จัดส่งเเล้ว"}
-                        </button>
-                      </>
-                    )}
-
-                    {showStatus == "รอจัดส่ง" && (
-                      <>
-                        <div className="mt-3">
-                          <input
-                            type="file"
-                            className="form-control"
-                            id="image"
-                            name="image"
-                            onChange={handleImageChange}
-                            placeholder="อัพโหลดไฟล์ภาพ"
-                          />
-                          {errorsImage && (
-                            <div className="error-from">{errorsImage}</div>
-                          )}
-                        </div>
-                        <div className="form-group">
-                          <div className="justify-content-center d-flex">
-                            <div className="mt-5">
-                              {preview && (
-                                <img
-                                  src={preview}
-                                  alt="Image Preview"
-                                  width="200"
-                                />
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </>
-                    )}
                   </div>
                 </div>
               </div>

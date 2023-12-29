@@ -291,6 +291,43 @@ const getBill = async (id, dispatch) => {
     };
   }
 };
+const getBillProduct = async (id, dispatch) => {
+  const params = {
+    isAdd: true,
+    id: id,
+  };
+  const response = await axios.get(`${url}/getBillProduct.php`, {
+    params,
+  });
+
+  console.log("response", response.data.message);
+
+  if (response.data.message) {
+    dispatch({
+      type: "BILL_PRODUCT_SUCCESS",
+      payload: response.data.data,
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    /*   dispatch({
+      type: "PRODUCT_CODE_ERROR",
+      payload: response.data.error,
+    }); */
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
 const getBillAll = async (dispatch) => {
   const params = {
     isAdd: true,
@@ -1147,6 +1184,7 @@ export default {
   getCustomerCodeAll,
   getAddress,
   getBill,
+  getBillProduct,
   getBillAll,
   register,
   Login,

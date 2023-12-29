@@ -79,10 +79,16 @@ export default function Sidebar() {
                 <span>สินค้าเข้าโกดังไทย</span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item active">
               <Link className="nav-link" to="/bill-all">
                 <i class="fa-solid fa-file-invoice"></i>
                 <span>ออกบิล</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/bill-list">
+                <i class="fa-solid fa-file-invoice"></i>
+                <span>รายการพัสดุออกบิล</span>
               </Link>
             </li>
             <li className="nav-item">
@@ -97,7 +103,7 @@ export default function Sidebar() {
                 <span>สั่งซื้อสินค้าจีน</span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item ">
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-qrcode"></i>
                 <span>แจ้งQCสินค้า</span>
