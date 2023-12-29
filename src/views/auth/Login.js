@@ -50,6 +50,9 @@ const Login = () => {
       const response = await Service.Login(formData, dispatch);
 
       if (response.status == "success") {
+        console.log("response", response.id);
+        const getPoints = await Service.getPoints(response.id, dispatch);
+
         navigate("/product-list");
       } else {
         if (response.error == "User not found!") {

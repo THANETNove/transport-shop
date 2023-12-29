@@ -9,6 +9,7 @@ const initialState = {
   BillData: null,
   BillDataAll: null,
   BillProduct: null,
+  points: 0,
 };
 
 export default function (state = initialState, action) {
@@ -66,6 +67,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         BillProduct: action.payload,
+      };
+    case "POINTS_SUCCESS":
+      return {
+        ...state,
+        points: action.payload,
       };
     case "ADDRESS_ERROR":
       return {

@@ -17,6 +17,7 @@ const ProductList = () => {
   const { status_list, product_type, status_code_data } = useSelector(
     (state) => state.post
   );
+  const points = useSelector((state) => state.get.points);
   const [statusList, setStatusList] = useState(status_list);
   const [productType, setProductType] = useState(product_type);
   const [statusSuccess, setStatusSuccess] = useState(null);
@@ -67,6 +68,7 @@ const ProductList = () => {
     const pro_log_4 = await Service.getProductCode(user.id, dispatch); // ดึงรหัสพัสดุ
     const pro_log_5 = await Service.getCustomerCodeAll(dispatch); // ดึงประเภทพัสดุ
     const pro_log_6 = await Service.getAddress(user && user.id, dispatch);
+    const getPoints = await Service.getPoints(user && user.id, dispatch);
 
     setTimeout(() => {
       dispatch({
@@ -145,8 +147,6 @@ const ProductList = () => {
     setCurrentItems(currentItems);
     setPageCount(pageCount);
   }, [productList]);
-
-  console.log("productList", productList);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
@@ -251,24 +251,50 @@ const ProductList = () => {
   };
 
   const handleSubmitBilling = async () => {
-    const response = await Service.createIssueBill(
-      user && user.id,
-      idAddress,
-      selectedData,
-      dispatch
-    );
-    if (response.status == "success") {
-      fetchData();
-      setStatusModel(0);
-      setIdAddress(null);
-      setSelectedData([]);
-      document.getElementById("close-modal") &&
-        document.getElementById("close-modal").click();
-      setStatusBill(true);
-      setTimeout(() => {
-        setStatusBill(false);
-      }, 3000);
+    console.log("selectedData", selectedData);
+
+    const amount =
+      selectedData &&
+      Math.ceil(
+        selectedData
+          .reduce((acc, item) => {
+            const amount = parseFloat(
+              item.payment_amount_chinese_thai_delivery,
+              10
+            ); // แปลงเป็นตัวเลข
+            if (!isNaN(amount)) {
+              return acc + amount;
+            }
+            return acc;
+          }, 0)
+          .toFixed(2)
+      );
+    if (points.money > amount) {
+      let point = points.money - amount;
+     
+
+      const response = await Service.createIssueBill(
+        user && user.id,
+        idAddress,
+        selectedData,
+        point,
+        dispatch
+      );
+      if (response.status == "success") {
+        fetchData();
+        setStatusModel(0);
+        setIdAddress(null);
+        setSelectedData([]);
+        document.getElementById("close-modal") &&
+          document.getElementById("close-modal").click();
+        setStatusBill(true);
+        setTimeout(() => {
+          setStatusBill(false);
+        }, 3000);
+      }
     }
+    console.log("amount", amount);
+    /*  */
   };
 
   const searchData = (event) => {
@@ -282,7 +308,6 @@ const ProductList = () => {
           .includes(value.trim().toLowerCase())
       );
 
-      console.log("productList", productList);
       setProductList(filteredProducts);
     } else {
       const filteredItems =
@@ -295,7 +320,6 @@ const ProductList = () => {
   };
 
   const systemUser = () => {
-    console.log("currentItems", currentItems);
     return (
       <>
         <tbody>

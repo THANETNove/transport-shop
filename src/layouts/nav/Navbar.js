@@ -4,6 +4,7 @@ import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 
 export default function Navbar() {
   const user = useSelector((state) => state.auth.user);
+  const points = useSelector((state) => state.get.points);
 
   return (
     <>
@@ -76,7 +77,7 @@ export default function Navbar() {
             <div className="nav-link text-gray-600 small">
               <i class="fa-solid fa-coins small-xl"></i>
               <span className="ml-3 text-gray-600 small-xl">
-                {user.money.toLocaleString()}
+                {points.money.toLocaleString()}
               </span>
             </div>
 

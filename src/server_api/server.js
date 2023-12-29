@@ -328,6 +328,44 @@ const getBillProduct = async (id, dispatch) => {
     };
   }
 };
+const getPoints = async (id, dispatch) => {
+  const params = {
+    isAdd: true,
+    id: id,
+  };
+  const response = await axios.get(`${url}/getPoints.php`, {
+    params,
+  });
+
+  console.log("response", response.data.message);
+
+  if (response.data.message) {
+    dispatch({
+      type: "POINTS_SUCCESS",
+      payload: response.data.data[0],
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    /*   dispatch({
+      type: "PRODUCT_CODE_ERROR",
+      payload: response.data.error,
+    }); */
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 const getBillAll = async (dispatch) => {
   const params = {
     isAdd: true,
@@ -495,6 +533,7 @@ const Login = async (e, dispatch) => {
     return {
       status: "success",
       message: response.data.message,
+      id: response.data.user.id,
     };
   } else if (response.data.error) {
     dispatch({
@@ -735,12 +774,13 @@ const createProductCode = async (id, code, dispatch) => {
   }
 };
 
-const createIssueBill = async (id, id_address, data, dispatch) => {
+const createIssueBill = async (id, id_address, data, point, dispatch) => {
   const formData = new FormData();
   formData.append("isAdd", true);
   formData.append("id", id);
   formData.append("id_address", id_address);
   formData.append("data", JSON.stringify(data));
+  formData.append("point", point);
 
   const response = await axios.post(`${url}/createIssueBill.php`, formData, {
     headers: {
@@ -1186,6 +1226,7 @@ export default {
   getBill,
   getBillProduct,
   getBillAll,
+  getPoints,
   register,
   Login,
   statusList,

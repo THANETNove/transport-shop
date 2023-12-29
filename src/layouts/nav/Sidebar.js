@@ -156,12 +156,20 @@ export default function Sidebar() {
         )}
 
         {user && user.status > 0 && (
-          <li className="nav-item">
-            <Link className="nav-link" to="/check-bill">
-              <i class="fa-solid fa-tag"></i>
-              <span>ตรวจสอบบิล</span>
-            </Link>
-          </li>
+          <>
+            <li className="nav-item">
+              <Link className="nav-link" to="/check-bill">
+                <i class="fa-solid fa-tag"></i>
+                <span>ตรวจสอบบิล</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/record-bill">
+                <i class="fa-solid fa-tag"></i>
+                <span>ประวัติตรวจสอบบิล</span>
+              </Link>
+            </li>
+          </>
         )}
         {/* <li className="nav-item">
           <a

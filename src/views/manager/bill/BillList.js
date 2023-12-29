@@ -11,7 +11,7 @@ import DatePicker from "react-datepicker";
 import ReactPaginate from "react-paginate";
 import { useRef } from "react";
 
-const ProductList = () => {
+const BillList = () => {
   const user = useSelector((state) => state.auth.user);
   const { BillDataAll } = useSelector((state) => state.get);
   const dispatch = useDispatch();
@@ -312,9 +312,10 @@ const ProductList = () => {
         <tbody>
           {sortedItems &&
             sortedItems.map((item, index) => {
-              if (item.status == "รอตรวจสอบ" || item.status == "รอจัดส่ง") {
+              if (item.status == "จัดส่งเเล้ว" || item.status == "ถูกยกเลิก") {
                 return (
                   <tr key={item.billId} className="text-center">
+                    {/* Your table cell content here */}
                     <th scope="row">{index + 1} </th>
                     <td>{item.billId}</td>
                     <td>{item.customerCode}</td>
@@ -632,65 +633,6 @@ const ProductList = () => {
                         </tbody>
                       </table>
                     </div>
-
-                    {showStatus != "จัดส่งเเล้ว" && (
-                      <>
-                        {" "}
-                        <button
-                          type="button"
-                          class="btn btn-danger"
-                          onClick={() => handleUpdateStatusBill("ถูกยกเลิก")}
-                        >
-                          ถูกยกเลิก
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-success ml-3"
-                          onClick={() =>
-                            handleUpdateStatusBill(
-                              showStatus == "รอตรวจสอบ"
-                                ? "รอจัดส่ง"
-                                : showStatus == "รอจัดส่ง" && "จัดส่งเเล้ว"
-                            )
-                          }
-                        >
-                          {showStatus == "รอตรวจสอบ"
-                            ? "รอจัดส่ง"
-                            : showStatus == "รอจัดส่ง" && "จัดส่งเเล้ว"}
-                        </button>
-                      </>
-                    )}
-
-                    {showStatus == "รอจัดส่ง" && (
-                      <>
-                        <div className="mt-3">
-                          <input
-                            type="file"
-                            className="form-control"
-                            id="image"
-                            name="image"
-                            onChange={handleImageChange}
-                            placeholder="อัพโหลดไฟล์ภาพ"
-                          />
-                          {errorsImage && (
-                            <div className="error-from">{errorsImage}</div>
-                          )}
-                        </div>
-                        <div className="form-group">
-                          <div className="justify-content-center d-flex">
-                            <div className="mt-5">
-                              {preview && (
-                                <img
-                                  src={preview}
-                                  alt="Image Preview"
-                                  width="200"
-                                />
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </>
-                    )}
                   </div>
                 </div>
               </div>
@@ -701,4 +643,4 @@ const ProductList = () => {
     </div>
   );
 };
-export default ProductList;
+export default BillList;
