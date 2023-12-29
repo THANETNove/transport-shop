@@ -20,6 +20,8 @@ const ProductList = () => {
   const [productType, setProductType] = useState(product_type);
   const [statusSuccess, setStatusSuccess] = useState(null);
   const [statusResponse, setStatusResponse] = useState(null);
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -49,8 +51,8 @@ const ProductList = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
   useEffect(() => {
-    console.log("user", user);
     if (user.status == "0") {
       const filteredItems = currentItems.filter(
         (product) => product.customer_code === user.customerCode
@@ -121,14 +123,23 @@ const ProductList = () => {
     }, 1000);
   }, [statusSuccess]);
 
+  
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    /*   console.log(`Loading items from ${itemOffset} to ${endOffset}`); */
+    let currentItems = productList && productList.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(
+      productList && productList.length / itemsPerPage
+    );
+    const maxItemOffset = (pageCount - 1) * itemsPerPage;
+
+    setCurrentItems(currentItems);
+    setPageCount(pageCount);
+  }, [productList]);
+
   // Simulate fetching items from another resources.
   // (This could be items from props; or items loaded in a local state
   // from an API endpoint with useEffect and useState)
-  const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = productList && productList.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(productList && productList.length / itemsPerPage);
-  const maxItemOffset = (pageCount - 1) * itemsPerPage;
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
@@ -141,9 +152,14 @@ const ProductList = () => {
     const { value } = event.target;
     if (value) {
       const filteredProducts = productList.filter((product) =>
-        product.customer_code.includes(value)
+        product.customer_code
+          .trim()
+          .toLowerCase()
+          .includes(value.trim().toLowerCase())
       );
 
+      console.log("value", value);
+      console.log("filteredProducts", filteredProducts);
       setProductList(filteredProducts);
     } else {
       setProductList(product);
@@ -176,7 +192,7 @@ const ProductList = () => {
   };
 
   const systemAdmin = () => {
-    /*     console.log("currentItems", currentItems); */
+    console.log("currentItems", currentItems);
     return (
       <tbody>
         {currentItems &&
@@ -332,8 +348,6 @@ const ProductList = () => {
     );
   };
 
-  console.log("user", user);
-
   const dataList = Math.ceil(productList && productList.length / itemsPerPage);
   return (
     <div className="container-fluid">
@@ -448,7 +462,7 @@ const ProductList = () => {
               </div>
             </div>
           </div>
-          {pageCount > 1 && (
+          {pageCount && pageCount > 1 && (
             <ReactPaginate
               breakLabel="..."
               nextLabel="Next"
