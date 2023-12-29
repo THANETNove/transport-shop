@@ -127,6 +127,18 @@ export default function Sidebar() {
                 <span>แลกเงิน </span>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/money">
+                <i class="fa-solid fa-money-bill-transfer"></i>
+                <span>เติมเงิน </span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/record-money-wallet">
+                <i class="fa-solid fa-money-bill-transfer"></i>
+                <span>ประวัติเติมเงิน </span>
+              </Link>
+            </li>
           </>
         )}
 

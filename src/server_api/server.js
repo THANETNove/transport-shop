@@ -806,6 +806,39 @@ const createIssueBill = async (id, id_address, data, point, dispatch) => {
   }
 };
 
+const createSlip = async (id, date, time, money, image) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", id);
+  formData.append("date", date);
+  formData.append("time", time);
+  formData.append("money", money);
+  formData.append("image", image);
+
+  const response = await axios.post(`${url}/createSlip.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 //  Update POST
 const UpdateProductType = async (e, dispatch) => {
   const formData = new FormData();
@@ -1234,6 +1267,7 @@ export default {
   createAddress,
   createProductCode,
   createPriceUser,
+  createSlip,
   ProductType,
   UpdateProduct,
   updateStatusProductList,

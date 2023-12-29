@@ -10,6 +10,8 @@ import moneyWallet from "./views/user/moneyWallet/MoneyWallet";
 import ProductListUser from "./views/user/products/ProductList";
 import BillList from "./views/user/products/Bill";
 import ProductListBill from "./views/user/products/ProductListBill";
+import Money from "./views/user/moneyWallet/Money";
+import Slip from "./views/manager/bill/RecordSlip";
 //Admin
 
 // Manager
@@ -23,7 +25,9 @@ import PricePreUser from "./views/manager/priceUser/PricePreUser";
 import CreatePricePreUser from "./views/manager/priceUser/CreatePricePreUser";
 import EditPricePreUser from "./views/manager/priceUser/EditPricePreUser";
 import BillListStatus from "./views/manager/bill/Bill";
-import recordBill from "./views/manager/bill/BillList";
+import BillListManager from "./views/manager/bill/BillList";
+
+import recordSlipList from "./views/manager/bill/RecordSlip";
 
 // All ใช้รวมกัน
 import CreateProduct from "./views/all/products/CreateProduct";
@@ -86,6 +90,16 @@ const userRoutes = [
     component: ProductListBill,
     layout: "/auth",
   },
+  {
+    path: "/money",
+    component: Money,
+    layout: "/auth",
+  },
+  {
+    path: "/record-money-wallet",
+    component: Slip,
+    layout: "/auth",
+  },
 ];
 
 const adminRoutes = [
@@ -116,7 +130,7 @@ const adminRoutes = [
   },
   {
     path: "/record-bill/",
-    component: recordBill,
+    component: BillListManager,
     layout: "/auth",
   },
 ];
@@ -189,7 +203,7 @@ const managerRoutes = [
   },
   {
     path: "/record-bill/",
-    component: recordBill,
+    component: BillListManager,
     layout: "/auth",
   },
 ];
