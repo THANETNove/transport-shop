@@ -480,11 +480,15 @@ const ProductList = () => {
                           </tr>
                           <tr>
                             <th scope="row">ปริมาตร(คิว) </th>
-                            <td>{totalQueue} CBM</td>
+                            <td>
+                              {totalQueue && totalQueue.toLocaleString()} CBM
+                            </td>
                           </tr>
                           <tr>
                             <th scope="row">น้ำหนัก </th>
-                            <td>{totalWeight} kg</td>
+                            <td>
+                              {totalWeight && totalWeight.toLocaleString()} kg
+                            </td>
                           </tr>
                           <tr>
                             <th scope="row">ยอดรวมค่านำเข้า จีน-ไทย </th>

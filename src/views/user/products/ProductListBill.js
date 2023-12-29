@@ -133,53 +133,6 @@ const ProductList = () => {
     }
   };
 
-  const totalQuantity = 500;
-  /*   showDataBill &&
-    showDataBill.reduce((acc, item) => {
-      const quantity = parseInt(item.quantity, 10); // แปลงเป็นตัวเลข
-      if (!isNaN(quantity)) {
-        return acc + quantity;
-      }
-      return acc;
-    }, 0); */
-
-  const totalWeight = 500;
-  /*  showDataBill &&
-    showDataBill.reduce((acc, item) => {
-      const weight = parseFloat(item.total_weight, 10); // แปลงเป็นตัวเลข
-      if (!isNaN(weight)) {
-        return acc + weight;
-      }
-      return acc;
-    }, 0); */
-
-  const totalQueue = 5000;
-  /*  showDataBill &&
-    showDataBill
-      .reduce((acc, item) => {
-        const quantity = parseFloat(item.total_queue, 10); // แปลงเป็นตัวเลข
-        if (!isNaN(quantity)) {
-          return acc + quantity;
-        }
-        return acc;
-      }, 0)
-      .toFixed(2); */
-
-  const paymentAmountChineseThaiDelivery = 5000;
-  /*  showDataBill &&
-    Math.ceil(
-      showDataBill.reduce((acc, item) => {
-        const amount = parseFloat(
-          item.payment_amount_chinese_thai_delivery,
-          10
-        ); // แปลงเป็นตัวเลข
-        if (!isNaN(amount)) {
-          return acc + amount;
-        }
-        return acc;
-      }, 0)
-    );
- */
   const systemUser = () => {
     return (
       <>
@@ -436,29 +389,45 @@ const ProductList = () => {
                         <tbody>
                           <tr>
                             <th scope="row">จำนวน </th>
-                            <td>{totalQuantity} กล่อง</td>
+                            <td>
+                              {showItemBill && showItemBill.quantity} กล่อง
+                            </td>
                           </tr>
                           <tr>
                             <th scope="row">ปริมาตร(คิว) </th>
-                            <td>{totalQueue} CBM</td>
+                            <td>
+                              {showItemBill && showItemBill.total_queue} CBM
+                            </td>
                           </tr>
                           <tr>
                             <th scope="row">น้ำหนัก </th>
-                            <td>{totalWeight} kg</td>
+                            <td>
+                              {showItemBill && showItemBill.total_weight} kg
+                            </td>
                           </tr>
                           <tr>
                             <th scope="row">ยอดรวมค่านำเข้า จีน-ไทย </th>
                             <td>
-                              {paymentAmountChineseThaiDelivery &&
-                                paymentAmountChineseThaiDelivery.toLocaleString()}{" "}
+                              {Number(
+                                showItemBill &&
+                                  showItemBill.payment_amount_chinese_thai_delivery
+                              ).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
                               บาท
                             </td>
                           </tr>
                           <tr>
                             <th scope="row">ยอดชำระทั้งหมด </th>
                             <td>
-                              {paymentAmountChineseThaiDelivery &&
-                                paymentAmountChineseThaiDelivery.toLocaleString()}{" "}
+                              {Number(
+                                showItemBill &&
+                                  showItemBill.payment_amount_chinese_thai_delivery
+                              ).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
                               บาท ( ชำระแล้ว)
                             </td>
                           </tr>
