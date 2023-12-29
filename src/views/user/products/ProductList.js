@@ -21,6 +21,8 @@ const ProductList = () => {
   const [productType, setProductType] = useState(product_type);
   const [statusSuccess, setStatusSuccess] = useState(null);
   const [statusResponse, setStatusResponse] = useState(null);
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(null);
   const [statusBill, setStatusBill] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -131,11 +133,20 @@ const ProductList = () => {
   // Simulate fetching items from another resources.
   // (This could be items from props; or items loaded in a local state
   // from an API endpoint with useEffect and useState)
-  const endOffset = itemOffset + itemsPerPage;
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    /*   console.log(`Loading items from ${itemOffset} to ${endOffset}`); */
+    let currentItems = productList && productList.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(
+      productList && productList.length / itemsPerPage
+    );
+    const maxItemOffset = (pageCount - 1) * itemsPerPage;
 
-  const currentItems = productList && productList.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(productList && productList.length / itemsPerPage);
-  const maxItemOffset = (pageCount - 1) * itemsPerPage;
+    setCurrentItems(currentItems);
+    setPageCount(pageCount);
+  }, [productList]);
+
+  console.log("productList", productList);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
@@ -260,7 +271,31 @@ const ProductList = () => {
     }
   };
 
+  const searchData = (event) => {
+    const { value } = event.target;
+    console.log("value", value);
+    if (value) {
+      const filteredProducts = productList.filter((product) =>
+        product.tech_china
+          .trim()
+          .toLowerCase()
+          .includes(value.trim().toLowerCase())
+      );
+
+      console.log("productList", productList);
+      setProductList(filteredProducts);
+    } else {
+      const filteredItems =
+        product &&
+        product.filter(
+          (product) => product.customer_code === user.customerCode
+        );
+      setProductList(filteredItems);
+    }
+  };
+
   const systemUser = () => {
+    console.log("currentItems", currentItems);
     return (
       <>
         <tbody>
@@ -335,19 +370,6 @@ const ProductList = () => {
         </tbody>
       </>
     );
-  };
-
-  const searchData = (event) => {
-    const { value } = event.target;
-    if (value) {
-      const filteredProducts = productList.filter((product) =>
-        product.customer_code.includes(value)
-      );
-
-      setProductList(filteredProducts);
-    } else {
-      setProductList(product);
-    }
   };
 
   const newAddress = () => {
@@ -576,7 +598,7 @@ const ProductList = () => {
               </div>
             </div>
           </div>
-          {pageCount > 1 && (
+          {pageCount && pageCount > 1 && (
             <ReactPaginate
               breakLabel="..."
               nextLabel="Next"

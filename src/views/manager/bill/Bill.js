@@ -342,7 +342,7 @@ const ProductList = () => {
                     )
                   }
                 >
-                  show
+                  ตรวจสอบ
                 </a>
               </tr>
             ))}

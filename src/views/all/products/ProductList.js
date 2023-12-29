@@ -192,7 +192,6 @@ const ProductList = () => {
   };
 
   const systemAdmin = () => {
-    console.log("currentItems", currentItems);
     return (
       <tbody>
         {currentItems &&
