@@ -214,6 +214,9 @@ const ProductList = () => {
                     <tr className="text-center">
                       <th scope="col">#</th>
                       <th scope="col">เลขที่</th>
+                      <th scope="col">รหัสลูกค้า</th>
+                      <th scope="col">เเทคจีน</th>
+                      <th scope="col">รหัสโกดัง</th>
                       <th scope="col">วันที่</th>
                       <th scope="col">สถานะ</th>
                       <th scope="col">show</th>
