@@ -297,12 +297,19 @@ const ProductList = () => {
     );
 
   const systemUser = () => {
-    console.log("currentItems", currentItems);
+    const sortedItems = [...currentItems].sort((a, b) => {
+      // Convert strings to Date objects for comparison
+      const dateA = new Date(a.billUpdated_at);
+      const dateB = new Date(b.billUpdated_at);
+
+      // Compare dates in descending order
+      return dateB - dateA;
+    });
     return (
       <>
         <tbody>
-          {currentItems &&
-            currentItems.map((item, index) => (
+          {sortedItems &&
+            sortedItems.map((item, index) => (
               <tr key={item.billId} className="text-center">
                 {/* Your table cell content here */}
                 <th scope="row">{index + 1} </th>

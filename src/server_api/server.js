@@ -263,7 +263,7 @@ const getBill = async (id, dispatch) => {
     params,
   });
 
-  console.log("response", response.data.message);
+  console.log("response", response.data.data);
 
   if (response.data.message) {
     dispatch({
