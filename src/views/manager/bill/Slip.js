@@ -15,7 +15,7 @@ const MoneySlip = () => {
   const [urlImage, setUrlImage] = useState(null);
 
   const fetchData = async () => {
-    await Service.getSlipAll(user && user.customerCode, dispatch); // ดึงรหัสพัสดุ
+    await Service.getSlipAll(user && user.customerCode, dispatch);
   };
 
   useEffect(() => {
@@ -26,7 +26,22 @@ const MoneySlip = () => {
     setData(dataSlipAll);
   }, [dataSlipAll]);
 
-  console.log("data", data);
+  const handleApprove = async (id, code_user, money, status) => {
+    const isConfirmed = window.confirm(
+      status == "อนุมัติ"
+        ? "คุณต้องการที่จะอนุมัติใช่หรือไม่?"
+        : "คุณต้องการที่จะไม่อนุมัติใช่หรือไม่?"
+    );
+
+    if (isConfirmed) {
+      const responsive = await Service.updateSlip(id, code_user, money, status);
+      if (responsive.status == "success") {
+        fetchData();
+      }
+
+      console.log("responsive", responsive);
+    }
+  };
 
   return (
     <div className="container-fluid">
@@ -80,6 +95,37 @@ const MoneySlip = () => {
                                   className="pointer"
                                   data-bs-target="#exampleModal"
                                 />
+                              </td>
+                              <td>
+                                <button
+                                  type="button"
+                                  class="btn btn-danger"
+                                  onClick={() =>
+                                    handleApprove(
+                                      item.id,
+                                      item.code_user,
+                                      item.money,
+                                      "ไม่อนุมัติ"
+                                    )
+                                  }
+                                >
+                                  ไม่อนุมัติ
+                                </button>
+
+                                <button
+                                  type="button"
+                                  class="btn btn-primary ml-3"
+                                  onClick={() =>
+                                    handleApprove(
+                                      item.id,
+                                      item.code_user,
+                                      item.money,
+                                      "อนุมัติ"
+                                    )
+                                  }
+                                >
+                                  อนุมัติ
+                                </button>
                               </td>
                             </tr>
                           );

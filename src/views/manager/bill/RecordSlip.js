@@ -69,7 +69,7 @@ const MoneySlip = () => {
                                     {item.statusSlip}
                                   </p>
                                 )}
-                                {item.statusSlip == "สลิปไม่ถูกต้อง" && (
+                                {item.statusSlip == "ไม่อนุมัติ" && (
                                   <p style={{ color: "#FF0000" }}>
                                     {" "}
                                     {item.statusSlip}

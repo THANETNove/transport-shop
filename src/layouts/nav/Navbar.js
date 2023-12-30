@@ -77,7 +77,7 @@ export default function Navbar() {
             <div className="nav-link text-gray-600 small">
               <i class="fa-solid fa-coins small-xl"></i>
               <span className="ml-3 text-gray-600 small-xl">
-                {points.money.toLocaleString()}
+                {Number(points.money).toLocaleString()}
               </span>
             </div>
 

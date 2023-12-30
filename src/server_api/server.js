@@ -1172,6 +1172,38 @@ const updateProductDateToThailand = async (id, to_thailand) => {
     };
   }
 };
+const updateSlip = async (id, code_user, money, status) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", id);
+  formData.append("code_user", code_user);
+  formData.append("money", money);
+  formData.append("status", status);
+
+  const response = await axios.post(`${url}/updateSlip.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+
+  console.log("response.data", response.data.message);
+
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    return {
+      status: "unknown",
+    };
+  }
+};
 
 // Delete POST
 const deleteStatusList = async (id, dispatch) => {
@@ -1358,6 +1390,7 @@ export default {
   updateProductDateCloseCabinet,
   updateProductDateToThailand,
   UpdateStatusBill,
+  updateSlip,
   createIssueBill,
   deleteStatusList,
   deleteProduct,
