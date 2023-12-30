@@ -234,7 +234,6 @@ const ProductList = () => {
     if (event == "ถูกยกเลิก") {
       const require = await Service.UpdateStatusBill(showIdBill, event, image);
 
-    
       if (require.status == "success") {
         fetchData();
         setMessage(messCancel);
@@ -475,13 +474,15 @@ const ProductList = () => {
                 </p>
               )}
 
-              <div className="box-bill">
-                <p>เลขที่/No {showIdBill && showIdBill}</p>
-                <p>วันที่/Date {showUpdated_atBill && showUpdated_atBill} น.</p>
-              </div>
               <div className="row">
                 <div className="col-6">
-                  <h6 className="uppercase-text">MEDO INTERNATIONAL</h6>
+                  <div className="box-bill">
+                    <p>เลขที่/No {showIdBill && showIdBill}</p>
+                    <p>
+                      วันที่/Date {showUpdated_atBill && showUpdated_atBill} น.
+                    </p>
+                  </div>
+                  <h6 className="uppercase-text mb-4">MEDO INTERNATIONAL</h6>
                   {/* <p>MEDO INTERNATIONAL</p> */}
                   {/*  <p>TEL. 085-1122999</p> */}
                 </div>

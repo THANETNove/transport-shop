@@ -30,8 +30,6 @@ const MoneySlip = () => {
     const { value } = event.target;
     setData(dataSlipAll);
 
-   
-
     if (value) {
       const dataSlipAll = Object.values(data).filter((item) =>
         item.code_user.includes(value)
