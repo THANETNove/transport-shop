@@ -251,8 +251,6 @@ const ProductList = () => {
   };
 
   const handleSubmitBilling = async () => {
-
-
     const amount =
       selectedData &&
       Math.ceil(
@@ -271,7 +269,6 @@ const ProductList = () => {
       );
     if (points.money > amount) {
       let point = points.money - amount;
-     
 
       const response = await Service.createIssueBill(
         user && user.id,
@@ -293,12 +290,11 @@ const ProductList = () => {
         }, 3000);
       }
     }
-   
   };
 
   const searchData = (event) => {
     const { value } = event.target;
-   
+
     if (value) {
       const filteredProducts = productList.filter((product) =>
         product.tech_china
@@ -397,7 +393,7 @@ const ProductList = () => {
 
   const newAddress = () => {
     return (
-      <>
+      <div className="row">
         <div class="mb-3">
           <label for="id_user" class="form-label">
             ชื่อ นามสกุล
@@ -503,7 +499,7 @@ const ProductList = () => {
             <div className="error-from">{errors.zip_code}</div>
           )}
         </div>
-      </>
+      </div>
     );
   };
 

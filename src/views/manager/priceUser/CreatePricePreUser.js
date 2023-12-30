@@ -94,9 +94,8 @@ const CreatePricePreUser = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validate()) {
-      
       const response = await Service.createPriceUser(formData, dispatch);
-     
+
       if (response.status == "success") {
         fetchData();
         fetchUser(formData.id_user);
@@ -141,8 +140,9 @@ const CreatePricePreUser = () => {
     }));
   };
 
-  
-
+  console.log("product_type", product_type);
+  console.log("priceUser", priceUser);
+//thiuserHPQ4ei
   return (
     <div className="container-fluid">
       <div className="row">
@@ -206,15 +206,16 @@ const CreatePricePreUser = () => {
                                 </option>
                               ))
                             : product_type &&
-                              product_type.map((type) =>
-                                priceUser &&
-                                !priceUser.some(
-                                  (priceId) => priceId.id_type == type.id
-                                ) ? (
-                                  <option key={type.id} value={type.id}>
-                                    {type.name}
-                                  </option>
-                                ) : null
+                              product_type.map(
+                                (type) =>
+                                  priceUser &&
+                                  !priceUser.some(
+                                    (priceId) => priceId.id_type == type.id
+                                  ) && (
+                                    <option key={type.id} value={type.id}>
+                                      {type.name}
+                                    </option>
+                                  )
                               )}
                         </select>
                         {errors.id_type && (
