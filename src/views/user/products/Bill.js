@@ -37,7 +37,6 @@ const ProductList = () => {
   const url = Service.getUrlImage();
   const fetchData = async () => {
     const pro_log_1 = await Service.getBill(user && user.id, dispatch);
-
   };
 
   useEffect(() => {
@@ -192,8 +191,6 @@ const ProductList = () => {
     );
 
   const systemUser = () => {
-
-
     const sortedItems =
       currentItems &&
       [...currentItems].sort((a, b) => {
@@ -360,13 +357,15 @@ const ProductList = () => {
               ></button>
             </div>
             <div class="modal-body">
-              <div className="box-bill">
-                <p>เลขที่/No {showIdBill && showIdBill}</p>
-                <p>วันที่/Date {showUpdated_atBill && showUpdated_atBill} น.</p>
-              </div>
               <div className="row">
                 <div className="col-6">
-                  <h6 className="uppercase-text">MEDO INTERNATIONAL</h6>
+                  <div className="box-bill">
+                    <p>เลขที่/No {showIdBill && showIdBill}</p>
+                    <p>
+                      วันที่/Date {showUpdated_atBill && showUpdated_atBill} น.
+                    </p>
+                  </div>
+                  <h6 className="uppercase-text mb-4">MEDO INTERNATIONAL</h6>
                   {/* <p>MEDO INTERNATIONAL</p> */}
                   {/*  <p>TEL. 085-1122999</p> */}
                 </div>
