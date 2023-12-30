@@ -24,6 +24,7 @@ const Sidebar = () => {
       currentPath && currentPath == path ? "nav-item active" : "nav-item";
     return pathUrl;
   };
+
   return (
     <>
       {/* Sidebar */}
@@ -59,7 +60,7 @@ const Sidebar = () => {
 
         <hr className="sidebar-divider" />
         <div className="sidebar-heading">Interface</div>
-        <li className="nav-item">
+        <li className={activePath("/product-list")}>
           <Link className="nav-link" to="/product-list">
             <i class="fa-solid fa-table-columns"></i>
             <span>พัสดุทั้งหมด</span>
