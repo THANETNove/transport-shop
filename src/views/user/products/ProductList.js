@@ -237,13 +237,9 @@ const ProductList = () => {
 
   const handleSubmitAddress = async (event) => {
     event.preventDefault();
-
-    console.log("formData", formData);
     if (validate()) {
       const response = await Service.createAddress(formData, dispatch);
-      /*  console.log("response", response); */
       if (response.status == "success") {
-        /*        console.log("444"); */
         const response2 = await Service.getAddress(user && user.id, dispatch);
         console.log("response2", response2);
 
