@@ -268,8 +268,6 @@ const getBill = async (id, dispatch) => {
     params,
   });
 
-
-
   if (response.data.message) {
     dispatch({
       type: "BILL_SUCCESS",
@@ -304,8 +302,6 @@ const getBillProduct = async (id, dispatch) => {
   const response = await axios.get(`${url}/getBillProduct.php`, {
     params,
   });
-
-
 
   if (response.data.message) {
     dispatch({
@@ -342,8 +338,6 @@ const getPoints = async (id, dispatch) => {
     params,
   });
 
-
-
   if (response.data.message) {
     dispatch({
       type: "POINTS_SUCCESS",
@@ -378,8 +372,6 @@ const getSlip = async (id, dispatch) => {
   const response = await axios.get(`${url}/getSlip.php`, {
     params,
   });
-
-
 
   if (response.data.message) {
     dispatch({
@@ -416,8 +408,6 @@ const getSlipAll = async (id, dispatch) => {
     params,
   });
 
-
-
   if (response.data.message) {
     dispatch({
       type: "SLIP_ALL_SUCCESS",
@@ -452,8 +442,6 @@ const getBillAll = async (dispatch) => {
   const response = await axios.get(`${url}/getIssueBill_All.php`, {
     params,
   });
-
-
 
   if (response.data.message) {
     dispatch({
@@ -543,6 +531,41 @@ const getCustomerCodeAll = async (dispatch) => {
   }
 };
 
+const getUserAll = async (dispatch) => {
+  const params = {
+    isAdd: true,
+  };
+  const response = await axios.get(`${url}/getUser.php`, {
+    params,
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "USERS_ALL_SUCCESS",
+      payload: response.data.data,
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    /*   dispatch({
+      type: "PRODUCT_CODE_ERROR",
+      payload: response.data.error,
+    }); */
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 //POST
 const register = async (e, dispatch) => {
   const formData = new FormData();
@@ -592,7 +615,6 @@ const register = async (e, dispatch) => {
 };
 
 const Login = async (e, dispatch) => {
-
   const formData = new FormData();
   formData.append("isAdd", true);
   formData.append("username", e.username);
@@ -708,7 +730,6 @@ const ProductType = async (e, dispatch) => {
 };
 
 const createProduct = async (e, dispatch) => {
-
   const formData = new FormData();
   formData.append("isAdd", true);
   for (let key in e) {
@@ -783,7 +804,6 @@ const createAddress = async (e, dispatch) => {
 };
 
 const createPriceUser = async (e, dispatch) => {
-
   const formData = new FormData();
   formData.append("isAdd", true);
   for (let key in e) {
@@ -815,7 +835,6 @@ const createPriceUser = async (e, dispatch) => {
 };
 
 const createProductCode = async (id, code, dispatch) => {
- 
   const formData = new FormData();
   formData.append("isAdd", true);
   formData.append("id", id);
@@ -960,7 +979,6 @@ const UpdateProductType = async (e, dispatch) => {
 };
 
 const UpdateProduct = async (e, dispatch) => {
-
   const formData = new FormData();
   formData.append("isAdd", true);
   for (let key in e) {
@@ -1108,7 +1126,6 @@ const updatePriceUser = async (e, dispatch) => {
 };
 
 const updateProductDateCloseCabinet = async (id, close_cabinet) => {
- 
   const formData = new FormData();
   formData.append("isAdd", true);
   formData.append("id", id);
@@ -1186,7 +1203,33 @@ const updateSlip = async (id, code_user, money, status) => {
     },
   });
 
-  
+  if (response.data.message) {
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    return {
+      status: "unknown",
+    };
+  }
+};
+const updatePassword = async (id, password) => {
+  const formData = new FormData();
+  formData.append("isAdd", true);
+  formData.append("id", id);
+  formData.append("password", password);
+
+  const response = await axios.post(`${url}/updatePassword.php`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
 
   if (response.data.message) {
     return {
@@ -1374,6 +1417,7 @@ export default {
   getPoints,
   getSlip,
   getSlipAll,
+  getUserAll,
   register,
   Login,
   statusList,
@@ -1382,6 +1426,7 @@ export default {
   createProductCode,
   createPriceUser,
   createSlip,
+  createIssueBill,
   ProductType,
   UpdateProduct,
   updateStatusProductList,
@@ -1391,7 +1436,7 @@ export default {
   updateProductDateToThailand,
   UpdateStatusBill,
   updateSlip,
-  createIssueBill,
+  updatePassword,
   deleteStatusList,
   deleteProduct,
   deleteProductTypeList,

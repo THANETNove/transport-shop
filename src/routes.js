@@ -26,6 +26,7 @@ import CreatePricePreUser from "./views/manager/priceUser/CreatePricePreUser";
 import EditPricePreUser from "./views/manager/priceUser/EditPricePreUser";
 import BillListStatus from "./views/manager/bill/Bill";
 import BillListManager from "./views/manager/bill/BillList";
+import NewPassword from "./views/auth/NewPassword";
 
 import checkMoney from "./views/manager/bill/Slip";
 import recordSlipList from "./views/manager/bill/RecordSlip";
@@ -144,6 +145,11 @@ const adminRoutes = [
     component: recordSlipList,
     layout: "/auth",
   },
+  {
+    path: "/new-password/",
+    component: NewPassword,
+    layout: "/auth",
+  },
 ];
 
 const managerRoutes = [
@@ -225,6 +231,11 @@ const managerRoutes = [
   {
     path: "/list-slip-money/",
     component: recordSlipList,
+    layout: "/auth",
+  },
+  {
+    path: "/new-password/",
+    component: NewPassword,
     layout: "/auth",
   },
 ];

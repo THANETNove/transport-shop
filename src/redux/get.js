@@ -12,6 +12,7 @@ const initialState = {
   points: 0,
   dataSlip: null,
   dataSlipAll: null,
+  userAll: null,
 };
 
 export default function (state = initialState, action) {
@@ -84,6 +85,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         dataSlipAll: action.payload,
+      };
+    case "USERS_ALL_SUCCESS":
+      return {
+        ...state,
+        userAll: action.payload,
       };
     case "ADDRESS_ERROR":
       return {

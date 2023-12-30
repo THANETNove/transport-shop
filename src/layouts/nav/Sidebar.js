@@ -196,6 +196,12 @@ const Sidebar = () => {
                 <span>ประวัติเติมเงิน </span>
               </Link>
             </li>
+            <li className={activePath("/new-password")}>
+              <Link className="nav-link" to="/new-password">
+                <i class="fa-solid fa-key"></i>
+                <span>เปลี่ยน password </span>
+              </Link>
+            </li>
           </>
         )}
         {/* <li className="nav-item">
