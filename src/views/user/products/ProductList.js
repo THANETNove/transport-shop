@@ -102,6 +102,8 @@ const ProductList = () => {
     set_product();
   }, []);
 
+  /*   console.log("user_address", user_address); */
+
   useEffect(() => {
     set_product();
   }, [product]);
@@ -238,10 +240,14 @@ const ProductList = () => {
   const handleSubmitAddress = async (event) => {
     event.preventDefault();
 
+    console.log("formData", formData);
     if (validate()) {
       const response = await Service.createAddress(formData, dispatch);
+      /*  console.log("response", response); */
       if (response.status == "success") {
+        /*        console.log("444"); */
         const response2 = await Service.getAddress(user && user.id, dispatch);
+        console.log("response2", response2);
 
         if (response2.status == "success") {
           setStatusModel(0);
@@ -708,7 +714,13 @@ const ProductList = () => {
               </button>
               <button
                 type="button"
-                class={idAddress ? "btn btn-primary" : "btn btn-secondary"}
+                class={
+                  statusModel === 0
+                    ? idAddress
+                      ? "btn btn-primary"
+                      : "btn btn-secondary"
+                    : "btn btn-primary"
+                }
                 onClick={
                   statusModel === 0
                     ? idAddress && handleSubmitBilling

@@ -233,6 +233,8 @@ const getAddress = async (id, dispatch) => {
     params,
   });
 
+  console.log("response", response);
+
   if (response.data.message) {
     dispatch({
       type: "ADDRESS_SUCCESS",
@@ -779,7 +781,7 @@ const createAddress = async (e, dispatch) => {
     formData.append(key, e[key]);
   }
 
-  const response = await axios.post(`${url}createAddress.php`, formData, {
+  const response = await axios.post(`${url}/createAddress.php`, formData, {
     headers: {
       "Content-Type": "multipart/form-data;charset=utf-8",
     },
