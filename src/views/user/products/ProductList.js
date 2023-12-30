@@ -332,9 +332,9 @@ const ProductList = () => {
                 <tr key={product.id} className="text-center">
                   <th scope="row">{index + 1}</th>
                   <th>
-                    <div class="form-check">
+                    <div className="form-check">
                       <input
-                        class="form-check-input"
+                        className="form-check-input"
                         type="checkbox"
                         checked={selectedData.includes(product)}
                         onChange={() => handleCheckboxChange(product)}
@@ -401,40 +401,40 @@ const ProductList = () => {
   const newAddress = () => {
     return (
       <div className="row">
-        <div class="mb-3">
-          <label for="id_user" class="form-label">
+        <div className="mb-3">
+          <label for="id_user" className="form-label">
             ชื่อ นามสกุล
           </label>
           <input
             type="text"
             name="name"
-            class="form-control"
+            className="form-control"
             id="name"
             onChange={handleChangeAddress}
             placeholder="ชื่อ นามสกุล"
           />
           {errors.name && <div className="error-from">{errors.name}</div>}
         </div>
-        <div class="mb-3">
-          <label for="id_user" class="form-label">
+        <div className="mb-3">
+          <label for="id_user" className="form-label">
             เบอร์โทร
           </label>
           <input
             type="text"
             name="tel"
-            class="form-control"
+            className="form-control"
             id="tel"
             onChange={handleChangeAddress}
             placeholder="เบอร์โทร"
           />
           {errors.tel && <div className="error-from">{errors.tel}</div>}
         </div>
-        <div class="mb-3">
-          <label for="exampleFormControlTextarea1" class="form-label">
+        <div className="mb-3">
+          <label for="exampleFormControlTextarea1" className="form-label">
             ที่อยู่
           </label>
           <textarea
-            class="form-control"
+            className="form-control"
             name="address"
             onChange={handleChangeAddress}
             id="address"
@@ -442,14 +442,14 @@ const ProductList = () => {
           ></textarea>
           {errors.address && <div className="error-from">{errors.address}</div>}
         </div>
-        <div class="mb-3">
-          <label for="id_user" class="form-label">
+        <div className="mb-3">
+          <label for="id_user" className="form-label">
             เเขวง/ตำบล
           </label>
           <input
             type="text"
             name="subdistricts"
-            class="form-control"
+            className="form-control"
             id="subdistricts"
             onChange={handleChangeAddress}
             placeholder="เเขวง/ตำบล"
@@ -458,14 +458,14 @@ const ProductList = () => {
             <div className="error-from">{errors.subdistricts}</div>
           )}
         </div>
-        <div class="mb-3">
-          <label for="id_user" class="form-label">
+        <div className="mb-3">
+          <label for="id_user" className="form-label">
             เขต/อำเภอ
           </label>
           <input
             type="text"
             name="districts"
-            class="form-control"
+            className="form-control"
             id="districts"
             onChange={handleChangeAddress}
             placeholder="เขต/อำเภอ"
@@ -474,14 +474,14 @@ const ProductList = () => {
             <div className="error-from">{errors.districts}</div>
           )}
         </div>
-        <div class="mb-3">
-          <label for="id_user" class="form-label">
+        <div className="mb-3">
+          <label for="id_user" className="form-label">
             จังหวัด
           </label>
           <input
             type="text"
             name="provinces"
-            class="form-control"
+            className="form-control"
             id="provinces"
             onChange={handleChangeAddress}
             placeholder="จังหวัด"
@@ -490,14 +490,14 @@ const ProductList = () => {
             <div className="error-from">{errors.provinces}</div>
           )}
         </div>
-        <div class="mb-3">
-          <label for="id_user" class="form-label">
+        <div className="mb-3">
+          <label for="id_user" className="form-label">
             รหัสไปรษณีย์
           </label>
           <input
             type="text"
             name="zip_code"
-            class="form-control"
+            className="form-control"
             id="zip_code"
             onChange={handleChangeAddress}
             placeholder="รหัสไปรษณีย์"
@@ -591,9 +591,9 @@ const ProductList = () => {
                     <tr className="text-center">
                       <th scope="col">#</th>
                       <th scope="col">
-                        <div class="form-check">
+                        <div className="form-check">
                           <input
-                            class="form-check-input"
+                            className="form-check-input"
                             type="checkbox"
                             value=""
                             id="flexCheckDefault"
@@ -601,7 +601,7 @@ const ProductList = () => {
                             onChange={() => handleSelectAll()}
                           />
                           <label
-                            class="form-check-label"
+                            className="form-check-label"
                             for="flexCheckDefault"
                           >
                             All
@@ -647,16 +647,16 @@ const ProductList = () => {
       </div>
 
       <div
-        class="modal fade"
+        className="modal fade"
         id="exampleModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
                 {statusModel == 0 ? "เลือกที่อยู่" : "เพิ่มที่อยู่"}
               </h1>
               <p className="ml-3" style={{ color: "red" }}>
@@ -664,27 +664,27 @@ const ProductList = () => {
               </p>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
                 onClick={() => setStatusModel(0)}
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               {statusModel == 0 ? (
                 <div className="col-12">
                   {addressData &&
                     addressData.map((item, index) => (
-                      <div class="form-check">
+                      <div className="form-check">
                         <input
-                          class="form-check-input"
+                          className="form-check-input"
                           type="radio"
                           onClick={() => setIdAddress(item.id)}
                           checked={idAddress === item.id}
                           name="idAddress"
                           id={`idAddress_${index}`}
                         />
-                        <label class="form-check-label" for="idAddress">
+                        <label className="form-check-label" for="idAddress">
                           {item.username}&nbsp; {item.tel}&nbsp; {item.address}
                           &nbsp;
                           {item.subdistricts}&nbsp; {item.districts} &nbsp;{" "}
@@ -695,7 +695,7 @@ const ProductList = () => {
                     ))}
 
                   <button
-                    class="btn btn-primary mt-3"
+                    className="btn btn-primary mt-3"
                     type="submit"
                     onClick={() => setStatusModel(1)}
                   >
@@ -706,11 +706,11 @@ const ProductList = () => {
                 newAddress()
               )}
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
                 id="close-modal"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-bs-dismiss={statusModel === 0 ? "modal" : undefined}
                 onClick={statusModel === 0 ? null : () => setStatusModel(0)}
               >
@@ -718,7 +718,7 @@ const ProductList = () => {
               </button>
               <button
                 type="button"
-                class={
+                className={
                   statusModel === 0
                     ? idAddress
                       ? "btn btn-primary"

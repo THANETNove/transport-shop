@@ -436,7 +436,7 @@ const ProductList = () => {
 
       <button
         type="button"
-        class="btn btn-primary"
+        className="btn btn-primary"
         data-bs-toggle="modal"
         id="btn-exampleModal"
         data-bs-target="#exampleModal"
@@ -446,28 +446,28 @@ const ProductList = () => {
       </button>
 
       <div
-        class="modal fade"
+        className="modal fade"
         id="exampleModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog   modal-xl">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
+        <div className="modal-dialog   modal-xl">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
                 ใบแจ้งหนี้/วางบิล ค่าขนส่ง ไทย - จีน
               </h1>
 
               <button
                 type="button"
                 id="btn-close"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               {errorMessage && (
                 <p style={{ color: "red", textAlign: "center" }}>
                   {errorMessage}
@@ -498,7 +498,7 @@ const ProductList = () => {
                   <p>TEL. {showTel}</p>
                 </div>
                 <div className="table-responsive box-bill-add">
-                  <table class="table">
+                  <table className="table">
                     <thead>
                       <tr>
                         <th scope="col">รหัสสินค้า</th>
@@ -566,7 +566,7 @@ const ProductList = () => {
                   <div className="col-4">
                     <h6 className="uppercase-text">เรทค่านำเข้า</h6>
                     <div className="table-responsive box-bill-add">
-                      <table class="table  mt-3">
+                      <table className="table  mt-3">
                         <tbody>
                           {userCode &&
                             userCode
@@ -598,7 +598,7 @@ const ProductList = () => {
                     <h6 className="uppercase-text">สรุปรายการ</h6>
 
                     <div className="table-responsive box-bill-add">
-                      <table class="table  mt-3">
+                      <table className="table  mt-3">
                         <tbody>
                           <tr>
                             <th scope="row">จำนวน </th>
@@ -641,14 +641,14 @@ const ProductList = () => {
                         {" "}
                         <button
                           type="button"
-                          class="btn btn-danger"
+                          className="btn btn-danger"
                           onClick={() => handleUpdateStatusBill("ถูกยกเลิก")}
                         >
                           ถูกยกเลิก
                         </button>
                         <button
                           type="button"
-                          class="btn btn-success ml-3"
+                          className="btn btn-success ml-3"
                           onClick={() =>
                             handleUpdateStatusBill(
                               showStatus == "รอตรวจสอบ"

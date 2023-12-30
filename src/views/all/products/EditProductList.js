@@ -459,7 +459,7 @@ const EditProductList = () => {
                   <form onSubmit={handleSubmit}>
                     <div className="form-group row">
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
-                        <label for="exampleFormControlInput1" class="form-labe">
+                        <label for="exampleFormControlInput1" className="form-labe">
                           รหัสลูกค้า
                         </label>
                         <input
@@ -478,7 +478,7 @@ const EditProductList = () => {
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
-                        <label for="exampleFormControlInput1" class="form-labe">
+                        <label for="exampleFormControlInput1" className="form-labe">
                           เเทคจีน
                         </label>
                         <input
@@ -499,7 +499,7 @@ const EditProductList = () => {
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                         <label
                           for="exampleFormControlInput1"
-                          class="form-label"
+                          className="form-label"
                         >
                           รหัสโกดัง
                         </label>
@@ -519,7 +519,7 @@ const EditProductList = () => {
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
-                        <label for="exampleFormControlInput1" class="form-labe">
+                        <label for="exampleFormControlInput1" className="form-labe">
                           เลขตู้
                         </label>
                         <input
@@ -542,7 +542,7 @@ const EditProductList = () => {
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                         <label
                           for="exampleFormControlInput1"
-                          class="form-label mr-4"
+                          className="form-label mr-4"
                         >
                           ถึงโกดังจีน
                         </label>
@@ -565,7 +565,7 @@ const EditProductList = () => {
                       <div className="col-sm-6  col-md-6 col-lg-6 ">
                         <label
                           for="exampleFormControlInput1"
-                          class="form-label mr-5"
+                          className="form-label mr-5"
                         >
                           ปิดตู้
                         </label>
@@ -591,7 +591,7 @@ const EditProductList = () => {
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                         <label
                           for="exampleFormControlInput1"
-                          class="form-label mr-5"
+                          className="form-label mr-5"
                         >
                           ถึงไทย
                         </label>
@@ -646,7 +646,7 @@ const EditProductList = () => {
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                         <label
                           for="exampleFormControlInput1"
-                          class="form-label"
+                          className="form-label"
                         >
                           จำนวน
                         </label>
@@ -893,7 +893,7 @@ const EditProductList = () => {
                             <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                               <label
                                 for="exampleFormControlInput1"
-                                class="form-label"
+                                className="form-label"
                               >
                                 คิวต่อชิ้น
                               </label>
@@ -915,7 +915,7 @@ const EditProductList = () => {
                             <div className="col-sm-6  col-md-6 col-lg-6">
                               <label
                                 for="exampleFormControlInput1"
-                                class="form-label"
+                                className="form-label"
                               >
                                 น้ำหนักต่อชิ้น
                               </label>
@@ -964,7 +964,7 @@ const EditProductList = () => {
                       <div className="col-sm-6  col-md-6 col-lg-6">
                         <label
                           for="exampleFormControlInput1"
-                          class="form-label"
+                          className="form-label"
                         >
                           คิวรวม
                         </label>
@@ -991,7 +991,7 @@ const EditProductList = () => {
                           ประเภทพัสดุ
                         </label>
                         <select
-                          class="form-control"
+                          className="form-control"
                           id="product_type"
                           name="product_type"
                           onChange={handleChangeType}
@@ -1033,7 +1033,7 @@ const EditProductList = () => {
                       <div className="col-sm-6  col-md-6 col-lg-6">
                         <label
                           for="exampleFormControlInput1"
-                          class="form-label"
+                          className="form-label"
                         >
                           ยอดชำระค่าจัดส่ง จีน-ไทย
                         </label>

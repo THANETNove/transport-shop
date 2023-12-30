@@ -96,7 +96,7 @@ const MoneySlip = () => {
                 {/* 
       <button
         type="button"
-        class="btn btn-primary"
+        className="btn btn-primary"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
       >
@@ -104,27 +104,27 @@ const MoneySlip = () => {
       </button> */}
 
                 <div
-                  class="modal fade"
+                  className="modal fade"
                   id="exampleModal"
                   tabindex="-1"
                   aria-labelledby="exampleModalLabel"
                   aria-hidden="true"
                 >
-                  <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                      <div class="modal-header">
+                  <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+                      <div className="modal-header">
                         <h1
-                          class="modal-title fs-5"
+                          className="modal-title fs-5"
                           id="exampleModalLabel"
                         ></h1>
                         <button
                           type="button"
-                          class="btn-close"
+                          className="btn-close"
                           data-bs-dismiss="modal"
                           aria-label="Close"
                         ></button>
                       </div>
-                      <div class="modal-body">
+                      <div className="modal-body">
                         <img src={urlImage} alt="" width={"60%"} />
                       </div>
                     </div>

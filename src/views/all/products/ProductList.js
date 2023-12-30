@@ -201,9 +201,9 @@ const ProductList = () => {
                 {/*  {product.id} */}
               </th>
               <th>
-                <div class="form-check">
+                <div className="form-check">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     type="checkbox"
                     value=""
                     id="flexCheckDefault"
@@ -418,15 +418,15 @@ const ProductList = () => {
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">
-                        <div class="form-check">
+                        <div className="form-check">
                           <input
-                            class="form-check-input"
+                            className="form-check-input"
                             type="checkbox"
                             value=""
                             id="flexCheckDefault"
                           />
                           <label
-                            class="form-check-label"
+                            className="form-check-label"
                             for="flexCheckDefault"
                           >
                             All

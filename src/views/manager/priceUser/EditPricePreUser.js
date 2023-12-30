@@ -91,7 +91,7 @@ const EditPricePreUser = () => {
                   <form onSubmit={handleSubmit}>
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
-                        <label for="inputPassword6" class="col-form-label">
+                        <label for="inputPassword6" className="col-form-label">
                           รหัสลูกค้า
                         </label>
                         <input
@@ -107,7 +107,7 @@ const EditPricePreUser = () => {
                     </div>
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
-                        <label for="inputPassword6" class="col-form-label">
+                        <label for="inputPassword6" className="col-form-label">
                           ประเภทพัสดุ
                         </label>
                         <select
@@ -121,7 +121,7 @@ const EditPricePreUser = () => {
                     </div>
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
-                        <label for="inputPassword6" class="col-form-label">
+                        <label for="inputPassword6" className="col-form-label">
                           KG
                         </label>
                         <input
@@ -140,7 +140,7 @@ const EditPricePreUser = () => {
                     </div>
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
-                        <label for="inputPassword6" class="col-form-label">
+                        <label for="inputPassword6" className="col-form-label">
                           CBM
                         </label>
                         <input

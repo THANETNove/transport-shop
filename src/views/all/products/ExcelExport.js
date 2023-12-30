@@ -114,55 +114,55 @@ const CSVExport = () => {
   return (
     <div className="col-8 col-sm-8  col-md-6 col-lg-3">
       <h6>เลือก Export</h6>
-      <div class="mb-3">
-        {/* <label for="exampleFormControlInput1" class="form-label">
+      <div className="mb-3">
+        {/* <label for="exampleFormControlInput1" className="form-label">
           รหัสลูกค้า
         </label> */}
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           id="exampleFormControlInput1"
           placeholder="รหัสลูกค้า"
           name="customerCode"
           onChange={selectProductExport}
         />
       </div>
-      <div class="form-check">
+      <div className="form-check">
         <input
-          class="form-check-input"
+          className="form-check-input"
           type="checkbox"
           id="flexCheckDefault"
           name="chineseWarehouse"
           value={closeCabinet}
           onChange={selectProductExport}
         />
-        <label class="form-check-label" for="flexCheckDefault">
+        <label className="form-check-label" for="flexCheckDefault">
           วันที่ถึงโกดังจีน
         </label>
       </div>
-      <div class="form-check">
+      <div className="form-check">
         <input
-          class="form-check-input"
+          className="form-check-input"
           type="checkbox"
           name="closeCabinet"
           value={closeCabinet}
           onClick={selectProductExport}
           id="flexCheckDefault"
         />
-        <label class="form-check-label" for="flexCheckDefault">
+        <label className="form-check-label" for="flexCheckDefault">
           วันที่ปิดตู้
         </label>
       </div>
-      <div class="form-check">
+      <div className="form-check">
         <input
-          class="form-check-input"
+          className="form-check-input"
           type="checkbox"
           name="toThailand"
           id="flexCheckDefault"
           value={toThailand}
           onClick={selectProductExport}
         />
-        <label class="form-check-label" for="flexCheckDefault">
+        <label className="form-check-label" for="flexCheckDefault">
           วันที่ถึงโกดังไทย
         </label>
       </div>

@@ -89,39 +89,39 @@ const Money = () => {
 
             <div className="card-body">
               <div className="table-responsive">
-                <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">
+                <div className="mb-3">
+                  <label for="exampleFormControlInput1" className="form-label">
                     วัน-เดือน-ปี
                   </label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="exampleFormControlInput1"
                     placeholder="12-30-2566"
                     onChange={(event) => setDate(event.target.value)}
                   />
                   {errorDate && <div className="error-from">{errorDate}</div>}
                 </div>
-                <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">
+                <div className="mb-3">
+                  <label for="exampleFormControlInput1" className="form-label">
                     เวลา
                   </label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="exampleFormControlInput1"
                     placeholder="07:58"
                     onChange={(event) => setTime(event.target.value)}
                   />
                   {errorTime && <div className="error-from">{errorTime}</div>}
                 </div>
-                <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">
+                <div className="mb-3">
+                  <label for="exampleFormControlInput1" className="form-label">
                     ยอดการโอน
                   </label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="exampleFormControlInput1"
                     placeholder="ยอดการโอน"
                     min={0}
@@ -132,8 +132,8 @@ const Money = () => {
                   />
                   {errorMoney && <div className="error-from">{errorMoney}</div>}
                 </div>
-                <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">
+                <div className="mb-3">
+                  <label for="exampleFormControlInput1" className="form-label">
                     สลิป
                   </label>
                   <input
