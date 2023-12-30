@@ -27,6 +27,7 @@ import EditPricePreUser from "./views/manager/priceUser/EditPricePreUser";
 import BillListStatus from "./views/manager/bill/Bill";
 import BillListManager from "./views/manager/bill/BillList";
 
+import checkMoney from "./views/manager/bill/Slip";
 import recordSlipList from "./views/manager/bill/RecordSlip";
 
 // All ใช้รวมกัน
@@ -133,6 +134,16 @@ const adminRoutes = [
     component: BillListManager,
     layout: "/auth",
   },
+  {
+    path: "/check-money/",
+    component: checkMoney,
+    layout: "/auth",
+  },
+  {
+    path: "/list-slip-money/",
+    component: recordSlipList,
+    layout: "/auth",
+  },
 ];
 
 const managerRoutes = [
@@ -204,6 +215,16 @@ const managerRoutes = [
   {
     path: "/record-bill/",
     component: BillListManager,
+    layout: "/auth",
+  },
+  {
+    path: "/check-money/",
+    component: checkMoney,
+    layout: "/auth",
+  },
+  {
+    path: "/list-slip-money/",
+    component: recordSlipList,
     layout: "/auth",
   },
 ];

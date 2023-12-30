@@ -175,6 +175,18 @@ export default function Sidebar() {
                 <span>ประวัติตรวจสอบบิล</span>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/check-money">
+                <i class="fa-solid fa-sack-dollar"></i>
+                <span>อนุมัติเติมเงิน</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/list-slip-money">
+                <i class="fa-solid fa-money-bill-transfer"></i>
+                <span>ประวัติเติมเงิน </span>
+              </Link>
+            </li>
           </>
         )}
         {/* <li className="nav-item">

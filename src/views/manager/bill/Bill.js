@@ -520,8 +520,10 @@ const ProductList = () => {
                             <td>{item.customer_code}</td>
                             <td>{item.product_type}</td>
                             <td>{item.quantity}</td>
-                            <td>{item.total_weight}</td>
-                            <td>{item.total_queue}</td>
+                            <td>
+                              {Number(item.total_weight).toLocaleString()}
+                            </td>
+                            <td>{Number(item.total_queue).toLocaleString()}</td>
                             <td>{item.thinkingFrom}</td>
                             <td>
                               {Number(

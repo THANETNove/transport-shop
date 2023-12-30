@@ -407,6 +407,43 @@ const getSlip = async (id, dispatch) => {
     };
   }
 };
+const getSlipAll = async (id, dispatch) => {
+  const params = {
+    isAdd: true,
+    id: id,
+  };
+  const response = await axios.get(`${url}/getSlip_All.php`, {
+    params,
+  });
+
+  console.log("response", response.data.message);
+
+  if (response.data.message) {
+    dispatch({
+      type: "SLIP_ALL_SUCCESS",
+      payload: response.data.data,
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    /*   dispatch({
+      type: "PRODUCT_CODE_ERROR",
+      payload: response.data.error,
+    }); */
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
 
 const getBillAll = async (dispatch) => {
   const params = {
@@ -1304,6 +1341,7 @@ export default {
   getBillAll,
   getPoints,
   getSlip,
+  getSlipAll,
   register,
   Login,
   statusList,
