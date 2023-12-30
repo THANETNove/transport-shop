@@ -52,6 +52,22 @@ const NewPassword = () => {
     }
   };
 
+  const searchData = (event) => {
+    const { value } = event.target;
+    setData(userAll);
+
+    if (value) {
+      const user = Object.values(userAll).filter((item) =>
+        item.username.includes(value)
+      );
+      if (user.length > 0) {
+        setData(user);
+      } else {
+        setData(userAll);
+      }
+    }
+  };
+
   console.log("new_password", new_password);
 
   return (
@@ -72,7 +88,7 @@ const NewPassword = () => {
                     placeholder="รหัสลูกค้า"
                     aria-label="Search"
                     /*   value={searchText} */
-                    /*   onChange={searchData} */
+                    onChange={searchData}
                     aria-describedby="basic-addon2"
                   />
                   <div className="input-group-append">
@@ -134,7 +150,7 @@ const NewPassword = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                {user && user.customerCode}
+                {user && user.username}
               </h1>
               <button
                 type="button"
