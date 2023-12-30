@@ -68,9 +68,15 @@ export default function Sidebar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/money-wallet">
+              <Link className="nav-link" to="/money">
                 <i class="fa-solid fa-sack-dollar"></i>
-                <span>เติมเงินเข้ากระเป๋า</span>
+                <span>เติมเงินเข้ากระเป๋า </span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/record-money-wallet">
+                <i class="fa-solid fa-money-bill-transfer"></i>
+                <span>ประวัติเติมเงิน </span>
               </Link>
             </li>
             <li className="nav-item">
@@ -125,18 +131,6 @@ export default function Sidebar() {
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-money-bill-transfer"></i>
                 <span>แลกเงิน </span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/money">
-                <i class="fa-solid fa-money-bill-transfer"></i>
-                <span>เติมเงิน </span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/record-money-wallet">
-                <i class="fa-solid fa-money-bill-transfer"></i>
-                <span>ประวัติเติมเงิน </span>
               </Link>
             </li>
           </>
