@@ -26,7 +26,23 @@ const MoneySlip = () => {
     setData(dataSlipAll);
   }, [dataSlipAll]);
 
-  console.log("data", data);
+  const searchData = (event) => {
+    const { value } = event.target;
+    setData(dataSlipAll);
+
+    console.log("value", value);
+
+    if (value) {
+      const dataSlipAll = Object.values(data).filter((item) =>
+        item.code_user.includes(value)
+      );
+      if (dataSlipAll.length > 0) {
+        setData(dataSlipAll);
+      } else {
+        setData(dataSlipAll);
+      }
+    }
+  };
 
   return (
     <div className="container-fluid">
@@ -35,6 +51,24 @@ const MoneySlip = () => {
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               ประวัติเติมเงิน
+              <div className="col-md-6 col-sm-8 col-8">
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control  background-white bg-light border-0 small"
+                    placeholder="รหัสลูกค้า"
+                    aria-label="Search"
+                    /*   value={searchText} */
+                    onChange={searchData}
+                    aria-describedby="basic-addon2"
+                  />
+                  <div className="input-group-append">
+                    <button className="btn btn-primary" type="button">
+                      <i className="fas fa-search fa-sm" />
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="card-body">

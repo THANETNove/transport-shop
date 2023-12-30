@@ -13,6 +13,7 @@ const MoneySlip = () => {
 
   const [data, setData] = useState(dataSlipAll);
   const [urlImage, setUrlImage] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const fetchData = async () => {
     await Service.getSlipAll(user && user.customerCode, dispatch);
@@ -36,10 +37,12 @@ const MoneySlip = () => {
     if (isConfirmed) {
       const responsive = await Service.updateSlip(id, code_user, money, status);
       if (responsive.status == "success") {
+        setMessage("update สำเร็จ");
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000);
         fetchData();
       }
-
-      console.log("responsive", responsive);
     }
   };
 
@@ -50,6 +53,9 @@ const MoneySlip = () => {
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               เติมเงิน
+              <p className="mt-3" style={{ color: "green" }}>
+                {message}
+              </p>
             </div>
 
             <div className="card-body">
