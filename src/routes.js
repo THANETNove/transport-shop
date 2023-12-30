@@ -11,7 +11,7 @@ import ProductListUser from "./views/user/products/ProductList";
 import BillList from "./views/user/products/Bill";
 import ProductListBill from "./views/user/products/ProductListBill";
 import Money from "./views/user/moneyWallet/Money";
-import Slip from "./views/manager/bill/RecordSlip";
+import RecordMoneyWallet from "./views/user/moneyWallet/MoneySlip";
 //Admin
 
 // Manager
@@ -97,7 +97,7 @@ const userRoutes = [
   },
   {
     path: "/record-money-wallet",
-    component: Slip,
+    component: RecordMoneyWallet,
     layout: "/auth",
   },
 ];

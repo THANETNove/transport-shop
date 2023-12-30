@@ -12692,3 +12692,13 @@ body.sidebar-toggled footer.sticky-footer {
 .btn-Upload {
   width: 200px;
 }
+
+.pointer {
+  cursor: pointer;
+}
+
+.modal-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

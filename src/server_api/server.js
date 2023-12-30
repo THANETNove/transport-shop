@@ -11,6 +11,11 @@ const getUrlImage = () => {
   /* const https_url = "https://medocargo.com/API/image/product/"; */
   return https_url;
 };
+const getUrlSlip = () => {
+  const https_url = "http://localhost/project/API/image/slip/";
+  /* const https_url = "https://medocargo.com/API/image/slip/"; */
+  return https_url;
+};
 
 const url = getUrl();
 
@@ -343,6 +348,43 @@ const getPoints = async (id, dispatch) => {
     dispatch({
       type: "POINTS_SUCCESS",
       payload: response.data.data[0],
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    /*   dispatch({
+      type: "PRODUCT_CODE_ERROR",
+      payload: response.data.error,
+    }); */
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+const getSlip = async (id, dispatch) => {
+  const params = {
+    isAdd: true,
+    id: id,
+  };
+  const response = await axios.get(`${url}/getSlip.php`, {
+    params,
+  });
+
+  console.log("response", response.data.message);
+
+  if (response.data.message) {
+    dispatch({
+      type: "SLIP_SUCCESS",
+      payload: response.data.data,
     });
 
     return {
@@ -1247,6 +1289,7 @@ const deleteUserCode = async (id, dispatch) => {
 export default {
   getUrl,
   getUrlImage,
+  getUrlSlip,
   getStatusList,
   getProductType,
   getProductTypeId,
@@ -1260,6 +1303,7 @@ export default {
   getBillProduct,
   getBillAll,
   getPoints,
+  getSlip,
   register,
   Login,
   statusList,

@@ -10,6 +10,7 @@ const initialState = {
   BillDataAll: null,
   BillProduct: null,
   points: 0,
+  dataSlip: null,
 };
 
 export default function (state = initialState, action) {
@@ -72,6 +73,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         points: action.payload,
+      };
+    case "SLIP_SUCCESS":
+      return {
+        ...state,
+        dataSlip: action.payload,
       };
     case "ADDRESS_ERROR":
       return {

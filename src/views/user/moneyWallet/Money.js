@@ -97,7 +97,7 @@ const Money = () => {
                     type="text"
                     class="form-control"
                     id="exampleFormControlInput1"
-                    placeholder="วัน-เดือน-ปี"
+                    placeholder="12-30-2566"
                     onChange={(event) => setDate(event.target.value)}
                   />
                   {errorDate && <div className="error-from">{errorDate}</div>}
@@ -110,7 +110,7 @@ const Money = () => {
                     type="text"
                     class="form-control"
                     id="exampleFormControlInput1"
-                    placeholder="เวลา"
+                    placeholder="07:58"
                     onChange={(event) => setTime(event.target.value)}
                   />
                   {errorTime && <div className="error-from">{errorTime}</div>}

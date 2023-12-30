@@ -1,0 +1,114 @@
+import React, { useEffect, useState } from "react";
+import Service from "../../../server_api/server";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+
+const MoneySlip = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const url = Service.getUrlSlip();
+  const user = useSelector((state) => state.auth.user);
+  const { dataSlip } = useSelector((state) => state.get);
+
+  const [data, setData] = useState(null);
+  const [urlImage, setUrlImage] = useState(null);
+
+  const fetchData = async () => {
+    await Service.getSlip(user && user.customerCode, dispatch); // ดึงรหัสพัสดุ
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setData(dataSlip);
+  }, [dataSlip]);
+
+  console.log("data", data);
+
+  return (
+    <div className="table-responsive">
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data &&
+            data.map((item, index) => (
+              <tr key={index}>
+                <th scope="row">{index + 1}</th>
+                <td>{item.code_user}</td>
+                <td>{item.date}</td>
+                <td>{item.time}</td>
+                <td>
+                  {item.statusSlip == "รอการตรวจสอบ" && (
+                    <p style={{ color: "#858796" }}> {item.statusSlip}</p>
+                  )}
+                  {item.statusSlip == "อนุมัติ" && (
+                    <p style={{ color: "#1cc88a" }}> {item.statusSlip}</p>
+                  )}
+                  {item.statusSlip == "สลิปไม่ถูกต้อง" && (
+                    <p style={{ color: "#FF0000" }}> {item.statusSlip}</p>
+                  )}
+                </td>
+                <td>
+                  <img
+                    src={url + item.image}
+                    alt=""
+                    width={50}
+                    onClick={() => setUrlImage(url + item.image)}
+                    data-bs-toggle="modal"
+                    className="pointer"
+                    data-bs-target="#exampleModal"
+                  />
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+      {/* 
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        Launch demo modal
+      </button> */}
+
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <img src={urlImage} alt="" width={"60%"} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MoneySlip;
