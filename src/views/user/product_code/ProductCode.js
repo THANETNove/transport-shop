@@ -33,7 +33,7 @@ const ProductCode = () => {
     setCodeData(status_code_data);
   }, [status_code_data]);
 
-  console.log("codeData", codeData);
+ 
 
   return (
     <div className="container-fluid">

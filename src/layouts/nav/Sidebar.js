@@ -1,11 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export default function Sidebar() {
+const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   const user = useSelector((state) => state.auth.user);
 
@@ -15,6 +17,12 @@ export default function Sidebar() {
       payload: null,
     });
     navigate("/");
+  };
+
+  const activePath = (path) => {
+    let pathUrl =
+      currentPath && currentPath == path ? "nav-item active" : "nav-item";
+    return pathUrl;
   };
   return (
     <>
@@ -61,73 +69,73 @@ export default function Sidebar() {
         {/* Users */}
         {user && user.status == 0 && (
           <>
-            <li className="nav-item">
+            <li className={activePath("/product-code")}>
               <Link className="nav-link" to="/product-code">
                 <i class="fa-solid fa-layer-group"></i>
                 <span>สร้างรหัสตัวแทน</span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/money")}>
               <Link className="nav-link" to="/money">
                 <i class="fa-solid fa-sack-dollar"></i>
                 <span>เติมเงินเข้ากระเป๋า </span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/record-money-wallet")}>
               <Link className="nav-link" to="/record-money-wallet">
                 <i class="fa-solid fa-money-bill-transfer"></i>
                 <span>ประวัติเติมเงิน </span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/money-wallet")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-warehouse"></i>
                 <span>สินค้าเข้าโกดังไทย</span>
               </Link>
             </li>
-            <li className="nav-item active">
+            <li className={activePath("/bill-all")}>
               <Link className="nav-link" to="/bill-all">
                 <i class="fa-solid fa-file-invoice"></i>
                 <span>ออกบิล</span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/bill-list")}>
               <Link className="nav-link" to="/bill-list">
                 <i class="fa-solid fa-file-invoice"></i>
                 <span>รายการพัสดุออกบิล</span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/money-wallet1")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-arrow-up-9-1"></i>
                 <span>แจ้งเลขพัสดุเพิ่มเติม</span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/money-wallet1")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-brands fa-product-hunt"></i>
                 <span>สั่งซื้อสินค้าจีน</span>
               </Link>
             </li>
-            <li className="nav-item ">
+            <li className={activePath("/money-wallet1")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-qrcode"></i>
                 <span>แจ้งQCสินค้า</span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/money-wallet1")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-warehouse"></i>
                 <span>ที่อยู่โกดังจีน </span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/money-wallet1")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-server"></i>
                 <span>ใช้บริการล่ามรายครึ่งปี </span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/money-wallet1")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-money-bill-transfer"></i>
                 <span>แลกเงิน </span>
@@ -140,19 +148,19 @@ export default function Sidebar() {
 
         {user && user.status == 2 && (
           <>
-            <li className="nav-item">
+            <li className={activePath("/status-list")}>
               <Link className="nav-link" to="/status-list">
                 <i class="fa-solid fa-layer-group"></i>
                 <span>สถานะ พัสดุ</span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/product-type-list")}>
               <Link className="nav-link" to="/product-type-list">
                 <i class="fa-solid fa-notes-medical"></i>
                 <span>ประเภทพัสดุ</span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/price-per-user")}>
               <Link className="nav-link" to="/price-per-user">
                 <i class="fa-solid fa-tag"></i>
                 <span>ราคาต่อ User</span>
@@ -163,25 +171,25 @@ export default function Sidebar() {
 
         {user && user.status > 0 && (
           <>
-            <li className="nav-item">
+            <li className={activePath("/check-bill")}>
               <Link className="nav-link" to="/check-bill">
                 <i class="fa-solid fa-tag"></i>
                 <span>ตรวจสอบบิล</span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/record-bill")}>
               <Link className="nav-link" to="/record-bill">
                 <i class="fa-solid fa-tag"></i>
                 <span>ประวัติตรวจสอบบิล</span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/check-money")}>
               <Link className="nav-link" to="/check-money">
                 <i class="fa-solid fa-sack-dollar"></i>
                 <span>อนุมัติเติมเงิน</span>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className={activePath("/list-slip-money")}>
               <Link className="nav-link" to="/list-slip-money">
                 <i class="fa-solid fa-money-bill-transfer"></i>
                 <span>ประวัติเติมเงิน </span>
@@ -225,4 +233,6 @@ export default function Sidebar() {
       </ul>
     </>
   );
-}
+};
+
+export default Sidebar;

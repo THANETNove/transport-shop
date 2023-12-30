@@ -234,7 +234,6 @@ const BillList = () => {
     if (event == "ถูกยกเลิก") {
       const require = await Service.UpdateStatusBill(showIdBill, event, image);
 
-      console.log("require", require);
       if (require.status == "success") {
         fetchData();
         setMessage(messCancel);

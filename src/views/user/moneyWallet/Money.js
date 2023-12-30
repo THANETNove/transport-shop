@@ -52,7 +52,7 @@ const Money = () => {
       if (time != null && time != "") {
         if (money != null && money != "") {
           if (image) {
-            console.log("image", image);
+  
             const response = await Service.createSlip(
               user && user.customerCode,
               date,

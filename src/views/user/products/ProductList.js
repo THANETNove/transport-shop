@@ -242,7 +242,7 @@ const ProductList = () => {
       const response = await Service.createAddress(formData, dispatch);
       if (response.status == "success") {
         const response2 = await Service.getAddress(user && user.id, dispatch);
-        console.log("response", response);
+
         if (response2.status == "success") {
           setStatusModel(0);
         }
@@ -251,7 +251,7 @@ const ProductList = () => {
   };
 
   const handleSubmitBilling = async () => {
-    console.log("selectedData", selectedData);
+
 
     const amount =
       selectedData &&
@@ -293,13 +293,12 @@ const ProductList = () => {
         }, 3000);
       }
     }
-    console.log("amount", amount);
-    /*  */
+   
   };
 
   const searchData = (event) => {
     const { value } = event.target;
-    console.log("value", value);
+   
     if (value) {
       const filteredProducts = productList.filter((product) =>
         product.tech_china

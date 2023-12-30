@@ -30,7 +30,7 @@ const MoneySlip = () => {
     const { value } = event.target;
     setData(dataSlipAll);
 
-    console.log("value", value);
+   
 
     if (value) {
       const dataSlipAll = Object.values(data).filter((item) =>

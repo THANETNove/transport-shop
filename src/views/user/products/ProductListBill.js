@@ -38,7 +38,7 @@ const ProductList = () => {
 
   const fetchData = async () => {
     const pro_log_1 = await Service.getBillProduct(user && user.id, dispatch);
-    /* console.log("pro_log_1", pro_log_1); */
+
   };
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const ProductList = () => {
   }, [BillProduct]);
 
   const showProduct = (date) => {
-    console.log("date", date);
+
     document.getElementById("btn-exampleModal") &&
       document.getElementById("btn-exampleModal").click();
     setShowItemBill(date);

@@ -37,7 +37,7 @@ const ProductList = () => {
   const url = Service.getUrlImage();
   const fetchData = async () => {
     const pro_log_1 = await Service.getBill(user && user.id, dispatch);
-    /* console.log("pro_log_1", pro_log_1); */
+
   };
 
   useEffect(() => {
@@ -192,7 +192,7 @@ const ProductList = () => {
     );
 
   const systemUser = () => {
-    console.log("currentItems", currentItems);
+
 
     const sortedItems =
       currentItems &&

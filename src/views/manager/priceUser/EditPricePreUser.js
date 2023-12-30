@@ -67,7 +67,7 @@ const EditPricePreUser = () => {
     event.preventDefault();
     if (validate()) {
       const response = await Service.updatePriceUser(formData, dispatch);
-      console.log("response", response);
+
       if (response.status == "success") {
         navigate("/price-per-user");
       }

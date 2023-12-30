@@ -26,7 +26,6 @@ const MoneySlip = () => {
     setData(dataSlip);
   }, [dataSlip]);
 
-  console.log("data", data);
 
   return (
     <div className="container-fluid">

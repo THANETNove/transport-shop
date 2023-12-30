@@ -268,7 +268,7 @@ const getBill = async (id, dispatch) => {
     params,
   });
 
-  console.log("response", response.data.data);
+
 
   if (response.data.message) {
     dispatch({
@@ -305,7 +305,7 @@ const getBillProduct = async (id, dispatch) => {
     params,
   });
 
-  console.log("response", response.data.message);
+
 
   if (response.data.message) {
     dispatch({
@@ -342,7 +342,7 @@ const getPoints = async (id, dispatch) => {
     params,
   });
 
-  console.log("response", response.data.message);
+
 
   if (response.data.message) {
     dispatch({
@@ -379,7 +379,7 @@ const getSlip = async (id, dispatch) => {
     params,
   });
 
-  console.log("response", response.data.message);
+
 
   if (response.data.message) {
     dispatch({
@@ -416,7 +416,7 @@ const getSlipAll = async (id, dispatch) => {
     params,
   });
 
-  console.log("response", response.data.message);
+
 
   if (response.data.message) {
     dispatch({
@@ -453,7 +453,7 @@ const getBillAll = async (dispatch) => {
     params,
   });
 
-  /*   console.log("response", response.data.data); */
+
 
   if (response.data.message) {
     dispatch({
@@ -592,7 +592,7 @@ const register = async (e, dispatch) => {
 };
 
 const Login = async (e, dispatch) => {
-  console.log("e", e);
+
   const formData = new FormData();
   formData.append("isAdd", true);
   formData.append("username", e.username);
@@ -708,7 +708,7 @@ const ProductType = async (e, dispatch) => {
 };
 
 const createProduct = async (e, dispatch) => {
-  console.log("55", e);
+
   const formData = new FormData();
   formData.append("isAdd", true);
   for (let key in e) {
@@ -783,7 +783,7 @@ const createAddress = async (e, dispatch) => {
 };
 
 const createPriceUser = async (e, dispatch) => {
-  console.log("55");
+
   const formData = new FormData();
   formData.append("isAdd", true);
   for (let key in e) {
@@ -815,7 +815,7 @@ const createPriceUser = async (e, dispatch) => {
 };
 
 const createProductCode = async (id, code, dispatch) => {
-  console.log("id, code,", id, code);
+ 
   const formData = new FormData();
   formData.append("isAdd", true);
   formData.append("id", id);
@@ -960,7 +960,7 @@ const UpdateProductType = async (e, dispatch) => {
 };
 
 const UpdateProduct = async (e, dispatch) => {
-  console.log("e", e);
+
   const formData = new FormData();
   formData.append("isAdd", true);
   for (let key in e) {
@@ -1108,7 +1108,7 @@ const updatePriceUser = async (e, dispatch) => {
 };
 
 const updateProductDateCloseCabinet = async (id, close_cabinet) => {
-  console.log("close_cabinet");
+ 
   const formData = new FormData();
   formData.append("isAdd", true);
   formData.append("id", id);
@@ -1186,7 +1186,7 @@ const updateSlip = async (id, code_user, money, status) => {
     },
   });
 
-  console.log("response.data", response.data.message);
+  
 
   if (response.data.message) {
     return {

@@ -158,8 +158,7 @@ const ProductList = () => {
           .includes(value.trim().toLowerCase())
       );
 
-      console.log("value", value);
-      console.log("filteredProducts", filteredProducts);
+ 
       setProductList(filteredProducts);
     } else {
       setProductList(product);

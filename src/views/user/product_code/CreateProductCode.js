@@ -11,9 +11,7 @@ const CreateProductCode = () => {
   const [userCustomerCode, setUserCustomerCode] = useState(user.customerCode);
   const [errors, setErrors] = useState(null);
 
-  /*     console.log("user",user.id);
-    console.log("user",user.customerCode);
-    console.log("user",user); */
+
 
   const generateRandomString = (length) => {
     const characters =
@@ -73,7 +71,7 @@ const CreateProductCode = () => {
     setUserCustomerCode(user.customerCode);
   }, []);
 
-  console.log("errors", errors);
+
 
   return (
     <div className="container-fluid">

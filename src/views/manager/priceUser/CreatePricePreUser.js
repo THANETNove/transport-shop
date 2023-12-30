@@ -94,9 +94,9 @@ const CreatePricePreUser = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validate()) {
-      console.log("5555");
+      
       const response = await Service.createPriceUser(formData, dispatch);
-      console.log("response", response);
+     
       if (response.status == "success") {
         fetchData();
         fetchUser(formData.id_user);
@@ -141,12 +141,7 @@ const CreatePricePreUser = () => {
     }));
   };
 
-  ///getCustomerCode
-  /*  console.log(
-    "id_price_user",
-    useSelector((state) => state.get)
-  ); */
-  /*  console.log("product_type", product_type); */
+  
 
   return (
     <div className="container-fluid">

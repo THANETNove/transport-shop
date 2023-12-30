@@ -20,7 +20,7 @@ const ShowProductList = () => {
   const [inputFields, setInputFields] = useState(null);
 
   const url = Service.getUrlImage();
-  console.log("url", url);
+
 
   const { id } = useParams();
 
@@ -89,8 +89,7 @@ const ShowProductList = () => {
     setInputFields(productList && JSON.parse(productList.inputFields));
   }, [productList]);
 
-  console.log("close_cabinet", formData.close_cabinet);
-  console.log("to_thailand", formData.to_thailand);
+
   return (
     <>
       <div className="container-fluidaa">

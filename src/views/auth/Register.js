@@ -124,7 +124,7 @@ const Register = () => {
     event.preventDefault();
     if (validate()) {
       const response = await Service.register(formData, dispatch);
-      console.log("response", response);
+    
       if (response.status == "success") {
         navigate("/dashboard");
       } else {
@@ -134,7 +134,7 @@ const Register = () => {
             ["username"]: "Username already exists!",
           }));
         } else if (response.error == "email_exists") {
-          console.log("44");
+     
           setErrors((prevState) => ({
             ...prevState,
             ["email"]: "Email already exists!",
