@@ -102,8 +102,6 @@ const ProductList = () => {
     set_product();
   }, []);
 
-  /*   console.log("user_address", user_address); */
-
   useEffect(() => {
     set_product();
   }, [product]);
@@ -668,7 +666,7 @@ const ProductList = () => {
             </div>
             <div class="modal-body">
               {statusModel == 0 ? (
-                <>
+                <div className="col-12">
                   {addressData &&
                     addressData.map((item, index) => (
                       <div class="form-check">
@@ -697,7 +695,7 @@ const ProductList = () => {
                   >
                     + เพิ่มที่อยู่
                   </button>
-                </>
+                </div>
               ) : (
                 newAddress()
               )}
