@@ -25,6 +25,7 @@ const ProductList = () => {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(null);
   const [statusBill, setStatusBill] = useState(false);
+  const [errorMoney, setErrorMoney] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -251,6 +252,7 @@ const ProductList = () => {
   };
 
   const handleSubmitBilling = async () => {
+    console.log("555");
     const amount =
       selectedData &&
       Math.ceil(
@@ -289,6 +291,11 @@ const ProductList = () => {
           setStatusBill(false);
         }, 3000);
       }
+    } else {
+      setErrorMoney("เงินในระบบไม่พอ กรุณาเติมเงิน");
+      setTimeout(() => {
+        setErrorMoney(null);
+      }, 3000);
     }
   };
 
@@ -652,6 +659,9 @@ const ProductList = () => {
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 {statusModel == 0 ? "เลือกที่อยู่" : "เพิ่มที่อยู่"}
               </h1>
+              <p className="ml-3" style={{ color: "red" }}>
+                {errorMoney}
+              </p>
               <button
                 type="button"
                 class="btn-close"

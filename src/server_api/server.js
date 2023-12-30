@@ -233,8 +233,6 @@ const getAddress = async (id, dispatch) => {
     params,
   });
 
-  console.log("response", response);
-
   if (response.data.message) {
     dispatch({
       type: "ADDRESS_SUCCESS",
