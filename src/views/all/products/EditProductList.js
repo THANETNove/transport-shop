@@ -370,7 +370,6 @@ const EditProductList = () => {
         ...prevState,
         ["total_queue"]: quAll,
       }));
-      console.log("99999");
     }
   }, [formData.quantity, formData.cue_per_piece]);
 
@@ -383,11 +382,11 @@ const EditProductList = () => {
         cue_per_piece += parseFloat(inputFields[i].cuePerPiece);
       }
 
-      setFormData((prevState) => ({
+      /*   setFormData((prevState) => ({
         ...prevState,
-        ["cue_per_piece"]: quAll.toFixed(2),
+        ["cue_per_piece"]: cue_per_piece.toFixed(2),
       }));
-
+ */
       let quantity_all = 0;
       for (let i = 0; i < inputFields.length; i++) {
         if (!isNaN(parseFloat(inputFields[i].quantity))) {
@@ -402,7 +401,7 @@ const EditProductList = () => {
 
       setFormData((prevState) => ({
         ...prevState,
-        ["total_queue"]: quAll.toFixed(2),
+        ["total_queue"]: cue_per_piece.toFixed(2),
       }));
     }
   }, [formData.quantity, inputFields]);

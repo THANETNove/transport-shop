@@ -381,15 +381,15 @@ const CreateProduct = () => {
       quantity_all += parseFloat(inputFields[i].quantity);
     }
 
-    const quAll = cue_per_piece * quantity_all;
-    setFormData((prevState) => ({
+    /*  const quAll = cue_per_piece * quantity_all;
+       setFormData((prevState) => ({
       ...prevState,
-      ["cue_per_piece"]: quAll.toFixed(2),
-    }));
+      ["cue_per_piece"]: cue_per_piece.toFixed(2),
+    })); */
 
     setFormData((prevState) => ({
       ...prevState,
-      ["total_queue"]: quAll.toFixed(2),
+      ["total_queue"]: cue_per_piece.toFixed(2),
     }));
   }, [formData.quantity, inputFields]);
 
