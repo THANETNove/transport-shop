@@ -37,7 +37,7 @@ const ProductList = () => {
   const [addressData, setAddressData] = useState(user_address);
   const [idAddress, setIdAddress] = useState(null);
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 50; // จำนวนรายการต่อหน้า
+  const itemsPerPage = 100; // จำนวนรายการต่อหน้า
   const [selectedData, setSelectedData] = useState([]); // ข้อมูลที่ถูกเลือก
   const [statusModel, setStatusModel] = useState(0); // ข้อมูลที่ถูกเลือก
 
@@ -147,7 +147,7 @@ const ProductList = () => {
 
     setCurrentItems(currentItems);
     setPageCount(pageCount);
-  }, [productList]);
+  }, [productList, itemOffset]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {

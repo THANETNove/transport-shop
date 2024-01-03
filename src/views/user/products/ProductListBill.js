@@ -28,7 +28,7 @@ const ProductList = () => {
   const [showUsername, setShowUsername] = useState(null);
   const [showUpdated_atBill, setShowUpdated_atBill] = useState(null);
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 50; // จำนวนรายการต่
+  const itemsPerPage = 100; // จำนวนรายการต่
   const { users_code } = useSelector((state) => state.get);
   const [userCode, setUserCode] = useState(users_code);
   const [showImage, setShowImage] = useState(null);

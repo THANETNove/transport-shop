@@ -30,8 +30,8 @@ const ProductList = () => {
   const [statusProductList, setStatusProductList] = useState(statusProduct);
   const [codeData, setCodeData] = useState(status_code_data);
   const [userdata, setUserdata] = useState([]);
-  const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 50; // จำนวนรายการต่อหน้า
+  const [itemOffset, setItemOffset] = useState(1);
+  const itemsPerPage = 100; // จำนวนรายการต่อหน้า
 
   const fetchData = async () => {
     const pro_log_1 = await Service.getProductType(dispatch); // ดึงประเภทสินค้า
@@ -123,7 +123,6 @@ const ProductList = () => {
     }, 1000);
   }, [statusSuccess]);
 
-  
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
     /*   console.log(`Loading items from ${itemOffset} to ${endOffset}`); */
@@ -135,7 +134,7 @@ const ProductList = () => {
 
     setCurrentItems(currentItems);
     setPageCount(pageCount);
-  }, [productList]);
+  }, [productList, itemOffset]);
 
   // Simulate fetching items from another resources.
   // (This could be items from props; or items loaded in a local state
@@ -158,7 +157,6 @@ const ProductList = () => {
           .includes(value.trim().toLowerCase())
       );
 
- 
       setProductList(filteredProducts);
     } else {
       setProductList(product);
