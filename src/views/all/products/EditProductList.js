@@ -161,14 +161,14 @@ const EditProductList = () => {
     }
 
     // quantity validation
-    if (!formData.quantity.trim()) {
+    /*  if (!formData.quantity.trim()) {
       newErrors.quantity = "quantity is required";
       isValid = false;
     } else if (isNaN(Number(formData.quantity))) {
       newErrors.quantity = "quantity must be a number";
       isValid = false;
     }
-
+ */
     if (typeof formData.total_weight !== "string") {
       formData.total_weight = formData.total_weight.toString(); // แปลงเป็นสตริง
     }
