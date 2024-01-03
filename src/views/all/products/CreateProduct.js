@@ -27,6 +27,8 @@ const CreateProduct = () => {
 
   const [inputFields, setInputFields] = useState([
     {
+      quantity: 0,
+      wideSize: 0,
       wideSize: 0,
       lengthSize: 0,
       heightSize: 0,
@@ -127,13 +129,13 @@ const CreateProduct = () => {
     }
 
     // quantity validation
-    if (!formData.quantity.trim()) {
+    /*   if (!formData.quantity.trim()) {
       newErrors.quantity = "quantity is required";
       isValid = false;
     } else if (isNaN(Number(formData.quantity))) {
       newErrors.quantity = "quantity must be a number";
       isValid = false;
-    }
+    } */
 
     if (typeof formData.total_weight !== "string") {
       formData.total_weight = formData.total_weight.toString(); // แปลงเป็นสตริง
@@ -371,12 +373,15 @@ const CreateProduct = () => {
   // คิวรวม
   useEffect(() => {
     let cue_per_piece = 0;
-
+    let quantity_all = 0;
     for (let i = 0; i < inputFields.length; i++) {
       cue_per_piece += parseFloat(inputFields[i].cuePerPiece);
     }
+    for (let i = 0; i < inputFields.length; i++) {
+      quantity_all += parseFloat(inputFields[i].quantity);
+    }
 
-    const quAll = cue_per_piece * formData.quantity;
+    const quAll = cue_per_piece * quantity_all;
     setFormData((prevState) => ({
       ...prevState,
       ["cue_per_piece"]: quAll.toFixed(2),
@@ -391,13 +396,16 @@ const CreateProduct = () => {
   // น้ำหนักรวม
   useEffect(() => {
     let weight = 0;
-
+    let quantity_all = 0;
     for (let i = 0; i < inputFields.length; i++) {
       weight += parseFloat(inputFields[i].weightFields);
     }
+    for (let i = 0; i < inputFields.length; i++) {
+      quantity_all += parseFloat(inputFields[i].quantity);
+    }
 
     // คำนวณค่า total_weight ใหม่
-    const totalWeight = formData.quantity * weight;
+    const totalWeight = quantity_all * weight;
     // อัปเดตค่าใน formData ด้วย setFormData
     setFormData((prevState) => ({
       ...prevState,
@@ -421,6 +429,7 @@ const CreateProduct = () => {
     setInputFields([
       ...inputFields,
       {
+        quantity: 0,
         wideSize: 0,
         lengthSize: 0,
         heightSize: 0,
@@ -442,7 +451,6 @@ const CreateProduct = () => {
     setInputFields(values);
   };
 
- 
   return (
     <div className="container-fluidaa">
       <div className="row">
@@ -653,7 +661,7 @@ const CreateProduct = () => {
                       </div>
                     </div>
                     <div className="form-group row">
-                      <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                      {/*      <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
                         <label
                           for="exampleFormControlInput1"
                           className="form-label"
@@ -671,10 +679,34 @@ const CreateProduct = () => {
                         {errors.quantity && (
                           <div className="error-from">{errors.quantity}</div>
                         )}
-                      </div>
+                      </div> */}
 
                       {inputFields.map((inputField, index) => (
                         <>
+                          <div className="col-sm-6  col-md-6 col-lg-6">
+                            <label
+                              for="exampleFormControlInput1"
+                              className="form-label"
+                            >
+                              จำนวน {index + 1}
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control form-control-user"
+                              id="quantity"
+                              placeholder={`จำนวน ${index + 1}`}
+                              name="quantity"
+                              value={inputField.quantity}
+                              onChange={(event) =>
+                                handleChangeInput(index, "quantity", event)
+                              }
+                            />
+                            {errors.quantity && (
+                              <div className="error-from">
+                                {errors.quantity}
+                              </div>
+                            )}
+                          </div>
                           <div className="col-sm-6  col-md-6 col-lg-6">
                             <label
                               for="exampleFormControlInput1"

@@ -30,7 +30,7 @@ const ProductList = () => {
   const [statusProductList, setStatusProductList] = useState(statusProduct);
   const [codeData, setCodeData] = useState(status_code_data);
   const [userdata, setUserdata] = useState([]);
-  const [itemOffset, setItemOffset] = useState(1);
+  const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 100; // จำนวนรายการต่อหน้า
 
   const fetchData = async () => {
@@ -189,6 +189,7 @@ const ProductList = () => {
   };
 
   const systemAdmin = () => {
+    console.log("itemOffset", itemOffset);
     return (
       <tbody>
         {currentItems &&

@@ -254,7 +254,7 @@ const EditProductList = () => {
     const kg = valuesArray[1]; // 2
     const cbm = valuesArray[2]; // 0.6
 
-   /*  console.log("id", id);
+    /*  console.log("id", id);
     console.log("kg", kg);
     console.log("cbm", cbm); */
 
@@ -264,7 +264,7 @@ const EditProductList = () => {
       const calculate_kg = parseFloat(kg) * parseFloat(formData.total_weight);
       // คำนวน cbm*คิวรวม
       const calculate_cbm = parseFloat(cbm) * parseFloat(formData.total_queue);
-/* 
+      /* 
       console.log("calculate_kg", calculate_kg);
       console.log("calculate_cbm", calculate_cbm); */
 
@@ -325,7 +325,6 @@ const EditProductList = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validate()) {
-   
       const response = await Service.UpdateProduct(formData, dispatch);
 
       if (response.status == "success") {
@@ -438,7 +437,6 @@ const EditProductList = () => {
     setInputFields(values);
   };
 
-
   return (
     <div className="container-fluidaa">
       <div className="row">
@@ -459,7 +457,10 @@ const EditProductList = () => {
                   <form onSubmit={handleSubmit}>
                     <div className="form-group row">
                       <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
-                        <label for="exampleFormControlInput1" className="form-labe">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-labe"
+                        >
                           รหัสลูกค้า
                         </label>
                         <input
@@ -478,7 +479,10 @@ const EditProductList = () => {
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
-                        <label for="exampleFormControlInput1" className="form-labe">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-labe"
+                        >
                           เเทคจีน
                         </label>
                         <input
@@ -519,7 +523,10 @@ const EditProductList = () => {
                         )}
                       </div>
                       <div className="col-sm-6  col-md-6 col-lg-6">
-                        <label for="exampleFormControlInput1" className="form-labe">
+                        <label
+                          for="exampleFormControlInput1"
+                          className="form-labe"
+                        >
                           เลขตู้
                         </label>
                         <input
@@ -643,32 +650,64 @@ const EditProductList = () => {
                       </div>
                     </div>
                     <div className="form-group row">
-                      <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
-                        <label
-                          for="exampleFormControlInput1"
-                          className="form-label"
-                        >
-                          จำนวน
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control form-control-user"
-                          id="quantity"
-                          placeholder="จำนวน"
-                          onChange={handleChange}
-                          value={formData.quantity}
-                          name="quantity"
-                        />
-                        {errors.quantity && (
-                          <div className="error-from">{errors.quantity}</div>
-                        )}
-                      </div>
+                      {inputFields == null && (
+                        <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                          <label
+                            for="exampleFormControlInput1"
+                            className="form-label"
+                          >
+                            จำนวน
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control form-control-user"
+                            id="quantity"
+                            placeholder="จำนวน"
+                            onChange={handleChange}
+                            value={formData.quantity}
+                            name="quantity"
+                          />
+                          {errors.quantity && (
+                            <div className="error-from">{errors.quantity}</div>
+                          )}
+                        </div>
+                      )}
 
                       {inputFields != null ? (
                         <>
                           {inputFields &&
                             inputFields.map((inputField, index) => (
                               <>
+                                <div className="col-sm-6  col-md-6 col-lg-6">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    className="form-label"
+                                  >
+                                    จำนวน {index + 1}
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control form-control-user"
+                                    id="quantity"
+                                    placeholder={`ขนาดความกว้างชิ้นที่ ${
+                                      index + 1
+                                    }`}
+                                    name="quantity"
+                                    value={inputField.quantity}
+                                    onChange={(event) =>
+                                      handleChangeInput(
+                                        index,
+                                        "quantity",
+                                        event
+                                      )
+                                    }
+                                  />
+                                  {errors.quantity && (
+                                    <div className="error-from">
+                                      {errors.quantity}
+                                    </div>
+                                  )}
+                                </div>
                                 <div className="col-sm-6  col-md-6 col-lg-6">
                                   <label
                                     for="exampleFormControlInput1"
