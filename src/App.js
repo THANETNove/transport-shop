@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeLayout />} />
         <Route path="/*" element={<AuthLayouts />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );

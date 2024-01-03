@@ -189,7 +189,6 @@ const ProductList = () => {
   };
 
   const systemAdmin = () => {
-    console.log("itemOffset", itemOffset);
     return (
       <tbody>
         {currentItems &&

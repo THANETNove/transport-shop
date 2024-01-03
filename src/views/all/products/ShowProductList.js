@@ -21,7 +21,6 @@ const ShowProductList = () => {
 
   const url = Service.getUrlImage();
 
-
   const { id } = useParams();
 
   const [formData, setFormData] = useState({
@@ -88,7 +87,6 @@ const ShowProductList = () => {
 
     setInputFields(productList && JSON.parse(productList.inputFields));
   }, [productList]);
-
 
   return (
     <>
@@ -224,24 +222,37 @@ const ShowProductList = () => {
                         </div>
                       </div>
                       <div className="form-group row">
-                        <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
-                          <label
-                            for="exampleFormControlInput1"
-                            className="form-label"
-                          >
-                            จำนวน
-                          </label>
-                          <p className="form-control form-control-user">
-                            {formData.quantity}
-                          </p>
-                        </div>
+                        {inputFields == null && (
+                          <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                            <label
+                              for="exampleFormControlInput1"
+                              className="form-label"
+                            >
+                              จำนวน
+                            </label>
+                            <p className="form-control form-control-user">
+                              {formData.quantity}
+                            </p>
+                          </div>
+                        )}
 
                         {inputFields != null ? (
                           <>
                             {inputFields &&
                               inputFields.map((inputField, index) => (
                                 <>
-                                  <div className="col-sm-6  col-md-6 col-lg-6">
+                                  <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0 mt-3">
+                                    <label
+                                      for="exampleFormControlInput1"
+                                      className="form-label mt-1"
+                                    >
+                                      จำนวน {index + 1}
+                                    </label>
+                                    <p className="form-control form-control-user">
+                                      {inputField.quantity}
+                                    </p>
+                                  </div>
+                                  <div className="col-sm-6  col-md-6 col-lg-6 mt-3">
                                     <label
                                       for="exampleFormControlInput1"
                                       className="form-label"
@@ -259,7 +270,7 @@ const ShowProductList = () => {
                                       value={inputField.wideSize}
                                     />
                                   </div>
-                                  <div className="col-sm-6  col-md-6 col-lg-6 mt-3">
+                                  <div className="col-sm-6  col-md-6 col-lg-6">
                                     <label
                                       for="exampleFormControlInput1"
                                       className="form-label"
@@ -277,7 +288,7 @@ const ShowProductList = () => {
                                       value={inputField.lengthSize}
                                     />
                                   </div>
-                                  <div className="col-sm-6  col-md-6 col-lg-6  mt-3">
+                                  <div className="col-sm-6  col-md-6 col-lg-6">
                                     <label
                                       for="exampleFormControlInput1"
                                       className="form-label"
@@ -316,7 +327,7 @@ const ShowProductList = () => {
                                   <div className="col-sm-6  col-md-6 col-lg-6">
                                     <label
                                       for="exampleFormControlInput1"
-                                      className="form-label"
+                                      className="form-label mt-3"
                                     >
                                       น้ำหนักชิ้นที่ {index + 1}
                                     </label>
