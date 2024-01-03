@@ -396,16 +396,16 @@ const CreateProduct = () => {
   // น้ำหนักรวม
   useEffect(() => {
     let weight = 0;
-    let quantity_all = 0;
+    let weight_all = 0;
     for (let i = 0; i < inputFields.length; i++) {
       weight += parseFloat(inputFields[i].weightFields);
     }
     for (let i = 0; i < inputFields.length; i++) {
-      quantity_all += parseFloat(inputFields[i].quantity);
+      weight_all += parseFloat(inputFields[i].quantity);
     }
 
     // คำนวณค่า total_weight ใหม่
-    const totalWeight = quantity_all * weight;
+    const totalWeight = weight_all * weight;
     // อัปเดตค่าใน formData ด้วย setFormData
     setFormData((prevState) => ({
       ...prevState,

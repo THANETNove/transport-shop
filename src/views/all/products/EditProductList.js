@@ -364,12 +364,13 @@ const EditProductList = () => {
   }, [inputFields]);
   // คิวรวม  เก่า
   useEffect(() => {
-    if (inputFields == null) {
+    if (inputFields && inputFields.length == 0) {
       const quAll = formData.cue_per_piece * formData.quantity;
       setFormData((prevState) => ({
         ...prevState,
         ["total_queue"]: quAll,
       }));
+      console.log("99999");
     }
   }, [formData.quantity, formData.cue_per_piece]);
 
@@ -387,7 +388,18 @@ const EditProductList = () => {
         ["cue_per_piece"]: quAll.toFixed(2),
       }));
 
-      const quAll = cue_per_piece * formData.quantity;
+      let quantity_all = 0;
+      for (let i = 0; i < inputFields.length; i++) {
+        if (!isNaN(parseFloat(inputFields[i].quantity))) {
+          quantity_all += parseFloat(inputFields[i].quantity);
+        } else {
+          quantity_all = formData.quantity;
+          break; // ใส่ break เพื่อหยุดลูปเมื่อพบค่าไม่ถูกต้อง
+        }
+      }
+
+      const quAll = cue_per_piece * quantity_all;
+
       setFormData((prevState) => ({
         ...prevState,
         ["total_queue"]: quAll.toFixed(2),
@@ -413,8 +425,19 @@ const EditProductList = () => {
       for (let i = 0; i < inputFields.length; i++) {
         weight += parseFloat(inputFields[i].weightFields);
       }
+
+      let weight_all = 0;
+      for (let i = 0; i < inputFields.length; i++) {
+        if (!isNaN(parseFloat(inputFields[i].quantity))) {
+          weight_all += parseFloat(inputFields[i].quantity);
+        } else {
+          weight_all = formData.quantity;
+          break; // ใส่ break เพื่อหยุดลูปเมื่อพบค่าไม่ถูกต้อง
+        }
+      }
+
       // คำนวณค่า total_weight ใหม่
-      const totalWeight = formData.quantity * weight;
+      const totalWeight = weight_all * weight;
       // อัปเดตค่าใน formData ด้วย setFormData
       setFormData((prevState) => ({
         ...prevState,
@@ -437,6 +460,7 @@ const EditProductList = () => {
     setInputFields(values);
   };
 
+  console.log("inputFields", inputFields);
   return (
     <div className="container-fluidaa">
       <div className="row">
@@ -689,9 +713,7 @@ const EditProductList = () => {
                                     type="text"
                                     className="form-control form-control-user"
                                     id="quantity"
-                                    placeholder={`ขนาดความกว้างชิ้นที่ ${
-                                      index + 1
-                                    }`}
+                                    placeholder={`จำนวน ${index + 1}`}
                                     name="quantity"
                                     value={inputField.quantity}
                                     onChange={(event) =>
@@ -711,7 +733,7 @@ const EditProductList = () => {
                                 <div className="col-sm-6  col-md-6 col-lg-6">
                                   <label
                                     for="exampleFormControlInput1"
-                                    className="form-label mt-3"
+                                    className="form-label"
                                   >
                                     ขนาดความกว้างชิ้นที่ {index + 1}
                                   </label>
