@@ -37,6 +37,7 @@ const ProductList = () => {
   const [addressData, setAddressData] = useState(user_address);
   const [idAddress, setIdAddress] = useState(null);
   const [itemOffset, setItemOffset] = useState(0);
+  const [price, sePrice] = useState(0);
   const itemsPerPage = 100; // จำนวนรายการต่อหน้า
   const [selectedData, setSelectedData] = useState([]); // ข้อมูลที่ถูกเลือก
   const [statusModel, setStatusModel] = useState(0); // ข้อมูลที่ถูกเลือก
@@ -251,8 +252,7 @@ const ProductList = () => {
     }
   };
 
-  const handleSubmitBilling = async () => {
-    console.log("555");
+  const handleAmount = async () => {
     const amount =
       selectedData &&
       Math.ceil(
@@ -269,7 +269,28 @@ const ProductList = () => {
           }, 0)
           .toFixed(2)
       );
-    if (points.money > amount) {
+
+    sePrice(amount);
+  };
+
+  const handleSubmitBilling = async () => {
+    /* const amount =
+      selectedData &&
+      Math.ceil(
+        selectedData
+          .reduce((acc, item) => {
+            const amount = parseFloat(
+              item.payment_amount_chinese_thai_delivery,
+              10
+            ); // แปลงเป็นตัวเลข
+            if (!isNaN(amount)) {
+              return acc + amount;
+            }
+            return acc;
+          }, 0)
+          .toFixed(2)
+      ); */
+    /*  if (points.money > amount) {
       let point = points.money - amount;
 
       const response = await Service.createIssueBill(
@@ -296,7 +317,7 @@ const ProductList = () => {
       setTimeout(() => {
         setErrorMoney(null);
       }, 3000);
-    }
+    } */
   };
 
   const searchData = (event) => {
@@ -540,6 +561,7 @@ const ProductList = () => {
                     data-bs-target={
                       selectedData.length > 0 ? "#exampleModal" : ""
                     }
+                    onClick={() => handleAmount()}
                   >
                     ออกบิล
                   </button>
@@ -662,6 +684,7 @@ const ProductList = () => {
               <p className="ml-3" style={{ color: "red" }}>
                 {errorMoney}
               </p>
+
               <button
                 type="button"
                 className="btn-close"
@@ -673,6 +696,11 @@ const ProductList = () => {
             <div className="modal-body">
               {statusModel == 0 ? (
                 <div className="col-12">
+                  <div className="col-12 mb-3 ">
+                    <p style={{ fontSize: "24px", color: "darkred" }}>
+                      ยอดบิลที่ต้องชำระ: {price.toLocaleString()} บาท
+                    </p>
+                  </div>
                   {addressData &&
                     addressData.map((item, index) => (
                       <div className="form-check">
