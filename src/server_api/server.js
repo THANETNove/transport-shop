@@ -872,13 +872,22 @@ const createProductCode = async (id, code, dispatch) => {
   }
 };
 
-const createIssueBill = async (id, id_address, data, point, dispatch) => {
+const createIssueBill = async (
+  id,
+  id_address,
+  data,
+  point,
+  price,
+  dispatch
+) => {
+  console.log("price", price);
   const formData = new FormData();
   formData.append("isAdd", true);
   formData.append("id", id);
   formData.append("id_address", id_address);
   formData.append("data", JSON.stringify(data));
   formData.append("point", point);
+  formData.append("price", price);
 
   const response = await axios.post(`${url}/createIssueBill.php`, formData, {
     headers: {

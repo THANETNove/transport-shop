@@ -290,14 +290,15 @@ const ProductList = () => {
           }, 0)
           .toFixed(2)
       ); */
-    /*  if (points.money > amount) {
-      let point = points.money - amount;
+    if (points.money > price) {
+      let point = points.money - price;
 
       const response = await Service.createIssueBill(
         user && user.id,
         idAddress,
         selectedData,
         point,
+        price,
         dispatch
       );
       if (response.status == "success") {
@@ -317,7 +318,7 @@ const ProductList = () => {
       setTimeout(() => {
         setErrorMoney(null);
       }, 3000);
-    } */
+    }
   };
 
   const searchData = (event) => {
