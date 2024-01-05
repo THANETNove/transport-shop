@@ -33,7 +33,9 @@ const CreateProduct = () => {
       lengthSize: 0,
       heightSize: 0,
       cuePerPiece: 0,
+      cuePerPieceSum: 0,
       weightFields: 0,
+      weightFieldsSum: 0,
     },
   ]);
 
@@ -269,14 +271,14 @@ const CreateProduct = () => {
         // กรณี calculate_kg มากกว่า calculate_cbm
         setFormData((prevState) => ({
           ...prevState,
-          ["payment_amount_chinese_thai_delivery"]: calculate_kg.toFixed(2),
+          ["payment_amount_chinese_thai_delivery"]: calculate_kg.toFixed(4),
           thinkingFrom: "น้ำหนัก",
         }));
       } else {
         // กรณี calculate_cbm มากกว่าหรือเท่ากับ calculate_kg
         setFormData((prevState) => ({
           ...prevState,
-          ["payment_amount_chinese_thai_delivery"]: calculate_cbm.toFixed(2),
+          ["payment_amount_chinese_thai_delivery"]: calculate_cbm.toFixed(4),
           thinkingFrom: "ปริมาตร",
         }));
       }
@@ -361,15 +363,34 @@ const CreateProduct = () => {
     setCodeData(status_code_data);
   }, [status_code_data]);
 
-  // คิวต่อชิ้น
+  // คิวต่อชิ้น // คิวรวมต่อชิ้น
   useEffect(() => {
     for (let i = 0; i < inputFields.length; i++) {
       const { wideSize, lengthSize, heightSize, quantity } = inputFields[i];
-   
+      // คิวต่อชิ้น
       const result =
         // กว้าง*ยาว*สุง/1000000*สุง
-        ((wideSize * lengthSize * heightSize) / 1000000) * quantity;
-      inputFields[i].cuePerPiece = result.toFixed(2);
+        (wideSize * lengthSize * heightSize) / 1000000;
+      inputFields[i].cuePerPiece = result.toFixed(4);
+
+      // คิวรวมต่อชิ้น
+      const resultSum =
+        // กว้าง*ยาว*สุง/1000000*สุง
+        ((wideSize * lengthSize * heightSize) / 1000000) * Number(quantity);
+      inputFields[i].cuePerPieceSum = resultSum.toFixed(4);
+
+      console.log("resultSum", resultSum);
+      console.log("resultSum.toFixed(4)", resultSum.toFixed(4));
+    }
+  }, [inputFields]);
+  // น้ำหนักรวมต่อชิ้น
+
+  useEffect(() => {
+    for (let i = 0; i < inputFields.length; i++) {
+      const { weightFields, quantity } = inputFields[i];
+
+      const resultSum = weightFields * Number(quantity);
+      inputFields[i].weightFieldsSum = resultSum.toFixed(4);
     }
   }, [inputFields]);
 
@@ -378,7 +399,7 @@ const CreateProduct = () => {
     let cue_per_piece = 0;
     let quantity_all = 0;
     for (let i = 0; i < inputFields.length; i++) {
-      cue_per_piece += parseFloat(inputFields[i].cuePerPiece);
+      cue_per_piece += parseFloat(inputFields[i].cuePerPieceSum);
     }
     for (let i = 0; i < inputFields.length; i++) {
       quantity_all += parseFloat(inputFields[i].quantity);
@@ -392,27 +413,21 @@ const CreateProduct = () => {
 
     setFormData((prevState) => ({
       ...prevState,
-      ["total_queue"]: cue_per_piece.toFixed(2),
+      ["total_queue"]: cue_per_piece.toFixed(4),
     }));
   }, [formData.quantity, inputFields]);
 
   // น้ำหนักรวม
   useEffect(() => {
     let weight = 0;
-    let weight_all = 0;
-    for (let i = 0; i < inputFields.length; i++) {
-      weight += parseFloat(inputFields[i].weightFields);
-    }
-    for (let i = 0; i < inputFields.length; i++) {
-      weight_all += parseFloat(inputFields[i].quantity);
-    }
 
-    // คำนวณค่า total_weight ใหม่
-    const totalWeight = weight_all * weight;
+    for (let i = 0; i < inputFields.length; i++) {
+      weight += parseFloat(inputFields[i].weightFieldsSum);
+    }
     // อัปเดตค่าใน formData ด้วย setFormData
     setFormData((prevState) => ({
       ...prevState,
-      total_weight: totalWeight.toFixed(2), // ตรงนี้ใช้ "total_weight" แทน ["total_weight"]
+      total_weight: weight.toFixed(4), // ตรงนี้ใช้ "total_weight" แทน ["total_weight"]
     }));
   }, [formData.quantity, inputFields]);
 
@@ -437,7 +452,9 @@ const CreateProduct = () => {
         lengthSize: 0,
         heightSize: 0,
         cuePerPiece: 0,
+        cuePerPieceSum: 0,
         weightFields: 0,
+        weightFieldsSum: 0,
       },
     ]);
   };
@@ -808,7 +825,32 @@ const CreateProduct = () => {
                                 </div>
                               )}
                             </div>
-                            <div className="col-sm-6  col-md-6 col-lg-6">
+                            <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                              <label
+                                for="exampleFormControlInput1"
+                                className="form-label"
+                              >
+                                คิวชิ้นที่ {index + 1}
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control form-control-user"
+                                id="cue_per_piece_sum"
+                                name="cue_per_piece_sum"
+                                /*  value={formData.cue_per_piece} */
+                                placeholder={`คิวรวมต่อชิ้นที่ ${index + 1}`}
+                                value={inputField.cuePerPieceSum}
+                                onChange={(event) =>
+                                  handleChangeInput(index, "cuePerPiece", event)
+                                }
+                              />
+                              {errors.cue_per_piece && (
+                                <div className="error-from">
+                                  {errors.cue_per_piece}
+                                </div>
+                              )}
+                            </div>
+                            <div className="col-sm-6  col-md-6 col-lg-6 mt-3">
                               <label
                                 for="exampleFormControlInput1"
                                 className="form-label"
@@ -822,6 +864,34 @@ const CreateProduct = () => {
                                 name="weight"
                                 placeholder={`น้ำหนัก ชิ้นที่ ${index + 1}`}
                                 value={inputField.weightFields}
+                                onChange={(event) =>
+                                  handleChangeInput(
+                                    index,
+                                    "weightFields",
+                                    event
+                                  )
+                                }
+                              />
+                              {errors.weight && (
+                                <div className="error-from">
+                                  {errors.weight}
+                                </div>
+                              )}
+                            </div>
+                            <div className="col-sm-6  col-md-6 col-lg-6 mt-3">
+                              <label
+                                for="exampleFormControlInput1"
+                                className="form-label"
+                              >
+                                น้ำหนักรวมชิ้นที่ {index + 1}
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control form-control-user"
+                                id="weightSum"
+                                name="weightSum"
+                                placeholder={`น้ำหนัก ชิ้นที่ ${index + 1}`}
+                                value={inputField.weightFieldsSum}
                                 onChange={(event) =>
                                   handleChangeInput(
                                     index,
