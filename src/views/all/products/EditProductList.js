@@ -272,14 +272,14 @@ const EditProductList = () => {
         // กรณี calculate_kg มากกว่า calculate_cbm
         setFormData((prevState) => ({
           ...prevState,
-          ["payment_amount_chinese_thai_delivery"]: calculate_kg,
+          ["payment_amount_chinese_thai_delivery"]: calculate_kg.toFixed(2),
           thinkingFrom: "น้ำหนัก",
         }));
       } else {
         // กรณี calculate_cbm มากกว่าหรือเท่ากับ calculate_kg
         setFormData((prevState) => ({
           ...prevState,
-          ["payment_amount_chinese_thai_delivery"]: calculate_cbm,
+          ["payment_amount_chinese_thai_delivery"]: calculate_cbm.toFixed(2),
           thinkingFrom: "ปริมาตร",
         }));
       }
@@ -400,7 +400,6 @@ const EditProductList = () => {
       }));
  */
 
-    
       let quantity_all = 0;
       for (let i = 0; i < inputFields.length; i++) {
         if (!isNaN(parseFloat(inputFields[i].quantity))) {

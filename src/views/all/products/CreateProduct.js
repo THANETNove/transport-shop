@@ -271,14 +271,14 @@ const CreateProduct = () => {
         // กรณี calculate_kg มากกว่า calculate_cbm
         setFormData((prevState) => ({
           ...prevState,
-          ["payment_amount_chinese_thai_delivery"]: calculate_kg.toFixed(4),
+          ["payment_amount_chinese_thai_delivery"]: calculate_kg.toFixed(2),
           thinkingFrom: "น้ำหนัก",
         }));
       } else {
         // กรณี calculate_cbm มากกว่าหรือเท่ากับ calculate_kg
         setFormData((prevState) => ({
           ...prevState,
-          ["payment_amount_chinese_thai_delivery"]: calculate_cbm.toFixed(4),
+          ["payment_amount_chinese_thai_delivery"]: calculate_cbm.toFixed(2),
           thinkingFrom: "ปริมาตร",
         }));
       }
