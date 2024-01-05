@@ -356,8 +356,9 @@ const EditProductList = () => {
   useEffect(() => {
     if (inputFields != null) {
       for (let i = 0; i < inputFields.length; i++) {
-        const { wideSize, lengthSize, heightSize } = inputFields[i];
-        const result = (wideSize * lengthSize * heightSize) / 1000000;
+        const { wideSize, lengthSize, heightSize, quantity } = inputFields[i];
+        const result =
+          ((wideSize * lengthSize * heightSize) / 1000000) * quantity;
         inputFields[i].cuePerPiece = result.toFixed(2);
       }
     }

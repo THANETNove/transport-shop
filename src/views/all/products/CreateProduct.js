@@ -364,8 +364,11 @@ const CreateProduct = () => {
   // คิวต่อชิ้น
   useEffect(() => {
     for (let i = 0; i < inputFields.length; i++) {
-      const { wideSize, lengthSize, heightSize } = inputFields[i];
-      const result = (wideSize * lengthSize * heightSize) / 1000000;
+      const { wideSize, lengthSize, heightSize, quantity } = inputFields[i];
+   
+      const result =
+        // กว้าง*ยาว*สุง/1000000*สุง
+        ((wideSize * lengthSize * heightSize) / 1000000) * quantity;
       inputFields[i].cuePerPiece = result.toFixed(2);
     }
   }, [inputFields]);
