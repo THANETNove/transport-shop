@@ -324,6 +324,23 @@ const ShowProductList = () => {
                                       value={inputField.cuePerPiece}
                                     />
                                   </div>
+                                  <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                                    <label
+                                      for="exampleFormControlInput1"
+                                      className="form-label mt-3"
+                                    >
+                                      คิวรวมชิ้นที่ {index + 1}
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control form-control-user"
+                                      id="cue_per_piece"
+                                      name="cue_per_piece"
+                                      /*  value={formData.cue_per_piece} */
+                                      placeholder={`คิวต่อชิ้นที่ ${index + 1}`}
+                                      value={inputField.cuePerPiece}
+                                    />
+                                  </div>
                                   <div className="col-sm-6  col-md-6 col-lg-6">
                                     <label
                                       for="exampleFormControlInput1"
@@ -340,6 +357,24 @@ const ShowProductList = () => {
                                         index + 1
                                       }`}
                                       value={inputField.weightFields}
+                                    />
+                                  </div>
+                                  <div className="col-sm-6  col-md-6 col-lg-6">
+                                    <label
+                                      for="exampleFormControlInput1"
+                                      className="form-label mt-3"
+                                    >
+                                      น้ำหนักรวมต่อชิ้นที่ {index + 1}
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control form-control-user"
+                                      id="weight"
+                                      name="weight"
+                                      placeholder={`น้ำหนัก ชิ้นที่ ${
+                                        index + 1
+                                      }`}
+                                      value={inputField.weightFieldsSum}
                                     />
                                   </div>
                                 </>
