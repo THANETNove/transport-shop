@@ -357,9 +357,15 @@ const EditProductList = () => {
     if (inputFields != null) {
       for (let i = 0; i < inputFields.length; i++) {
         const { wideSize, lengthSize, heightSize, quantity } = inputFields[i];
+        const result = (wideSize * lengthSize * heightSize) / 1000000;
+        inputFields[i].cuePerPiece = result.toFixed(4);
+      }
+
+      for (let i = 0; i < inputFields.length; i++) {
+        const { wideSize, lengthSize, heightSize, quantity } = inputFields[i];
         const result =
-          ((wideSize * lengthSize * heightSize) / 1000000) * quantity;
-        inputFields[i].cuePerPiece = result.toFixed(2);
+          ((wideSize * lengthSize * heightSize) / 1000000) * Number(quantity);
+        inputFields[i].cuePerPieceSum = result.toFixed(4);
       }
     }
   }, [inputFields]);
@@ -382,12 +388,19 @@ const EditProductList = () => {
       for (let i = 0; i < inputFields.length; i++) {
         cue_per_piece += parseFloat(inputFields[i].cuePerPiece);
       }
+      let cue_per_piece_sum = 0;
+
+      for (let i = 0; i < inputFields.length; i++) {
+        cue_per_piece_sum += parseFloat(inputFields[i].cuePerPieceSum);
+      }
 
       /*   setFormData((prevState) => ({
         ...prevState,
         ["cue_per_piece"]: cue_per_piece.toFixed(2),
       }));
  */
+
+    
       let quantity_all = 0;
       for (let i = 0; i < inputFields.length; i++) {
         if (!isNaN(parseFloat(inputFields[i].quantity))) {
@@ -398,11 +411,14 @@ const EditProductList = () => {
         }
       }
 
-      const quAll = cue_per_piece * quantity_all;
+      const quAll = Number(cue_per_piece) * Number(quantity_all);
 
       setFormData((prevState) => ({
         ...prevState,
-        ["total_queue"]: cue_per_piece.toFixed(2),
+        ["total_queue"]:
+          cue_per_piece_sum != 0
+            ? cue_per_piece_sum.toFixed(4)
+            : quAll.toFixed(4),
       }));
     }
   }, [formData.quantity, inputFields]);
@@ -437,14 +453,30 @@ const EditProductList = () => {
       }
 
       // คำนวณค่า total_weight ใหม่
-      const totalWeight = weight_all * weight;
+      const totalWeight = Number(weight_all) * weight;
       // อัปเดตค่าใน formData ด้วย setFormData
+      /*   setFormData((prevState) => ({
+        ...prevState,
+        weightFieldsSum: totalWeight.toFixed(2), // ตรงนี้ใช้ "total_weight" แทน ["total_weight"]
+      })); */
+
       setFormData((prevState) => ({
         ...prevState,
-        total_weight: totalWeight.toFixed(2), // ตรงนี้ใช้ "total_weight" แทน ["total_weight"]
+        total_weight: totalWeight.toFixed(4), // ตรงนี้ใช้ "total_weight" แทน ["total_weight"]
       }));
     }
   }, [formData.quantity, inputFields]);
+
+  useEffect(() => {
+    if (inputFields != null) {
+      for (let i = 0; i < inputFields.length; i++) {
+        const { weightFields, quantity } = inputFields[i];
+
+        const resultSum = parseFloat(weightFields) * Number(quantity);
+        inputFields[i].weightFieldsSum = resultSum.toFixed(4);
+      }
+    }
+  }, [inputFields]);
 
   useEffect(() => {
     setFormData((prevState) => ({
@@ -460,7 +492,6 @@ const EditProductList = () => {
     setInputFields(values);
   };
 
-  console.log("inputFields", inputFields);
   return (
     <div className="container-fluidaa">
       <div className="row">
@@ -702,7 +733,7 @@ const EditProductList = () => {
                           {inputFields &&
                             inputFields.map((inputField, index) => (
                               <>
-                                <div className="col-sm-6  col-md-6 col-lg-6">
+                                <div className="col-sm-6  col-md-6 col-lg-6 mt-3">
                                   <label
                                     for="exampleFormControlInput1"
                                     className="form-label"
@@ -730,7 +761,7 @@ const EditProductList = () => {
                                     </div>
                                   )}
                                 </div>
-                                <div className="col-sm-6  col-md-6 col-lg-6">
+                                <div className="col-sm-6  col-md-6 col-lg-6 mt-3">
                                   <label
                                     for="exampleFormControlInput1"
                                     className="form-label"
@@ -850,6 +881,35 @@ const EditProductList = () => {
                                     </div>
                                   )}
                                 </div>
+                                <div className="col-sm-6  col-md-6 col-lg-6 mb-3 mb-sm-0">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    className="form-label mt-3"
+                                  >
+                                    คิวรวมชิ้นที่ {index + 1}
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control form-control-user"
+                                    id="cue_per_piece"
+                                    name="cue_per_piece"
+                                    /*  value={formData.cue_per_piece} */
+                                    placeholder={`คิวต่อชิ้นที่ ${index + 1}`}
+                                    value={inputField.cuePerPieceSum}
+                                    onChange={(event) =>
+                                      handleChangeInput(
+                                        index,
+                                        "cuePerPiece",
+                                        event
+                                      )
+                                    }
+                                  />
+                                  {errors.cue_per_piece && (
+                                    <div className="error-from">
+                                      {errors.cue_per_piece}
+                                    </div>
+                                  )}
+                                </div>
                                 <div className="col-sm-6  col-md-6 col-lg-6">
                                   <label
                                     for="exampleFormControlInput1"
@@ -864,6 +924,36 @@ const EditProductList = () => {
                                     name="weight"
                                     placeholder={`น้ำหนัก ชิ้นที่ ${index + 1}`}
                                     value={inputField.weightFields}
+                                    onChange={(event) =>
+                                      handleChangeInput(
+                                        index,
+                                        "weightFields",
+                                        event
+                                      )
+                                    }
+                                  />
+                                  {errors.weight && (
+                                    <div className="error-from">
+                                      {errors.weight}
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="col-sm-6  col-md-6 col-lg-6">
+                                  <label
+                                    for="exampleFormControlInput1"
+                                    className="form-label mt-3"
+                                  >
+                                    น้ำหนักรวมชิ้นที่ {index + 1}
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control form-control-user"
+                                    id="weight"
+                                    name="weight"
+                                    placeholder={`น้ำหนักรวม ชิ้นที่ ${
+                                      index + 1
+                                    }`}
+                                    value={inputField.weightFieldsSum}
                                     onChange={(event) =>
                                       handleChangeInput(
                                         index,
