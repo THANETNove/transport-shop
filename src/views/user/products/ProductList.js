@@ -255,20 +255,18 @@ const ProductList = () => {
   const handleAmount = async () => {
     const amount =
       selectedData &&
-      Math.ceil(
-        selectedData
-          .reduce((acc, item) => {
-            const amount = parseFloat(
-              item.payment_amount_chinese_thai_delivery,
-              10
-            ); // แปลงเป็นตัวเลข
-            if (!isNaN(amount)) {
-              return acc + amount;
-            }
-            return acc;
-          }, 0)
-          .toFixed(2)
-      );
+      selectedData
+        .reduce((acc, item) => {
+          const amount = parseFloat(
+            item.payment_amount_chinese_thai_delivery,
+            10
+          ); // แปลงเป็นตัวเลข
+          if (!isNaN(amount)) {
+            return acc + amount;
+          }
+          return acc;
+        }, 0)
+        .toFixed(2);
 
     sePrice(amount);
   };
