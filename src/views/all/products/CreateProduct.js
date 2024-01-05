@@ -830,7 +830,7 @@ const CreateProduct = () => {
                                 for="exampleFormControlInput1"
                                 className="form-label"
                               >
-                                คิวชิ้นที่ {index + 1}
+                                คิวรวมชิ้นที่ {index + 1}
                               </label>
                               <input
                                 type="text"
@@ -838,7 +838,7 @@ const CreateProduct = () => {
                                 id="cue_per_piece_sum"
                                 name="cue_per_piece_sum"
                                 /*  value={formData.cue_per_piece} */
-                                placeholder={`คิวรวมต่อชิ้นที่ ${index + 1}`}
+                                placeholder={`คิวรวมชิ้นที่ ${index + 1}`}
                                 value={inputField.cuePerPieceSum}
                                 onChange={(event) =>
                                   handleChangeInput(index, "cuePerPiece", event)
