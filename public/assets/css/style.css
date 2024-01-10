@@ -2430,3 +2430,11 @@ section {
 .text-footer {
   font-size: calc(60% + 3.5vmin) !important;
 }
+
+.td-width {
+  width: 150px !important;
+}
+
+.word-break {
+  min-width: 150px !important;
+}

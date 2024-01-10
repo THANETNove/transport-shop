@@ -209,10 +209,10 @@ const ProductList = () => {
                 </div>
               </th>
               <td>{product.customer_code} </td>
-              {/*   <td>{product.tech_china}</td> */}
-              {/*       <td>{product.warehouse_code}</td>
-            <td>{product.cabinet_number}</td> */}
-              <td>
+              <td>{product.tech_china}</td>
+              <td>{product.warehouse_code}</td>
+              <td>{product.cabinet_number}</td>
+              <td className="word-break">
                 {format(new Date(product.chinese_warehouse), "dd-MM-yyyy")}
               </td>
               <td>
@@ -228,7 +228,7 @@ const ProductList = () => {
                       ? new Date(product.close_cabinet)
                       : null
                   }
-                  className="form-control form-control-user"
+                  className="form-control form-control-user td-width"
                   onChange={(date) =>
                     handleDateChange("close_cabinet", product.id, date)
                   }
@@ -254,7 +254,7 @@ const ProductList = () => {
                       ? new Date(product.to_thailand)
                       : null
                   }
-                  className="form-control form-control-user"
+                  className="form-control form-control-user td-width"
                   onChange={(date) =>
                     handleDateChange("to_thailand", product.id, date)
                   }
@@ -269,7 +269,7 @@ const ProductList = () => {
                     status.statusProduct
                 )} */}
                 <select
-                  className="form-control"
+                  className="form-control td-width"
                   id="parcel_status"
                   name="parcel_status"
                   value={product.parcel_status || ""} // Use empty string instead of null
@@ -432,9 +432,12 @@ const ProductList = () => {
                         </div>
                       </th>
                       <th scope="col">รหัสลูกค้า</th>
-                      {/*  <th scope="col">รหัสโกดัง</th>
-            <th scope="col">เลขตู้</th> */}
-                      <th scope="col">ถึงโกดังจีน</th>
+                      <th scope="col">เเทคจีน</th>
+                      <th scope="col">รหัสโกดัง</th>
+                      <th scope="col">เลขตู้</th>
+                      <th scope="col" className="td-width">
+                        ถึงโกดังจีน
+                      </th>
                       <th scope="col">ปิดตู้</th>
                       <th scope="col">ถึงไทย</th>
                       <th scope="col">สถานะ</th>
