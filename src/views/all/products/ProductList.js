@@ -149,7 +149,6 @@ const ProductList = () => {
 
   const searchData = (event) => {
     const { value } = event.target;
-    console.log("value", value);
     if (value) {
       const filteredProducts = productList.filter(
         (product) =>
@@ -165,7 +164,6 @@ const ProductList = () => {
 
       setProductList(filteredProducts);
     } else {
-      console.log("else", product);
       setProductList(product);
     }
   };

@@ -257,8 +257,11 @@ const ProductList = () => {
       const quantity = parseInt(item.quantity, 10); // แปลงเป็นตัวเลข
       if (!isNaN(quantity)) {
         return acc + quantity;
+      } else {
+        const qua = JSON.parse(item.inputFields)[0].quantity;
+        const qua2 = parseInt(qua, 10);
+        return acc + qua2;
       }
-      return acc;
     }, 0);
 
   const totalWeight =
@@ -520,7 +523,11 @@ const ProductList = () => {
                             <td></td>
                             <td>{item.customer_code}</td>
                             <td>{item.product_type}</td>
-                            <td>{item.quantity}</td>
+                            <td>
+                              {item.quantity
+                                ? item.quantity
+                                : JSON.parse(item.inputFields)[0].quantity}
+                            </td>
                             <td>
                               {Number(item.total_weight).toLocaleString()}
                             </td>

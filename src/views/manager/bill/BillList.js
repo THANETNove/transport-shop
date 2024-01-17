@@ -70,6 +70,7 @@ const BillList = () => {
     image,
     status
   ) => {
+    /* console.log("dataBill", dataBill); */
     document.getElementById("btn-exampleModal") &&
       document.getElementById("btn-exampleModal").click();
     setShowDataBill(dataBill);
@@ -257,8 +258,11 @@ const BillList = () => {
       const quantity = parseInt(item.quantity, 10); // แปลงเป็นตัวเลข
       if (!isNaN(quantity)) {
         return acc + quantity;
+      } else {
+        const qua = JSON.parse(item.inputFields)[0].quantity;
+        const qua2 = parseInt(qua, 10);
+        return acc + qua2;
       }
-      return acc;
     }, 0);
 
   const totalWeight =
@@ -521,7 +525,11 @@ const BillList = () => {
                             <td></td>
                             <td>{item.customer_code}</td>
                             <td>{item.product_type}</td>
-                            <td>{item.quantity}</td>
+                            <td>
+                              {item.quantity
+                                ? item.quantit
+                                : JSON.parse(item.inputFields)[0].quantity}
+                            </td>
                             <td>{item.total_weight}</td>
                             <td>{item.total_queue}</td>
                             <td>{item.thinkingFrom}</td>

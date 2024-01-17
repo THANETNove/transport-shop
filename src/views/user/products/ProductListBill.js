@@ -325,7 +325,13 @@ const ProductList = () => {
                         <td></td>
                         <td>{showItemBill && showItemBill.customer_code}</td>
                         <td>{showItemBill && showItemBill.product_type}</td>
-                        <td>{showItemBill && showItemBill.quantity}</td>
+                        <td>
+                          {showItemBill && showItemBill.quantity
+                            ? showItemBill.quantity
+                            : showItemBill &&
+                              showItemBill.inputFields &&
+                              JSON.parse(showItemBill.inputFields)[0]?.quantity}
+                        </td>
                         <td>{showItemBill && showItemBill.total_weight}</td>
                         <td>{showItemBill && showItemBill.total_queue}</td>
                         <td>{showItemBill && showItemBill.thinkingFrom}</td>
@@ -393,7 +399,13 @@ const ProductList = () => {
                           <tr>
                             <th scope="row">จำนวน </th>
                             <td>
-                              {showItemBill && showItemBill.quantity} กล่อง
+                              {showItemBill && showItemBill.quantity
+                                ? showItemBill.quantity
+                                : showItemBill &&
+                                  showItemBill.inputFields &&
+                                  JSON.parse(showItemBill.inputFields)[0]
+                                    ?.quantity}{" "}
+                              กล่อง
                             </td>
                           </tr>
                           <tr>
