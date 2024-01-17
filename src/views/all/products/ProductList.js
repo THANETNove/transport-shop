@@ -149,16 +149,23 @@ const ProductList = () => {
 
   const searchData = (event) => {
     const { value } = event.target;
+    console.log("value", value);
     if (value) {
-      const filteredProducts = productList.filter((product) =>
-        product.customer_code
-          .trim()
-          .toLowerCase()
-          .includes(value.trim().toLowerCase())
+      const filteredProducts = productList.filter(
+        (product) =>
+          product.customer_code
+            .trim()
+            .toLowerCase()
+            .includes(value.trim().toLowerCase()) ||
+          product.warehouse_code
+            .trim()
+            .toLowerCase()
+            .includes(value.trim().toLowerCase())
       );
 
       setProductList(filteredProducts);
     } else {
+      console.log("else", product);
       setProductList(product);
     }
   };
