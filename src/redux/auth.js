@@ -1,6 +1,7 @@
 const initialState = {
   user: null,
   errors: null,
+  language: "th",
 };
 
 export default function (state = initialState, action) {
@@ -24,6 +25,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         errors: action.payload,
+      };
+    case "LANGUAGE":
+      return {
+        ...state,
+        language: action.payload,
       };
     default:
       return state;

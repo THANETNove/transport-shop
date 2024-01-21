@@ -8,13 +8,8 @@ export default function Header() {
   const { i18n } = useTranslation();
 
   const changeLanguage = (lng) => {
-    console.log("lng", lng);
     i18n.changeLanguage(lng);
   };
-
-  useEffect(() => {
-    i18n.changeLanguage("th");
-  }, [i18n]);
 
   return (
     <header id="header" className="header fixed-top">
