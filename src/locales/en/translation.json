@@ -1,6 +1,5 @@
 {
-  "home.lang": "English",
-  "home.title": "Welcome to our website!",
-  "home.content": "This is the content in English.",
-  "welcome": "Welcome to my app"
+  "lang_en": "English",
+  "lang_th": "ภาษาไทย",
+  "lang_ch": "中國人"
 }
