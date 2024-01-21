@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { Store, persistor } from "./redux/Store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import "./i18n"; // Import the i18n.js file
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
