@@ -346,7 +346,7 @@ const ProductList = () => {
                         <td>
                           {showItemBill && showItemBill.quantity
                             ? showItemBill.quantity
-                            : totalQuantity.toLocaleString()}
+                            : Number(totalQuantity).toLocaleString()}
                         </td>
                         <td>{showItemBill && showItemBill.total_weight}</td>
                         <td>{showItemBill && showItemBill.total_queue}</td>
@@ -417,7 +417,7 @@ const ProductList = () => {
                             <td>
                               {showItemBill && showItemBill.quantity
                                 ? showItemBill.quantity
-                                : totalQuantity.toLocaleString()}{" "}
+                                : Number(totalQuantity).toLocaleString()}{" "}
                               กล่อง
                             </td>
                           </tr>

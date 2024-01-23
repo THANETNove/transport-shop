@@ -536,7 +536,7 @@ const BillList = () => {
                               <td>
                                 {item.quantity
                                   ? item.quantit
-                                  : itemQuantity.toLocaleString()}
+                                  : Number(itemQuantity).toLocaleString()}
                               </td>
                               <td>{item.total_weight}</td>
                               <td>{item.total_queue}</td>
@@ -618,7 +618,9 @@ const BillList = () => {
                         <tbody>
                           <tr>
                             <th scope="row">จำนวน </th>
-                            <td>{totalQuantity2.toLocaleString()} กล่อง</td>
+                            <td>
+                              {Number(totalQuantity2).toLocaleString()} กล่อง
+                            </td>
                           </tr>
                           <tr>
                             <th scope="row">ปริมาตร(คิว) </th>

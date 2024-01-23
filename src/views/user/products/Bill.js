@@ -431,7 +431,7 @@ const ProductList = () => {
                               <td>
                                 {item.quantity
                                   ? item.quantity
-                                  : itemQuantity.toLocaleString()}
+                                  : Number(itemQuantity).toLocaleString()}
                               </td>
                               <td>
                                 {Number(item.total_weight).toLocaleString()}
@@ -511,7 +511,9 @@ const ProductList = () => {
                         <tbody>
                           <tr>
                             <th scope="row">จำนวน </th>
-                            <td>{totalQuantity2.toLocaleString()} กล่อง</td>
+                            <td>
+                              {Number(totalQuantity2).toLocaleString()} กล่อง
+                            </td>
                           </tr>
                           <tr>
                             <th scope="row">ปริมาตร(คิว) </th>
