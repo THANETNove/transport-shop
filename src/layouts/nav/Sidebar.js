@@ -184,6 +184,12 @@ const Sidebar = () => {
                 <span>ประวัติตรวจสอบบิล</span>
               </Link>
             </li>
+            <li className={activePath("/bill-list")}>
+              <Link className="nav-link" to="/bill-list-admin">
+                <i class="fa-solid fa-file-invoice"></i>
+                <span>รายการพัสดุออกบิล</span>
+              </Link>
+            </li>
             <li className={activePath("/check-money")}>
               <Link className="nav-link" to="/check-money">
                 <i class="fa-solid fa-sack-dollar"></i>

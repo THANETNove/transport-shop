@@ -35,6 +35,9 @@ import recordSlipList from "./views/manager/bill/RecordSlip";
 import CreateProduct from "./views/all/products/CreateProduct";
 import EditProduct from "./views/all/products/EditProductList";
 import ShowProduct from "./views/all/products/ShowProductList";
+import ListBillAdmin from "./views/all/products/ProductListBill";
+import ShowProductItem from "./views/user/products/ShowProductListBill";
+import ShowProductItemAdmin from "./views/all/products/ShowProductListBill";
 
 const commonRoutes = [
   {
@@ -73,6 +76,11 @@ const userRoutes = [
     layout: "/auth",
   },
   {
+    path: "/bill-list",
+    component: ProductListBill,
+    layout: "/auth",
+  },
+  {
     path: "/product-list",
     component: ProductListUser,
     layout: "/auth",
@@ -82,14 +90,10 @@ const userRoutes = [
     component: ShowProduct,
     layout: "/auth",
   },
+
   {
     path: "/bill-all",
     component: BillList,
-    layout: "/auth",
-  },
-  {
-    path: "/bill-list",
-    component: ProductListBill,
     layout: "/auth",
   },
   {
@@ -100,6 +104,11 @@ const userRoutes = [
   {
     path: "/record-money-wallet",
     component: RecordMoneyWallet,
+    layout: "/auth",
+  },
+  {
+    path: "/show-product-item/:id",
+    component: ShowProductItem,
     layout: "/auth",
   },
 ];
@@ -148,6 +157,16 @@ const adminRoutes = [
   {
     path: "/new-password/",
     component: NewPassword,
+    layout: "/auth",
+  },
+  {
+    path: "/bill-list-admin/",
+    component: ListBillAdmin,
+    layout: "/auth",
+  },
+  {
+    path: "/show-product-item/:id",
+    component: ShowProductItemAdmin,
     layout: "/auth",
   },
 ];
@@ -236,6 +255,16 @@ const managerRoutes = [
   {
     path: "/new-password/",
     component: NewPassword,
+    layout: "/auth",
+  },
+  {
+    path: "/bill-list-admin/",
+    component: ListBillAdmin,
+    layout: "/auth",
+  },
+  {
+    path: "/show-product-item/:id",
+    component: ShowProductItemAdmin,
     layout: "/auth",
   },
 ];

@@ -13,10 +13,10 @@ import { useRef } from "react";
 
 const ProductList = () => {
   const user = useSelector((state) => state.auth.user);
-  const { BillProduct } = useSelector((state) => state.get);
+  const { BillProductAll } = useSelector((state) => state.get);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [data, setData] = useState(BillProduct);
+  const [data, setData] = useState(BillProductAll);
   const [showItemBill, setShowItemBill] = useState(null);
   const [showIdBill, setShowIdBill] = useState(null);
   const [showAddress, setShowAddress] = useState(null);
@@ -37,7 +37,8 @@ const ProductList = () => {
   const url = Service.getUrlImage();
 
   const fetchData = async () => {
-    const pro_log_1 = await Service.getBillProduct(user && user.id, dispatch);
+    const pro_log_1 = await Service.getBillProductAll(dispatch);
+    console.log("pro_log_1", pro_log_1);
   };
 
   useEffect(() => {
@@ -48,8 +49,8 @@ const ProductList = () => {
   }, [users_code]);
 
   useEffect(() => {
-    setData(BillProduct);
-  }, [BillProduct]);
+    setData(BillProductAll);
+  }, [BillProductAll]);
 
   const showProduct = (date) => {
     document.getElementById("btn-exampleModal") &&
@@ -117,7 +118,7 @@ const ProductList = () => {
 
   const searchData = (event) => {
     const { value } = event.target;
-    setData(BillProduct);
+    setData(BillProductAll);
 
     if (value) {
       const filteredProducts = Object.values(data).filter(

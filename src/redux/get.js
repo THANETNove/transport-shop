@@ -13,6 +13,7 @@ const initialState = {
   dataSlip: null,
   dataSlipAll: null,
   userAll: null,
+  BillProductAll: null,
 };
 
 export default function (state = initialState, action) {
@@ -70,6 +71,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         BillProduct: action.payload,
+      };
+    case "BILL_PRODUCT_ALL_SUCCESS":
+      return {
+        ...state,
+        BillProductAll: action.payload,
       };
     case "POINTS_SUCCESS":
       return {

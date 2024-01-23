@@ -314,10 +314,6 @@ const getBillProduct = async (id, dispatch) => {
       message: response.data.message,
     };
   } else if (response.data.error) {
-    /*   dispatch({
-      type: "PRODUCT_CODE_ERROR",
-      payload: response.data.error,
-    }); */
     return {
       status: "error",
       error: response.data.error,
@@ -329,6 +325,38 @@ const getBillProduct = async (id, dispatch) => {
     };
   }
 };
+
+const getBillProductAll = async ( dispatch) => {
+  const params = {
+    isAdd: true,
+  };
+  const response = await axios.get(`${url}/getBillProductAll.php`, {
+    params,
+  });
+
+  if (response.data.message) {
+    dispatch({
+      type: "BILL_PRODUCT_ALL_SUCCESS",
+      payload: response.data.data,
+    });
+
+    return {
+      status: "success",
+      message: response.data.message,
+    };
+  } else if (response.data.error) {
+    return {
+      status: "error",
+      error: response.data.error,
+    };
+  } else {
+    // handle other cases, if any
+    return {
+      status: "unknown",
+    };
+  }
+};
+
 const getPoints = async (id, dispatch) => {
   const params = {
     isAdd: true,
@@ -1427,6 +1455,7 @@ export default {
   getSlip,
   getSlipAll,
   getUserAll,
+  getBillProductAll,
   register,
   Login,
   statusList,
