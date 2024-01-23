@@ -708,7 +708,7 @@ const CreateProduct = () => {
                               for="exampleFormControlInput1"
                               className="form-label"
                             >
-                              จำนวน {index + 1}
+                              จำนวน
                             </label>
                             <input
                               type="text"

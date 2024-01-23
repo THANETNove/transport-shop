@@ -286,6 +286,17 @@ const ProductList = () => {
       }, 0)
       .toFixed(2);
 
+  const totalQuantity2 =
+    showDataBill &&
+    showDataBill.reduce((total, item) => {
+      const fields = JSON.parse(item.inputFields);
+      const itemQuantity = fields.reduce((itemTotal, field) => {
+        const quantity = parseFloat(field.quantity) || 0;
+        return itemTotal + quantity;
+      }, 0);
+      return total + itemQuantity;
+    }, 0);
+
   const paymentAmountChineseThaiDelivery =
     showDataBill &&
     Math.ceil(
@@ -507,7 +518,6 @@ const ProductList = () => {
                         <th scope="col">รหัสสินค้า</th>
                         <th scope="col">เลขพัสดุ</th>
                         <th scope="col">รหัสลูกค้า</th>
-                        <th scope="col">ประเภทพัสดุ</th>
                         <th scope="col">จำนวน</th>
                         <th scope="col">น้ำหนัก (กก)</th>
                         <th scope="col">ปริมาตร(คิว)</th>
@@ -517,32 +527,44 @@ const ProductList = () => {
                     </thead>
                     <tbody>
                       {showDataBill &&
-                        showDataBill.map((item, index) => (
-                          <tr>
-                            <th scope="row">{item.warehouse_code}</th>
-                            <td></td>
-                            <td>{item.customer_code}</td>
-                            <td>{item.product_type}</td>
-                            <td>
-                              {item.quantity
-                                ? item.quantity
-                                : JSON.parse(item.inputFields)[0].quantity}
-                            </td>
-                            <td>
-                              {Number(item.total_weight).toLocaleString()}
-                            </td>
-                            <td>{Number(item.total_queue).toLocaleString()}</td>
-                            <td>{item.thinkingFrom}</td>
-                            <td>
-                              {Number(
-                                item.payment_amount_chinese_thai_delivery
-                              ).toLocaleString(undefined, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                            </td>
-                          </tr>
-                        ))}
+                        showDataBill.map((item, index) => {
+                          let quantityItem =
+                            item && JSON.parse(item.inputFields);
+                          const itemQuantity =
+                            quantityItem &&
+                            quantityItem.reduce((itemTotal, field) => {
+                              const quantity = parseFloat(field.quantity) || 0;
+                              return itemTotal + quantity;
+                            }, 0);
+                          return (
+                            <tr>
+                              <th scope="row">{item.warehouse_code}</th>
+                              <td></td>
+                              <td>{item.customer_code}</td>
+
+                              <td>
+                                {item.quantity
+                                  ? item.quantity
+                                  : itemQuantity.toLocaleString()}
+                              </td>
+                              <td>
+                                {Number(item.total_weight).toLocaleString()}
+                              </td>
+                              <td>
+                                {Number(item.total_queue).toLocaleString()}
+                              </td>
+                              <td>{item.thinkingFrom}</td>
+                              <td>
+                                {Number(
+                                  item.payment_amount_chinese_thai_delivery
+                                ).toLocaleString(undefined, {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 </div>
@@ -609,7 +631,7 @@ const ProductList = () => {
                         <tbody>
                           <tr>
                             <th scope="row">จำนวน </th>
-                            <td>{totalQuantity} กล่อง</td>
+                            <td>{totalQuantity2.toLocaleString()} กล่อง</td>
                           </tr>
                           <tr>
                             <th scope="row">ปริมาตร(คิว) </th>

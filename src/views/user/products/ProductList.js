@@ -115,9 +115,10 @@ const ProductList = () => {
     setProductList(filteredItems);
   };
 
-  const showProduct = async (id) => {
+  const showProduct = async (item) => {
     const re = await Service.getProduct(dispatch); // ดึงสิค้า
     if (re.status == "success") {
+      const id = encodeURIComponent(JSON.stringify(item));
       navigate(`/show-product/${id}`);
     }
   };
@@ -406,7 +407,7 @@ const ProductList = () => {
                   <td>
                     <a
                       className="btn btn-primary btn-sm"
-                      onClick={() => showProduct(product.id)}
+                      onClick={() => showProduct(product)}
                     >
                       show
                     </a>

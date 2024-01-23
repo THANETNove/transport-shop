@@ -68,6 +68,16 @@ const ProductList = () => {
     setShowImage(date.billImage);
   };
 
+  const showProduct2 = async (item) => {
+    const re = await Service.getProduct(dispatch); // ดึงสิค้า
+
+    if (re.status == "success") {
+      const id = encodeURIComponent(JSON.stringify(item));
+
+      navigate(`/show-product/${id}`);
+    }
+  };
+
   const endOffset = itemOffset + itemsPerPage;
 
   const currentItems = data && Object.values(data).slice(itemOffset, endOffset);
@@ -138,17 +148,12 @@ const ProductList = () => {
           {currentItems &&
             currentItems.map((item, index) => (
               <tr key={item.billId} className="text-center">
-                {/* Your table cell content here */}
                 <th scope="row">{index + 1} </th>
                 <td>{item.billId}</td>
                 <td>{item.customer_code}</td>
                 <td>{item.tech_china}</td>
                 <td>{item.warehouse_code}</td>
-                <td>
-                  {
-                    item.billUpdated_at /* formatDateTime(item.billUpdated_at) */
-                  }
-                </td>
+                <td>{item.billUpdated_at}</td>
                 <td>
                   {item.status == "รอตรวจสอบ" && (
                     <p style={{ color: "#858796" }}> {item.status}</p>
@@ -169,12 +174,26 @@ const ProductList = () => {
                 >
                   show
                 </a>
+                <a
+                  className="btn btn-primary btn-sm ml-3"
+                  onClick={() => showProduct2(item)}
+                >
+                  รายละเอียด
+                </a>
               </tr>
             ))}
         </tbody>
       </>
     );
   };
+
+  const inputFields = showItemBill && JSON.parse(showItemBill.inputFields);
+  const totalQuantity =
+    inputFields &&
+    inputFields.reduce((total, field) => {
+      const quantity = field?.quantity || 0;
+      return total + parseFloat(quantity);
+    }, 0);
 
   return (
     <div className="container-fluid">
@@ -309,7 +328,6 @@ const ProductList = () => {
                         <th scope="col">รหัสสินค้า</th>
                         <th scope="col">เลขพัสดุ</th>
                         <th scope="col">รหัสลูกค้า</th>
-                        <th scope="col">ประเภทพัสดุ</th>
                         <th scope="col">จำนวน</th>
                         <th scope="col">น้ำหนัก (กก)</th>
                         <th scope="col">ปริมาตร(คิว)</th>
@@ -324,13 +342,11 @@ const ProductList = () => {
                         </th>
                         <td></td>
                         <td>{showItemBill && showItemBill.customer_code}</td>
-                        <td>{showItemBill && showItemBill.product_type}</td>
+
                         <td>
                           {showItemBill && showItemBill.quantity
                             ? showItemBill.quantity
-                            : showItemBill &&
-                              showItemBill.inputFields &&
-                              JSON.parse(showItemBill.inputFields)[0]?.quantity}
+                            : totalQuantity.toLocaleString()}
                         </td>
                         <td>{showItemBill && showItemBill.total_weight}</td>
                         <td>{showItemBill && showItemBill.total_queue}</td>
@@ -401,10 +417,7 @@ const ProductList = () => {
                             <td>
                               {showItemBill && showItemBill.quantity
                                 ? showItemBill.quantity
-                                : showItemBill &&
-                                  showItemBill.inputFields &&
-                                  JSON.parse(showItemBill.inputFields)[0]
-                                    ?.quantity}{" "}
+                                : totalQuantity.toLocaleString()}{" "}
                               กล่อง
                             </td>
                           </tr>

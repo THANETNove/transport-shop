@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import { useSelector, useDispatch } from "react-redux";
 import { format } from "date-fns";
 
-const ShowProductList = () => {
+const ShowdecodedItem = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -13,7 +13,7 @@ const ShowProductList = () => {
     (state) => state.post
   );
   const user = useSelector((state) => state.auth.user);
-  const [productList, setProductList] = useState(null);
+
   const [statusList, setStatusList] = useState(status_list);
   const [productType, setProductType] = useState(product_type);
   const [preview, setPreview] = useState(null);
@@ -22,6 +22,8 @@ const ShowProductList = () => {
   const url = Service.getUrlImage();
 
   const { id } = useParams();
+  const decodedItem = JSON.parse(decodeURIComponent(id));
+
 
   const [formData, setFormData] = useState({
     idProduct: "",
@@ -45,48 +47,43 @@ const ShowProductList = () => {
   });
 
   useEffect(() => {
-    const result = product && product.find((product) => product.id == id);
-    setProductList(result);
-  }, [id]);
-
-  useEffect(() => {
     setFormData((prevState) => ({
       ...prevState,
-      idProduct: productList && productList.id,
-      customer_code: productList && productList.customer_code,
-      tech_china: productList && productList.tech_china,
-      warehouse_code: productList && productList.warehouse_code,
-      cabinet_number: productList && productList.cabinet_number,
-      chinese_warehouse: new Date(productList && productList.chinese_warehouse), // date
+      idProduct: decodedItem && decodedItem.id,
+      customer_code: decodedItem && decodedItem.customer_code,
+      tech_china: decodedItem && decodedItem.tech_china,
+      warehouse_code: decodedItem && decodedItem.warehouse_code,
+      cabinet_number: decodedItem && decodedItem.cabinet_number,
+      chinese_warehouse: new Date(decodedItem && decodedItem.chinese_warehouse), // date
       close_cabinet:
-        productList && !["null", "NULL", ""].includes(productList.close_cabinet)
-          ? new Date(productList.close_cabinet)
+        decodedItem && !["null", "NULL", ""].includes(decodedItem.close_cabinet)
+          ? new Date(decodedItem.close_cabinet)
           : null, // date
       to_thailand:
-        productList && !["null", "NULL", ""].includes(productList.to_thailand)
-          ? new Date(productList.to_thailand)
+        decodedItem && !["null", "NULL", ""].includes(decodedItem.to_thailand)
+          ? new Date(decodedItem.to_thailand)
           : null,
       parcel_status:
-        productList && productList.parcel_status
-          ? productList.parcel_status
+        decodedItem && decodedItem.parcel_status
+          ? decodedItem.parcel_status
           : null,
-      quantity: productList && productList.quantity,
-      wide_size: productList && productList.wide_size,
-      long_size: productList && productList.long_size,
-      height_size: productList && productList.height_size,
-      cue_per_piece: productList && productList.cue_per_piece,
-      weight: productList && productList.weight,
-      total_weight: productList && productList.total_weight,
-      total_queue: productList && productList.total_queue,
+      quantity: decodedItem && decodedItem.quantity,
+      wide_size: decodedItem && decodedItem.wide_size,
+      long_size: decodedItem && decodedItem.long_size,
+      height_size: decodedItem && decodedItem.height_size,
+      cue_per_piece: decodedItem && decodedItem.cue_per_piece,
+      weight: decodedItem && decodedItem.weight,
+      total_weight: decodedItem && decodedItem.total_weight,
+      total_queue: decodedItem && decodedItem.total_queue,
       payment_amount_chinese_thai_delivery:
-        productList && productList.payment_amount_chinese_thai_delivery,
-      product_type: productList && productList.product_type,
-      old_image: productList && productList.image,
+        decodedItem && decodedItem.payment_amount_chinese_thai_delivery,
+      product_type: decodedItem && decodedItem.product_type,
+      old_image: decodedItem && decodedItem.image,
       status_recorder: user.status,
     }));
 
-    setInputFields(productList && JSON.parse(productList.inputFields));
-  }, [productList]);
+    setInputFields(decodedItem && JSON.parse(decodedItem.inputFields));
+  }, []);
 
   return (
     <>
@@ -94,7 +91,7 @@ const ShowProductList = () => {
         <div className="row">
           <div className="col-xl-12 col-lg-12">
             <div className="card shadow mb-4">
-              <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <div className="card-header py-3 d-flex flex-row align-decodedItems-center justify-content-between">
                 <h6 className="m-0 font-weight-bold text-primary">
                   รายละเอียดพัสดุ
                 </h6>
@@ -537,4 +534,4 @@ const ShowProductList = () => {
   );
 };
 
-export default ShowProductList;
+export default ShowdecodedItem;
