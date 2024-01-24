@@ -52,8 +52,9 @@ const ProductList = () => {
   }, [BillProduct]);
 
   const showProduct = (date) => {
-    document.getElementById("btn-exampleModal") &&
-      document.getElementById("btn-exampleModal").click();
+    console.log("date", date);
+    /* document.getElementById("btn-exampleModalUser") &&
+      document.getElementById("btn-exampleModalUser").click(); */
     setShowItemBill(date);
     setShowIdBill(date.billId);
     setShowAddress(date.address);
@@ -145,7 +146,7 @@ const ProductList = () => {
         <tbody>
           {currentItems &&
             currentItems.map((item, index) => (
-              <tr key={item.billId} className="text-center">
+              <tr key={index} className="text-center">
                 <th scope="row">{index + 1} </th>
                 <td>{item.billId}</td>
                 <td>{item.customer_code}</td>
@@ -168,6 +169,8 @@ const ProductList = () => {
                 </td>
                 <a
                   className="btn btn-primary btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModalUser"
                   onClick={() => showProduct(item)}
                 >
                   show
@@ -264,20 +267,20 @@ const ProductList = () => {
         </div>
       </div>
 
-      <button
+      {/* <button
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        id="btn-exampleModal"
-        data-bs-target="#exampleModal"
-        style={{ display: "none" }}
+        id="btn-exampleModalUser"
+        data-bs-target="#exampleModalUser"
+         style={{ display: "none" }}
       >
         Launch demo modal
-      </button>
+      </button> */}
 
       <div
         className="modal fade"
-        id="exampleModal"
+        id="exampleModalUser"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"

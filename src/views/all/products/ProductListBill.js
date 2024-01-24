@@ -146,7 +146,7 @@ const ProductList = () => {
         <tbody>
           {currentItems &&
             currentItems.map((item, index) => (
-              <tr key={item.billId} className="text-center">
+              <tr key={index} className="text-center">
                 <th scope="row">{index + 1} </th>
                 <td>{item.billId}</td>
                 <td>{item.customer_code}</td>

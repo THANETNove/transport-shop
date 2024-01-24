@@ -12,7 +12,7 @@ const ShowProductListShow = () => {
   const { product, statusProduct, status_list, product_type } = useSelector(
     (state) => state.post
   );
-  const { BillData } = useSelector((state) => state.get);
+  const { BillProduct } = useSelector((state) => state.get);
   const user = useSelector((state) => state.auth.user);
   const [productList, setProductList] = useState(null);
   const [statusList, setStatusList] = useState(status_list);
@@ -46,15 +46,9 @@ const ShowProductListShow = () => {
   });
 
   const findId = (targetId) => {
-    for (const key in BillData) {
-      const dataBill = BillData[key].dataBill;
-      const foundItem =
-        dataBill && dataBill.find((item) => item.id == targetId);
-      setProductList(foundItem);
-
-      /* return foundItem; */
-    }
-    return null; // หากไม่พบ id ที่ต้องการ
+    const foundItem =
+      BillProduct && BillProduct.find((item) => item.id == targetId);
+    setProductList(foundItem);
   };
 
   useEffect(() => {
@@ -63,7 +57,7 @@ const ShowProductListShow = () => {
 
   useEffect(() => {
     findId(id);
-  }, [id]);
+  }, [id, BillProduct]);
 
   useEffect(() => {
     setFormData((prevState) => ({
@@ -104,7 +98,7 @@ const ShowProductListShow = () => {
     setInputFields(productList && JSON.parse(productList.inputFields));
   }, [productList]);
 
-  console.log("productList", productList);
+  console.log("BillProduct", BillProduct);
 
   return (
     <>
