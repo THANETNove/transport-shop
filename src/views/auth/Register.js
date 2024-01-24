@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Service from "../../server_api/server";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -43,67 +45,67 @@ const Register = () => {
 
     // username validation
     if (!formData.username.trim()) {
-      newErrors.username = "username is required";
+      newErrors.username = t("error.username");
       isValid = false;
     }
     // customerCode validation
     if (!formData.customerCode.trim()) {
-      newErrors.customerCode = "รหัสลูกค้า is required";
+      newErrors.customerCode = t("error.customer_id");
       isValid = false;
     }
 
     // Email validation
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
+      newErrors.email = t("error.email");
       isValid = false;
     } else if (!emailPattern.test(formData.email)) {
-      newErrors.email = "Email format is invalid";
+      newErrors.email = t("error.email_invalid");
       isValid = false;
     }
 
     // password validation
     if (!formData.password.trim()) {
-      newErrors.password = "password is required";
+      newErrors.password = t("error.password");
       isValid = false;
     } else if (formData.password.length <= 5) {
-      newErrors.password = "Password must be at least 6 characters.";
+      newErrors.password = t("error.password_6");
       isValid = false;
     }
 
     // name_surname validation
     if (!formData.name_surname.trim()) {
-      newErrors.name_surname = "name_surname is required";
+      newErrors.name_surname = t("error.name_surname");
       isValid = false;
     }
     // phone_number validation
     if (!formData.phone_number.trim()) {
-      newErrors.phone_number = "phone_number is required";
+      newErrors.phone_number = t("error.phone");
       isValid = false;
     }
     // address validation
     if (!formData.address.trim()) {
-      newErrors.address = "address is required";
+      newErrors.address = t("error.address");
       isValid = false;
     }
     // subdistrict validation
     if (!formData.subdistrict.trim()) {
-      newErrors.subdistrict = "subdistrict is required";
+      newErrors.subdistrict = t("error.subdistrict");
       isValid = false;
     }
     // district validation
     if (!formData.district.trim()) {
-      newErrors.district = "district is required";
+      newErrors.district = t("error.district");
       isValid = false;
     }
     // province validation
     if (!formData.province.trim()) {
-      newErrors.province = "province is required";
+      newErrors.province = t("error.province");
       isValid = false;
     }
     // zipCode validation
     if (!formData.zipCode.trim()) {
-      newErrors.zipCode = "zipCode is required";
+      newErrors.zipCode = t("error.zipCode");
       isValid = false;
     }
 
@@ -124,25 +126,24 @@ const Register = () => {
     event.preventDefault();
     if (validate()) {
       const response = await Service.register(formData, dispatch);
-    
+
       if (response.status == "success") {
         navigate("/dashboard");
       } else {
         if (response.error == "username_exists") {
           setErrors((prevState) => ({
             ...prevState,
-            ["username"]: "Username already exists!",
+            ["username"]: t("error.username_exists"),
           }));
         } else if (response.error == "email_exists") {
-     
           setErrors((prevState) => ({
             ...prevState,
-            ["email"]: "Email already exists!",
+            ["email"]: t("error.email_exists"),
           }));
         } else if (response.error == "customerCode_exists") {
           setErrors((prevState) => ({
             ...prevState,
-            ["customerCode"]: "customerCode_result already exists!",
+            ["customerCode"]: t("error.customerCode_result_exists"),
           }));
         }
       }
@@ -161,7 +162,9 @@ const Register = () => {
               <div className="col-lg-7">
                 <div className="p-5">
                   <div className="text-center">
-                    <h1 className="h4 text-gray-900 mb-4">สร้างบัญชี</h1>
+                    <h1 className="h4 text-gray-900 mb-4">
+                      {t("register.create_account")}
+                    </h1>
                   </div>
                   <form className="user" onSubmit={handleSubmit}>
                     <div className="form-group row">
@@ -170,7 +173,7 @@ const Register = () => {
                           type="text"
                           className="form-control form-control-user"
                           id="username"
-                          placeholder="Username"
+                          placeholder={t("login.username")}
                           name="username"
                           value={formData.username}
                           onChange={handleChange}
@@ -184,7 +187,7 @@ const Register = () => {
                           type="text"
                           className="form-control form-control-user"
                           id="customerCode"
-                          placeholder="รหัสลูกค้า"
+                          placeholder={t("customer_id")}
                           name="customerCode"
                           value={formData.customerCode}
                           onChange={handleChange}
@@ -201,7 +204,7 @@ const Register = () => {
                         type="email"
                         className="form-control form-control-user"
                         id="email"
-                        placeholder="Email Address"
+                        placeholder={t("email")}
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
@@ -215,7 +218,7 @@ const Register = () => {
                         type="password"
                         className="form-control form-control-user"
                         id="password"
-                        placeholder="Password"
+                        placeholder={t("login.password")}
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
@@ -243,7 +246,7 @@ const Register = () => {
                         type="number"
                         className="form-control form-control-user"
                         id="phone_number"
-                        placeholder="เบอร์ติดต่อ"
+                        placeholder={t("contact")}
                         name="phone_number"
                         value={formData.phone_number}
                         onChange={handleChange}
@@ -255,7 +258,7 @@ const Register = () => {
                     <div className="form-group">
                       <textarea
                         className="form-control"
-                        placeholder="ที่อยู่"
+                        placeholder={t("address")}
                         id="address"
                         name="address"
                         value={formData.address}
@@ -289,7 +292,7 @@ const Register = () => {
                           name="district"
                           value={formData.district}
                           onChange={handleChange}
-                          placeholder="อำเภอ/เขต"
+                          placeholder={t("district")}
                         />
                         {errors.district && (
                           <div className="error-from">{errors.district}</div>
