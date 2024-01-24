@@ -57,7 +57,7 @@ const ShowProductListShow = () => {
 
   useEffect(() => {
     findId(id);
-  }, [id]);
+  }, [id, BillProductAll]);
 
   useEffect(() => {
     setFormData((prevState) => ({
@@ -97,8 +97,6 @@ const ShowProductListShow = () => {
 
     setInputFields(productList && JSON.parse(productList.inputFields));
   }, [productList]);
-
-  console.log("productList", productList);
 
   return (
     <>

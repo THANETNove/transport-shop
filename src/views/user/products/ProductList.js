@@ -115,10 +115,9 @@ const ProductList = () => {
     setProductList(filteredItems);
   };
 
-  const showProduct = async (item) => {
+  const showProduct = async (id) => {
     const re = await Service.getProduct(dispatch); // ดึงสิค้า
     if (re.status == "success") {
-      const id = encodeURIComponent(JSON.stringify(item));
       navigate(`/show-product/${id}`);
     }
   };
@@ -407,7 +406,7 @@ const ProductList = () => {
                   <td>
                     <a
                       className="btn btn-primary btn-sm"
-                      onClick={() => showProduct(product)}
+                      onClick={() => showProduct(product.id)}
                     >
                       show
                     </a>
@@ -590,7 +589,7 @@ const ProductList = () => {
                   <input
                     type="text"
                     className="form-control  background-white bg-light border-0 small"
-                    placeholder="Search รหัสลูกค้า"
+                    placeholder="Search เเทคจีน	"
                     aria-label="Search"
                     onChange={searchData}
                     aria-describedby="basic-addon2"
