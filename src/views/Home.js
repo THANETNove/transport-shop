@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-export default function Home() {
+const Home = () => {
+  const { t } = useTranslation();
   return (
     <>
       <section id="hero" className="hero d-flex align-items-center">
@@ -9,18 +11,14 @@ export default function Home() {
           <div className="row">
             <div className="col-lg-6 d-flex flex-column justify-content-center">
               <h1 data-aos="fade-up" className="aos-init aos-animate text-name">
-                ระบบเช็คสินค้า จีน - ไทย
+                {t("system_product")}
               </h1>
               <h6
                 /*   data-aos="fade-up"
                 data-aos-delay="100" */
                 className="aos-init aos-animate"
               >
-                บริการนำเข้า-ส่งออกสินค้าจากจีน-ไทยจัดการเคลียร์ภาษีแบบครบวงจร
-                รับส่งแบบเหมาตู้ รับส่งแบบปลีก(พรีออเดอร์)
-                พาเดินตลาดสั่งซื้อสินค้า และสั่งซื้อออนไลน์
-                มีระบบให้ติดตามสถานะสินค้าได้ตลอด 24 ชั่วโมง
-                และสามารถสั่งซื้อสินค้าแบบออนไลน์ได้อย่างสะดวก
+                {t("import_service")}
               </h6>
               <div
                 data-aos="fade-up"
@@ -32,7 +30,7 @@ export default function Home() {
                     href="#about"
                     className="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
                   >
-                    <span>Get Started</span>
+                    <span>{t("get_started")}</span>
                     <i className="bi bi-arrow-right"></i>
                   </a>
                 </div>
@@ -846,15 +844,9 @@ export default function Home() {
               <div className="col-lg-5 col-md-12 footer-info">
                 <a href="index.html" className="logo align-items-center">
                   {/*  <img src="assets/img/logo.png" alt /> */}
-                  <span className="text-footer">ระบบเช็คสินค้า จีน - ไทย</span>
+                  <span className="text-footer">{t("system_product")}</span>
                 </a>
-                <p>
-                  บริการนำเข้า-ส่งออกสินค้าจากจีน-ไทยจัดการเคลียร์ภาษีแบบครบวงจร
-                  รับส่งแบบเหมาตู้ รับส่งแบบปลีก(พรีออเดอร์)
-                  พาเดินตลาดสั่งซื้อสินค้า และสั่งซื้อออนไลน์
-                  มีระบบให้ติดตามสถานะสินค้าได้ตลอด 24 ชั่วโมง
-                  และสามารถสั่งซื้อสินค้าแบบออนไลน์ได้อย่างสะดวก
-                </p>
+                <p>{t("import_service")}</p>
                 {/*  <div className="social-links mt-3">
                   <a href="#" className="twitter">
                     <i className="bi bi-twitter" />
@@ -939,11 +931,11 @@ export default function Home() {
         </div>
         <div className="container">
           <div className="copyright">
-            © Copyright{" "}
+            {t("copyright")}
             <strong>
-              <span>ระบบเช็คสินค้า จีน - ไทย</span>
+              <span>{t("system_product")}</span>
             </strong>
-            . All Rights Reserved
+            {t("all_rights_reserved")}
           </div>
           <div className="credits">
             {/* All the links in the footer should remain intact. */}
@@ -963,4 +955,6 @@ export default function Home() {
       </a>
     </>
   );
-}
+};
+
+export default Home;

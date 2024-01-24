@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import Service from "../../server_api/server";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -50,7 +52,6 @@ const Login = () => {
       const response = await Service.Login(formData, dispatch);
 
       if (response.status == "success") {
-  
         const getPoints = await Service.getPoints(response.id, dispatch);
 
         navigate("/product-list");
@@ -81,7 +82,9 @@ const Login = () => {
                 <div className="col-lg-6">
                   <div className="p-5">
                     <div className="text-center">
-                      <h1 className="h4 text-gray-900 mb-4">เข้าสู่ระบบ</h1>
+                      <h1 className="h4 text-gray-900 mb-4">
+                        {t("login_head")}
+                      </h1>
                     </div>
                     <form className="user" onSubmit={handleSubmit}>
                       <div className="form-group">
@@ -89,7 +92,7 @@ const Login = () => {
                           type="text"
                           className="form-control form-control-user"
                           id="username"
-                          placeholder="Username"
+                          placeholder={t("login.username")}
                           name="username"
                           value={formData.username}
                           onChange={handleChange}
@@ -104,7 +107,7 @@ const Login = () => {
                           type="password"
                           className="form-control form-control-user"
                           id="password"
-                          placeholder="Password"
+                          placeholder={t("login.password")}
                           name="password"
                           value={formData.password}
                           onChange={handleChange}
@@ -133,7 +136,7 @@ const Login = () => {
                         type="submit"
                         className="btn btn-primary btn-user btn-block"
                       >
-                        Login
+                        {t("login")}
                       </button>
                     </form>
                     <hr />
@@ -142,12 +145,12 @@ const Login = () => {
                         Forgot Password?
                       </a> */}
                       <Link to="/" className="small">
-                        <span>go Back Home</span>
+                        <span>{t("go_back_home")}</span>
                       </Link>
                     </div>
                     <div className="text-center">
                       <Link to="/register" className="small">
-                        <span> Create an Account!</span>
+                        <span> {t("create_account")}</span>
                       </Link>
                     </div>
                   </div>

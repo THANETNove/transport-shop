@@ -1,5 +1,18 @@
 {
   "lang_en": "English",
   "lang_th": "ภาษาไทย",
-  "lang_ch": "中國人"
+  "lang_ch": "中國人",
+  "system_product": "ระบบเช็คสินค้า จีน - ไทย",
+  "login": "login",
+  "register": "register",
+  "import_service": "บริการนำเข้า-ส่งออกสินค้าจากจีน-ไทยจัดการเคลียร์ภาษีแบบครบวงจร รับส่งแบบเหมาตู้ รับส่งแบบปลีก(พรีออเดอร์) พาเดินตลาดสั่งซื้อสินค้า และสั่งซื้อออนไลน์ มีระบบให้ติดตามสถานะสินค้าได้ตลอด 24 ชั่วโมง และสามารถสั่งซื้อสินค้าแบบออนไลน์ได้อย่างสะดวก",
+  "get_started": "Get Started",
+  "copyright": "© Copyright ",
+  "all_rights_reserved": ". All Rights Reserved",
+  "login_head": "เข้าสู่ระบบ",
+  "login.username":"Username",
+  "login.password":"Password",
+  "go_back_home": "go Back Home",
+  "create_account": "Create an Account!",
+  "register.create_account": "สร้างบัญชี"
 }

@@ -18,7 +18,7 @@ export default function Header() {
       <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
         <a className="logo  align-items-center">
           {/* <img src="assets/img/logo.png" alt /> */}
-          <span>ระบบเช็คสินค้า จีน - ไทย {t("welcome")}</span>
+          <span>{t("system_product")}</span>
         </a>
         <nav id="navbar" className="navbar">
           <ul>
@@ -44,12 +44,12 @@ export default function Header() {
             </li>
             <li>
               <Link to="/login" className="nav-link ">
-                <span>login</span>
+                <span>{t("login")}</span>
               </Link>
             </li>
             <li>
               <Link className="nav-link" to="/register">
-                register
+                {t("register")}
               </Link>
             </li>
             {/*  <li>
