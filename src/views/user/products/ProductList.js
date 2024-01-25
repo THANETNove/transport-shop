@@ -288,8 +288,14 @@ const ProductList = () => {
           }, 0)
           .toFixed(2)
       ); */
-    if (points.money > price) {
-      let point = points.money - price;
+
+    console.log(
+      "points.money > price",
+      parseFloat(points.money),
+      parseFloat(price)
+    );
+    if ((parseFloat(points.money), parseFloat(price))) {
+      let point = parseFloat(points.money) - parseFloat(price);
 
       const response = await Service.createIssueBill(
         user && user.id,
