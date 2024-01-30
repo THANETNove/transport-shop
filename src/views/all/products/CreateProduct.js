@@ -8,8 +8,10 @@ import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 const CreateProduct = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { status_list, product_type, status_code_data } = useSelector(
@@ -102,7 +104,7 @@ const CreateProduct = () => {
 
     // customer_code validation
     if (!formData.customer_code.trim()) {
-      newErrors.customer_code = "customer_code is required";
+      newErrors.customer_code = t("create_product.customer_code_required");
       isValid = false;
     }
 

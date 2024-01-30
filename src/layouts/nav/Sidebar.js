@@ -2,8 +2,10 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -39,31 +41,40 @@ const Sidebar = () => {
               <div className="sidebar-brand-icon">
                 <i class="fa-solid fa-users"></i>
               </div>
-              <span className="sidebar-brand-text mx-3 a-pointer"> User</span>
+              <span className="sidebar-brand-text mx-3 a-pointer">
+                {" "}
+                {t("siaebar.user")}
+              </span>
             </>
           ) : user && user.status == 1 ? (
             <>
               <div className="sidebar-brand-icon">
                 <i class="fa-solid fa-headset"></i>
               </div>
-              <span className="sidebar-brand-text mx-3 a-pointer"> Admin</span>
+              <span className="sidebar-brand-text mx-3 a-pointer">
+                {" "}
+                {t("siaebar.admin")}
+              </span>
             </>
           ) : (
             <>
               <div className="sidebar-brand-icon">
                 <i class="fa-solid fa-people-roof"></i>
               </div>
-              <span className="sidebar-brand-text mx-3 a-pointer">Manager</span>
+              <span className="sidebar-brand-text mx-3 a-pointer">
+                {" "}
+                {t("siaebar.manager")}
+              </span>
             </>
           )}
         </a>
 
         <hr className="sidebar-divider" />
-        <div className="sidebar-heading">Interface</div>
+        <div className="sidebar-heading">{t("siaebar.interface")}</div>
         <li className={activePath("/product-list")}>
           <Link className="nav-link" to="/product-list">
             <i class="fa-solid fa-table-columns"></i>
-            <span>พัสดุทั้งหมด</span>
+            <span>{t("siaebar.all_parcels")}</span>
           </Link>
         </li>
 
@@ -73,73 +84,73 @@ const Sidebar = () => {
             <li className={activePath("/product-code")}>
               <Link className="nav-link" to="/product-code">
                 <i class="fa-solid fa-layer-group"></i>
-                <span>สร้างรหัสตัวแทน</span>
+                <span>{t("siaebar.create_agent_code")}</span>
               </Link>
             </li>
             <li className={activePath("/money")}>
               <Link className="nav-link" to="/money">
                 <i class="fa-solid fa-sack-dollar"></i>
-                <span>เติมเงินเข้ากระเป๋า </span>
+                <span>{t("siaebar.money_wallet")} </span>
               </Link>
             </li>
             <li className={activePath("/record-money-wallet")}>
               <Link className="nav-link" to="/record-money-wallet">
                 <i class="fa-solid fa-money-bill-transfer"></i>
-                <span>ประวัติเติมเงิน </span>
+                <span>{t("siaebar.top_up_history")} </span>
               </Link>
             </li>
             <li className={activePath("/money-wallet")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-warehouse"></i>
-                <span>สินค้าเข้าโกดังไทย</span>
+                <span>{t("siaebar.entering_thai")}</span>
               </Link>
             </li>
             <li className={activePath("/bill-all")}>
               <Link className="nav-link" to="/bill-all">
                 <i class="fa-solid fa-file-invoice"></i>
-                <span>ออกบิล</span>
+                <span>{t("siaebar.issue_bil")}</span>
               </Link>
             </li>
             <li className={activePath("/bill-list")}>
               <Link className="nav-link" to="/bill-list">
                 <i class="fa-solid fa-file-invoice"></i>
-                <span>รายการพัสดุออกบิล</span>
+                <span>{t("siaebar.billed_list")}</span>
               </Link>
             </li>
             <li className={activePath("/money-wallet1")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-arrow-up-9-1"></i>
-                <span>แจ้งเลขพัสดุเพิ่มเติม</span>
+                <span>{t("siaebar.additional")}</span>
               </Link>
             </li>
             <li className={activePath("/money-wallet1")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-brands fa-product-hunt"></i>
-                <span>สั่งซื้อสินค้าจีน</span>
+                <span>{t("siaebar.order_chinese")}</span>
               </Link>
             </li>
             <li className={activePath("/money-wallet1")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-qrcode"></i>
-                <span>แจ้งQCสินค้า</span>
+                <span>{t("siaebar.notify_qr")}</span>
               </Link>
             </li>
             <li className={activePath("/money-wallet1")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-warehouse"></i>
-                <span>ที่อยู่โกดังจีน </span>
+                <span>{t("siaebar.chinese_address")} </span>
               </Link>
             </li>
             <li className={activePath("/money-wallet1")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-server"></i>
-                <span>ใช้บริการล่ามรายครึ่งปี </span>
+                <span>{t("siaebar.interpreter")} </span>
               </Link>
             </li>
             <li className={activePath("/money-wallet1")}>
               <Link className="nav-link" to="/money-wallet">
                 <i class="fa-solid fa-money-bill-transfer"></i>
-                <span>แลกเงิน </span>
+                <span>{t("siaebar.exchange_money")} </span>
               </Link>
             </li>
           </>

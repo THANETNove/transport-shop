@@ -10,8 +10,10 @@ import DatePicker from "react-datepicker";
 import ExcelExport from "./ExcelExport";
 import ExcelImport from "./ExcelImport";
 import ReactPaginate from "react-paginate";
+import { useTranslation } from "react-i18next";
 
 const ProductList = () => {
+  const { t } = useTranslation();
   const user = useSelector((state) => state.auth.user);
   const { status_list, product_type, status_code_data } = useSelector(
     (state) => state.post
@@ -290,7 +292,7 @@ const ProductList = () => {
                   <option value="" disabled>
                     {" "}
                     {/* Use value="" to represent the default "Select" option */}
-                    เลือก สถานะ
+                    {t("product_list.select_status")}
                   </option>
                   {statusList &&
                     statusList.map((status) => (
@@ -320,7 +322,7 @@ const ProductList = () => {
                   className="btn btn-primary btn-sm"
                   onClick={() => showProduct(product.id)}
                 >
-                  show
+                  {t("product_list.show")}
                 </a>
               </td>
               <td>
@@ -328,19 +330,19 @@ const ProductList = () => {
                   className="btn btn-secondary btn-sm"
                   onClick={() => getEdit(product.id)}
                 >
-                  Edit
+                  {t("product_list.edit")}
                 </button>
               </td>
               <td>
                 <button
                   className="btn btn-danger btn-sm"
                   onClick={() => {
-                    if (window.confirm("คุณต้องการลบ ข้อมูลใช่หรือไม่ ! ")) {
+                    if (window.confirm(t("product_list.delete"))) {
                       deleteProductList(product.id, product.image);
                     }
                   }}
                 >
-                  delete
+                  {t("product_list.delete")}
                 </button>
               </td>
             </tr>
@@ -370,18 +372,18 @@ const ProductList = () => {
               {/*  <h6 className="m-0 font-weight-bold text-primary">เพิ่มพัสดุ</h6> */}
               {user.status != 0 ? (
                 <Link className="btn btn-primary" to="/create-product">
-                  เพิ่มพัสดุ
+                  {t("product_list.add_parcel")}
                 </Link>
               ) : (
                 <h6 className="m-0 font-weight-bold text-primary">
-                  พัสดุทั้งหมด
+                  {t("product_list.all_parcel")}
                 </h6>
               )}
 
               <div>
                 {statusProductList == "success" && (
                   <span className="color-success">
-                    product added successfully!
+                    {t("product_list.added_successfully")}
                   </span>
                 )}
                 <span
@@ -400,7 +402,7 @@ const ProductList = () => {
                   <input
                     type="text"
                     className="form-control  background-white bg-light border-0 small"
-                    placeholder="Search รหัสลูกค้า"
+                    placeholder={t("product_list.search_customer")}
                     aria-label="Search"
                     onChange={searchData}
                     aria-describedby="basic-addon2"
@@ -432,31 +434,31 @@ const ProductList = () => {
                             className="form-check-label"
                             for="flexCheckDefault"
                           >
-                            All
+                            {t("product_list.all")}
                           </label>
                         </div>
                       </th>
-                      <th scope="col">รหัสลูกค้า</th>
-                      <th scope="col">เเทคจีน</th>
-                      <th scope="col">รหัสโกดัง</th>
-                      <th scope="col">เลขตู้</th>
+                      <th scope="col">{t("product_list.customer")}</th>
+                      <th scope="col">{t("product_list.chinese_tack")}</th>
+                      <th scope="col">{t("product_list.warehouse")}</th>
+                      <th scope="col">{t("product_list.cabinet")}</th>
                       <th scope="col" className="td-width">
-                        ถึงโกดังจีน
+                        {t("product_list.chinese_warehouse")}
                       </th>
-                      <th scope="col">ปิดตู้</th>
-                      <th scope="col">ถึงไทย</th>
-                      <th scope="col">สถานะ</th>
+                      <th scope="col">{t("product_list.close_cabinet")}</th>
+                      <th scope="col">{t("product_list.to_thailand")}</th>
+                      <th scope="col">{t("product_list.status")}</th>
                       {/*  <th scope="col">จำนวน</th> */}
                       {/*     <th scope="col">ขนาด</th>
             <th scope="col">คิวต่อชิ้น</th>
             <th scope="col">น้ำหนัก</th>
             <th scope="col">คิวรวม</th> */}
-                      <th scope="col">ยอดชำระ จีน-ไทย</th>
-                      <th scope="col">show</th>
+                      <th scope="col">{t("product_list.payment_amount")}</th>
+                      <th scope="col">{t("product_list.show")}</th>
                       {user.status != 0 && (
                         <>
-                          <th scope="col">Edit</th>
-                          <th scope="col">delete</th>
+                          <th scope="col">{t("product_list.edit")}</th>
+                          <th scope="col">{t("product_list.delete")}</th>
                         </>
                       )}
                     </tr>

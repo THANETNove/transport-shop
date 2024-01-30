@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CSVLink } from "react-csv";
+import { useTranslation } from "react-i18next";
 const CSVExport = () => {
+  const { t } = useTranslation();
   const { product, statusProduct } = useSelector((state) => state.post);
 
   const [productExport, setProductExport] = useState(product);
@@ -113,7 +115,7 @@ const CSVExport = () => {
 
   return (
     <div className="col-8 col-sm-8  col-md-6 col-lg-3">
-      <h6>เลือก Export</h6>
+      <h6>{t("product_list.select_export")}</h6>
       <div className="mb-3">
         {/* <label for="exampleFormControlInput1" className="form-label">
           รหัสลูกค้า
@@ -137,7 +139,7 @@ const CSVExport = () => {
           onChange={selectProductExport}
         />
         <label className="form-check-label" for="flexCheckDefault">
-          วันที่ถึงโกดังจีน
+          {t("product_list.date_chinese")}
         </label>
       </div>
       <div className="form-check">
@@ -150,7 +152,7 @@ const CSVExport = () => {
           id="flexCheckDefault"
         />
         <label className="form-check-label" for="flexCheckDefault">
-          วันที่ปิดตู้
+          {t("product_list.closed_date")}
         </label>
       </div>
       <div className="form-check">
@@ -163,7 +165,7 @@ const CSVExport = () => {
           onClick={selectProductExport}
         />
         <label className="form-check-label" for="flexCheckDefault">
-          วันที่ถึงโกดังไทย
+          {t("product_list.date_thai")}
         </label>
       </div>
       {csvData != null && (
@@ -173,10 +175,12 @@ const CSVExport = () => {
             separator={";"} // Use semicolon as the separator
             filename={"sample.csv"}
           >
-            Export to CSV
+            {t("product_list.export_csv")}
           </CSVLink>
           <br />
-          <h6>จำนวน Data Export {csvData.length}</h6>
+          <h6>
+            {t("product_list.data_export")} {csvData.length}
+          </h6>
         </>
       )}
     </div>
