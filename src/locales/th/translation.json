@@ -137,7 +137,7 @@
   "price_per_user.user_parcel_type": "ประเภทพัสดุของ user",
   "price_per_user.edit_user_parcel_type": "เเก้ไขประเภทพัสดุของ user",
   "check_bill.please_upload": "กรุณาอัพโหลดภาพ",
-  "check_bill.update_successful": "update status successful",
+  "check_bill.update_successful": "update สถานะสำเร็จ",
   "check_bill.update_unsuccessful": "update สถานะไม่สำเร็จ",
   "check_bill.canceled_successful": "ถูกยกเลิก สถานะสำเร็จ",
   "check_bill.canceled_unsuccessful": "ถูกยกเลิก สถานะไม่สำเร็จ",
@@ -171,5 +171,6 @@
   "check_bill.paid": "(ชำระแล้ว)",
   "check_bill.choose_transportation": "เลือกขนส่ง",
   "check_bill.make_up": "นัดรับ",
-  "check_bill.canceled": "ถูกยกเลิก"
+  "check_bill.canceled": "ถูกยกเลิก",
+  "check_bill.n": "น."
 }
