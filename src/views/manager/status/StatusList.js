@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Service from "../../../server_api/server";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export default function StatusList() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { status_list } = useSelector((state) => state.post);
   const [statusList, setStatusList] = useState(status_list);
@@ -53,7 +55,7 @@ export default function StatusList() {
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               {/*  <h6 className="m-0 font-weight-bold text-primary">เพิ่มพัสดุ</h6> */}
               <Link className="btn btn-primary" to="/create-status">
-                เพิ่ม สถานะ
+                {t("create_status.add_status")}
               </Link>
               <span
                 className={
@@ -71,9 +73,9 @@ export default function StatusList() {
                 <table className="table  align-middle table-hover">
                   <thead>
                     <tr>
-                      <th scope="col">id</th>
-                      <th scope="col">ชื่อ สถานะ</th>
-                      <th scope="col">delete</th>
+                      <th scope="col">{t("show_status.id")}</th>
+                      <th scope="col">{t("create_status.name_status")}</th>
+                      <th scope="col">{t("create_product.delete")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -95,7 +97,7 @@ export default function StatusList() {
                                 }
                               }}
                             >
-                              delete
+                              {t("create_product.delete")}
                             </button>
                           </td>
                         </tr>
