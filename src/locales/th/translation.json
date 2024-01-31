@@ -123,5 +123,6 @@
   "show_product.long_size": "ขนาดความยาว",
   "show_product.height_size": "ขนาดความสุง",
   "show_product.queue_per": "คิวต่อชิ้น",
-  "show_product.weight_per": "น้ำหนักต่อชิ้น"
+  "show_product.weight_per": "น้ำหนักต่อชิ้น",
+  "create_status.name_status": "ชื่อ สถานะ"
 }

@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Service from "../../../server_api/server";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export default function CreateStatus() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
@@ -56,7 +58,9 @@ export default function CreateStatus() {
         <div className="col-xl-12 col-lg-12">
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <h6 className="m-0 font-weight-bold text-primary">ชื่อ สถานะ</h6>
+              <h6 className="m-0 font-weight-bold text-primary">
+                {t("create_status.name_status")}
+              </h6>
             </div>
 
             <div className="card-body ">
@@ -69,7 +73,7 @@ export default function CreateStatus() {
                           type="text"
                           className="form-control form-control-user"
                           id="statusProduct"
-                          placeholder="ชื่อ สถานะ"
+                          placeholder={t("create_status.name_status")}
                           name="statusProduct"
                           value={formData.statusProduct}
                           onChange={handleChange}
@@ -86,7 +90,7 @@ export default function CreateStatus() {
                       type="submit"
                       className="btn btn-primary btn-user btn-block mt-5 mb-5"
                     >
-                      บันทึก
+                      {t("create_product.save")}
                     </button>
                   </form>
                 </div>
