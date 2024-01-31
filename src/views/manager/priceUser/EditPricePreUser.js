@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import Service from "../../../server_api/server";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const EditPricePreUser = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -81,7 +83,7 @@ const EditPricePreUser = () => {
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <h6 className="m-0 font-weight-bold text-primary">
-                เเก้ไขประเภทพัสดุของ user
+                {t("price_per_user.edit_user_parcel_type")}
               </h6>
             </div>
 
@@ -92,14 +94,14 @@ const EditPricePreUser = () => {
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
                         <label for="inputPassword6" className="col-form-label">
-                          รหัสลูกค้า
+                          {t("customer_id")}
                         </label>
                         <input
                           type="text"
                           className="form-control form-control-user"
                           id="username"
                           name="username"
-                          placeholder="รหัสลูกค้า"
+                          placeholder={t("customer_id")}
                           value={userCode && userCode.customerCode}
                           disabled
                         />
@@ -108,7 +110,7 @@ const EditPricePreUser = () => {
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
                         <label for="inputPassword6" className="col-form-label">
-                          ประเภทพัสดุ
+                          {t("create_product.parcel_type")}
                         </label>
                         <select
                           className="form-control"
@@ -122,14 +124,14 @@ const EditPricePreUser = () => {
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
                         <label for="inputPassword6" className="col-form-label">
-                          KG
+                          {t("price_per_user.kg")}
                         </label>
                         <input
                           type="text"
                           className="form-control form-control-user"
                           id="kg"
                           name="kg"
-                          placeholder="kg"
+                          placeholder={t("price_per_user.kg")}
                           value={formData && formData.kg}
                           onChange={handleChange}
                         />
@@ -141,13 +143,13 @@ const EditPricePreUser = () => {
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
                         <label for="inputPassword6" className="col-form-label">
-                          CBM
+                          {t("price_per_user.cbm")}
                         </label>
                         <input
                           type="text"
                           className="form-control form-control-user"
                           id="cbm"
-                          placeholder="cbm"
+                          placeholder={t("price_per_user.cbm")}
                           name="cbm"
                           value={formData && formData.cbm}
                           onChange={handleChange}
@@ -162,7 +164,7 @@ const EditPricePreUser = () => {
                       type="submit"
                       className="btn btn-primary btn-user btn-block mt-5 mb-5"
                     >
-                      บันทึก
+                      {t("create_product.save")}
                     </button>
                   </form>
                 </div>
