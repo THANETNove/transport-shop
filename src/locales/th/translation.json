@@ -117,5 +117,11 @@
   "create_product.edit_parcel": "เเก้ไขรายละเอียดพัสดุ",
   "create_product.select_date": "Select date",
   "create_product.parcel_type": "ประเภทพัสดุ",
-  "create_product.image_preview": "Image Preview"
+  "create_product.image_preview": "Image Preview",
+  "create_product.parcel_details": "รายละเอียดพัสดุ",
+  "show_product.width": "ขนาดความกว้าง",
+  "show_product.long_size": "ขนาดความยาว",
+  "show_product.height_size": "ขนาดความสุง",
+  "show_product.queue_per": "คิวต่อชิ้น",
+  "show_product.weight_per": "น้ำหนักต่อชิ้น"
 }

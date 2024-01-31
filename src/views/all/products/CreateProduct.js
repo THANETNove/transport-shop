@@ -884,7 +884,7 @@ const CreateProduct = () => {
                                 name="weight"
                                 placeholder={`${t(
                                   "create_product.the_weight"
-                                )} ชิ้นที่ ${index + 1}`}
+                                )}  ${index + 1}`}
                                 value={inputField.weightFields}
                                 onChange={(event) =>
                                   handleChangeInput(
