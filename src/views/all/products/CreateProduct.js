@@ -110,25 +110,27 @@ const CreateProduct = () => {
 
     // tech_china validation
     if (!formData.tech_china.trim()) {
-      newErrors.customerCode = "tech_china is required";
+      newErrors.customerCode = t("create_product.tech_china_required");
       isValid = false;
     }
 
     // warehouse_code validation
     if (!formData.warehouse_code.trim()) {
-      newErrors.warehouse_code = "warehouse_code is required";
+      newErrors.warehouse_code = t("create_product.warehouse_code_required");
       isValid = false;
     }
 
     // cabinet_number validation
     if (!formData.cabinet_number.trim()) {
-      newErrors.cabinet_number = "cabinet_number is required";
+      newErrors.cabinet_number = t("create_product.cabinet_number_required");
       isValid = false;
     }
 
     // chinese_warehouse validation
     if (!formData.chinese_warehouse) {
-      newErrors.chinese_warehouse = "chinese_warehouse is required";
+      newErrors.chinese_warehouse = t(
+        "create_product.chinese_warehouse_required"
+      );
       isValid = false;
     }
 
@@ -146,10 +148,10 @@ const CreateProduct = () => {
     }
     // total_weight validation
     if (!formData.total_weight.trim()) {
-      newErrors.total_weight = "total_weight is required";
+      newErrors.total_weight = t("create_product.total_weight_required");
       isValid = false;
     } else if (isNaN(Number(formData.total_weight))) {
-      newErrors.total_weight = "total_weight must be a number";
+      newErrors.total_weight = t("create_product.total_weight_number");
       isValid = false;
     }
     if (typeof formData.total_queue !== "string") {
@@ -157,10 +159,10 @@ const CreateProduct = () => {
     }
     // total_queue validation
     if (!formData.total_queue.trim()) {
-      newErrors.total_queue = "total_queue is required";
+      newErrors.total_queue = t("create_product.total_queue_required");
       isValid = false;
     } else if (isNaN(Number(formData.total_queue))) {
-      newErrors.total_queue = "total_queue must be a number";
+      newErrors.total_queue = t("create_product.total_queue_number");
       isValid = false;
     }
 
@@ -170,18 +172,20 @@ const CreateProduct = () => {
     }
     // payment_amount_chinese_thai_delivery validation
     if (!formData.payment_amount_chinese_thai_delivery.trim()) {
-      newErrors.payment_amount_chinese_thai_delivery =
-        "payment_amount_chinese_thai_delivery is required";
+      newErrors.payment_amount_chinese_thai_delivery = t(
+        "create_product.payment_required"
+      );
       isValid = false;
     } else if (isNaN(Number(formData.payment_amount_chinese_thai_delivery))) {
-      newErrors.payment_amount_chinese_thai_delivery =
-        "payment_amount_chinese_thai_delivery must be a number";
+      newErrors.payment_amount_chinese_thai_delivery = t(
+        "create_product.payment_number"
+      );
       isValid = false;
     }
 
     // product_type validation
     if (!formData.product_type.trim()) {
-      newErrors.product_type = "product_type is required";
+      newErrors.product_type = t("create_product.product_type_required");
       isValid = false;
     }
 
@@ -229,7 +233,7 @@ const CreateProduct = () => {
     } else {
       setErrors((prevState) => ({
         ...prevState,
-        ["customer_code"]: "รหัสลูกค้าไม่ตรง",
+        ["customer_code"]: t("create_product.not_match"),
       }));
     }
   };
@@ -274,20 +278,20 @@ const CreateProduct = () => {
         setFormData((prevState) => ({
           ...prevState,
           ["payment_amount_chinese_thai_delivery"]: calculate_kg.toFixed(2),
-          thinkingFrom: "น้ำหนัก",
+          thinkingFrom: t("create_product.weight"),
         }));
       } else {
         // กรณี calculate_cbm มากกว่าหรือเท่ากับ calculate_kg
         setFormData((prevState) => ({
           ...prevState,
           ["payment_amount_chinese_thai_delivery"]: calculate_cbm.toFixed(2),
-          thinkingFrom: "ปริมาตร",
+          thinkingFrom: t("create_product.volume"),
         }));
       }
     } else {
       setErrors((prevState) => ({
         ...prevState,
-        ["product_type"]: "เลือกประเภทพัสดุ",
+        ["product_type"]: t("create_product.select_parcel"),
       }));
     }
   };
@@ -479,7 +483,9 @@ const CreateProduct = () => {
         <div className="col-xl-12 col-lg-12">
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <h6 className="m-0 font-weight-bold text-primary">สร้างพัสดุ</h6>
+              <h6 className="m-0 font-weight-bold text-primary">
+                {t("create_product.create_parcel")}
+              </h6>
               {/*  <h6 className="m-0 font-weight-bold text-primary">
                 เพิ่มปุ่มชำระเงิน (ชำระบิลนี้)
               </h6> */}
@@ -495,7 +501,7 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-labe"
                         >
-                          รหัสลูกค้า
+                          {t("customer_id")}
                         </label>
                         <input
                           type="text"
@@ -503,7 +509,7 @@ const CreateProduct = () => {
                           id="customer_code"
                           name="customer_code"
                           value={formData.customer_code}
-                          placeholder="รหัสลูกค้า"
+                          placeholder={t("customer_id")}
                           onChange={handleChangeCustomerCode}
                         />
 
@@ -518,14 +524,14 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-labe"
                         >
-                          เเทคจีน
+                          {t("product_list.chinese_tack")}
                         </label>
                         <input
                           type="text"
                           className="form-control form-control-user"
                           id="tech_china"
                           name="tech_china"
-                          placeholder="เเทคจีน"
+                          placeholder={t("product_list.chinese_tack")}
                           onChange={handleChange}
                         />
                         {errors.tech_china && (
@@ -539,13 +545,13 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label"
                         >
-                          รหัสโกดัง
+                          {t("product_list.warehouse")}
                         </label>
                         <input
                           type="text"
                           className="form-control form-control-user"
                           id="warehouse_code"
-                          placeholder="รหัสโกดัง"
+                          placeholder={t("product_list.warehouse")}
                           name="warehouse_code"
                           onChange={handleChange}
                         />
@@ -560,13 +566,13 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-labe"
                         >
-                          เลขตู้
+                          {t("product_list.cabinet")}
                         </label>
                         <input
                           type="text"
                           className="form-control form-control-user"
                           id="cabinet_number"
-                          placeholder="เลขตู้"
+                          placeholder={t("product_list.cabinet")}
                           name="cabinet_number"
                           onChange={handleChange}
                         />
@@ -583,7 +589,7 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label mr-4"
                         >
-                          ถึงโกดังจีน
+                          {t("product_list.chinese_warehouse")}
                         </label>
                         <DatePicker
                           /*  selected={startDate} */
@@ -608,7 +614,7 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label mr-5"
                         >
-                          ปิดตู้
+                          {t("product_list.close_cabinet")}
                         </label>
                         <DatePicker
                           /*  selected={startDate} */
@@ -617,7 +623,7 @@ const CreateProduct = () => {
                           id="close_cabinet"
                           name="close_cabinet"
                           className="form-control form-control-user"
-                          placeholder="ปิดตู้"
+                          placeholder={t("product_list.close_cabinet")}
                           onChange={(date) =>
                             handleDateChange("close_cabinet", date)
                           }
@@ -631,7 +637,7 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label mr-5"
                         >
-                          ถึงไทย
+                          {t("product_list.to_thailand")}
                         </label>
                         <DatePicker
                           /* selected={startDate} */
@@ -640,7 +646,7 @@ const CreateProduct = () => {
                           name="to_thailand"
                           placeholderText="Select date"
                           className="form-control form-control-user w-100"
-                          placeholder="ถึงไทย"
+                          placeholder={t("product_list.to_thailand")}
                           onChange={(date) =>
                             handleDateChange("to_thailand", date)
                           }
@@ -655,7 +661,7 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label"
                         >
-                          สถานะสินค้า
+                          {t("create_product.product_status")}
                         </label>
                         <select
                           className="form-control"
@@ -710,13 +716,15 @@ const CreateProduct = () => {
                               for="exampleFormControlInput1"
                               className="form-label"
                             >
-                              จำนวน
+                              {t("create_product.quantity")}
                             </label>
                             <input
                               type="text"
                               className="form-control form-control-user"
                               id="quantity"
-                              placeholder={`จำนวน ${index + 1}`}
+                              placeholder={`${t("create_product.quantity")} ${
+                                index + 1
+                              }`}
                               name="quantity"
                               value={inputField.quantity}
                               onChange={(event) =>
@@ -734,13 +742,15 @@ const CreateProduct = () => {
                               for="exampleFormControlInput1"
                               className="form-label"
                             >
-                              ขนาดความกว้างชิ้นที่ {index + 1}
+                              {t("create_product.width_size")} {index + 1}
                             </label>
                             <input
                               type="text"
                               className="form-control form-control-user"
                               id="wide_size"
-                              placeholder={`ขนาดความกว้างชิ้นที่ ${index + 1}`}
+                              placeholder={`${t("create_product.width_size")} ${
+                                index + 1
+                              }`}
                               name="wide_size"
                               value={inputField.wideSize}
                               onChange={(event) =>
@@ -758,13 +768,15 @@ const CreateProduct = () => {
                               for="exampleFormControlInput1"
                               className="form-label"
                             >
-                              ขนาดความยาวชิ้นที่ {index + 1}
+                              {t("create_product.the_length")} {index + 1}
                             </label>
                             <input
                               type="long_size"
                               className="form-control form-control-user"
                               id="long_size"
-                              placeholder={`ขนาดความยาวชิ้นที่ ${index + 1}`}
+                              placeholder={`${t("create_product.the_length")} ${
+                                index + 1
+                              }`}
                               name="long_size"
                               value={inputField.lengthSize}
                               onChange={(event) =>
@@ -782,13 +794,15 @@ const CreateProduct = () => {
                               for="exampleFormControlInput1"
                               className="form-label"
                             >
-                              ขนาดความสุงชิ้นที่ {index + 1}
+                              {t("create_product.height")} {index + 1}
                             </label>
                             <input
                               type="text"
                               className="form-control form-control-user"
                               id="height_size"
-                              placeholder={`ขนาดความสุงชิ้นที่ ${index + 1}`}
+                              placeholder={`${t("create_product.height")} ${
+                                index + 1
+                              }`}
                               name="height_size"
                               value={inputField.heightSize}
                               onChange={(event) =>
@@ -807,7 +821,7 @@ const CreateProduct = () => {
                                 for="exampleFormControlInput1"
                                 className="form-label"
                               >
-                                คิวชิ้นที่ {index + 1}
+                                {t("create_product.cue")} {index + 1}
                               </label>
                               <input
                                 type="text"
@@ -815,7 +829,9 @@ const CreateProduct = () => {
                                 id="cue_per_piece"
                                 name="cue_per_piece"
                                 /*  value={formData.cue_per_piece} */
-                                placeholder={`คิวต่อชิ้นที่ ${index + 1}`}
+                                placeholder={`${t("create_product.cue")} ${
+                                  index + 1
+                                }`}
                                 value={inputField.cuePerPiece}
                                 onChange={(event) =>
                                   handleChangeInput(index, "cuePerPiece", event)
@@ -832,7 +848,7 @@ const CreateProduct = () => {
                                 for="exampleFormControlInput1"
                                 className="form-label"
                               >
-                                คิวรวมชิ้นที่ {index + 1}
+                                {t("create_product.the_queue")} {index + 1}
                               </label>
                               <input
                                 type="text"
@@ -840,7 +856,9 @@ const CreateProduct = () => {
                                 id="cue_per_piece_sum"
                                 name="cue_per_piece_sum"
                                 /*  value={formData.cue_per_piece} */
-                                placeholder={`คิวรวมชิ้นที่ ${index + 1}`}
+                                placeholder={`${t(
+                                  "create_product.the_queue"
+                                )} ${index + 1}`}
                                 value={inputField.cuePerPieceSum}
                                 onChange={(event) =>
                                   handleChangeInput(index, "cuePerPiece", event)
@@ -857,14 +875,16 @@ const CreateProduct = () => {
                                 for="exampleFormControlInput1"
                                 className="form-label"
                               >
-                                น้ำหนักชิ้นที่ {index + 1}
+                                {t("create_product.the_weight")} {index + 1}
                               </label>
                               <input
                                 type="text"
                                 className="form-control form-control-user"
                                 id="weight"
                                 name="weight"
-                                placeholder={`น้ำหนัก ชิ้นที่ ${index + 1}`}
+                                placeholder={`${t(
+                                  "create_product.the_weight"
+                                )} ชิ้นที่ ${index + 1}`}
                                 value={inputField.weightFields}
                                 onChange={(event) =>
                                   handleChangeInput(
@@ -885,14 +905,16 @@ const CreateProduct = () => {
                                 for="exampleFormControlInput1"
                                 className="form-label"
                               >
-                                น้ำหนักรวมชิ้นที่ {index + 1}
+                                {t("create_product.total_weigh")} {index + 1}
                               </label>
                               <input
                                 type="text"
                                 className="form-control form-control-user"
                                 id="weightSum"
                                 name="weightSum"
-                                placeholder={`น้ำหนัก ชิ้นที่ ${index + 1}`}
+                                placeholder={`${t(
+                                  "create_product.total_weigh"
+                                )} ${index + 1}`}
                                 value={inputField.weightFieldsSum}
                                 onChange={(event) =>
                                   handleChangeInput(
@@ -915,7 +937,7 @@ const CreateProduct = () => {
                                   className="btn btn-danger"
                                   onClick={() => handleRemoveFields(index)}
                                 >
-                                  ลบ
+                                  {t("create_product.delete")}
                                 </button>
                               </div>
                             )}
@@ -928,7 +950,7 @@ const CreateProduct = () => {
                           className="btn btn-primary"
                           onClick={handleAddFields}
                         >
-                          เพิ่ม Input Fields
+                          {t("create_product.add_Input")}
                         </button>
                       </div>
                     </div>
@@ -938,7 +960,7 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label"
                         >
-                          น้ำหนักรวม
+                          {t("create_product.total_weigh_all")}
                         </label>
                         <input
                           type="text"
@@ -946,7 +968,7 @@ const CreateProduct = () => {
                           id="total_weight"
                           name="total_weight"
                           value={formData.total_weight}
-                          placeholder="น้ำหนักรวม"
+                          placeholder={t("create_product.total_weigh_all")}
                           onChange={handleChange}
                         />
                         {errors.total_weight && (
@@ -960,13 +982,13 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label"
                         >
-                          คิวรวม
+                          {t("create_product.total_queue")}
                         </label>
                         <input
                           type="text"
                           className="form-control form-control-user"
                           id="total_queue"
-                          placeholder="คิวรวม"
+                          placeholder={t("create_product.total_queue")}
                           name="total_queue"
                           value={formData.total_queue}
                           onChange={handleChange}
@@ -982,7 +1004,7 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label"
                         >
-                          ประเภทพัสดุ
+                          {t("create_product.parcel_type")}
                         </label>
                         <select
                           className="form-select"
@@ -991,7 +1013,7 @@ const CreateProduct = () => {
                           onChange={handleChangeType}
                           aria-label="Default select example"
                         >
-                          <option>เลือกประเภทพัสดุ</option>
+                          <option>{t("create_product.select_parcel")}</option>
                           {userCode &&
                             userCode
                               .filter(
@@ -1019,7 +1041,7 @@ const CreateProduct = () => {
                           for="exampleFormControlInput1"
                           className="form-label"
                         >
-                          ยอดชำระค่าจัดส่ง จีน-ไทย
+                          {t("create_product.total_cost_china_thailand")}
                         </label>
                         <input
                           type="text"
@@ -1027,7 +1049,9 @@ const CreateProduct = () => {
                           id="payment_amount_chinese_thai_delivery"
                           name="payment_amount_chinese_thai_delivery"
                           value={formData.payment_amount_chinese_thai_delivery}
-                          placeholder="ยอดชำระค่าจัดส่ง จีน-ไทย"
+                          placeholder={t(
+                            "create_product.total_cost_china_thailand"
+                          )}
                           onChange={handleChange}
                         />
                         {errors.payment_amount_chinese_thai_delivery && (
@@ -1045,7 +1069,7 @@ const CreateProduct = () => {
                           id="image"
                           name="image"
                           onChange={handleImageChange}
-                          placeholder="อัพโหลดไฟล์ภาพ"
+                          placeholder={t("create_product.upload_image_file")}
                         />
                         {errors.image && (
                           <div className="error-from">{errors.image}</div>
@@ -1069,7 +1093,7 @@ const CreateProduct = () => {
                       type="submit"
                       className="btn btn-primary btn-user btn-block mt-5 mb-5"
                     >
-                      บันทึก
+                      {t("create_product.save")}
                     </button>
                   </form>
                 </div>
