@@ -175,10 +175,12 @@ const BillList = () => {
     showDataBill &&
     showDataBill.reduce((total, item) => {
       const fields = JSON.parse(item.inputFields);
-      const itemQuantity = fields.reduce((itemTotal, field) => {
-        const quantity = parseFloat(field.quantity) || 0;
-        return itemTotal + quantity;
-      }, 0);
+      const itemQuantity =
+        fields &&
+        fields.reduce((itemTotal, field) => {
+          const quantity = parseFloat(field.quantity) || 0;
+          return itemTotal + quantity;
+        }, 0);
       return total + itemQuantity;
     }, 0);
 
