@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 import Service from "../../../server_api/server";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const CreatePricePreUser = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
@@ -142,7 +144,7 @@ const CreatePricePreUser = () => {
 
   console.log("product_type", product_type);
   console.log("priceUser", priceUser);
-//thiuserHPQ4ei
+  //thiuserHPQ4ei
   return (
     <div className="container-fluid">
       <div className="row">
@@ -150,7 +152,7 @@ const CreatePricePreUser = () => {
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <h6 className="m-0 font-weight-bold text-primary">
-                ประเภทพัสดุของ user
+                {t("price_per_user.user_parcel_type")}
               </h6>
             </div>
 
@@ -161,14 +163,14 @@ const CreatePricePreUser = () => {
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
                         <label for="inputPassword6" className="col-form-label">
-                          รหัสลูกค้า
+                          {t("customer_id")}
                         </label>
                         <input
                           type="text"
                           className="form-control form-control-user"
                           id="username"
                           name="username"
-                          placeholder="รหัสลูกค้า"
+                          placeholder={t("customer_id")}
                           value={formData.username}
                           onChange={handleChangeUser}
                         />
@@ -180,14 +182,14 @@ const CreatePricePreUser = () => {
                           className="btn btn-danger mt-2"
                           onClick={handleClearUsername}
                         >
-                          ลบ
+                          {t("create_product.delete")}
                         </button>
                       </div>
                     </div>
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
                         <label for="inputPassword6" className="col-form-label">
-                          ประเภทพัสดุ
+                          {t("create_product.parcel_type")}
                         </label>
                         <select
                           className="form-control"
@@ -197,7 +199,9 @@ const CreatePricePreUser = () => {
                           onChange={handleChange}
                           aria-label="Default select example"
                         >
-                          <option selected>เลือก สถานะ</option>
+                          <option selected>
+                            {t("product_list.select_status")}
+                          </option>
                           {priceUser && priceUser.length === 0
                             ? product_type &&
                               product_type.map((pro_type) => (
@@ -226,14 +230,14 @@ const CreatePricePreUser = () => {
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
                         <label for="inputPassword6" className="col-form-label">
-                          KG
+                          {t("price_per_user.kg")}
                         </label>
                         <input
                           type="text"
                           className="form-control form-control-user"
                           id="kg"
                           name="kg"
-                          placeholder="kg"
+                          placeholder={t("price_per_user.kg")}
                           value={formData.kg}
                           onChange={handleChange}
                         />
@@ -245,13 +249,13 @@ const CreatePricePreUser = () => {
                     <div className="form-group">
                       <div className="col-sm-12 mb-3 mb-sm-0">
                         <label for="inputPassword6" className="col-form-label">
-                          CBM
+                          {t("price_per_user.cbm")}
                         </label>
                         <input
                           type="text"
                           className="form-control form-control-user"
                           id="cbm"
-                          placeholder="cbm"
+                          placeholder={t("price_per_user.cbm")}
                           name="cbm"
                           value={formData.cbm}
                           onChange={handleChange}
@@ -266,7 +270,7 @@ const CreatePricePreUser = () => {
                       type="submit"
                       className="btn btn-primary btn-user btn-block mt-5 mb-5"
                     >
-                      บันทึก
+                      {t("create_product.save")}
                     </button>
                   </form>
                 </div>
