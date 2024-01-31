@@ -130,5 +130,8 @@
   "show_status.id": "id",
   "product_type.add_parcel_type": "เพิ่ม ประเภทพัสดุ",
   "create_product_type.name_required": "name is required",
-  "create_product_type.name_parcel_type": "ชื่อประเภทพัสดุ"
+  "create_product_type.name_parcel_type": "ชื่อประเภทพัสดุ",
+  "price_per_user.price_per_user": "เพิ่ม ราคาต่อ USER",
+  "price_per_user.kg": "KG",
+  "price_per_user.cbm": "CBM"
 }

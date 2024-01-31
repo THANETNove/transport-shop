@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Service from "../../../server_api/server";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const PricePreUser = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { users_code } = useSelector((state) => state.get);
@@ -44,7 +46,7 @@ const PricePreUser = () => {
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               {/*  <h6 className="m-0 font-weight-bold text-primary">เพิ่มพัสดุ</h6> */}
               <Link className="btn btn-primary" to="/create-price-per-user">
-                เพิ่ม ราคาต่อ USER
+                {t("price_per_user.price_per_user")}
               </Link>
               <span className="color-error">
                 {statusSuccess && statusSuccess != null && statusSuccess}
@@ -56,13 +58,13 @@ const PricePreUser = () => {
                 <table className="table  align-middle table-hover">
                   <thead>
                     <tr>
-                      <th scope="col">id</th>
-                      <th scope="col">รหัสลูกค้า</th>
-                      <th scope="col">ประเภทพัสดุ</th>
-                      <th scope="col">KG</th>
-                      <th scope="col">CBM</th>
-                      <th scope="col">Edit</th>
-                      <th scope="col">delete</th>
+                      <th scope="col">{t("show_status.id")}</th>
+                      <th scope="col">{t("customer_id")}</th>
+                      <th scope="col">{t("create_product.parcel_type")}</th>
+                      <th scope="col">{t("price_per_user.kg")}</th>
+                      <th scope="col">{t("price_per_user.cbm")}</th>
+                      <th scope="col">{t("product_list.edit")}</th>
+                      <th scope="col">{t("create_product.delete")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -81,23 +83,19 @@ const PricePreUser = () => {
                                 navigate(`/edit-price-per-user/${value.id}`)
                               }
                             >
-                              Edit
+                              {t("product_list.edit")}
                             </button>
                           </td>
                           <td>
                             <button
                               className="btn btn-danger"
                               onClick={() => {
-                                if (
-                                  window.confirm(
-                                    "คุณต้องการลบ ข้อมูลใช่หรือไม่ ! "
-                                  )
-                                ) {
+                                if (window.confirm(t("window.confirm"))) {
                                   deleteUsersCode(value.id);
                                 }
                               }}
                             >
-                              delete
+                              {t("create_product.delete")}
                             </button>
                           </td>
                         </tr>
