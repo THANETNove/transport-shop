@@ -158,6 +158,19 @@ const BillList = () => {
     }
   };
 
+  const totalQuantity =
+    showDataBill &&
+    showDataBill.reduce((acc, item) => {
+      const quantity = parseInt(item.quantity, 10); // แปลงเป็นตัวเลข
+      if (!isNaN(quantity)) {
+        return acc + quantity;
+      } else {
+        const qua = JSON.parse(item.inputFields)[0].quantity;
+        const qua2 = parseInt(qua, 10);
+        return acc + qua2;
+      }
+    }, 0);
+
   const totalQuantity2 =
     showDataBill &&
     showDataBill.reduce((total, item) => {
@@ -541,7 +554,9 @@ const BillList = () => {
                           <tr>
                             <th scope="row">{t("create_product.quantity")} </th>
                             <td>
-                              {Number(totalQuantity2).toLocaleString()}{" "}
+                              {totalQuantity2 != 0
+                                ? Number(totalQuantity2).toLocaleString()
+                                : Number(totalQuantity).toLocaleString()}{" "}
                               {t("check_bill.box")}
                             </td>
                           </tr>

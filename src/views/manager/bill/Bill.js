@@ -322,6 +322,7 @@ const ProductList = () => {
         // Compare dates in descending order
         return dateB - dateA;
       });
+
     return (
       <>
         <tbody>
@@ -652,7 +653,9 @@ const ProductList = () => {
                           <tr>
                             <th scope="row">{t("create_product.quantity")} </th>
                             <td>
-                              {Number(totalQuantity2).toLocaleString()}{" "}
+                              {totalQuantity2 != 0
+                                ? Number(totalQuantity2).toLocaleString()
+                                : Number(totalQuantity).toLocaleString()}{" "}
                               {t("check_bill.box")}
                             </td>
                           </tr>

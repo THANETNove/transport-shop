@@ -141,7 +141,7 @@ const ProductList = () => {
     }
   };
 
-  /* const totalQuantity =
+  const totalQuantity =
     showDataBill &&
     showDataBill.reduce((acc, item) => {
       const quantity = parseInt(item.quantity, 10); // แปลงเป็นตัวเลข
@@ -152,16 +152,18 @@ const ProductList = () => {
         const qua2 = parseInt(qua, 10);
         return acc + qua2;
       }
-    }, 0); */
+    }, 0);
 
   const totalQuantity2 =
     showDataBill &&
     showDataBill.reduce((total, item) => {
       const fields = JSON.parse(item.inputFields);
-      const itemQuantity = fields.reduce((itemTotal, field) => {
-        const quantity = parseFloat(field.quantity) || 0;
-        return itemTotal + quantity;
-      }, 0);
+      const itemQuantity =
+        fields &&
+        fields.reduce((itemTotal, field) => {
+          const quantity = parseFloat(field.quantity) || 0;
+          return itemTotal + quantity;
+        }, 0);
       return total + itemQuantity;
     }, 0);
 
@@ -215,6 +217,8 @@ const ProductList = () => {
         // Compare dates in descending order
         return dateB - dateA;
       });
+
+    console.log("sortedItems", sortedItems);
     return (
       <>
         <tbody>
@@ -413,9 +417,7 @@ const ProductList = () => {
                         showDataBill.map((item, index) => {
                           let quantityItem =
                             item && JSON.parse(item.inputFields);
-                          /*  const totalQuantityPerItem = quantityItem.map(
-                            () => {}
-                          ); */
+
                           const itemQuantity =
                             quantityItem &&
                             quantityItem.reduce((itemTotal, field) => {
@@ -512,7 +514,10 @@ const ProductList = () => {
                           <tr>
                             <th scope="row">จำนวน </th>
                             <td>
-                              {Number(totalQuantity2).toLocaleString()} กล่อง
+                              {totalQuantity2 != 0
+                                ? Number(totalQuantity2).toLocaleString()
+                                : Number(totalQuantity).toLocaleString()}{" "}
+                              กล่อง
                             </td>
                           </tr>
                           <tr>
