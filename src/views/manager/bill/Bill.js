@@ -10,8 +10,10 @@ import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import DatePicker from "react-datepicker";
 import ReactPaginate from "react-paginate";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const ProductList = () => {
+  const { t } = useTranslation();
   const user = useSelector((state) => state.auth.user);
   const { BillDataAll } = useSelector((state) => state.get);
   const dispatch = useDispatch();
@@ -184,10 +186,10 @@ const ProductList = () => {
   const handleUpdateStatusBill = async (event) => {
     /*  let data = [{ id: showIdBill, status: event, image: image }]; */
 
-    let mess = "update สถานะสำเร็จ";
-    let errorMess = "update สถานะไม่สำเร็จ";
-    let messCancel = "ถูกยกเลิก สถานะสำเร็จ";
-    let errorMessCancel = "ถูกยกเลิก สถานะไม่สำเร็จ";
+    let mess = t("check_bill.update_successful");
+    let errorMess = t("check_bill.update_unsuccessful");
+    let messCancel = t("check_bill.canceled_successful");
+    let errorMessCancel = t("check_bill.canceled_unsuccessful");
     if (event == "รอจัดส่ง") {
       const require = await Service.UpdateStatusBill(showIdBill, event, image);
       if (require.status == "success") {
@@ -228,7 +230,7 @@ const ProductList = () => {
           }, 3000);
         }
       } else {
-        setErrorsImage("กรุณาอัพโหลดภาพ");
+        setErrorsImage(t("check_bill.please_upload"));
       }
     }
     if (event == "ถูกยกเลิก") {
@@ -365,7 +367,7 @@ const ProductList = () => {
                         )
                       }
                     >
-                      ตรวจสอบ
+                      {t("check_bill.examine")}
                     </a>
                   </tr>
                 );
@@ -390,7 +392,7 @@ const ProductList = () => {
                   <input
                     type="text"
                     className="form-control  background-white bg-light border-0 small"
-                    placeholder="Search เลขที่ หรือ 2023-12-21"
+                    placeholder={t("check_bill.search")}
                     aria-label="Search"
                     /*   value={searchText} */
                     onChange={searchData}
@@ -413,12 +415,12 @@ const ProductList = () => {
                 <table className="table  align-middle table-hover">
                   <thead>
                     <tr className="text-center">
-                      <th scope="col">#</th>
-                      <th scope="col">เลขที่</th>
-                      <th scope="col">รหัสลูกค้า</th>
-                      <th scope="col">วันที่</th>
-                      <th scope="col">สถานะ</th>
-                      <th scope="col">show</th>
+                      <th scope="col">{t("show_status.id")}</th>
+                      <th scope="col">{t("check_bill.number")}</th>
+                      <th scope="col">{t("customer_id")}</th>
+                      <th scope="col">{t("check_bill.date")}</th>
+                      <th scope="col">{t("product_list.status")}</th>
+                      <th scope="col">{t("product_list.show")}</th>
                     </tr>
                   </thead>
                   {systemUser()}
@@ -470,7 +472,7 @@ const ProductList = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                ใบแจ้งหนี้/วางบิล ค่าขนส่ง ไทย - จีน
+                {t("check_bill.invoice_billing")}
               </h1>
 
               <button
@@ -491,38 +493,48 @@ const ProductList = () => {
               <div className="row">
                 <div className="col-6">
                   <div className="box-bill">
-                    <p>เลขที่/No {showIdBill && showIdBill}</p>
                     <p>
-                      วันที่/Date {showUpdated_atBill && showUpdated_atBill} น.
+                      เ{t("check_bill.number_no")} {showIdBill && showIdBill}
+                    </p>
+                    <p>
+                      {t("check_bill.date")}{" "}
+                      {showUpdated_atBill && showUpdated_atBill} น.
                     </p>
                   </div>
-                  <h6 className="uppercase-text mb-4">MEDO INTERNATIONAL</h6>
+                  <h6 className="uppercase-text mb-4">
+                    {t("check_bill.MEDO_INTERNATIONAL")}
+                  </h6>
                   {/* <p>MEDO INTERNATIONAL</p> */}
                   {/*  <p>TEL. 085-1122999</p> */}
                 </div>
                 <div className="col-6">
-                  <h6 className="uppercase-text">รายละเอียดลูกค้า</h6>
+                  <h6 className="uppercase-text">
+                    {t("check_bill.customer_details")}
+                  </h6>
                   <p>
-                    ที่อยู่ คุณ {showUsername}&nbsp; &nbsp; {showAddress}&nbsp;
-                    &nbsp; เเขวง/ตำบล.
-                    {showSubdistricts}&nbsp; &nbsp; เขต/อำเภอ.
-                    {showDistricts}&nbsp; &nbsp; จ.{showProvinces}&nbsp; &nbsp;
-                    รหัสไปรษณีย์ {showZip_code}
+                    {t("check_bill.adduser_user")} {showUsername}&nbsp; &nbsp;{" "}
+                    {showAddress}&nbsp; &nbsp; {t("check_bill.subdistricts")}
+                    {showSubdistricts}&nbsp; &nbsp; {t("check_bill.districts")}
+                    {showDistricts}&nbsp; &nbsp; {t("check_bill.provinces")}{" "}
+                    {showProvinces}&nbsp; &nbsp; {t("check_bill.zip_code")}{" "}
+                    {showZip_code}
                   </p>
-                  <p>TEL. {showTel}</p>
+                  <p>
+                    {t("check_bill.tel")} {showTel}
+                  </p>
                 </div>
                 <div className="table-responsive box-bill-add">
                   <table className="table">
                     <thead>
                       <tr>
-                        <th scope="col">รหัสสินค้า</th>
-                        <th scope="col">เลขพัสดุ</th>
-                        <th scope="col">รหัสลูกค้า</th>
-                        <th scope="col">จำนวน</th>
-                        <th scope="col">น้ำหนัก (กก)</th>
-                        <th scope="col">ปริมาตร(คิว)</th>
-                        <th scope="col">คิดจาก</th>
-                        <th scope="col">ราคา</th>
+                        <th scope="col">{t("check_bill.product_code")}</th>
+                        <th scope="col">{t("check_bill.parcel_number")}</th>
+                        <th scope="col">{t("customer_id")}</th>
+                        <th scope="col">{t("create_product.quantity")}</th>
+                        <th scope="col">{t("check_bill.weight_kg")}</th>
+                        <th scope="col">{t("check_bill.volume_cue")}</th>
+                        <th scope="col">{t("check_bill.thinking")}</th>
+                        <th scope="col">{t("check_bill.price")}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -570,7 +582,9 @@ const ProductList = () => {
                 </div>
                 <div className="row mt-4">
                   <div className="col-3">
-                    <h6 className="uppercase-text">บิลส่งของ จัดส่งแล้ว</h6>
+                    <h6 className="uppercase-text">
+                      {t("check_bill.been_shipped")}
+                    </h6>
                     {/*   <img
                       src="../../assetsAuth/img/image.jpeg"
                       className="img-fluid"
@@ -593,7 +607,9 @@ const ProductList = () => {
                     )}
                   </div>
                   <div className="col-4">
-                    <h6 className="uppercase-text">เรทค่านำเข้า</h6>
+                    <h6 className="uppercase-text">
+                      {t("check_bill.import_rate")}
+                    </h6>
                     <div className="table-responsive box-bill-add">
                       <table className="table  mt-3">
                         <tbody>
@@ -615,7 +631,9 @@ const ProductList = () => {
                                 <tr>
                                   <th scope="row"> {type.name}</th>
                                   <td>
-                                    {`"KG":  ${type.kg},  "CBM" : ${type.cbm} `}
+                                    {`${"price_per_user.kg"}:  ${
+                                      type.kg
+                                    },  ${"price_per_user.cbm"} : ${type.cbm} `}
                                   </td>
                                 </tr>
                               ))}
@@ -624,44 +642,59 @@ const ProductList = () => {
                     </div>
                   </div>
                   <div className="col-5">
-                    <h6 className="uppercase-text">สรุปรายการ</h6>
+                    <h6 className="uppercase-text">
+                      {t("check_bill.summary_program")}
+                    </h6>
 
                     <div className="table-responsive box-bill-add">
                       <table className="table  mt-3">
                         <tbody>
                           <tr>
-                            <th scope="row">จำนวน </th>
+                            <th scope="row">{t("create_product.quantity")} </th>
                             <td>
-                              {Number(totalQuantity2).toLocaleString()} กล่อง
+                              {Number(totalQuantity2).toLocaleString()}{" "}
+                              {t("check_bill.box")}
                             </td>
                           </tr>
                           <tr>
-                            <th scope="row">ปริมาตร(คิว) </th>
-                            <td>{Number(totalQueue).toLocaleString()} CBM</td>
+                            <th scope="row">{t("check_bill.volume_cue")} </th>
+                            <td>
+                              {Number(totalQueue).toLocaleString()}{" "}
+                              {t("price_per_user.cbm")}
+                            </td>
                           </tr>
                           <tr>
-                            <th scope="row">น้ำหนัก </th>
-                            <td>{Number(totalWeight).toLocaleString()} kg</td>
+                            <th scope="row">{t("create_product.weight")} </th>
+                            <td>
+                              {Number(totalWeight).toLocaleString()}{" "}
+                              {t("price_per_user.kg")}
+                            </td>
                           </tr>
                           <tr>
-                            <th scope="row">ยอดรวมค่านำเข้า จีน-ไทย </th>
+                            <th scope="row">
+                              {t("check_bill.import_costs_china_thailand")}{" "}
+                            </th>
                             <td>
                               {paymentAmountChineseThaiDelivery &&
                                 paymentAmountChineseThaiDelivery.toLocaleString()}{" "}
-                              บาท
+                              {t("check_bill.baht")}
                             </td>
                           </tr>
                           <tr>
-                            <th scope="row">ยอดชำระทั้งหมด </th>
+                            <th scope="row">
+                              {t("check_bill.total_payment")}{" "}
+                            </th>
                             <td>
                               {paymentAmountChineseThaiDelivery &&
                                 paymentAmountChineseThaiDelivery.toLocaleString()}{" "}
-                              บาท ( ชำระแล้ว)
+                              {t("check_bill.baht")} {t("check_bill.paid")}
                             </td>
                           </tr>
                           <tr>
-                            <th scope="row">เลือกขนส่ง </th>
-                            <td>นัดรับ</td>
+                            <th scope="row">
+                              {t("check_bill.choose_transportation")}{" "}
+                            </th>
+                            <td>{t("check_bill.make_up")}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -675,7 +708,7 @@ const ProductList = () => {
                           className="btn btn-danger"
                           onClick={() => handleUpdateStatusBill("ถูกยกเลิก")}
                         >
-                          ถูกยกเลิก
+                          {t("check_bill.canceled")}
                         </button>
                         <button
                           type="button"
@@ -704,7 +737,7 @@ const ProductList = () => {
                             id="image"
                             name="image"
                             onChange={handleImageChange}
-                            placeholder="อัพโหลดไฟล์ภาพ"
+                            placeholder={t("create_product.upload_image_file")}
                           />
                           {errorsImage && (
                             <div className="error-from">{errorsImage}</div>
