@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 import Service from "../../../server_api/server";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const CreateProductType = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
@@ -24,7 +26,7 @@ const CreateProductType = () => {
 
     // name validation
     if (!formData.name.trim()) {
-      newErrors.name = "name is required";
+      newErrors.name = t("create_product_type.name_required");
       isValid = false;
     }
 
@@ -57,7 +59,9 @@ const CreateProductType = () => {
         <div className="col-xl-12 col-lg-12">
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <h6 className="m-0 font-weight-bold text-primary">ประเภทพัสดุ</h6>
+              <h6 className="m-0 font-weight-bold text-primary">
+                {t("create_product.parcel_type")}
+              </h6>
             </div>
 
             <div className="card-body ">
@@ -70,7 +74,9 @@ const CreateProductType = () => {
                           type="text"
                           className="form-control form-control-user"
                           id="name"
-                          placeholder="ชื่อประเภทพัสดุ"
+                          placeholder={t(
+                            "create_product_type.name_parcel_type"
+                          )}
                           name="name"
                           value={formData.name}
                           onChange={handleChange}
@@ -85,7 +91,7 @@ const CreateProductType = () => {
                       type="submit"
                       className="btn btn-primary btn-user btn-block mt-5 mb-5"
                     >
-                      บันทึก
+                      {t("create_product.save")}
                     </button>
                   </form>
                 </div>

@@ -126,5 +126,9 @@
   "show_product.weight_per": "น้ำหนักต่อชิ้น",
   "create_status.name_status": "ชื่อ สถานะ",
   "create_status.add_status": "เพิ่ม สถานะ",
-  "show_status.id": "id"
+  "create_status.status_product_required": "statusProduct is required",
+  "show_status.id": "id",
+  "product_type.add_parcel_type": "เพิ่ม ประเภทพัสดุ",
+  "create_product_type.name_required": "name is required",
+  "create_product_type.name_parcel_type": "ชื่อประเภทพัสดุ"
 }

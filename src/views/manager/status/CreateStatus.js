@@ -23,7 +23,7 @@ export default function CreateStatus() {
 
     // username validation
     if (!formData.statusProduct.trim()) {
-      newErrors.statusProduct = "statusProduct is required";
+      newErrors.statusProduct = t("create_status.status_product_required");
       isValid = false;
     }
 

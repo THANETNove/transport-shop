@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import Service from "../../../server_api/server";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const ProductTypeList = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const productTypeListFromState = useSelector(
@@ -59,7 +61,7 @@ const ProductTypeList = () => {
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               {/*  <h6 className="m-0 font-weight-bold text-primary">เพิ่มพัสดุ</h6> */}
               <Link className="btn btn-primary" to="/create-product-type">
-                เพิ่ม ประเภทพัสดุ
+                {t("product_type.add_parcel_type")}
               </Link>
               <span
                 className={
@@ -77,10 +79,10 @@ const ProductTypeList = () => {
                 <table className="table  align-middle table-hover">
                   <thead>
                     <tr>
-                      <th scope="col">id</th>
-                      <th scope="col">ประเภทพัสดุ</th>
-                      <th scope="col">Edit</th>
-                      <th scope="col">delete</th>
+                      <th scope="col">{t("show_status.id")}</th>
+                      <th scope="col">{t("create_product.parcel_type")}</th>
+                      <th scope="col">{t("product_list.edit")}</th>
+                      <th scope="col">{t("create_product.delete")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -97,7 +99,7 @@ const ProductTypeList = () => {
                                 navigate(`/edit-product-type/${status.id}`)
                               }
                             >
-                              Edit
+                              {t("product_list.edit")}
                             </button>
                           </td>
                           <td>
@@ -113,7 +115,7 @@ const ProductTypeList = () => {
                                 }
                               }}
                             >
-                              delete
+                              {t("create_product.delete")}
                             </button>
                           </td>
                         </tr>
