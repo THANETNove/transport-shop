@@ -113,4 +113,9 @@
   "create_product.total_cost_china_thailand": "ยอดชำระค่าจัดส่ง จีน-ไทย",
   "create_product.upload_image_file": "อัพโหลดไฟล์ภาพ",
   "create_product.save": "บันทึก",
+  "create_product.select_image": "Please select a valid image file",
+  "create_product.edit_parcel": "เเก้ไขรายละเอียดพัสดุ",
+  "create_product.select_date": "Select date",
+  "create_product.parcel_type": "ประเภทพัสดุ",
+  "create_product.image_preview": "Image Preview"
 }

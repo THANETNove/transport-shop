@@ -255,7 +255,7 @@ const CreateProduct = () => {
     console.log("kg", kg);
     console.log("cbm", cbm); */
 
-    if (selectedValue != "เลือกประเภทพัสดุ") {
+    if (selectedValue != t("create_product.select_parcel")) {
       setErrors((prevState) => ({
         ...prevState,
         ["product_type"]: "",
@@ -593,7 +593,7 @@ const CreateProduct = () => {
                         </label>
                         <DatePicker
                           /*  selected={startDate} */
-                          placeholderText="Select date"
+                          placeholderText={t("create_product.select_date")}
                           id="chinese_warehouse"
                           name="chinese_warehouse"
                           selected={formData.chinese_warehouse}
@@ -618,7 +618,7 @@ const CreateProduct = () => {
                         </label>
                         <DatePicker
                           /*  selected={startDate} */
-                          placeholderText="Select date"
+                          placeholderText={t("create_product.select_date")}
                           selected={formData.close_cabinet}
                           id="close_cabinet"
                           name="close_cabinet"
