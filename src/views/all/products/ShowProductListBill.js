@@ -4,8 +4,10 @@ import Service from "../../../server_api/server";
 import DatePicker from "react-datepicker";
 import { useSelector, useDispatch } from "react-redux";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 const ShowProductListShow = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -106,7 +108,7 @@ const ShowProductListShow = () => {
             <div className="card shadow mb-4">
               <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 className="m-0 font-weight-bold text-primary">
-                  รายละเอียดพัสดุ
+                  {t("create_product.parcel_details")}
                 </h6>
               </div>
 
@@ -120,7 +122,7 @@ const ShowProductListShow = () => {
                             for="exampleFormControlInput1"
                             className="form-labe"
                           >
-                            รหัสลูกค้า
+                            {t("customer_id")}
                           </label>
                           <p className="form-control form-control-user">
                             {formData.customer_code}
@@ -131,7 +133,7 @@ const ShowProductListShow = () => {
                             for="exampleFormControlInput1"
                             className="form-labe"
                           >
-                            เเทคจีน
+                            {t("product_list.chinese_tack")}
                           </label>
                           <p className="form-control form-control-user">
                             {formData.tech_china}
@@ -144,7 +146,7 @@ const ShowProductListShow = () => {
                             for="exampleFormControlInput1"
                             className="form-label"
                           >
-                            รหัสโกดัง
+                            {t("product_list.warehouse")}
                           </label>
                           <p className="form-control form-control-user">
                             {formData.warehouse_code}
@@ -155,7 +157,7 @@ const ShowProductListShow = () => {
                             for="exampleFormControlInput1"
                             className="form-labe"
                           >
-                            เลขตู้
+                            {t("product_list.cabinet")}
                           </label>
                           <p className="form-control form-control-user">
                             {formData.cabinet_number}
@@ -168,7 +170,7 @@ const ShowProductListShow = () => {
                             for="exampleFormControlInput1"
                             className="form-label mr-4"
                           >
-                            ถึงโกดังจีน
+                            {t("roduct_list.chinese_warehouse")}
                           </label>
                           <p className="form-control form-control-user">
                             {/* {formData.chinese_warehouse
@@ -181,7 +183,7 @@ const ShowProductListShow = () => {
                             for="exampleFormControlInput1"
                             className="form-label mr-5"
                           >
-                            ปิดตู้
+                            {t("product_list.close_cabinet")}
                           </label>
                           <p className="form-control form-control-user">
                             {formData.close_cabinet
@@ -196,7 +198,7 @@ const ShowProductListShow = () => {
                             for="exampleFormControlInput1"
                             className="form-label mr-5"
                           >
-                            ถึงไทย
+                            {t("product_list.to_thailand")}
                           </label>
                           <p className="form-control form-control-user">
                             {formData.to_thailand
@@ -209,7 +211,7 @@ const ShowProductListShow = () => {
                             for="exampleFormControlInput1"
                             className="form-label mr-5"
                           >
-                            สถานะ
+                            {t("product_list.status")}
                           </label>
                           <select
                             className="form-control"
@@ -219,7 +221,9 @@ const ShowProductListShow = () => {
                             aria-label="Default select example"
                             disabled
                           >
-                            <option selected>เลือก สถานะ</option>
+                            <option selected>
+                              {t("product_list.select_status")}
+                            </option>
                             {statusList &&
                               statusList.map((status) => (
                                 <option key={status.id} value={status.id}>
@@ -238,7 +242,7 @@ const ShowProductListShow = () => {
                               for="exampleFormControlInput1"
                               className="form-label"
                             >
-                              จำนวน
+                              {t("create_product.quantity")}
                             </label>
                             <p className="form-control form-control-user">
                               {formData.quantity}
@@ -256,7 +260,7 @@ const ShowProductListShow = () => {
                                       for="exampleFormControlInput1"
                                       className="form-label mt-1"
                                     >
-                                      จำนวน {index + 1}
+                                      {t("create_product.quantity")} {index + 1}
                                     </label>
                                     <p className="form-control form-control-user">
                                       {inputField.quantity}
@@ -267,7 +271,8 @@ const ShowProductListShow = () => {
                                       for="exampleFormControlInput1"
                                       className="form-label"
                                     >
-                                      ขนาดความกว้างชิ้นที่ {index + 1}
+                                      {t("create_product.width_size")}{" "}
+                                      {index + 1}
                                     </label>
                                     <input
                                       type="text"
@@ -285,7 +290,8 @@ const ShowProductListShow = () => {
                                       for="exampleFormControlInput1"
                                       className="form-label"
                                     >
-                                      ขนาดความยาวชิ้นที่ {index + 1}
+                                      {t("create_product.the_length")}{" "}
+                                      {index + 1}
                                     </label>
                                     <input
                                       type="long_size"
@@ -303,13 +309,13 @@ const ShowProductListShow = () => {
                                       for="exampleFormControlInput1"
                                       className="form-label"
                                     >
-                                      ขนาดความสุงชิ้นที่ {index + 1}
+                                      {t("create_product.height")} {index + 1}
                                     </label>
                                     <input
                                       type="text"
                                       className="form-control form-control-user"
                                       id="height_size"
-                                      placeholder={`ขนาดความสุงชิ้นที่ ${
+                                      placeholder={`${"create_product.height"} ${
                                         index + 1
                                       }`}
                                       name="height_size"
@@ -322,7 +328,7 @@ const ShowProductListShow = () => {
                                       for="exampleFormControlInput1"
                                       className="form-label mt-3"
                                     >
-                                      คิวชิ้นที่ {index + 1}
+                                      {t("create_product.cue")} {index + 1}
                                     </label>
                                     <input
                                       type="text"
@@ -338,7 +344,8 @@ const ShowProductListShow = () => {
                                       for="exampleFormControlInput1"
                                       className="form-label mt-3"
                                     >
-                                      คิวรวมชิ้นที่ {index + 1}
+                                      {t("create_product.the_queue")}{" "}
+                                      {index + 1}
                                     </label>
                                     <input
                                       type="text"
@@ -354,7 +361,8 @@ const ShowProductListShow = () => {
                                       for="exampleFormControlInput1"
                                       className="form-label mt-3"
                                     >
-                                      น้ำหนักชิ้นที่ {index + 1}
+                                      {t("create_product.the_weight")}{" "}
+                                      {index + 1}
                                     </label>
                                     <input
                                       type="text"
@@ -372,7 +380,8 @@ const ShowProductListShow = () => {
                                       for="exampleFormControlInput1"
                                       className="form-label mt-3"
                                     >
-                                      น้ำหนักรวมต่อชิ้นที่ {index + 1}
+                                      {t("create_product.the_weight")}{" "}
+                                      {index + 1}
                                     </label>
                                     <input
                                       type="text"
@@ -395,7 +404,7 @@ const ShowProductListShow = () => {
                                 for="exampleFormControlInput1"
                                 className="form-label"
                               >
-                                ขนาดกว้าง
+                                {t("show_product.width")}
                               </label>
                               <p className="form-control form-control-user">
                                 {formData.wide_size}
@@ -408,7 +417,7 @@ const ShowProductListShow = () => {
                                   for="exampleFormControlInput1"
                                   className="form-label"
                                 >
-                                  ขนาดยาว
+                                  {t("show_product.long_size")}
                                 </label>
                                 <p className="form-control form-control-user">
                                   {formData.long_size}
@@ -419,7 +428,7 @@ const ShowProductListShow = () => {
                                   for="exampleFormControlInput1"
                                   className="form-label"
                                 >
-                                  ขนาดสุง
+                                  {t("show_product.height_size")}
                                 </label>
                                 <p className="form-control form-control-user">
                                   {formData.height_size}
@@ -432,7 +441,7 @@ const ShowProductListShow = () => {
                                   for="exampleFormControlInput1"
                                   className="form-label"
                                 >
-                                  คิวต่อชิ้น
+                                  {t("show_product.queue_per")}
                                 </label>
                                 <p className="form-control form-control-user">
                                   {formData.cue_per_piece}
@@ -443,7 +452,7 @@ const ShowProductListShow = () => {
                                   for="exampleFormControlInput1"
                                   className="form-label"
                                 >
-                                  น้ำหนักต่อชิ้น
+                                  {t("show_product.weight_per")}
                                 </label>
                                 <p className="form-control form-control-user">
                                   {formData.weight}
@@ -459,7 +468,7 @@ const ShowProductListShow = () => {
                             for="exampleFormControlInput1"
                             className="form-label"
                           >
-                            น้ำหนักรวม
+                            {t("create_product.total_weigh_all")}
                           </label>
 
                           <p className="form-control form-control-user">
@@ -471,7 +480,7 @@ const ShowProductListShow = () => {
                             for="exampleFormControlInput1"
                             className="form-label"
                           >
-                            คิวรวม
+                            {t("create_product.total_queue")}
                           </label>
 
                           <p className="form-control form-control-user">
@@ -485,7 +494,7 @@ const ShowProductListShow = () => {
                             for="exampleFormControlInput1"
                             className="form-label"
                           >
-                            เลือกประเภทพัสดุ
+                            {t("create_product.parcel_type")}
                           </label>
                           <select
                             className="form-control"
@@ -496,7 +505,7 @@ const ShowProductListShow = () => {
                             disabled
                           >
                             <option selected disabled>
-                              เลือกประเภทพัสดุ
+                              {t("create_product.select_parcel")}
                             </option>
                             {productType &&
                               productType.map((type) => (
@@ -513,7 +522,7 @@ const ShowProductListShow = () => {
                             for="exampleFormControlInput1"
                             className="form-label"
                           >
-                            ยอดชำระค่าจัดส่ง จีน-ไทย
+                            {t("create_product.total_cost_china_thailand")}
                           </label>
                           <p className="form-control form-control-user">
                             {formData.payment_amount_chinese_thai_delivery}
