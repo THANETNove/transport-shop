@@ -172,5 +172,6 @@
   "check_bill.choose_transportation": "เลือกขนส่ง",
   "check_bill.make_up": "นัดรับ",
   "check_bill.canceled": "ถูกยกเลิก",
-  "check_bill.n": "น."
+  "check_bill.n": "น.",
+  "bill_list_admin.details": "รายละเอียด"
 }
