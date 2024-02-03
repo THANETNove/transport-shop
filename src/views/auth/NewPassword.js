@@ -3,8 +3,10 @@ import Service from "../../server_api/server";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const NewPassword = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userAll } = useSelector((state) => state.get);
@@ -26,9 +28,7 @@ const NewPassword = () => {
   }, [userAll]);
 
   const handleSubmit = async () => {
-    const isConfirmed = window.confirm(
-      "คุณต้องการที่จะเปลี่ยน password ใช่หรือไม่?"
-    );
+    const isConfirmed = window.confirm(t("new_password.change_your_password"));
     //thiuserHPQ4ei
 
     if (isConfirmed) {
@@ -41,7 +41,7 @@ const NewPassword = () => {
         setNew_password(null);
         document.getElementById("btn-close") &&
           document.getElementById("btn-close").click();
-        setMessage("เปลี่ยน password สำเร็จ");
+        setMessage(t("new_password.change_successful"));
 
         setTimeout(() => {
           setMessage(null);
@@ -76,7 +76,7 @@ const NewPassword = () => {
         <div className="col-xl-12 col-lg-12">
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              เปลี่ยน password
+              {t("new_password.change_password")}
               <span className="mt-3" style={{ color: "green" }}>
                 {message}
               </span>
@@ -85,7 +85,7 @@ const NewPassword = () => {
                   <input
                     type="text"
                     className="form-control  background-white bg-light border-0 small"
-                    placeholder="รหัสลูกค้า"
+                    placeholder={t("customer_id")}
                     aria-label="Search"
                     /*   value={searchText} */
                     onChange={searchData}
@@ -105,9 +105,9 @@ const NewPassword = () => {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">ชื่อ</th>
-                      <th scope="col">รหัสลูกค้า</th>
+                      <th scope="col">{t("show_status.id")}</th>
+                      <th scope="col">{t("new_password.name")}</th>
+                      <th scope="col">{t("customer_id")}</th>
                       <th scope="col"></th>
                     </tr>
                   </thead>
@@ -126,7 +126,7 @@ const NewPassword = () => {
                               data-bs-target="#exampleModal"
                               onClick={() => setUser(item)}
                             >
-                              เปลี่ยน password
+                              {t("new_password.change_password")}
                             </button>
                           </td>
                         </tr>
@@ -163,14 +163,14 @@ const NewPassword = () => {
             <div className="modal-body">
               <div className="mb-3 col-12">
                 <label for="exampleFormControlInput1" className="form-label">
-                  new password
+                  {t("new_password.new_password")}
                 </label>
                 <input
                   type="text"
                   value={new_password || ""}
                   className="form-control"
                   id="exampleFormControlInput1"
-                  placeholder="new password"
+                  placeholder={t("new_password.new_password")}
                   onChange={(event) => setNew_password(event.target.value)}
                 />
               </div>
@@ -181,7 +181,7 @@ const NewPassword = () => {
                 onClick={handleSubmit}
                 className="btn btn-primary"
               >
-                บันทึก
+                {t("create_product.save")}
               </button>
             </div>
           </div>
