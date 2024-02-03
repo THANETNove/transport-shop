@@ -204,5 +204,6 @@
   "money.dd_mm_yyyy": "วัน-เดือน-ปี",
   "money.transfer_amount": "ยอดการโอน",
   "money.slip": "สลิป",
-  "money.record_money_wallet": "ประวัติการชำระ"
+  "money.record_money_wallet": "ประวัติการชำระ",
+  "system_being_improved": "กำลังปรับปรุงระบบ จะใช้ได้ในเร็วๆนี้"
 }

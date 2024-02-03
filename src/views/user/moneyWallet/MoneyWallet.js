@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import Service from "../../../server_api/server";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const ProductCode = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
@@ -33,8 +35,6 @@ const ProductCode = () => {
     setCodeData(status_code_data);
   }, [status_code_data]);
 
-
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -53,7 +53,7 @@ const ProductCode = () => {
             <div className="card-body">
               <div className="table-responsive">
                 <h1 className="text-center mt-5 mb-5">
-                  กำลังปรับปรุงระบบ จะใช้ได้ในเร็วๆนี้
+                  {t("system_being_improved")}
                 </h1>
               </div>
             </div>
