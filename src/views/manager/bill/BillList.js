@@ -244,16 +244,26 @@ const BillList = () => {
                     <td> {item.billUpdated_at}</td>
                     <td>
                       {item.status == "รอตรวจสอบ" && (
-                        <p style={{ color: "#858796" }}> {item.status}</p>
+                        <p style={{ color: "#858796" }}>
+                          {" "}
+                          {t("check_bill.waiting_check")}
+                        </p>
                       )}
                       {item.status == "รอจัดส่ง" && (
-                        <p style={{ color: "#4e73df" }}> {item.status}</p>
+                        <p style={{ color: "#4e73df" }}>
+                          {t("check_bill.waiting_delivery")}
+                        </p>
                       )}
                       {item.status == "จัดส่งเเล้ว" && (
-                        <p style={{ color: "#1cc88a" }}> {item.status}</p>
+                        <p style={{ color: "#1cc88a" }}>
+                          {" "}
+                          {t("check_bill.already_shipped")}
+                        </p>
                       )}
                       {item.status == "ถูกยกเลิก" && (
-                        <p style={{ color: "#FF0000" }}> {item.status}</p>
+                        <p style={{ color: "#FF0000" }}>
+                          {t("check_bill.canceled")}
+                        </p>
                       )}
                     </td>
                     <a
