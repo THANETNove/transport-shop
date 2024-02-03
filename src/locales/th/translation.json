@@ -203,5 +203,6 @@
   "money.notification_payment": "เเจ้งการชำระ",
   "money.dd_mm_yyyy": "วัน-เดือน-ปี",
   "money.transfer_amount": "ยอดการโอน",
-  "money.slip": "สลิป"
+  "money.slip": "สลิป",
+  "money.record_money_wallet": "ประวัติการชำระ"
 }
