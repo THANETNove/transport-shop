@@ -91,7 +91,7 @@ const MoneySlip = () => {
                                 {item.statusSlip == "รอการตรวจสอบ" && (
                                   <p style={{ color: "#858796" }}>
                                     {" "}
-                                    {item.statusSlip}
+                                    {t("check_money.verification")}
                                   </p>
                                 )}
                               </td>

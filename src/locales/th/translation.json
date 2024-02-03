@@ -181,5 +181,7 @@
   "check_money.approved": "อนุมัติ",
   "check_money.you_want_approved": "คุณต้องการที่จะอนุมัติใช่หรือไม่?",
   "check_money.update_successful": "update สำเร็จ",
-  "check_money.you_want_not_approved": "คุณต้องการที่จะไม่อนุมัติใช่หรือไม่?"
+  "check_money.you_want_not_approved": "คุณต้องการที่จะไม่อนุมัติใช่หรือไม่?",
+  "check_money.verification": "คุณต้องการที่จะไม่อนุมัติใช่หรือไม่?",
+  "check_money.top_up_history": "ประวัติเติมเงิน"
 }
