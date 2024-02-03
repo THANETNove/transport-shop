@@ -3,8 +3,10 @@ import Service from "../../../server_api/server";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const MoneySlip = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const url = Service.getUrlSlip();
@@ -29,15 +31,15 @@ const MoneySlip = () => {
 
   const handleApprove = async (id, code_user, money, status) => {
     const isConfirmed = window.confirm(
-      status == "อนุมัติ"
-        ? "คุณต้องการที่จะอนุมัติใช่หรือไม่?"
-        : "คุณต้องการที่จะไม่อนุมัติใช่หรือไม่?"
+      status == t("check_money.approved")
+        ? t("check_money.you_want_approved")
+        : t("check_money.you_want_not_approved")
     );
 
     if (isConfirmed) {
       const responsive = await Service.updateSlip(id, code_user, money, status);
       if (responsive.status == "success") {
-        setMessage("update สำเร็จ");
+        setMessage(t("check_money.update_successful"));
         setTimeout(() => {
           setMessage(null);
         }, 3000);
@@ -52,7 +54,7 @@ const MoneySlip = () => {
         <div className="col-xl-12 col-lg-12">
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              เติมเงิน
+              {t("check_money.top_up")}
               <p className="mt-3" style={{ color: "green" }}>
                 {message}
               </p>
@@ -63,12 +65,12 @@ const MoneySlip = () => {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">รหัสลูกค้า</th>
-                      <th scope="col">จำนวนเงิน</th>
-                      <th scope="col">วันที่</th>
-                      <th scope="col">เวลา</th>
-                      <th scope="col">สถานะ</th>
+                      <th scope="col">{t("show_status.id")}</th>
+                      <th scope="col">{t("customer_id")}</th>
+                      <th scope="col">{t("check_money.amount_money")}</th>
+                      <th scope="col">{t("check_bill.date")}</th>
+                      <th scope="col">{t("check_money.time")}</th>
+                      <th scope="col">{t("product_list.status")}</th>
                       <th scope="col"></th>
                     </tr>
                   </thead>
@@ -82,7 +84,9 @@ const MoneySlip = () => {
                               <td>{item.code_user}</td>
                               <td>{Number(item.money).toLocaleString()}</td>
                               <td>{item.date}</td>
-                              <td>{item.time} น.</td>
+                              <td>
+                                {item.time} {t("check_bill.n")}
+                              </td>
                               <td>
                                 {item.statusSlip == "รอการตรวจสอบ" && (
                                   <p style={{ color: "#858796" }}>
@@ -115,7 +119,7 @@ const MoneySlip = () => {
                                     )
                                   }
                                 >
-                                  ไม่อนุมัติ
+                                  {t("check_money.not_approved")}
                                 </button>
 
                                 <button
@@ -130,7 +134,7 @@ const MoneySlip = () => {
                                     )
                                   }
                                 >
-                                  อนุมัติ
+                                  {t("check_money.approved")}
                                 </button>
                               </td>
                             </tr>

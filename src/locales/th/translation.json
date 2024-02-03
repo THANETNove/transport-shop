@@ -173,5 +173,13 @@
   "check_bill.make_up": "นัดรับ",
   "check_bill.canceled": "ถูกยกเลิก",
   "check_bill.n": "น.",
-  "bill_list_admin.details": "รายละเอียด"
+  "bill_list_admin.details": "รายละเอียด",
+  "check_money.top_up": "เติมเงิน",
+  "check_money.amount_money": "จำนวนเงิน",
+  "check_money.time": "เวลา",
+  "check_money.not_approved": "ไม่อนุมัติ",
+  "check_money.approved": "อนุมัติ",
+  "check_money.you_want_approved": "คุณต้องการที่จะอนุมัติใช่หรือไม่?",
+  "check_money.update_successful": "update สำเร็จ",
+  "check_money.you_want_not_approved": "คุณต้องการที่จะไม่อนุมัติใช่หรือไม่?"
 }
