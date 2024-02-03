@@ -199,5 +199,9 @@
   "product_list_user.add_address": "เพิ่มที่อยู่",
   "product_list_user.close": "Close",
   "product_code.sub_agent": "สร้างรหัสตัวแทนย่อย",
-  "product_code.parcel_code": "รหัสพัสดุ"
+  "product_code.parcel_code": "รหัสพัสดุ",
+  "money.notification_payment": "เเจ้งการชำระ",
+  "money.dd_mm_yyyy": "วัน-เดือน-ปี",
+  "money.transfer_amount": "ยอดการโอน",
+  "money.slip": "สลิป"
 }

@@ -3,8 +3,10 @@ import Service from "../../../server_api/server";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const Money = () => {
+  const { t } = useTranslation();
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,7 +54,6 @@ const Money = () => {
       if (time != null && time != "") {
         if (money != null && money != "") {
           if (image) {
-  
             const response = await Service.createSlip(
               user && user.customerCode,
               date,
@@ -84,14 +85,14 @@ const Money = () => {
         <div className="col-xl-12 col-lg-12">
           <div className="card shadow mb-4">
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              เเจ้งการชำระ
+              {t("money.notification_payment")}
             </div>
 
             <div className="card-body">
               <div className="table-responsive">
                 <div className="mb-3">
                   <label for="exampleFormControlInput1" className="form-label">
-                    วัน-เดือน-ปี
+                    {t("money.dd_mm_yyyy")}
                   </label>
                   <input
                     type="text"
@@ -104,7 +105,7 @@ const Money = () => {
                 </div>
                 <div className="mb-3">
                   <label for="exampleFormControlInput1" className="form-label">
-                    เวลา
+                    {t("check_money.time")}
                   </label>
                   <input
                     type="text"
@@ -117,13 +118,13 @@ const Money = () => {
                 </div>
                 <div className="mb-3">
                   <label for="exampleFormControlInput1" className="form-label">
-                    ยอดการโอน
+                    {t("money.transfer_amount")}
                   </label>
                   <input
                     type="text"
                     className="form-control"
                     id="exampleFormControlInput1"
-                    placeholder="ยอดการโอน"
+                    placeholder={t("money.transfer_amount")}
                     min={0}
                     value={money}
                     onChange={(event) =>
@@ -134,7 +135,7 @@ const Money = () => {
                 </div>
                 <div className="mb-3">
                   <label for="exampleFormControlInput1" className="form-label">
-                    สลิป
+                    {t("money.slip")}
                   </label>
                   <input
                     type="file"
@@ -163,7 +164,7 @@ const Money = () => {
                     onClick={handleSubmit}
                     className="btn btn-primary btn-user btn-block mt-5 mb-5"
                   >
-                    บันทึก
+                    {t("create_product.save")}
                   </button>
                 </div>
               </div>
