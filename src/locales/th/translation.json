@@ -197,5 +197,7 @@
   "product_list_user.bill_successfully": "ออกบิลสำเร็จ",
   "product_list_user.choose_address": "เลือกที่อยู่",
   "product_list_user.add_address": "เพิ่มที่อยู่",
-  "product_list_user.close": "Close"
+  "product_list_user.close": "Close",
+  "product_code.sub_agent": "สร้างรหัสตัวแทนย่อย",
+  "product_code.parcel_code": "รหัสพัสดุ"
 }

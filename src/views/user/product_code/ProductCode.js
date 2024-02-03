@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import Service from "../../../server_api/server";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const ProductCode = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
@@ -33,8 +35,6 @@ const ProductCode = () => {
     setCodeData(status_code_data);
   }, [status_code_data]);
 
- 
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -43,7 +43,7 @@ const ProductCode = () => {
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               {/*  <h6 className="m-0 font-weight-bold text-primary">เพิ่มพัสดุ</h6> */}
               <Link className="btn btn-primary" to="/create-product-code">
-                สร้างรหัสตัวแทนย่อย
+                {t("product_code.sub_agent")}
               </Link>
               <span className="color-success">
                 {messageCode == "success" && "เพิ่มรหัสพัสดุสำเร็จ"}
@@ -55,8 +55,8 @@ const ProductCode = () => {
                 <table className="table  align-middle table-hover">
                   <thead>
                     <tr>
-                      <th scope="col">id</th>
-                      <th scope="col">รหัสพัสดุ</th>
+                      <th scope="col">{t("show_status.id")}</th>
+                      <th scope="col">{t("product_code.parcel_code")}</th>
                     </tr>
                   </thead>
                   <tbody>
