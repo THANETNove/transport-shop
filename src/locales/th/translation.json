@@ -191,5 +191,11 @@
   "new_password.change_your_password": "คุณต้องการที่จะเปลี่ยน password ใช่หรือไม่?",
   "new_password.change_successful": "เปลี่ยน password สำเร็จ",
   "new_password.name": "ชื่อ",
-  "new_password.new_password": "new password"
+  "new_password.new_password": "new password",
+  "product_list_user.please_top_up": "เงินในระบบไม่พอ กรุณาเติมเงิน",
+  "product_list_user.first_last_name": "ชื่อ นามสกุล",
+  "product_list_user.bill_successfully": "ออกบิลสำเร็จ",
+  "product_list_user.choose_address": "เลือกที่อยู่",
+  "product_list_user.add_address": "เพิ่มที่อยู่",
+  "product_list_user.close": "Close"
 }

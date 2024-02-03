@@ -10,8 +10,10 @@ import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import DatePicker from "react-datepicker";
 import ReactPaginate from "react-paginate";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const ProductList = () => {
+  const { t } = useTranslation();
   const user = useSelector((state) => state.auth.user);
   const { user_address } = useSelector((state) => state.get);
   const { status_list, product_type, status_code_data } = useSelector(
@@ -318,7 +320,7 @@ const ProductList = () => {
         }, 3000);
       }
     } else {
-      setErrorMoney("เงินในระบบไม่พอ กรุณาเติมเงิน");
+      setErrorMoney(t("product_list_user.please_top_up"));
       setTimeout(() => {
         setErrorMoney(null);
       }, 3000);
@@ -414,7 +416,7 @@ const ProductList = () => {
                       className="btn btn-primary btn-sm"
                       onClick={() => showProduct(product.id)}
                     >
-                      show
+                      {t("product_list.show")}
                     </a>
                   </td>
                 </tr>
@@ -429,7 +431,7 @@ const ProductList = () => {
       <div className="row">
         <div className="mb-3">
           <label for="id_user" className="form-label">
-            ชื่อ นามสกุล
+            {t("product_list_user.first_last_name")}
           </label>
           <input
             type="text"
@@ -437,13 +439,13 @@ const ProductList = () => {
             className="form-control"
             id="name"
             onChange={handleChangeAddress}
-            placeholder="ชื่อ นามสกุล"
+            placeholder={t("product_list_user.first_last_name")}
           />
           {errors.name && <div className="error-from">{errors.name}</div>}
         </div>
         <div className="mb-3">
           <label for="id_user" className="form-label">
-            เบอร์โทร
+            {t("product_list_user.tel")}
           </label>
           <input
             type="text"
@@ -457,7 +459,7 @@ const ProductList = () => {
         </div>
         <div className="mb-3">
           <label for="exampleFormControlTextarea1" className="form-label">
-            ที่อยู่
+            {t("address")}
           </label>
           <textarea
             className="form-control"
@@ -470,7 +472,7 @@ const ProductList = () => {
         </div>
         <div className="mb-3">
           <label for="id_user" className="form-label">
-            เเขวง/ตำบล
+            {t("subdistrict")}
           </label>
           <input
             type="text"
@@ -478,7 +480,7 @@ const ProductList = () => {
             className="form-control"
             id="subdistricts"
             onChange={handleChangeAddress}
-            placeholder="เเขวง/ตำบล"
+            placeholder={t("subdistrict")}
           />
           {errors.subdistricts && (
             <div className="error-from">{errors.subdistricts}</div>
@@ -486,7 +488,7 @@ const ProductList = () => {
         </div>
         <div className="mb-3">
           <label for="id_user" className="form-label">
-            เขต/อำเภอ
+            {t("district")}
           </label>
           <input
             type="text"
@@ -494,7 +496,7 @@ const ProductList = () => {
             className="form-control"
             id="districts"
             onChange={handleChangeAddress}
-            placeholder="เขต/อำเภอ"
+            placeholder={t("district")}
           />
           {errors.districts && (
             <div className="error-from">{errors.districts}</div>
@@ -502,7 +504,7 @@ const ProductList = () => {
         </div>
         <div className="mb-3">
           <label for="id_user" className="form-label">
-            จังหวัด
+            {t("province")}
           </label>
           <input
             type="text"
@@ -510,7 +512,7 @@ const ProductList = () => {
             className="form-control"
             id="provinces"
             onChange={handleChangeAddress}
-            placeholder="จังหวัด"
+            placeholder={t("province")}
           />
           {errors.provinces && (
             <div className="error-from">{errors.provinces}</div>
@@ -518,7 +520,7 @@ const ProductList = () => {
         </div>
         <div className="mb-3">
           <label for="id_user" className="form-label">
-            รหัสไปรษณีย์
+            {t("zipCode")}
           </label>
           <input
             type="text"
@@ -526,7 +528,7 @@ const ProductList = () => {
             className="form-control"
             id="zip_code"
             onChange={handleChangeAddress}
-            placeholder="รหัสไปรษณีย์"
+            placeholder={t("zipCode")}
           />
           {errors.zip_code && (
             <div className="error-from">{errors.zip_code}</div>
@@ -548,12 +550,12 @@ const ProductList = () => {
               {/*  <h6 className="m-0 font-weight-bold text-primary">เพิ่มพัสดุ</h6> */}
               {user.status != 0 ? (
                 <Link className="btn btn-primary" to="/create-product">
-                  เพิ่มพัสดุ
+                  {t("product_list.add_parcel")}
                 </Link>
               ) : (
                 <>
                   <h6 className="m-0 font-weight-bold text-primary">
-                    พัสดุทั้งหมด
+                    {t("product_list.all_parcel")}
                   </h6>
                   <button
                     type="button"
@@ -568,7 +570,7 @@ const ProductList = () => {
                     }
                     onClick={() => handleAmount()}
                   >
-                    ออกบิล
+                    {t("siaebar.issue_bil")}
                   </button>
                 </>
               )}
@@ -576,7 +578,7 @@ const ProductList = () => {
               <div>
                 {statusProductList == "success" && (
                   <span className="color-success">
-                    product added successfully!
+                    {t("product_list.added_successfully")}
                   </span>
                 )}
                 <span
@@ -610,7 +612,11 @@ const ProductList = () => {
             </div>
 
             <div className="card-body">
-              {statusBill && <p style={{ color: "green" }}>ออกบิลสำเร็จ</p>}
+              {statusBill && (
+                <p style={{ color: "green" }}>
+                  {t("product_list_user.bill_successfully")}
+                </p>
+              )}
 
               <div className="table-responsive">
                 <table className="table  align-middle table-hover">
@@ -631,19 +637,19 @@ const ProductList = () => {
                             className="form-check-label"
                             for="flexCheckDefault"
                           >
-                            All
+                            {t("product_list.all")}
                           </label>
                         </div>
                       </th>
-                      <th scope="col">รหัสลูกค้า</th>
-                      <th scope="col">เเทคจีน</th>
-                      <th scope="col">ถึงโกดังจีน</th>
-                      <th scope="col">ปิดตู้</th>
-                      <th scope="col">ถึงไทย</th>
-                      <th scope="col">สถานะ</th>
-                      <th scope="col">จำนวน</th>
-                      <th scope="col">ยอดชำระ จีน-ไทย</th>
-                      <th scope="col">show</th>
+                      <th scope="col">{t("customer_id")}</th>
+                      <th scope="col">{t("product_list.chinese_tack")}</th>
+                      <th scope="col">{t("product_list.chinese_warehouse")}</th>
+                      <th scope="col">{t("product_list.close_cabinet")}</th>
+                      <th scope="col">{t("product_list.to_thailand")}</th>
+                      <th scope="col">{t("product_list.status")}</th>
+                      <th scope="col">{t("create_product.quantity")}</th>
+                      <th scope="col">{t("product_list.payment_amount")}</th>
+                      <th scope="col">{t("product_list.show")}</th>
                     </tr>
                   </thead>
                   {systemUser()}
@@ -684,7 +690,9 @@ const ProductList = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                {statusModel == 0 ? "เลือกที่อยู่" : "เพิ่มที่อยู่"}
+                {statusModel == 0
+                  ? t("product_list_user.choose_address")
+                  : t("product_list_user.add_address")}
               </h1>
               <p className="ml-3" style={{ color: "red" }}>
                 {errorMoney}
@@ -732,7 +740,7 @@ const ProductList = () => {
                     type="submit"
                     onClick={() => setStatusModel(1)}
                   >
-                    + เพิ่มที่อยู่
+                    + {t("product_list_user.add_address")}
                   </button>
                 </div>
               ) : (
@@ -747,7 +755,7 @@ const ProductList = () => {
                 data-bs-dismiss={statusModel === 0 ? "modal" : undefined}
                 onClick={statusModel === 0 ? null : () => setStatusModel(0)}
               >
-                Close
+                {t("product_list_user.close")}
               </button>
               <button
                 type="button"
@@ -764,7 +772,7 @@ const ProductList = () => {
                     : handleSubmitAddress
                 }
               >
-                Save changes
+                {t("create_product.save")}
               </button>
             </div>
           </div>
