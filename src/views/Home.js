@@ -28,8 +28,61 @@ const Home = () => {
                 <br /> - รวมภาษีนำเข้าแล้ว
                 <br /> - ไม่มีขั้นต่ำในการนำเข้า
                 <br /> - ตรวจสอบสถานะได้ 24ชม.
-                <br />- ระยะเวลาในการจัดส่งทางรถ 5-7 วัน ทางเรือ 12-15 วัน
+                <br />- ระยะเวลาในการจัดส่งทางรถ 5-7 วัน ทางเรือ 12-15 วัน{" "}
+                <br />
                 ----------------------------------- <br />
+              </h6>
+              {/*        <div
+                data-aos="fade-up"
+                data-aos-delay="600"
+                className="aos-init aos-animate"
+              >
+                <div className="text-center text-lg-start">
+                  <a
+                    href="/login"
+                    className="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
+                  >
+                    <span>{t("get_started")}</span>
+                    <i className="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </div> */}
+            </div>
+            <div
+              className="col-lg-6 hero-img aos-init aos-animate"
+              data-aos="zoom-out"
+              data-aos-delay="200"
+              style={{ marginTop: "70px" }}
+            >
+              <img
+                src="assetsAuth/img/123506.jpg"
+                className="img-fluid"
+                alt=""
+              />
+            </div>
+            <div
+              className="col-lg-6 hero-img aos-init aos-animate"
+              data-aos="zoom-out"
+              data-aos-delay="200"
+            >
+              <img
+                src="assetsAuth/img/123507.jpg"
+                className="img-fluid"
+                alt=""
+              />
+            </div>
+            <div
+              className="col-lg-6 hero-img aos-init aos-animate"
+              data-aos="zoom-out"
+              data-aos-delay="200"
+              style={{ textAlign: "left" }}
+            >
+              <h6
+                /*   data-aos="fade-up"
+                data-aos-delay="100" */
+                className="aos-init aos-animate"
+              >
+                <br />
                 ช่องทางการติดต่อ
                 <br />
                 Line :
@@ -56,32 +109,6 @@ const Home = () => {
                 #เสื้อผ้า #รองเท้า #กระเป๋า #เครื่องจักร #บรรจุภัณฑ์
                 #เฟอร์นิเจอร์ #สงรานต์
               </h6>
-              {/*        <div
-                data-aos="fade-up"
-                data-aos-delay="600"
-                className="aos-init aos-animate"
-              >
-                <div className="text-center text-lg-start">
-                  <a
-                    href="/login"
-                    className="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
-                  >
-                    <span>{t("get_started")}</span>
-                    <i className="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div> */}
-            </div>
-            <div
-              className="col-lg-6 hero-img aos-init aos-animate"
-              data-aos="zoom-out"
-              data-aos-delay="200"
-            >
-              <img
-                src="assetsAuth/img/123507.jpg"
-                className="img-fluid"
-                alt=""
-              />
             </div>
           </div>
         </div>
