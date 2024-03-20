@@ -73,6 +73,10 @@ section {
     font-size: 28px;
     line-height: 32px;
   }
+
+  .text-name-navbar {
+    font-size: calc(35% + 2.4vmin) !important;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -2423,12 +2427,14 @@ section {
   color: #012970;
 }
 
+
+
 .text-name {
-  font-size: calc(60% + 4vmin) !important;
+  font-size: calc(50% + 2vmin) !important;
 }
 
 .text-footer {
-  font-size: calc(60% + 3.5vmin) !important;
+  font-size: calc(50% + 2vmin) !important;
 }
 
 .td-width {

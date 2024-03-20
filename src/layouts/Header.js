@@ -18,7 +18,7 @@ export default function Header() {
       <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
         <a className="logo  align-items-center">
           {/* <img src="assets/img/logo.png" alt /> */}
-          <span>{t("system_product")}</span>
+          <span className="text-name-navbar">{t("system_product")}</span>
         </a>
         <nav id="navbar" className="navbar">
           <ul>
