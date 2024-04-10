@@ -307,6 +307,7 @@ const ProductList = () => {
         price,
         dispatch
       );
+      console.log("response", response);
       if (response.status == "success") {
         fetchData();
         setStatusModel(0);

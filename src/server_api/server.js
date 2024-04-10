@@ -2,18 +2,18 @@ import axios from "axios";
 import { format } from "date-fns";
 
 const getUrl = () => {
-  /*  const https_url = "http://localhost/project/API"; */
-  const https_url = "https://sd-logistic.com/API";
+  const https_url = "http://localhost/project/API";
+  /* const https_url = "https://sd-logistic.com/API"; */
   return https_url;
 };
 const getUrlImage = () => {
-  /* const https_url = "http://localhost/project/API/image/product/"; */
-  const https_url = "https://sd-logistic.com/API/image/product/";
+  const https_url = "http://localhost/project/API/image/product/";
+  /* const https_url = "https://sd-logistic.com/API/image/product/"; */
   return https_url;
 };
 const getUrlSlip = () => {
-  /* const https_url = "http://localhost/project/API/image/slip/"; */
-  const https_url = "https://sd-logistic.com/API/image/slip/";
+  const https_url = "http://localhost/project/API/image/slip/";
+  /* const https_url = "https://sd-logistic.com/API/image/slip/"; */
   return https_url;
 };
 
@@ -922,13 +922,14 @@ const createIssueBill = async (
       "Content-Type": "multipart/form-data;charset=utf-8",
     },
   });
+  console.log("response 222", response.data);
 
-  if (response.data.message) {
+  if (response.data && response.data.message) {
     return {
       status: "success",
       message: response.data.message,
     };
-  } else if (response.data.error) {
+  } else if (response.data && response.data.error) {
     return {
       status: "error",
       error: response.data.error,
