@@ -192,31 +192,31 @@ const Sidebar = () => {
             <li className={activePath("/record-bill")}>
               <Link className="nav-link" to="/record-bill">
                 <i class="fa-solid fa-tag"></i>
-                <span>ประวัติตรวจสอบบิล</span>
+                <span>{t("bill_check_history")}</span>
               </Link>
             </li>
             <li className={activePath("/bill-list")}>
               <Link className="nav-link" to="/bill-list-admin">
                 <i class="fa-solid fa-file-invoice"></i>
-                <span>รายการพัสดุออกบิล</span>
+                <span>{t("siaebar.billed_list")}</span>
               </Link>
             </li>
             <li className={activePath("/check-money")}>
               <Link className="nav-link" to="/check-money">
                 <i class="fa-solid fa-sack-dollar"></i>
-                <span>อนุมัติเติมเงิน</span>
+                <span>{t("top_up_approval")}</span>
               </Link>
             </li>
             <li className={activePath("/list-slip-money")}>
               <Link className="nav-link" to="/list-slip-money">
                 <i class="fa-solid fa-money-bill-transfer"></i>
-                <span>ประวัติเติมเงิน </span>
+                <span>{t("siaebar.top_up_history")} </span>
               </Link>
             </li>
             <li className={activePath("/new-password")}>
               <Link className="nav-link" to="/new-password">
                 <i class="fa-solid fa-key"></i>
-                <span>เปลี่ยน password </span>
+                <span>{t("change_password")} </span>
               </Link>
             </li>
           </>

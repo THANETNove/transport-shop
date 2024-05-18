@@ -209,5 +209,8 @@
   "system_being_improved": "กำลังปรับปรุงระบบ จะใช้ได้ในเร็วๆนี้",
   "system.logout": "ออกจากระบบ",
   "parcel_status":"สถานะ พัสดุ",
-  "check_the_bill":"ตรวจสอบบิล"
+  "check_the_bill":"ตรวจสอบบิล",
+  "bill_check_history":"ประวัติตรวจสอบบิล",
+  "top_up_approval":"อนุมัติเติมเงิน",
+  "change_password":"เปลี่ยน password"
 }

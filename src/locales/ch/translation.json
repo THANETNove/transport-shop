@@ -208,6 +208,9 @@
   "money.record_money_wallet": "支付历史",
   "system_being_improved": "该系统正在完善中，即将推出",
   "system.logout": "登出",
-  "parcel_status":"包裹状态",
-  "check_the_bill":"检查账单"
+  "parcel_status": "包裹状态",
+  "check_the_bill": "检查账单",
+  "bill_check_history": "账单查询历史记录",
+  "top_up_approval":"充值审批",
+  "change_password":"更改密码"
 }

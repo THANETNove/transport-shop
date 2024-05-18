@@ -208,6 +208,9 @@
   "money.record_money_wallet": "Paid history ",
   "system_being_improved": "We're under construction",
   "system.logout": "Logout",
-  "parcel_status":"Parcel status",
-  "check_the_bill":"Check the bill"
+  "parcel_status": "Parcel status",
+  "check_the_bill": "Check the bill",
+  "bill_check_history": "Bill check history",
+  "top_up_approval":"Top up approval",
+  "change_password":"Change password"
 }
