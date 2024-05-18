@@ -69,6 +69,19 @@ section {
 }
 
 @media (max-width: 768px) {
+  .hide-header {
+   display: none;
+  }
+}
+@media (min-width: 769px) {
+  .select-header {
+   display: none;
+  }
+}
+
+
+
+@media (max-width: 768px) {
   .section-header p {
     font-size: 28px;
     line-height: 32px;
@@ -2438,3 +2451,5 @@ section {
 .word-break {
   min-width: 150px !important;
 }
+
+

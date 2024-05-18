@@ -26,13 +26,11 @@ const Home = () => {
                 className="aos-init aos-animate"
               >
                 <div className="text-center text-lg-start">
-                  <a
-                    href="#about"
-                    className="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
-                  >
+
+                  <Link to="/login" className="nav-link  btn-get-started d-inline-flex align-items-center justify-content-center align-self-center">
                     <span>{t("get_started")}</span>
                     <i className="bi bi-arrow-right"></i>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
