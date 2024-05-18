@@ -20,7 +20,25 @@ export default function Header() {
           {/* <img src="assets/img/logo.png" alt /> */}
           <span className="text-name-navbar">{t("system_product")}</span>
         </a>
-        <nav id="navbar" className="navbar">
+        <select
+          class="form-select ml-3 col-3 select-header "
+          aria-label="Default select example"
+          onChange={(e) => changeLanguage(e.target.value)}
+        >
+          <option value="en" selected={savedLanguage == "en"}>
+            {t("lang_en")}
+          </option>
+          <option
+            value="th"
+            selected={savedLanguage == "th" || savedLanguage == null}
+          >
+            {t("lang_th")}
+          </option>
+          <option value="ch" selected={savedLanguage == "ch"}>
+            {t("lang_ch")}
+          </option>
+        </select>
+        <nav id="navbar" className="navbar hide-header">
           <ul>
             <li>
               <select
