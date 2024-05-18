@@ -163,19 +163,19 @@ const Sidebar = () => {
             <li className={activePath("/status-list")}>
               <Link className="nav-link" to="/status-list">
                 <i class="fa-solid fa-layer-group"></i>
-                <span>สถานะ พัสดุ</span>
+                <span>{t("parcel_status")}</span>
               </Link>
             </li>
             <li className={activePath("/product-type-list")}>
               <Link className="nav-link" to="/product-type-list">
                 <i class="fa-solid fa-notes-medical"></i>
-                <span>ประเภทพัสดุ</span>
+                <span>{t("create_product.parcel_type")}</span>
               </Link>
             </li>
             <li className={activePath("/price-per-user")}>
               <Link className="nav-link" to="/price-per-user">
                 <i class="fa-solid fa-tag"></i>
-                <span>ราคาต่อ User</span>
+                <span>{t("price_per_user.price_user")}</span>
               </Link>
             </li>
           </>
@@ -186,70 +186,47 @@ const Sidebar = () => {
             <li className={activePath("/check-bill")}>
               <Link className="nav-link" to="/check-bill">
                 <i class="fa-solid fa-tag"></i>
-                <span>ตรวจสอบบิล</span>
+                <span>{t("check_the_bill")}</span>
               </Link>
             </li>
             <li className={activePath("/record-bill")}>
               <Link className="nav-link" to="/record-bill">
                 <i class="fa-solid fa-tag"></i>
-                <span>ประวัติตรวจสอบบิล</span>
+                <span>{t("bill_check_history")}</span>
               </Link>
             </li>
             <li className={activePath("/bill-list")}>
               <Link className="nav-link" to="/bill-list-admin">
                 <i class="fa-solid fa-file-invoice"></i>
-                <span>รายการพัสดุออกบิล</span>
+                <span>{t("siaebar.billed_list")}</span>
               </Link>
             </li>
             <li className={activePath("/check-money")}>
               <Link className="nav-link" to="/check-money">
                 <i class="fa-solid fa-sack-dollar"></i>
-                <span>อนุมัติเติมเงิน</span>
+                <span>{t("top_up_approval")}</span>
               </Link>
             </li>
             <li className={activePath("/list-slip-money")}>
               <Link className="nav-link" to="/list-slip-money">
                 <i class="fa-solid fa-money-bill-transfer"></i>
-                <span>ประวัติเติมเงิน </span>
+                <span>{t("siaebar.top_up_history")} </span>
               </Link>
             </li>
             <li className={activePath("/new-password")}>
               <Link className="nav-link" to="/new-password">
                 <i class="fa-solid fa-key"></i>
-                <span>เปลี่ยน password </span>
+                <span>{t("change_password")} </span>
               </Link>
             </li>
           </>
         )}
-        {/* <li className="nav-item">
-          <a
-            className="nav-link collapsed"
-            data-toggle="collapse"
-            data-target="#collapseTwo"
-            aria-expanded="true"
-            aria-controls="collapseTwo"
-          >
-            <i className="fas fa-fw fa-cog" />
-            <span>Components</span>
-          </a>
-          <div
-            id="collapseTwo"
-            className="collapse"
-            aria-labelledby="headingTwo"
-            data-parent="#accordionSidebar"
-          >
-            <div className="bg-white py-2 collapse-inner rounded">
-              <h6 className="collapse-header">Custom Components:</h6>
-              <a className="collapse-item">Buttons</a>
-              <a className="collapse-item">Cards</a>
-            </div>
-          </div>
-        </li>*/}
+
 
         <li className="nav-item">
           <a className="nav-link" onClick={() => Logout()}>
             <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
+            <span> {t("system.logout")}</span>
           </a>
         </li>
         {/* Divider */}
