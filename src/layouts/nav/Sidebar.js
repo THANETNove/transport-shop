@@ -163,19 +163,19 @@ const Sidebar = () => {
             <li className={activePath("/status-list")}>
               <Link className="nav-link" to="/status-list">
                 <i class="fa-solid fa-layer-group"></i>
-                <span>สถานะ พัสดุ</span>
+                <span>{t("parcel_status")}</span>
               </Link>
             </li>
             <li className={activePath("/product-type-list")}>
               <Link className="nav-link" to="/product-type-list">
                 <i class="fa-solid fa-notes-medical"></i>
-                <span>ประเภทพัสดุ</span>
+                <span>{t("create_product.parcel_type")}</span>
               </Link>
             </li>
             <li className={activePath("/price-per-user")}>
               <Link className="nav-link" to="/price-per-user">
                 <i class="fa-solid fa-tag"></i>
-                <span>ราคาต่อ User</span>
+                <span>{t("price_per_user.price_user")}</span>
               </Link>
             </li>
           </>
@@ -186,7 +186,7 @@ const Sidebar = () => {
             <li className={activePath("/check-bill")}>
               <Link className="nav-link" to="/check-bill">
                 <i class="fa-solid fa-tag"></i>
-                <span>ตรวจสอบบิล</span>
+                <span>{t("check_the_bill")}</span>
               </Link>
             </li>
             <li className={activePath("/record-bill")}>
@@ -249,7 +249,7 @@ const Sidebar = () => {
         <li className="nav-item">
           <a className="nav-link" onClick={() => Logout()}>
             <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
+            <span> {t("system.logout")}</span>
           </a>
         </li>
         {/* Divider */}
