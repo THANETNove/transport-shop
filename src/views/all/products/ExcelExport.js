@@ -124,7 +124,7 @@ const CSVExport = () => {
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
-          placeholder="รหัสลูกค้า"
+          placeholder={t("customer_id")}
           name="customerCode"
           onChange={selectProductExport}
         />
