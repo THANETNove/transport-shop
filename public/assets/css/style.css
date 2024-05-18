@@ -79,6 +79,18 @@ section {
   }
 }
 
+@media (max-width: 768px) {
+  .hide-header {
+   display: none;
+  }
+}
+@media (min-width: 769px) {
+  .select-header {
+   display: none;
+  }
+}
+
+
 /*--------------------------------------------------------------
 # Breadcrumbs
 --------------------------------------------------------------*/
