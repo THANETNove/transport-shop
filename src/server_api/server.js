@@ -2,18 +2,18 @@ import axios from "axios";
 import { format } from "date-fns";
 
 const getUrl = () => {
-  const https_url = "http://localhost/project/API";
-  /* const https_url = "https://sd-logistic.com/API"; */
+  /* const https_url = "http://localhost/project/API"; */
+  const https_url = "https://sd-logistic.com/API";
   return https_url;
 };
 const getUrlImage = () => {
-  const https_url = "http://localhost/project/API/image/product/";
-  /* const https_url = "https://sd-logistic.com/API/image/product/"; */
+  /*  const https_url = "http://localhost/project/API/image/product/"; */
+  const https_url = "https://sd-logistic.com/API/image/product/";
   return https_url;
 };
 const getUrlSlip = () => {
-  const https_url = "http://localhost/project/API/image/slip/";
-  /* const https_url = "https://sd-logistic.com/API/image/slip/"; */
+  /* const https_url = "http://localhost/project/API/image/slip/"; */
+  const https_url = "https://sd-logistic.com/API/image/slip/";
   return https_url;
 };
 
